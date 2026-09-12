@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../src/styles.css";
 import "../src/refresh.css";
+import "../src/homepage-v2.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://wpmtest.app"),
