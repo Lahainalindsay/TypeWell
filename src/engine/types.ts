@@ -32,6 +32,11 @@ export interface Metrics {
   wordsTyped: number;
   wpm: number;
   rawWpm: number;
+  grossWpm: number;
+  netWpm: number;
+  charactersPerMinute: number;
+  correctWords: number;
+  mistypedWords: number;
   accuracy: number;
   consistency: number;
   consistencyLabel: "Very Steady" | "Steady" | "Variable" | "Uneven";

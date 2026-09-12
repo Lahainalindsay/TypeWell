@@ -19,6 +19,17 @@ describe("lesson progression and storage", () => {
     expect(restored.settings.theme).toBe("dark");
   });
 
+  it("keeps only valid imported keystrokes", () => {
+    const restored = validateProgress({
+      ...defaultProgress,
+      strokes: [
+        { expected: "r", actual: "t", correct: false, timestamp: 100 },
+        { expected: "x", actual: 7, correct: false, timestamp: 200 }
+      ]
+    });
+    expect(restored.strokes).toEqual([{ expected: "r", actual: "t", correct: false, timestamp: 100 }]);
+  });
+
   it("rejects invalid import data", () => {
     expect(() => validateProgress({ version: 2 })).toThrow();
   });

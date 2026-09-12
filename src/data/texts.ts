@@ -1,6 +1,8 @@
-export type PracticeMode = "Words" | "Sentences" | "Quotes" | "Custom Text" | "Weak Keys" | "Numbers" | "Punctuation" | "Symbols" | "Endurance" | "Speed Burst" | "Accuracy" | "Code";
+import { dataEntryFields, fictionalDataEntryRecords } from "../engine/dataEntry";
 
-export const practiceModes: PracticeMode[] = ["Words", "Sentences", "Quotes", "Custom Text", "Weak Keys", "Numbers", "Punctuation", "Symbols", "Endurance", "Speed Burst", "Accuracy", "Code"];
+export type PracticeMode = "Words" | "Sentences" | "Quotes" | "Custom Text" | "Weak Keys" | "Numbers" | "Data Entry" | "Numeric Keypad" | "Punctuation" | "Symbols" | "Endurance" | "Speed Burst" | "Accuracy" | "Code";
+
+export const practiceModes: PracticeMode[] = ["Words", "Sentences", "Quotes", "Custom Text", "Weak Keys", "Numbers", "Data Entry", "Numeric Keypad", "Punctuation", "Symbols", "Endurance", "Speed Burst", "Accuracy", "Code"];
 
 export const durations = [15, 30, 60, 120, 300, 600];
 export const testDurations = [15, 30, 60, 120, 300, 600];
@@ -64,6 +66,8 @@ export const library: Record<string, string[]> = {
 export function buildPracticeText(mode: PracticeMode, count = 50, customText = ""): string {
   if (mode === "Custom Text") return customText || "Paste custom text in the field above, then begin typing here.";
   if (mode === "Numbers") return repeatToLength(library.Numbers.join(" "), count * 6);
+  if (mode === "Data Entry") return repeatToLength(fictionalDataEntryRecords.map((record) => dataEntryFields(record).join(" ")).join(" "), count * 8);
+  if (mode === "Numeric Keypad") return repeatToLength(numericGroups.join(" "), count * 5);
   if (mode === "Punctuation") return repeatToLength(library.Punctuation.join(" "), count * 6);
   if (mode === "Symbols") return "email@domain.dev #issue-42 $19.95 + 8% = total_value / [draft] {ready} && checked";
   if (mode === "Code") return repeatToLength(library.Programming.join(" "), count * 7);
@@ -75,6 +79,12 @@ export function buildPracticeText(mode: PracticeMode, count = 50, customText = "
     : Object.values(library).flat().join(" ");
   return repeatToLength(pool, count * 6);
 }
+
+const numericGroups = [
+  "48291 10577 63.42 921004 782.15 34008 19.76 55021",
+  "71420 88.03 602911 147.28 90017 30556 42.10 781009",
+  "12004 97531 26.84 401772 63.19 80045 51902 7.25"
+];
 
 function repeatToLength(text: string, length: number): string {
   let output = "";

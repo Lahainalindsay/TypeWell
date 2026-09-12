@@ -20,8 +20,21 @@ describe("typing metrics", () => {
     });
     const metrics = calculateMetrics(state, 5000);
     expect(metrics.rawWpm).toBe(15);
+    expect(metrics.grossWpm).toBe(15);
+    expect(metrics.netWpm).toBe(12);
+    expect(metrics.charactersPerMinute).toBe(75);
     expect(metrics.accuracy).toBe(80);
     expect(metrics.uncorrectedErrors).toBe(1);
+  });
+
+  it("counts correct and mistyped completed words", () => {
+    let state = createSession("cat dog");
+    Array.from("cat dxg").forEach((char, index) => {
+      state = applyInput(state, char, index * 1000);
+    });
+    const metrics = calculateMetrics(state, 7000);
+    expect(metrics.correctWords).toBe(1);
+    expect(metrics.mistypedWords).toBe(1);
   });
 
   it("handles zero elapsed time", () => {

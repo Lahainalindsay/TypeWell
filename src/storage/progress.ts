@@ -1,5 +1,6 @@
 import type { Keystroke, Metrics } from "../engine/types";
 import type { WeakCombination, WeakKey } from "../engine/weakKeys";
+import { safeGet, safeSet } from "./safeStorage";
 
 export interface SessionRecord {
   id: string;
@@ -9,6 +10,7 @@ export interface SessionRecord {
   metrics: Metrics;
   weakKeys: WeakKey[];
   weakCombinations: WeakCombination[];
+  strokes?: Keystroke[];
 }
 
 export interface ProgressData {
@@ -67,7 +69,7 @@ export const defaultProgress: ProgressData = {
 
 export function loadProgress(): ProgressData {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = safeGet(STORAGE_KEY);
     if (!raw) return defaultProgress;
     return validateProgress(JSON.parse(raw));
   } catch {
@@ -76,7 +78,7 @@ export function loadProgress(): ProgressData {
 }
 
 export function saveProgress(progress: ProgressData): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  safeSet(STORAGE_KEY, JSON.stringify(progress));
 }
 
 export function validateProgress(value: unknown): ProgressData {
@@ -91,8 +93,12 @@ export function validateProgress(value: unknown): ProgressData {
     ...candidate,
     settings: { ...defaultProgress.settings, ...(candidate.settings ?? {}) },
     completedLessons: candidate.completedLessons.filter((id): id is string => typeof id === "string"),
-    sessions: candidate.sessions.slice(-300),
-    strokes: candidate.strokes.slice(-5000)
+    sessions: candidate.sessions
+      .filter((session): session is SessionRecord => Boolean(session) && typeof session === "object")
+      .slice(-300),
+    strokes: candidate.strokes
+      .filter((stroke): stroke is Keystroke => Boolean(stroke) && typeof stroke === "object" && typeof stroke.expected === "string" && typeof stroke.actual === "string" && typeof stroke.correct === "boolean")
+      .slice(-5000)
   };
 }
 

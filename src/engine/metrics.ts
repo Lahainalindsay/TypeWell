@@ -75,8 +75,15 @@ export function calculateMetrics(state: SessionState, now = performance.now()): 
   const totalKeystrokes = state.keystrokes.length;
   const wpm = elapsedMinutes <= 0 ? 0 : (correctCharacters / 5) / elapsedMinutes;
   const rawWpm = elapsedMinutes <= 0 ? 0 : (totalKeystrokes / 5) / elapsedMinutes;
+  const grossWpm = rawWpm;
+  // Net WPM uses a conservative character-error adjustment:
+  // ((total typed characters - incorrect current characters) / 5) / elapsed minutes.
+  // Corrected errors remain visible separately but do not keep reducing net WPM after correction.
+  const netWpm = elapsedMinutes <= 0 ? 0 : (Math.max(0, totalKeystrokes - incorrectCharacters) / 5) / elapsedMinutes;
+  const charactersPerMinute = elapsedMinutes <= 0 ? 0 : totalKeystrokes / elapsedMinutes;
   const accuracy = totalKeystrokes === 0 ? 100 : (state.keystrokes.filter((stroke) => stroke.correct).length / totalKeystrokes) * 100;
   const consistency = calculateConsistency(state.keystrokes);
+  const wordStats = calculateWordStats(state);
   return {
     correctCharacters,
     incorrectCharacters,
@@ -89,11 +96,34 @@ export function calculateMetrics(state: SessionState, now = performance.now()): 
     wordsTyped: correctCharacters / 5,
     wpm: round(wpm),
     rawWpm: round(rawWpm),
+    grossWpm: round(grossWpm),
+    netWpm: round(netWpm),
+    charactersPerMinute: round(charactersPerMinute),
+    correctWords: wordStats.correctWords,
+    mistypedWords: wordStats.mistypedWords,
     accuracy: round(accuracy),
     consistency: round(consistency),
     consistencyLabel: labelConsistency(consistency),
     errorRate: round(totalKeystrokes === 0 ? 0 : (incorrectCharacters / totalKeystrokes) * 100)
   };
+}
+
+export function calculateWordStats(state: SessionState): { correctWords: number; mistypedWords: number } {
+  if (!state.typed.length) return { correctWords: 0, mistypedWords: 0 };
+  const targetWords = state.target.split(/\s+/);
+  let cursor = 0;
+  let correctWords = 0;
+  let mistypedWords = 0;
+  for (const word of targetWords) {
+    const start = cursor;
+    const end = start + word.length;
+    cursor = end + 1;
+    if (state.typed.length < end) break;
+    const statuses = state.statuses.slice(start, end);
+    if (statuses.length && statuses.every((status) => status === "correct")) correctWords += 1;
+    else if (statuses.some((status) => status === "incorrect")) mistypedWords += 1;
+  }
+  return { correctWords, mistypedWords };
 }
 
 export function calculateConsistency(keystrokes: Keystroke[], windowSize = 8): number {
