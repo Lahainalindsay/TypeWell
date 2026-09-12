@@ -7,6 +7,7 @@ type AnalyticsEvent =
   | "certificate_created"
   | "weak_keys_practice"
   | "theme_changed"
+  | "data_entry_started"
   | "data_entry_completed"
   | "ten_key_completed";
 
