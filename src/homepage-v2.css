@@ -1,0 +1,356 @@
+/* Approved WPMTEST homepage pass: compact, ad-ready, typing-first, with translucent hand guidance. */
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Move the existing after-test ad slot to the top of the homepage when ads are enabled. */
+.home > .ad-slot[data-placement="after-home-test"] {
+  order: 1;
+  width: min(100%, 960px);
+  min-height: 84px !important;
+  margin: 0.25rem auto 1rem;
+}
+.home > .hero { order: 2; }
+.home > .home-test { order: 3; }
+.home > .seo-section,
+.home > .ad-slot:not([data-placement="after-home-test"]) { order: 4; }
+
+/* Brand treatment from the approved mockup, without changing the underlying app name/SEO. */
+.topbar {
+  min-height: 58px;
+  padding: 0.55rem clamp(1rem, 4vw, 3rem);
+  background: rgba(4, 13, 24, 0.94);
+  border-bottom: 1px solid rgba(74, 143, 202, 0.24);
+}
+.brand {
+  position: relative;
+  min-width: 170px;
+  align-items: flex-start;
+}
+.brand span {
+  font-size: 0;
+}
+.brand span::before {
+  content: "WPMTEST";
+  font-size: 1.22rem;
+  font-weight: 900;
+  letter-spacing: 0.025em;
+  color: #f8fbff;
+}
+.brand span::after {
+  content: ".";
+  color: var(--accent);
+  font-size: 1.22rem;
+}
+.brand::after {
+  content: "TYPE FASTER. GO FURTHER.";
+  color: #7790aa;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  margin-top: 0.16rem;
+}
+.brand small { display: none !important; }
+
+.topbar nav a,
+.topbar nav summary {
+  font-size: 0.87rem;
+  font-weight: 600;
+}
+.topbar nav a.active {
+  position: relative;
+  color: #f7fbff;
+  background: transparent;
+}
+.topbar nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: -0.38rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* Visually simplify the SEO hero while preserving the keyword-rich H1 in the DOM. */
+.home .hero {
+  max-width: 1180px;
+  width: 100%;
+  padding: 0.35rem 0 0.4rem;
+}
+.home .hero-copy .eyebrow { display: none; }
+.home .hero-copy h1 {
+  font-size: 0;
+  margin: 0;
+  line-height: 1;
+}
+.home .hero-copy h1::after {
+  content: "How fast can you type?";
+  display: block;
+  color: var(--text);
+  font-size: clamp(1.75rem, 3.1vw, 2.65rem);
+  line-height: 1.08;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+}
+.home .hero-copy > p:not(.eyebrow) {
+  margin: 0.35rem 0 0;
+  font-size: 0;
+  max-width: 700px;
+}
+.home .hero-copy > p:not(.eyebrow)::after {
+  content: "Choose a time, start typing, and see your results instantly.";
+  display: block;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.4;
+}
+
+.home-test {
+  width: 100%;
+  max-width: 1180px;
+}
+.home-test-head {
+  justify-content: flex-end;
+  margin: -3.45rem 0 0.7rem;
+  min-height: 3rem;
+}
+.home-test-head > div:first-child { display: none; }
+.duration-picker {
+  gap: 0.55rem;
+  flex-wrap: nowrap;
+}
+.duration-picker button {
+  min-width: 104px;
+  min-height: 42px;
+  padding: 0.52rem 0.85rem;
+  border-radius: 12px;
+  border-color: rgba(105, 153, 202, 0.35);
+  background: rgba(17, 31, 48, 0.72);
+  font-size: 0.82rem;
+}
+.duration-picker button.active {
+  color: white;
+  border-color: #2a9cff;
+  background: linear-gradient(135deg, #087fe7, #2aa7ff);
+  box-shadow: 0 8px 26px rgba(19, 145, 255, 0.28);
+}
+
+.home-test .trainer {
+  gap: 0.65rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.home-test .trainer-head {
+  display: none;
+}
+.home-test .metrics,
+.home-test .metrics.big {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.35fr;
+  gap: 0.55rem;
+  padding: 0.35rem;
+  border: 1px solid rgba(71, 130, 182, 0.2);
+  border-radius: 12px;
+  background: rgba(12, 27, 43, 0.82);
+}
+.home-test .metric {
+  min-height: 68px;
+  padding: 0.65rem 0.85rem;
+  border: 0;
+  border-radius: 9px;
+  background: rgba(3, 14, 26, 0.62);
+}
+.home-test .metric:nth-child(n+4) { display: none; }
+.home-test .metric span {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.73rem;
+  color: #9bb7d2;
+}
+.home-test .metric strong {
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+}
+
+.home-test .typing-text {
+  height: clamp(142px, 19vh, 184px);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid rgba(81, 151, 211, 0.36);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(5, 20, 34, 0.9), rgba(5, 16, 29, 0.76));
+  box-shadow: inset 0 0 30px rgba(18, 104, 175, 0.04);
+  font-size: clamp(1.12rem, 2vw, 1.48rem);
+  line-height: 1.75;
+  letter-spacing: 0.08em;
+}
+.home-test .pending { color: #70869d; }
+.home-test .current {
+  color: white;
+  background: linear-gradient(135deg, #0987f3, #3aa9ff);
+  box-shadow: 0 0 18px rgba(27, 151, 255, 0.38);
+}
+.home-test .start-hint {
+  order: 20;
+  border: 1px solid rgba(73, 132, 182, 0.22);
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+  margin: 0.1rem 0 0;
+  background: rgba(10, 27, 42, 0.62);
+  color: #9fb7cc;
+}
+
+/* Replace the old labeled finger-guide pills with a quieter legend. */
+.home-test .finger-guide {
+  display: none;
+}
+
+/* Keyboard + transparent hands. The actual key mapping remains functional; the highlighted
+   target key drives a translucent moving finger cue via .key.target::after. */
+.home-test .keyboard {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 910px);
+  margin: 0.15rem auto 0;
+  padding: 0.55rem 0.65rem 1.15rem;
+  border: 1px solid rgba(67, 128, 182, 0.28);
+  border-radius: 13px;
+  background: rgba(7, 20, 33, 0.72);
+  overflow: visible;
+}
+.home-test .key-row {
+  position: relative;
+  z-index: 3;
+  gap: 0.34rem;
+}
+.home-test .key {
+  position: relative;
+  z-index: 3;
+  height: 38px;
+  border-radius: 7px;
+  border-color: rgba(99, 145, 190, 0.3);
+  background: rgba(19, 37, 56, 0.82);
+  color: #d9e7f5;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.22);
+}
+.home-test .key.target {
+  z-index: 6;
+  color: white;
+  border-color: #2aa7ff;
+  background: linear-gradient(180deg, #168ef0, #0878d6);
+  box-shadow: 0 0 18px rgba(25, 151, 255, 0.52), inset 0 0 0 1px rgba(255,255,255,.18);
+}
+
+/* Simplified translucent left and right hand silhouettes behind the live keys. */
+.home-test .keyboard::before,
+.home-test .keyboard::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  pointer-events: none;
+  bottom: -52px;
+  width: 39%;
+  height: 185px;
+  opacity: 0.24;
+  filter: drop-shadow(0 0 14px rgba(57, 158, 255, 0.34));
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+}
+.home-test .keyboard::before {
+  left: 9%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 210'%3E%3Cg fill='%234ca8ff' fill-opacity='.28' stroke='%237bc3ff' stroke-opacity='.72' stroke-width='2'%3E%3Cpath d='M92 205c-19-38-24-78-19-116l6-48c2-13 20-12 20 2v52h8V26c0-15 21-15 21 0v67h9V18c0-15 22-15 22 0v75h9V27c0-15 21-15 21 0v70h9V48c0-15 21-15 21 0v69c0 13 5 21 16 11l25-24c11-10 25 2 17 14l-32 48c-14 21-26 30-32 39z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.home-test .keyboard::after {
+  right: 9%;
+  transform: scaleX(-1);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 210'%3E%3Cg fill='%238d72ff' fill-opacity='.25' stroke='%23b7a7ff' stroke-opacity='.68' stroke-width='2'%3E%3Cpath d='M92 205c-19-38-24-78-19-116l6-48c2-13 20-12 20 2v52h8V26c0-15 21-15 21 0v67h9V18c0-15 22-15 22 0v75h9V27c0-15 21-15 21 0v70h9V48c0-15 21-15 21 0v69c0 13 5 21 16 11l25-24c11-10 25 2 17 14l-32 48c-14 21-26 30-32 39z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Live finger cue: appears to reach from the translucent hand toward the target key. */
+.home-test .key.target::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 60%;
+  width: 17px;
+  height: 94px;
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: 0.6;
+  background: linear-gradient(180deg, rgba(151, 218, 255, .92), rgba(32, 126, 220, .14));
+  border: 1px solid rgba(164, 224, 255, .62);
+  box-shadow: 0 0 18px rgba(61, 174, 255, .5);
+  animation: finger-reach .18s ease-out;
+}
+.home-test .key.right-index.target::after,
+.home-test .key.right-middle.target::after,
+.home-test .key.right-ring.target::after,
+.home-test .key.right-pinky.target::after {
+  background: linear-gradient(180deg, rgba(215, 177, 255, .9), rgba(112, 74, 230, .14));
+  border-color: rgba(219, 186, 255, .62);
+  box-shadow: 0 0 18px rgba(149, 101, 255, .48);
+}
+.home-test .key.left-pinky.target::after,
+.home-test .key.right-pinky.target::after { height: 80px; }
+.home-test .key.left-index.target::after,
+.home-test .key.right-index.target::after { height: 104px; }
+.home-test .key.thumbs.target::after {
+  height: 55px;
+  width: 22px;
+  transform: translateX(-50%) rotate(18deg);
+}
+@keyframes finger-reach {
+  from { opacity: 0; transform: translateX(-50%) scaleY(.65); }
+  to { opacity: .6; transform: translateX(-50%) scaleY(1); }
+}
+
+/* Lower-page SEO remains present and crawlable, but separated from the task area. */
+.home .seo-section {
+  width: 100%;
+  max-width: 1180px;
+}
+
+@media (max-width: 900px) {
+  .home-test-head {
+    margin: 0 0 0.6rem;
+    justify-content: flex-start;
+  }
+  .duration-picker { flex-wrap: wrap; }
+  .duration-picker button { min-width: 88px; }
+  .home-test .keyboard::before,
+  .home-test .keyboard::after { opacity: 0.18; bottom: -38px; }
+}
+
+@media (max-width: 620px) {
+  .brand { min-width: 145px; }
+  .brand span::before,
+  .brand span::after { font-size: 1.04rem; }
+  .brand::after { font-size: 0.48rem; }
+  .home .hero-copy h1::after { font-size: 1.7rem; }
+  .home-test .metrics,
+  .home-test .metrics.big { grid-template-columns: 1fr 1fr; }
+  .home-test .metric:nth-child(3) { grid-column: 1 / -1; }
+  .home-test .typing-text {
+    letter-spacing: 0.035em;
+    font-size: 1rem;
+  }
+  .home-test .keyboard {
+    padding-inline: 0.25rem;
+    overflow-x: auto;
+  }
+  .home-test .keyboard::before,
+  .home-test .keyboard::after { display: none; }
+  .home-test .key.target::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-test .key.target::after { animation: none; }
+}
