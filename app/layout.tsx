@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "../src/styles.css";
+import "../src/refresh.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://typewell.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://wpmtest.app"),
   applicationName: "Typewell",
   icons: {
     icon: "/favicon.svg"
