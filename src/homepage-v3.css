@@ -1,0 +1,222 @@
+/* Homepage v3: closer to the approved visual mockup, with clearer color coding and finger motion. */
+
+:root {
+  --wpm-blue: #1e9cff;
+  --wpm-cyan: #32d5ff;
+  --wpm-green: #3fe08f;
+  --wpm-yellow: #ffca4b;
+  --wpm-orange: #ff8b61;
+  --wpm-pink: #ff6bd6;
+  --wpm-violet: #9b7cff;
+}
+
+body {
+  background:
+    radial-gradient(circle at 50% -15%, rgba(31, 143, 255, 0.12), transparent 34rem),
+    linear-gradient(180deg, #06111e 0%, #07111c 48%, #050d16 100%);
+}
+
+.home .hero,
+.home-test,
+.home .seo-section {
+  max-width: 1220px;
+}
+
+.home .hero-copy h1::after {
+  font-size: clamp(2rem, 3.8vw, 3.05rem);
+  font-weight: 900;
+}
+
+.home .hero-copy h1::after,
+.brand span::after,
+.home-test .duration-picker button.active {
+  text-shadow: 0 0 24px rgba(30, 156, 255, 0.18);
+}
+
+.home-test .metrics,
+.home-test .metrics.big {
+  border-color: rgba(77, 146, 210, 0.3);
+  background: linear-gradient(180deg, rgba(12, 31, 49, 0.92), rgba(7, 20, 34, 0.9));
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.2);
+}
+
+.home-test .metric {
+  background: linear-gradient(180deg, rgba(5, 18, 31, 0.86), rgba(6, 17, 29, 0.76));
+}
+
+.home-test .typing-text {
+  min-height: 164px;
+  border-color: rgba(71, 155, 230, 0.42);
+  background: linear-gradient(180deg, rgba(5, 20, 34, 0.97), rgba(6, 16, 27, 0.92));
+  box-shadow:
+    inset 0 0 40px rgba(25, 126, 210, 0.05),
+    0 14px 35px rgba(0, 0, 0, 0.16);
+}
+
+/* Make the keyboard look much more like the approved mockup. */
+.home-test .keyboard {
+  width: min(100%, 1030px);
+  padding: 0.7rem 0.85rem 2.4rem;
+  border-color: rgba(75, 151, 218, 0.36);
+  background: linear-gradient(180deg, rgba(6, 20, 34, 0.94), rgba(5, 16, 28, 0.92));
+  box-shadow:
+    inset 0 0 36px rgba(35, 128, 205, 0.05),
+    0 20px 55px rgba(0, 0, 0, 0.25);
+}
+
+.home-test .key-row { gap: 0.4rem; }
+
+.home-test .key {
+  height: 43px;
+  border-radius: 8px;
+  border-color: rgba(104, 156, 205, 0.32);
+  background: linear-gradient(180deg, rgba(22, 43, 65, 0.95), rgba(13, 31, 48, 0.95));
+  color: #f0f7ff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.24);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+/* Permanent color hints make finger zones readable without a side legend. */
+.home-test .key.left-pinky { border-bottom-color: var(--wpm-blue); }
+.home-test .key.left-ring { border-bottom-color: #26b9ff; }
+.home-test .key.left-middle { border-bottom-color: #39d8c5; }
+.home-test .key.left-index { border-bottom-color: var(--wpm-green); }
+.home-test .key.right-index { border-bottom-color: var(--wpm-yellow); }
+.home-test .key.right-middle { border-bottom-color: var(--wpm-orange); }
+.home-test .key.right-ring { border-bottom-color: var(--wpm-pink); }
+.home-test .key.right-pinky { border-bottom-color: var(--wpm-violet); }
+.home-test .key.thumbs { border-bottom-color: #4ba4ff; }
+
+.home-test .key.target {
+  transform: translateY(-2px);
+  color: white;
+  border-color: currentColor;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.14),
+    0 0 20px currentColor,
+    inset 0 0 20px rgba(255,255,255,.08);
+}
+.home-test .key.left-pinky.target { color: var(--wpm-blue); background: rgba(20, 111, 214, .88); }
+.home-test .key.left-ring.target { color: #26b9ff; background: rgba(15, 130, 212, .88); }
+.home-test .key.left-middle.target { color: #39d8c5; background: rgba(22, 142, 127, .86); }
+.home-test .key.left-index.target { color: var(--wpm-green); background: rgba(21, 145, 86, .88); }
+.home-test .key.right-index.target { color: var(--wpm-yellow); background: rgba(174, 122, 18, .9); }
+.home-test .key.right-middle.target { color: var(--wpm-orange); background: rgba(180, 74, 44, .9); }
+.home-test .key.right-ring.target { color: var(--wpm-pink); background: rgba(157, 52, 141, .9); }
+.home-test .key.right-pinky.target { color: var(--wpm-violet); background: rgba(93, 69, 177, .9); }
+.home-test .key.thumbs.target { color: #58a8ff; background: rgba(34, 97, 176, .9); }
+
+/* More visible glass hands. They stay translucent so the keys remain readable. */
+.home-test .keyboard::before,
+.home-test .keyboard::after {
+  bottom: -18px;
+  width: 43%;
+  height: 225px;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 15px rgba(39, 159, 255, 0.3));
+}
+.home-test .keyboard::before { left: 6%; }
+.home-test .keyboard::after { right: 6%; opacity: 0.38; }
+
+/*
+  The moving-finger illusion is tied to the actual target key. As the next key changes,
+  this translucent finger relocates to that key and animates from the hand toward it.
+*/
+.home-test .key.target::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 58%;
+  width: 24px;
+  height: 122px;
+  border-radius: 999px 999px 48% 48%;
+  transform-origin: 50% 8%;
+  pointer-events: none;
+  opacity: 0.78;
+  background:
+    radial-gradient(circle at 50% 9%, rgba(255,255,255,.42), transparent 24%),
+    linear-gradient(180deg, color-mix(in srgb, currentColor, white 28%), color-mix(in srgb, currentColor, transparent 84%));
+  border: 1px solid color-mix(in srgb, currentColor, white 36%);
+  box-shadow:
+    0 0 22px color-mix(in srgb, currentColor, transparent 30%),
+    inset 0 0 12px rgba(255,255,255,.12);
+  backdrop-filter: blur(1px);
+  animation: finger-press 220ms cubic-bezier(.2,.9,.25,1.15);
+}
+
+/* Shape/reach differences by finger make the motion read as a hand, not a cursor. */
+.home-test .key.left-pinky.target::after {
+  height: 90px;
+  transform: translateX(-50%) rotate(-18deg);
+}
+.home-test .key.left-ring.target::after {
+  height: 108px;
+  transform: translateX(-50%) rotate(-10deg);
+}
+.home-test .key.left-middle.target::after {
+  height: 128px;
+  transform: translateX(-50%) rotate(-4deg);
+}
+.home-test .key.left-index.target::after {
+  height: 138px;
+  transform: translateX(-50%) rotate(7deg);
+}
+.home-test .key.right-index.target::after {
+  height: 138px;
+  transform: translateX(-50%) rotate(-7deg);
+}
+.home-test .key.right-middle.target::after {
+  height: 128px;
+  transform: translateX(-50%) rotate(4deg);
+}
+.home-test .key.right-ring.target::after {
+  height: 108px;
+  transform: translateX(-50%) rotate(10deg);
+}
+.home-test .key.right-pinky.target::after {
+  height: 90px;
+  transform: translateX(-50%) rotate(18deg);
+}
+.home-test .key.thumbs.target::after {
+  width: 30px;
+  height: 82px;
+  border-radius: 999px;
+  transform: translateX(-50%) rotate(64deg);
+}
+
+@keyframes finger-press {
+  0% {
+    opacity: .22;
+    transform: translateX(-50%) translateY(34px) scaleY(.72) rotate(0deg);
+  }
+  55% { opacity: .9; }
+  100% { opacity: .78; }
+}
+
+/* Make the bottom hint feel integrated instead of like a separate utility strip. */
+.home-test .start-hint {
+  width: min(100%, 1220px);
+  margin: 0.2rem auto 0;
+  border-color: rgba(67, 147, 218, 0.28);
+  background: linear-gradient(180deg, rgba(7, 25, 41, .82), rgba(5, 18, 31, .8));
+}
+
+@media (max-width: 900px) {
+  .home-test .keyboard { padding-bottom: 1.75rem; }
+  .home-test .keyboard::before,
+  .home-test .keyboard::after {
+    height: 185px;
+    opacity: 0.3;
+  }
+  .home-test .key.target::after { height: 96px; }
+}
+
+@media (max-width: 620px) {
+  .home-test .keyboard::before,
+  .home-test .keyboard::after { display: none; }
+  .home-test .key.target::after { display: none; }
+  .home-test .key { height: 34px; }
+}
