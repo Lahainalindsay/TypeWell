@@ -434,8 +434,9 @@ function Trainer(props: {
   const [session, setSession] = useState(() => createSession(props.target));
   const [finished, setFinished] = useState<SessionRecord | null>(null);
   const [now, setNow] = useState(performance.now());
+  const [pausedAt, setPausedAt] = useState<number | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const metrics = calculateMetrics(session, now);
+  const metrics = calculateMetrics(session, pausedAt ?? now);
   const current = props.target[session.typed.length] ?? "";
   const next = props.target[session.typed.length + 1] ?? "";
 
@@ -446,8 +447,9 @@ function Trainer(props: {
   }, []);
   useEffect(() => {
     if (!props.duration || !session.startedAt || finished) return;
+    if (pausedAt) return;
     if ((now - session.startedAt) / 1000 >= props.duration) complete();
-  }, [now, session.startedAt, props.duration, finished]);
+  }, [now, session.startedAt, props.duration, finished, pausedAt]);
   useEffect(() => {
     if (session.endedAt && !finished) complete();
   }, [session.endedAt, finished]);
@@ -458,10 +460,27 @@ function Trainer(props: {
     addEventListener("keydown", exit);
     return () => removeEventListener("keydown", exit);
   }, []);
+  useEffect(() => {
+    function handleVisibility() {
+      if (document.hidden) {
+        if (session.startedAt && !finished) setPausedAt(performance.now());
+        return;
+      }
+      setPausedAt((hiddenAt) => {
+        if (hiddenAt === null) return null;
+        const resumedAt = performance.now();
+        setSession((old) => old.startedAt ? { ...old, startedAt: old.startedAt + (resumedAt - hiddenAt) } : old);
+        return null;
+      });
+    }
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, [session.startedAt, finished]);
 
   function reset() {
     setSession(createSession(props.target));
     setFinished(null);
+    setPausedAt(null);
     trackEvent("typing_test_restarted", { testType: props.mode, duration: props.duration ?? null });
     requestAnimationFrame(() => inputRef.current?.focus());
   }
@@ -524,6 +543,7 @@ function Trainer(props: {
         <TypingText target={props.target} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
         {!session.startedAt && <p className="start-hint">Click the text, then start typing. The timer begins on your first keystroke.</p>}
         <textarea ref={inputRef} className="sr-input" value="" readOnly onKeyDown={onKeyDown} aria-label="Typing input area. Type the displayed text." />
+        {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
         {props.progress.settings.showFingerGuide && <FingerGuide current={current} />}
         {props.progress.settings.showKeyboard && <KeyboardView current={current} next={next} last={session.typed.at(-1)} incorrect={session.statuses[session.typed.length - 1] === "incorrect" ? session.typed.at(-1) : undefined} />}
         {props.footer}

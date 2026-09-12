@@ -142,6 +142,7 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 .typing-text { width: 100%; max-width: 100%; height: clamp(150px, 24vh, 230px); min-height: 0; padding: clamp(1rem, 3vw, 2rem); outline: none; white-space: pre-wrap; overflow: hidden; overflow-wrap: anywhere; word-break: break-word; contain: layout paint; cursor: text; }
 .typing-text span { overflow-wrap: anywhere; word-break: break-word; }
 .start-hint { margin: -0.35rem 0 0; color: var(--muted); font-size: 0.86rem; }
+.pause-notice { margin: -0.35rem 0 0; color: var(--warning); font-size: 0.86rem; }
 .edge-fade { color: var(--accent); opacity: 0.65; }
 .sr-input { position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px; }
 .keyboard { display: grid; gap: 0.42rem; user-select: none; }
