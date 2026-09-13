@@ -27,18 +27,14 @@
 
     if (details) {
       const summary = q('summary', details);
-      if (summary) summary.textContent = 'More WPM Tools';
+      if (summary) summary.textContent = 'More';
       const menu = q('div', details);
       if (menu) menu.innerHTML = `
-        <a href="/3-minute-typing-test/">3 Minute Typing Test</a>
-        <a href="/10-minute-typing-test/">10 Minute Typing Test</a>
-        <a href="/data-entry-typing-test/">Data Entry Typing Test</a>
-        <a href="/10-key-typing-test/">10-Key Typing Test</a>
-        <a href="/numeric-keypad-test/">Numeric Keypad Test</a>
-        <a href="/kph-typing-test/">KPH Typing Test</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
-        <a href="/typing-practice/">Improve Typing with Typewell</a>`;
+        <a href="/progress">Typing Progress</a>
+        <a href="/settings">Settings</a>
+        <a href="/typing-practice/">Improve Your Typing with Typewell</a>`;
     }
   }
 
