@@ -3,6 +3,7 @@ import "../src/styles.css";
 import "../src/refresh.css";
 import "../src/homepage-v2.css";
 import "../src/homepage-v3.css";
+import "../src/certificate.css";
 
 const adsenseClient = "ca-pub-2169009102905035";
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
           crossOrigin="anonymous"
         />
+        <script defer src="/certificate-flow.js" />
       </head>
       <body>{children}</body>
     </html>
