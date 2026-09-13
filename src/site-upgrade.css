@@ -1,4 +1,4 @@
-/* Premium site polish: consistent wrapping, stronger homepage hierarchy, responsive navigation. */
+/* Site polish: stable typing text, clean homepage hierarchy, responsive SEO content. */
 
 .home-test .typing-text {
   white-space: normal !important;
@@ -12,6 +12,41 @@
 .home-test .typing-text span {
   overflow-wrap: normal !important;
   word-break: normal !important;
+}
+
+/* Homepage: one immediate free typing experience. Deeper explanation remains below. */
+.home.tw-free-online-typing .hero {
+  padding-top: .55rem;
+  padding-bottom: .6rem;
+}
+.home.tw-free-online-typing .hero-copy h1::after {
+  content: "Free Online Typing";
+}
+.home.tw-free-online-typing .hero-copy > p:not(.eyebrow)::after {
+  content: "Learn, practice, test, and improve your typing — from beginner skills to advanced and professional typing. Build speed, accuracy, rhythm, consistency, and technique for free.";
+}
+.home.tw-free-online-typing .duration-picker {
+  display: none !important;
+}
+.home.tw-free-online-typing .home-test-head {
+  display: none !important;
+}
+.home.tw-free-online-typing .trainer::before {
+  content: "Quick 30-Second Typing Check";
+  display: block;
+  margin: 0 0 .55rem;
+  color: #f4f9ff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+.home.tw-free-online-typing .trainer::after {
+  content: "Just start typing. See your WPM, accuracy, and typing performance instantly.";
+  display: block;
+  order: -1;
+  margin: 0 0 .2rem;
+  color: #9db4ca;
+  font-size: .88rem;
 }
 
 .home .philosophy {
@@ -35,7 +70,6 @@
 }
 .home .indicator-row strong { font-size: .98rem; color: #f5f9ff; }
 .home .indicator-row p { margin: .45rem 0 0; font-size: .86rem; line-height: 1.55; }
-
 .home .seo-section { position: relative; }
 .home .seo-section > h2 { letter-spacing: -.025em; }
 .home .link-grid a {
@@ -50,23 +84,8 @@
   box-shadow: 0 14px 36px rgba(0,0,0,.18);
 }
 
-.tw-home-feature-band {
-  width: min(100%, 1220px);
-  margin: 3.25rem auto 0;
-  padding: 1.35rem;
-  border: 1px solid rgba(69,151,224,.26);
-  border-radius: 18px;
-  background: radial-gradient(circle at 15% 0%, rgba(31,156,255,.12), transparent 28rem), linear-gradient(150deg, rgba(11,30,49,.96), rgba(5,17,29,.95));
-}
-.tw-home-feature-band .tw-kicker { color: #32b9ff; font-size: .74rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.tw-home-feature-band h2 { margin: .35rem 0 .5rem; font-size: clamp(1.6rem,3vw,2.45rem); letter-spacing: -.035em; }
-.tw-home-feature-band > p { color: #9db4ca; max-width: 780px; line-height: 1.65; }
-.tw-feature-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin-top:1rem; }
-.tw-feature-card { display:block; padding:1rem; border:1px solid rgba(91,158,218,.24); border-radius:14px; background:rgba(5,18,31,.72); color:#eef6ff; text-decoration:none; }
-.tw-feature-card:hover { border-color:#299fff; }
-.tw-feature-card strong { display:block; margin-bottom:.35rem; }
-.tw-feature-card span { color:#91a9c0; font-size:.88rem; line-height:1.5; }
-.tw-feature-card.coming { opacity:.82; }
+/* Legacy feature band intentionally suppressed; the homepage already has useful SEO sections. */
+.tw-home-feature-band { display: none !important; }
 
 .tw-standalone { max-width:1180px; margin:0 auto; padding:clamp(2rem,5vw,5rem) clamp(1rem,3vw,2rem); }
 .tw-standalone .tw-kicker { color:#32b9ff; text-transform:uppercase; letter-spacing:.12em; font-size:.75rem; font-weight:900; }
@@ -82,10 +101,10 @@
 @media (max-width:900px) {
   .home .indicator-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .home .indicator-row article:last-child { grid-column:1/-1; }
-  .tw-feature-grid,.tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (max-width:650px) {
-  .home .indicator-row,.tw-feature-grid,.tw-standalone-grid { grid-template-columns:1fr; }
+  .home .indicator-row,.tw-standalone-grid { grid-template-columns:1fr; }
   .home .indicator-row article:last-child { grid-column:auto; }
   .topbar nav { gap:.15rem; }
   .topbar nav > a { padding:.4rem .5rem; font-size:.78rem; }
