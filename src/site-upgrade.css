@@ -1,5 +1,4 @@
-/* Site polish: stable typing text, clean homepage hierarchy, responsive SEO content. */
-
+/* WPMTest.app polish: stable typing text, focused testing homepage, responsive SEO content. */
 .home-test .typing-text {
   white-space: normal !important;
   overflow: hidden !important;
@@ -9,83 +8,31 @@
   line-height: 1.72;
   letter-spacing: .045em;
 }
-.home-test .typing-text span {
-  overflow-wrap: normal !important;
-  word-break: normal !important;
-}
+.home-test .typing-text span { overflow-wrap: normal !important; word-break: normal !important; }
 
-/* Homepage: one immediate free typing experience. Deeper explanation remains below. */
-.home.tw-free-online-typing .hero {
-  padding-top: .55rem;
-  padding-bottom: .6rem;
-}
-.home.tw-free-online-typing .hero-copy h1::after {
-  content: "Free Online Typing";
-}
-.home.tw-free-online-typing .hero-copy > p:not(.eyebrow)::after {
-  content: "Learn, practice, test, and improve your typing — from beginner skills to advanced and professional typing. Build speed, accuracy, rhythm, consistency, and technique for free.";
-}
-.home.tw-free-online-typing .duration-picker {
-  display: none !important;
-}
-.home.tw-free-online-typing .home-test-head {
-  display: none !important;
-}
-.home.tw-free-online-typing .trainer::before {
-  content: "Quick 30-Second Typing Check";
-  display: block;
-  margin: 0 0 .55rem;
-  color: #f4f9ff;
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: -.01em;
-}
-.home.tw-free-online-typing .trainer::after {
-  content: "Just start typing. See your WPM, accuracy, and typing performance instantly.";
-  display: block;
-  order: -1;
-  margin: 0 0 .2rem;
-  color: #9db4ca;
-  font-size: .88rem;
-}
+/* WPMTest.app is a testing product first. */
+.home.tw-wpm-test-home .hero { padding-top:.55rem; padding-bottom:.6rem; }
+.home.tw-wpm-test-home .hero-copy h1::after { content:"Free WPM Test"; }
+.home.tw-wpm-test-home .hero-copy > p:not(.eyebrow)::after { content:"Test your typing speed online for free. Measure your words per minute (WPM), typing accuracy, consistency, and errors — then improve your score or earn a typing certificate."; }
+.home.tw-wpm-test-home .home-test-head > div:first-child { display:block !important; }
+.home.tw-wpm-test-home .home-test-head h2::after { content:"Test Your Typing Speed"; }
+.home.tw-wpm-test-home .home-test-head p::after { content:"Choose a timed typing test and start typing. Your timer begins on your first keystroke."; }
+.home.tw-wpm-test-home .duration-picker { display:flex !important; }
+.home.tw-wpm-test-home .duration-picker button { min-width:118px; }
+.home.tw-wpm-test-home .duration-picker button::after { content:" Test"; }
 
-.home .philosophy {
-  display: block;
-  padding: 1.5rem 0 0;
-}
-.home .philosophy h2 { margin-bottom: .45rem; }
-.home .philosophy .section-intro { max-width: 760px; margin-bottom: 1.2rem; }
-.home .indicator-row {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: .75rem;
-}
-.home .indicator-row article {
-  min-height: 132px;
-  padding: 1rem;
-  border: 1px solid rgba(92,163,225,.24);
-  border-radius: 14px;
-  background: linear-gradient(160deg, rgba(14,37,59,.92), rgba(7,20,34,.9));
-  box-shadow: 0 14px 38px rgba(0,0,0,.16);
-}
-.home .indicator-row strong { font-size: .98rem; color: #f5f9ff; }
-.home .indicator-row p { margin: .45rem 0 0; font-size: .86rem; line-height: 1.55; }
-.home .seo-section { position: relative; }
-.home .seo-section > h2 { letter-spacing: -.025em; }
-.home .link-grid a {
-  border-radius: 14px;
-  border-color: rgba(91,158,218,.25);
-  background: linear-gradient(160deg, rgba(13,34,54,.86), rgba(7,19,32,.86));
-  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
-}
-.home .link-grid a:hover {
-  transform: translateY(-2px);
-  border-color: rgba(50,169,255,.58);
-  box-shadow: 0 14px 36px rgba(0,0,0,.18);
-}
-
-/* Legacy feature band intentionally suppressed; the homepage already has useful SEO sections. */
-.tw-home-feature-band { display: none !important; }
+.home .philosophy { display:block; padding:1.5rem 0 0; }
+.home .philosophy h2 { margin-bottom:.45rem; }
+.home .philosophy .section-intro { max-width:760px; margin-bottom:1.2rem; }
+.home .indicator-row { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:.75rem; }
+.home .indicator-row article { min-height:132px; padding:1rem; border:1px solid rgba(92,163,225,.24); border-radius:14px; background:linear-gradient(160deg,rgba(14,37,59,.92),rgba(7,20,34,.9)); box-shadow:0 14px 38px rgba(0,0,0,.16); }
+.home .indicator-row strong { font-size:.98rem; color:#f5f9ff; }
+.home .indicator-row p { margin:.45rem 0 0; font-size:.86rem; line-height:1.55; }
+.home .seo-section { position:relative; }
+.home .seo-section > h2 { letter-spacing:-.025em; }
+.home .link-grid a { border-radius:14px; border-color:rgba(91,158,218,.25); background:linear-gradient(160deg,rgba(13,34,54,.86),rgba(7,19,32,.86)); transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease; }
+.home .link-grid a:hover { transform:translateY(-2px); border-color:rgba(50,169,255,.58); box-shadow:0 14px 36px rgba(0,0,0,.18); }
+.tw-home-feature-band { display:none !important; }
 
 .tw-standalone { max-width:1180px; margin:0 auto; padding:clamp(2rem,5vw,5rem) clamp(1rem,3vw,2rem); }
 .tw-standalone .tw-kicker { color:#32b9ff; text-transform:uppercase; letter-spacing:.12em; font-size:.75rem; font-weight:900; }
@@ -98,14 +45,5 @@
 .tw-standalone-card p { color:#96adc3; line-height:1.55; font-size:.9rem; margin:0; }
 .tw-coming { margin-top:2rem; padding:1.5rem; border-radius:16px; border:1px solid rgba(91,158,218,.24); background:rgba(8,25,41,.78); }
 
-@media (max-width:900px) {
-  .home .indicator-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .home .indicator-row article:last-child { grid-column:1/-1; }
-  .tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
-@media (max-width:650px) {
-  .home .indicator-row,.tw-standalone-grid { grid-template-columns:1fr; }
-  .home .indicator-row article:last-child { grid-column:auto; }
-  .topbar nav { gap:.15rem; }
-  .topbar nav > a { padding:.4rem .5rem; font-size:.78rem; }
-}
+@media (max-width:900px) { .home .indicator-row { grid-template-columns:repeat(2,minmax(0,1fr)); } .home .indicator-row article:last-child { grid-column:1/-1; } .tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:650px) { .home .indicator-row,.tw-standalone-grid { grid-template-columns:1fr; } .home .indicator-row article:last-child { grid-column:auto; } .topbar nav { gap:.15rem; } .topbar nav > a { padding:.4rem .5rem; font-size:.78rem; } .home.tw-wpm-test-home .duration-picker button { min-width:0; flex:1 1 45%; } }
