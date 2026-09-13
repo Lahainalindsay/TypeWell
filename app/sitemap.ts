@@ -12,6 +12,8 @@ const additionalIndexableRoutes = [
   "/learn/punctuation",
   "/learn/numbers",
   "/rhythm",
+  "/professionals",
+  "/educators",
   "/about",
   "/privacy",
   "/contact",
