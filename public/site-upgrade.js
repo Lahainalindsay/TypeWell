@@ -3,15 +3,16 @@
 
   function upgradeNav() {
     const nav = q('.topbar nav');
-    if (!nav || nav.dataset.twUpgrade) return;
-    nav.dataset.twUpgrade = '1';
+    if (!nav || nav.dataset.twWpmFocus) return;
+    nav.dataset.twWpmFocus = '1';
     const details = q('.more-tools', nav);
     Array.from(nav.querySelectorAll(':scope > a')).forEach(a => a.remove());
 
     const links = [
       ['/typing-test/', 'Typing Tests'],
-      ['/typing-practice/', 'Typing Practice'],
-      ['/learn', 'Learn Typing']
+      ['/1-minute-typing-test/', '1 Minute Typing Test'],
+      ['/5-minute-typing-test/', '5 Minute Typing Test'],
+      ['/typing-certificate/', 'Typing Certificate']
     ];
 
     links.forEach(([href, label]) => {
@@ -26,13 +27,18 @@
 
     if (details) {
       const summary = q('summary', details);
-      if (summary) summary.textContent = 'More Typing Tools';
+      if (summary) summary.textContent = 'More WPM Tools';
       const menu = q('div', details);
       if (menu) menu.innerHTML = `
-        <a href="/average-typing-speed/">Average Typing Speed</a>
+        <a href="/3-minute-typing-test/">3 Minute Typing Test</a>
+        <a href="/10-minute-typing-test/">10 Minute Typing Test</a>
+        <a href="/data-entry-typing-test/">Data Entry Typing Test</a>
+        <a href="/10-key-typing-test/">10-Key Typing Test</a>
+        <a href="/numeric-keypad-test/">Numeric Keypad Test</a>
+        <a href="/kph-typing-test/">KPH Typing Test</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
-        <a href="/progress">Typing Progress</a>
-        <a href="/settings">Typing Settings</a>`;
+        <a href="/average-typing-speed/">Average Typing Speed</a>
+        <a href="/typing-practice/">Improve Typing with Typewell</a>`;
     }
   }
 
@@ -43,7 +49,8 @@
   function refineHomepage() {
     const home = q('.home');
     if (!home) return;
-    home.classList.add('tw-free-online-typing');
+    home.classList.remove('tw-free-online-typing');
+    home.classList.add('tw-wpm-test-home');
   }
 
   function run() {
