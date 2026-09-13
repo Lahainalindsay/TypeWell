@@ -1,19 +1,10 @@
 import type { MetadataRoute } from "next";
-import { seoPages, SITE_URL } from "../src/seo/pages";
+import { seoPages } from "../src/seo/pages";
 
 export const dynamic = "force-static";
+const SITE_URL = "https://wpmtest.app";
 
-const additionalIndexableRoutes = [
-  "/learn",
-  "/learn/home-row",
-  "/learn/top-row",
-  "/learn/bottom-row",
-  "/learn/capital-letters",
-  "/learn/punctuation",
-  "/learn/numbers",
-  "/rhythm",
-  "/professionals",
-  "/educators",
+const supportingIndexableRoutes = [
   "/about",
   "/privacy",
   "/contact",
@@ -21,8 +12,8 @@ const additionalIndexableRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [...seoPages.map((page) => page.path), ...additionalIndexableRoutes];
-  return paths.map((path) => ({
+  const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes];
+  return [...new Set(paths)].map((path) => ({
     url: `${SITE_URL}${path === "/" ? "/" : `${path.replace(/\/$/, "")}/`}`
   }));
 }
