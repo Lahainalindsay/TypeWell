@@ -4,6 +4,7 @@ import "../src/refresh.css";
 import "../src/homepage-v2.css";
 import "../src/homepage-v3.css";
 import "../src/certificate.css";
+import "../src/site-upgrade.css";
 
 const adsenseClient = "ca-pub-2169009102905035";
 
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
         <script defer src="/certificate-flow.js" />
+        <script defer src="/site-upgrade.js" />
       </head>
       <body>{children}</body>
     </html>
