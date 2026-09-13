@@ -10,8 +10,14 @@
 }
 .home-test .typing-text span { overflow-wrap: normal !important; word-break: normal !important; }
 
-/* WPMTest.app is a testing product first. Hide the original generated hero text before inserting replacement copy so nothing overlaps. */
-.home.tw-wpm-test-home .hero { padding-top:.55rem; padding-bottom:.6rem; }
+/* Homepage layout: keep the hero and test as separate blocks so copy never collides with controls. */
+.home.tw-wpm-test-home .hero {
+  padding-top:1.75rem;
+  padding-bottom:1.35rem;
+}
+.home.tw-wpm-test-home .hero-copy {
+  max-width:980px;
+}
 .home.tw-wpm-test-home .hero-copy h1,
 .home.tw-wpm-test-home .hero-copy > p:not(.eyebrow),
 .home.tw-wpm-test-home .home-test-head h2,
@@ -29,11 +35,32 @@
 .home.tw-wpm-test-home .hero-copy > p:not(.eyebrow)::after {
   content:"Check your typing speed with a free online typing test. Measure your words per minute (WPM), typing accuracy, consistency, and errors — then retest, improve your typing, or earn a typing certificate.";
   display:block;
+  max-width:800px;
+  margin-top:1rem;
   font-size:clamp(.98rem,1.8vw,1.12rem);
   line-height:1.65;
   letter-spacing:normal;
 }
-.home.tw-wpm-test-home .home-test-head > div:first-child { display:block !important; }
+.home.tw-wpm-test-home .home-test {
+  clear:both;
+  margin-top:.25rem;
+}
+.home.tw-wpm-test-home .home-test-head {
+  display:flex !important;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:1.25rem;
+  margin-bottom:.8rem;
+}
+.home.tw-wpm-test-home .home-test-head > div:first-child {
+  display:block !important;
+  min-width:0;
+  flex:1 1 auto;
+}
+.home.tw-wpm-test-home .home-test-head h2,
+.home.tw-wpm-test-home .home-test-head p {
+  margin:0;
+}
 .home.tw-wpm-test-home .home-test-head h2::after {
   content:"Test Your Typing Speed & WPM";
   display:block;
@@ -43,10 +70,21 @@
 .home.tw-wpm-test-home .home-test-head p::after {
   content:"Choose a free timed typing test and start typing. Your timer begins on your first keystroke.";
   display:block;
+  margin-top:.3rem;
   font-size:.88rem;
   line-height:1.5;
 }
-.home.tw-wpm-test-home .duration-picker { display:flex !important; }
+.home.tw-wpm-test-home .duration-picker {
+  display:flex !important;
+  position:static !important;
+  float:none !important;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.55rem;
+  margin:0 !important;
+  transform:none !important;
+}
 .home.tw-wpm-test-home .duration-picker button { min-width:118px; }
 .home.tw-wpm-test-home .duration-picker button::after { content:" Test"; }
 
@@ -74,5 +112,17 @@
 .tw-standalone-card p { color:#96adc3; line-height:1.55; font-size:.9rem; margin:0; }
 .tw-coming { margin-top:2rem; padding:1.5rem; border-radius:16px; border:1px solid rgba(91,158,218,.24); background:rgba(8,25,41,.78); }
 
-@media (max-width:900px) { .home .indicator-row { grid-template-columns:repeat(2,minmax(0,1fr)); } .home .indicator-row article:last-child { grid-column:1/-1; } .tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media (max-width:650px) { .home .indicator-row,.tw-standalone-grid { grid-template-columns:1fr; } .home .indicator-row article:last-child { grid-column:auto; } .topbar nav { gap:.15rem; } .topbar nav > a { padding:.4rem .5rem; font-size:.78rem; } .home.tw-wpm-test-home .duration-picker button { min-width:0; flex:1 1 45%; } }
+@media (max-width:900px) {
+  .home .indicator-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .home .indicator-row article:last-child { grid-column:1/-1; }
+  .tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .home.tw-wpm-test-home .home-test-head { align-items:flex-start; flex-direction:column; }
+  .home.tw-wpm-test-home .duration-picker { width:100%; justify-content:flex-start; flex-wrap:wrap; }
+}
+@media (max-width:650px) {
+  .home .indicator-row,.tw-standalone-grid { grid-template-columns:1fr; }
+  .home .indicator-row article:last-child { grid-column:auto; }
+  .topbar nav { gap:.15rem; }
+  .topbar nav > a { padding:.4rem .5rem; font-size:.78rem; }
+  .home.tw-wpm-test-home .duration-picker button { min-width:0; flex:1 1 45%; }
+}
