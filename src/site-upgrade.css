@@ -10,13 +10,42 @@
 }
 .home-test .typing-text span { overflow-wrap: normal !important; word-break: normal !important; }
 
-/* WPMTest.app is a testing product first. */
+/* WPMTest.app is a testing product first. Hide the original generated hero text before inserting replacement copy so nothing overlaps. */
 .home.tw-wpm-test-home .hero { padding-top:.55rem; padding-bottom:.6rem; }
-.home.tw-wpm-test-home .hero-copy h1::after { content:"Free WPM Test"; }
-.home.tw-wpm-test-home .hero-copy > p:not(.eyebrow)::after { content:"Test your typing speed online for free. Measure your words per minute (WPM), typing accuracy, consistency, and errors — then improve your score or earn a typing certificate."; }
+.home.tw-wpm-test-home .hero-copy h1,
+.home.tw-wpm-test-home .hero-copy > p:not(.eyebrow),
+.home.tw-wpm-test-home .home-test-head h2,
+.home.tw-wpm-test-home .home-test-head p {
+  font-size:0 !important;
+  line-height:0 !important;
+}
+.home.tw-wpm-test-home .hero-copy h1::after {
+  content:"Free Online WPM Test";
+  display:block;
+  font-size:clamp(2.35rem,6vw,5rem);
+  line-height:.98;
+  letter-spacing:-.055em;
+}
+.home.tw-wpm-test-home .hero-copy > p:not(.eyebrow)::after {
+  content:"Check your typing speed with a free online typing test. Measure your words per minute (WPM), typing accuracy, consistency, and errors — then retest, improve your typing, or earn a typing certificate.";
+  display:block;
+  font-size:clamp(.98rem,1.8vw,1.12rem);
+  line-height:1.65;
+  letter-spacing:normal;
+}
 .home.tw-wpm-test-home .home-test-head > div:first-child { display:block !important; }
-.home.tw-wpm-test-home .home-test-head h2::after { content:"Test Your Typing Speed"; }
-.home.tw-wpm-test-home .home-test-head p::after { content:"Choose a timed typing test and start typing. Your timer begins on your first keystroke."; }
+.home.tw-wpm-test-home .home-test-head h2::after {
+  content:"Test Your Typing Speed & WPM";
+  display:block;
+  font-size:1.12rem;
+  line-height:1.25;
+}
+.home.tw-wpm-test-home .home-test-head p::after {
+  content:"Choose a free timed typing test and start typing. Your timer begins on your first keystroke.";
+  display:block;
+  font-size:.88rem;
+  line-height:1.5;
+}
 .home.tw-wpm-test-home .duration-picker { display:flex !important; }
 .home.tw-wpm-test-home .duration-picker button { min-width:118px; }
 .home.tw-wpm-test-home .duration-picker button::after { content:" Test"; }
