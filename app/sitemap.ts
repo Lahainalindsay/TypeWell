@@ -10,6 +10,7 @@ const supportingIndexableRoutes = [
   "/typing-test-for-students/",
   "/typing-test-for-employment/",
   "/certificate/sample/",
+  "/blog/data-entry-typing-test-for-employment/",
   "/about/",
   "/privacy/",
   "/contact/",
