@@ -1,14 +1,36 @@
 /* WPMTest.app: typing-first homepage, semantic SEO copy, stable test area, ad-safe layout. */
-.home-test .typing-text {
-  white-space: normal !important;
-  overflow: hidden !important;
-  overflow-wrap: normal !important;
-  word-break: normal !important;
-  hyphens: none !important;
-  line-height: 1.72;
-  letter-spacing: .045em;
+/* All typing prompts must flow like normal text. Do not horizontally scroll, clip the next
+   line, or split a word just to hit a character count. A ~75ch measure keeps desktop rows
+   near 70-75 characters while normal word wrapping preserves spaces and punctuation. */
+.typing-text,
+.home-test .typing-text,
+.numeric-prompt {
+  width:100% !important;
+  max-width:75ch !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  white-space:pre-wrap !important;
+  overflow:visible !important;
+  overflow-x:visible !important;
+  overflow-y:visible !important;
+  overflow-wrap:normal !important;
+  word-wrap:normal !important;
+  word-break:normal !important;
+  hyphens:none !important;
+  contain:none !important;
+  line-height:1.72;
+  letter-spacing:.035em;
 }
-.home-test .typing-text span { overflow-wrap: normal !important; word-break: normal !important; }
+.typing-text span,
+.home-test .typing-text span,
+.numeric-prompt span {
+  white-space:pre-wrap !important;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+}
 
 /* The typing tool is the homepage product. Keep the real semantic H1 available to search
    engines and assistive tech, but make it compact so the test and keyboard dominate the fold. */
@@ -75,9 +97,7 @@
   font-size:1rem !important;
   line-height:1.2 !important;
 }
-.home.tw-wpm-test-home .home-test-head p {
-  display:none !important;
-}
+.home.tw-wpm-test-home .home-test-head p { display:none !important; }
 .home.tw-wpm-test-home .duration-picker {
   display:flex !important;
   position:static !important;
@@ -93,13 +113,14 @@
 .home.tw-wpm-test-home .duration-picker button::after { content:" Test"; }
 .home.tw-wpm-test-home .home-test .metrics,
 .home.tw-wpm-test-home .home-test .metrics.big { margin-bottom:.25rem; }
+/* Override older fixed-height homepage rules. The prompt grows downward with its wrapped rows,
+   so the document itself scrolls naturally as the passage becomes taller. */
 .home.tw-wpm-test-home .home-test .typing-text {
-  height:clamp(112px,15vh,142px);
-  min-height:112px;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
 }
-.home.tw-wpm-test-home .home-test .keyboard {
-  margin-top:.1rem;
-}
+.home.tw-wpm-test-home .home-test .keyboard { margin-top:.35rem; }
 
 /* AdSense-safe structure. Never place an in-page ad inside or immediately against typing
    controls/keyboard. The existing after-home-test slot is reserved after the complete tool,
@@ -121,10 +142,7 @@
 }
 .home > .seo-section,
 .home > .ad-slot:not([data-placement="after-home-test"]) { order:5 !important; }
-.home > .ad-slot:not([data-placement="after-home-test"]) {
-  width:min(100%,970px);
-  margin:1.5rem auto;
-}
+.home > .ad-slot:not([data-placement="after-home-test"]) { width:min(100%,970px); margin:1.5rem auto; }
 
 .home .philosophy { display:block; padding:1.5rem 0 0; }
 .home .philosophy h2 { margin-bottom:.45rem; }
@@ -156,6 +174,7 @@
   .tw-standalone-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .home.tw-wpm-test-home .home-test-head { align-items:flex-start; flex-direction:column; }
   .home.tw-wpm-test-home .duration-picker { width:100%; justify-content:flex-start; flex-wrap:wrap; }
+  .typing-text,.home-test .typing-text,.numeric-prompt { max-width:100% !important; }
 }
 @media (max-width:650px) {
   .home .indicator-row,.tw-standalone-grid { grid-template-columns:1fr; }
@@ -165,5 +184,5 @@
   .home.tw-wpm-test-home .hero-copy h1 { font-size:1.45rem !important; }
   .home.tw-wpm-test-home .hero-copy > p:not(.eyebrow) { font-size:.82rem !important; }
   .home.tw-wpm-test-home .duration-picker button { min-width:0; flex:1 1 45%; }
-  .home.tw-wpm-test-home .home-test .typing-text { height:108px; min-height:108px; }
+  .typing-text,.home-test .typing-text,.numeric-prompt { height:auto !important; min-height:0 !important; max-height:none !important; }
 }
