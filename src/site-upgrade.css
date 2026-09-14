@@ -1,4 +1,4 @@
-/* WPMTest.app polish: stable typing text, semantic homepage copy, responsive SEO content. */
+/* WPMTest.app: typing-first homepage, semantic SEO copy, stable test area, ad-safe layout. */
 .home-test .typing-text {
   white-space: normal !important;
   overflow: hidden !important;
@@ -10,20 +10,23 @@
 }
 .home-test .typing-text span { overflow-wrap: normal !important; word-break: normal !important; }
 
-/* Keep the real React/HTML copy visible. Earlier design layers generated replacement copy
-   with pseudo-elements; disable those replacements so users, browsers, and search engines
-   all receive one semantic heading and one semantic description. */
+/* The typing tool is the homepage product. Keep the real semantic H1 available to search
+   engines and assistive tech, but make it compact so the test and keyboard dominate the fold. */
 .home.tw-wpm-test-home .hero {
-  padding-top:1.75rem;
-  padding-bottom:1.35rem;
+  order:2;
+  width:100%;
+  max-width:1180px;
+  padding:.55rem 0 .45rem;
 }
-.home.tw-wpm-test-home .hero-copy { max-width:980px; }
+.home.tw-wpm-test-home .hero-copy { max-width:1180px; }
+.home.tw-wpm-test-home .hero-copy .eyebrow { display:none !important; }
 .home.tw-wpm-test-home .hero-copy h1 {
-  font-size:clamp(2.35rem,6vw,5rem) !important;
-  line-height:.98 !important;
-  letter-spacing:-.055em;
+  display:block !important;
   margin:0;
-  max-width:900px;
+  max-width:none;
+  font-size:clamp(1.35rem,2.4vw,2.05rem) !important;
+  line-height:1.08 !important;
+  letter-spacing:-.035em;
 }
 .home.tw-wpm-test-home .hero-copy h1::before,
 .home.tw-wpm-test-home .hero-copy h1::after,
@@ -38,22 +41,27 @@
 }
 .home.tw-wpm-test-home .hero-copy > p:not(.eyebrow) {
   display:block !important;
-  max-width:800px;
-  margin:1rem 0 0;
-  font-size:clamp(.98rem,1.8vw,1.12rem) !important;
-  line-height:1.65 !important;
+  max-width:900px;
+  margin:.28rem 0 0;
+  font-size:.88rem !important;
+  line-height:1.45 !important;
   letter-spacing:normal;
 }
+
+/* Test controls stay compact; passage + keyboard are the visual center of the first screen. */
 .home.tw-wpm-test-home .home-test {
+  order:3;
   clear:both;
-  margin-top:.25rem;
+  margin-top:.1rem;
+  width:100%;
+  max-width:1180px;
 }
 .home.tw-wpm-test-home .home-test-head {
   display:flex !important;
-  align-items:flex-end;
+  align-items:center;
   justify-content:space-between;
-  gap:1.25rem;
-  margin:0 0 .8rem !important;
+  gap:1rem;
+  margin:0 0 .5rem !important;
   min-height:0 !important;
 }
 .home.tw-wpm-test-home .home-test-head > div:first-child {
@@ -64,14 +72,11 @@
 .home.tw-wpm-test-home .home-test-head h2 {
   display:block !important;
   margin:0;
-  font-size:1.12rem !important;
-  line-height:1.25 !important;
+  font-size:1rem !important;
+  line-height:1.2 !important;
 }
 .home.tw-wpm-test-home .home-test-head p {
-  display:block !important;
-  margin:.3rem 0 0;
-  font-size:.88rem !important;
-  line-height:1.5 !important;
+  display:none !important;
 }
 .home.tw-wpm-test-home .duration-picker {
   display:flex !important;
@@ -80,12 +85,46 @@
   flex:0 0 auto;
   align-items:center;
   justify-content:flex-end;
-  gap:.55rem;
+  gap:.45rem;
   margin:0 !important;
   transform:none !important;
 }
-.home.tw-wpm-test-home .duration-picker button { min-width:118px; }
+.home.tw-wpm-test-home .duration-picker button { min-width:108px; }
 .home.tw-wpm-test-home .duration-picker button::after { content:" Test"; }
+.home.tw-wpm-test-home .home-test .metrics,
+.home.tw-wpm-test-home .home-test .metrics.big { margin-bottom:.25rem; }
+.home.tw-wpm-test-home .home-test .typing-text {
+  height:clamp(112px,15vh,142px);
+  min-height:112px;
+}
+.home.tw-wpm-test-home .home-test .keyboard {
+  margin-top:.1rem;
+}
+
+/* AdSense-safe structure. Never place an in-page ad inside or immediately against typing
+   controls/keyboard. The existing after-home-test slot is reserved after the complete tool,
+   and lower content slots remain in content-rich sections. */
+.home > .ad-slot[data-placement="after-home-test"] {
+  order:4 !important;
+  width:min(100%,970px);
+  min-height:100px !important;
+  margin:1.35rem auto 1.1rem !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px dashed rgba(116,151,181,.2);
+  border-radius:10px;
+  color:#6f8295;
+  font-size:.68rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.home > .seo-section,
+.home > .ad-slot:not([data-placement="after-home-test"]) { order:5 !important; }
+.home > .ad-slot:not([data-placement="after-home-test"]) {
+  width:min(100%,970px);
+  margin:1.5rem auto;
+}
 
 .home .philosophy { display:block; padding:1.5rem 0 0; }
 .home .philosophy h2 { margin-bottom:.45rem; }
@@ -123,6 +162,8 @@
   .home .indicator-row article:last-child { grid-column:auto; }
   .topbar nav { gap:.15rem; }
   .topbar nav > a { padding:.4rem .5rem; font-size:.78rem; }
-  .home.tw-wpm-test-home .hero-copy h1 { font-size:clamp(2rem,11vw,3rem) !important; }
+  .home.tw-wpm-test-home .hero-copy h1 { font-size:1.45rem !important; }
+  .home.tw-wpm-test-home .hero-copy > p:not(.eyebrow) { font-size:.82rem !important; }
   .home.tw-wpm-test-home .duration-picker button { min-width:0; flex:1 1 45%; }
+  .home.tw-wpm-test-home .home-test .typing-text { height:108px; min-height:108px; }
 }
