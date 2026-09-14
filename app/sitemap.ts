@@ -6,6 +6,7 @@ const SITE_URL = "https://wpmtest.app";
 
 const supportingIndexableRoutes = [
   "/typing-test/code/",
+  "/typing-test-for-kids/",
   "/about",
   "/privacy",
   "/contact",
