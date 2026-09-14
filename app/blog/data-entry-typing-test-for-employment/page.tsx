@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { absoluteUrl } from "../../../src/lib/seo/site";
+import { absoluteUrl, SITE_NAME } from "../../../src/lib/seo/site";
 
 const canonical = absoluteUrl("/blog/data-entry-typing-test-for-employment/");
 
@@ -26,10 +26,19 @@ export default function DataEntryEmploymentGuidePage() {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: "Data Entry Typing Test for Employment: What to Expect and How to Practice",
-    mainEntityOfPage: canonical,
-    author: { "@type": "Organization", name: "WPMTest" },
-    publisher: { "@type": "Organization", name: "WPMTest" },
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+    author: { "@type": "Organization", name: SITE_NAME },
+    publisher: { "@type": "Organization", name: SITE_NAME },
     inLanguage: "en-US"
+  };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Typing Test for Employment", item: absoluteUrl("/typing-test-for-employment/") },
+      { "@type": "ListItem", position: 3, name: "Data Entry Employment Test Guide", item: canonical }
+    ]
   };
 
   return (
@@ -37,6 +46,7 @@ export default function DataEntryEmploymentGuidePage() {
       <main className="seo-prerender">
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
+          <a href="/typing-test-for-employment/">Employment Tests</a> <span aria-hidden="true">›</span>{" "}
           <span>Data Entry Employment Test Guide</span>
         </nav>
 
@@ -124,7 +134,9 @@ export default function DataEntryEmploymentGuidePage() {
           </nav>
         </article>
       </main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      {[articleSchema, breadcrumbSchema].map((schema, index) => (
+        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      ))}
     </>
   );
 }
