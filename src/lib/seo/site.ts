@@ -8,5 +8,5 @@ export function absoluteUrl(path = "/"): string {
 
 export function canonicalPath(path: string): string {
   if (!path || path === "/") return "/";
-  return `${path.replace(/^\/+|\/+$/g, "")}/`;
+  return `/${path.replace(/^\/+|\/+$/g, "")}/`;
 }
