@@ -49,10 +49,22 @@
     home.classList.add('tw-wpm-test-home');
   }
 
+  /* React renders each prompt space as a non-breaking space so a character can receive its
+     own status class. That prevents the browser from wrapping at word boundaries and was the
+     real cause of the one endlessly clipped line. Keep one span per character, but turn only
+     prompt NBSP characters back into ordinary spaces after render. The underlying target and
+     keystroke scoring are unchanged. */
+  function restoreTypingBreaks() {
+    document.querySelectorAll('.typing-text span').forEach((span) => {
+      if (span.textContent === '\u00a0') span.textContent = ' ';
+    });
+  }
+
   function run() {
     upgradeNav();
     removeHomepageBand();
     refineHomepage();
+    restoreTypingBreaks();
   }
 
   run();
