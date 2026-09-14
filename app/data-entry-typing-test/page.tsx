@@ -68,10 +68,9 @@ export default function DataEntryTypingTestPage() {
           <span>Data Entry</span>
         </nav>
 
-        <section className="seo-mode-intro">
+        <section className="seo-mode-intro" aria-label="Data entry assessment introduction">
           <p className="eyebrow">Free employment skills assessment</p>
-          <h1>Data Entry Typing Test &amp; Practice</h1>
-          <p>
+          <p className="section-intro">
             Practice the keyboard skills used in professional data-entry work. Enter realistic records containing names,
             addresses, dates, numbers, amounts and codes, then take the standardized Data Entry Proficiency Test.
           </p>
