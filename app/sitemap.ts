@@ -5,6 +5,7 @@ export const dynamic = "force-static";
 const SITE_URL = "https://wpmtest.app";
 
 const supportingIndexableRoutes = [
+  "/typing-test/code/",
   "/about",
   "/privacy",
   "/contact",
