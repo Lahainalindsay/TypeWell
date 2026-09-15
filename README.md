@@ -22,14 +22,7 @@ npm install
 npm run dev
 ```
 
-Legacy Vite compatibility scripts currently remain available while the repository is migrated:
-
-```bash
-npm run vite:dev
-npm run vite:build
-```
-
-Do not add new product architecture that depends on the legacy Vite entry.
+The production and local development path is Next.js. Legacy Vite application entry/configuration files have been removed; do not reintroduce a parallel Vite app path.
 
 ## Production Build
 
