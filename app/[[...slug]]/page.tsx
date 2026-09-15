@@ -5,11 +5,15 @@ import { getSeoPage, seoPages } from "../../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 
 const dedicatedRoutes = new Set([
+  "/about/",
   "/blog/data-entry-typing-test-for-employment/",
   "/certificate/sample/",
+  "/contact/",
   "/data-entry-typing-test/",
   "/educators/",
+  "/privacy/",
   "/professionals/",
+  "/terms/",
   "/typing-test/code/",
   "/typing-test-for-kids/",
   "/typing-test-for-students/",
@@ -28,22 +32,14 @@ const extraRoutes = [
   "/learn/numbers",
   "/rhythm",
   "/progress",
-  "/settings",
-  "/about",
-  "/privacy",
-  "/contact",
-  "/terms"
+  "/settings"
 ];
 
 const extraSeo = new Map([
   ["/learn", ["Learn Touch Typing - Free Typing Lessons | WPMTest", "Learn touch typing with guided lessons for home row, top row, bottom row, capitals, punctuation, numbers, and symbols.", "Learn Touch Typing"]],
   ["/rhythm", ["Typing Rhythm Trainer - Improve Speed & Consistency | WPMTest", "Train typing rhythm with a visual keystroke metronome that measures early, on-beat, and late timing.", "Typing Rhythm Trainer"]],
   ["/progress", ["Typing Progress Tracker | WPMTest", "Track local typing progress, best WPM, average accuracy, practice time, weak keys, and completed lessons.", "Typing Progress Tracker"]],
-  ["/settings", ["Typing Trainer Settings | WPMTest", "Adjust typing display, theme, keyboard guide, sound, high contrast, and reduced motion settings.", "Typing Settings"]],
-  ["/about", ["About WPMTest - Free Local Typing Practice", "Learn how WPMTest provides free typing tests, practice tools, lessons, and local progress without an account.", "About WPMTest"]],
-  ["/privacy", ["Privacy Policy - WPMTest Free Typing Practice", "Learn how WPMTest stores typing progress locally and handles typing practice data.", "Privacy Policy"]],
-  ["/contact", ["Contact WPMTest - Typing Practice Support", "Contact WPMTest about typing test issues, accessibility feedback, lessons, calculations, and product support.", "Contact WPMTest"]],
-  ["/terms", ["Terms and Disclaimer - WPMTest", "Read the WPMTest terms and disclaimer for free typing tests, practice tools, lessons, and locally stored results.", "Terms and Disclaimer"]]
+  ["/settings", ["Typing Trainer Settings | WPMTest", "Adjust typing display, theme, keyboard guide, sound, high contrast, and reduced motion settings.", "Typing Settings"]]
 ]);
 
 function pathFromSlug(slug?: string[]) {
