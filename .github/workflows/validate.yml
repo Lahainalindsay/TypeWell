@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Report dependency vulnerabilities
+        run: npm audit || true
+
       - name: Run tests
         run: npm test
 
