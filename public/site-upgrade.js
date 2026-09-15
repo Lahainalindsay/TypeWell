@@ -34,6 +34,7 @@
         <a href="/data-entry-typing-test/">Data Entry Typing Test</a>
         <a href="/10-key-typing-test/">10-Key Typing Test</a>
         <a href="/typing-test-for-employment/">Employment Typing Tests</a>
+        <a href="/certificate/sample/">View Sample Certificate</a>
         <a href="/blog/">Typing & Career Guides</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
