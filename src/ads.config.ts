@@ -1,9 +1,9 @@
 export type AdSlotId = "belowResults" | "contentMiddle" | "desktopSidebar" | "articleBottom" | "afterHomeTest" | "guideMidArticle";
 
 export const adsConfig = {
-  enabled: process.env.NEXT_PUBLIC_ADS_ENABLED === "true" || process.env.VITE_ADS_ENABLED === "true",
+  enabled: process.env.NEXT_PUBLIC_ADS_ENABLED === "true",
   provider: "adsense",
-  publisherId: process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || process.env.VITE_ADSENSE_PUBLISHER_ID || "",
+  publisherId: process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID || "",
   slots: {
     belowResults: { minHeight: 90 },
     contentMiddle: { minHeight: 90 },
