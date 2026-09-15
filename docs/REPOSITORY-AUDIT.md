@@ -1,91 +1,134 @@
 # WPMTest repository audit — 2026-09
 
-Status: initial structural audit. No runtime files are deleted by this document.
+Status: cleanup foundation substantially complete on `architecture-cleanup-2026-09`. The branch remains isolated from `main` until explicit merge approval.
 
 ## Executive findings
 
-### Critical
+### Resolved in this cleanup
 
-1. `src/App.tsx` is ~84 KB and currently owns too much application behavior. It is the highest structural risk and should be decomposed incrementally, not replaced wholesale.
-2. `src/seo/pages.ts` is ~21 KB and acts as a centralized SEO registry. It already caused an unsafe-edit failure through tooling. New major pages should not be added to it.
-3. SEO canonical origin in the legacy registry falls back to `https://typewell.app`; production is `https://wpmtest.app`. This must be corrected during migration.
+1. **Canonical production origin** now resolves to `https://wpmtest.app` rather than the old `typewell.app` fallback.
+2. **Vite application artifacts** were confirmed obsolete for the production Next.js static export and removed: `vite.config.ts`, `src/main.tsx`, and root `index.html`.
+3. **Dependency validation** now uses a generated lockfile, strict `npm ci`, strict `npm audit`, tests, and a production build in CI.
+4. **Dedicated route ownership** is explicit. The legacy catch-all excludes dedicated Next.js pages, and `tests/route-ownership.test.ts` fails if a future dedicated page is not registered.
+5. **About, Privacy, Contact, and Terms** were moved to dedicated Next routes with WPMTest metadata and current copy. The privacy page now accurately discloses Google AdSense/cookie usage. Contact intentionally publishes no email until a real support address exists.
+6. **Duplicate client-side SEO mutation** was removed from `src/App.tsx`. Next.js server metadata is now the SEO authority for migrated pages rather than client code rewriting titles, canonicals, OpenGraph metadata, and JSON-LD.
+7. **Visible Typewell branding** found during the migration was removed from the active navigation upgrade, educator/professional pages, the core app copy, and the printable/shareable certificate flow. The remaining `TypewellApp` identifier is internal code only.
+8. **Data Entry feature foundations** now live under `src/features/data-entry/` and career assessment configuration under `src/features/careers/`.
+9. **Data Entry employment content** has a dedicated article route and the main Data Entry assessment page has dedicated metadata, schema, practice guidance, assessment sections, results guidance, and certificate language.
+10. **Sitemap coverage** now includes the dedicated audience pages `/educators/` and `/professionals/` in addition to the other dedicated routes.
+11. **SEO registry formatting churn** was reversed. `src/seo/pages.ts` retains readable main-branch formatting with only the intended domain correction.
+12. **Obsolete Vite ad environment fallbacks** were removed. Ad configuration now uses the current Next.js environment names.
 
-### High priority
+## Current validation state
 
-4. Styling is layered across `styles.css`, `refresh.css`, `homepage-v2.css`, `homepage-v3.css`, `site-upgrade.css`, and `certificate.css`. Names such as v2/v3/refresh indicate historical layering. Do not delete yet; first trace imports and selector ownership, then consolidate.
-5. `public/site-upgrade.js` and `public/certificate-flow.js` patch/enhance runtime behavior outside the React/Next component structure. They may be active compatibility layers, but future functionality should move into owned feature components where practical.
-6. The application mixes a catch-all Next route (`app/[[...slug]]`) with dedicated route folders. This is workable during migration but requires explicit ownership rules to avoid route/metadata duplication.
+Latest confirmed full validation before this document update:
+- dependency install succeeded
+- `npm audit`: 0 vulnerabilities
+- 9 test files passed
+- 30 tests passed
+- TypeScript passed
+- Next.js production build compiled successfully
+- 44 static pages generated
+- route-ownership guard passed
 
-### Positive foundations
+Every subsequent cleanup commit has continued to run through the same branch/PR validation workflow. Do not merge until the final head commit is green.
 
-7. Engine code is already split into focused files: data entry, numeric, metrics, rhythm, weak keys, lessons and types. These can become the seed of domain feature modules rather than being rewritten unnecessarily.
-8. Important newer SEO pages already use dedicated Next route folders, including employment, kids, students, number typing and punctuation typing.
-9. Sitemap, robots, AdSense ads.txt and certificate sample routes are explicit and easy to audit.
+## Remaining structural risks
 
-## Current top-level observations
+### 1. `src/App.tsx` is still too large
 
-Tracked application areas include `app/`, `src/`, `public/`, tests/configuration, package files and root build configuration. Generated `.next/` and `out/` are not part of the source tree and are covered by the hardened `.gitignore` on the cleanup branch.
+The file has been reduced substantially and no longer owns the legacy legal pages or duplicate SEO mutation layer, but it still contains too many product surfaces. Continue decomposition by extraction rather than rewrite.
 
-Potential legacy/root artifact to investigate: `index.html`. The production app is Next.js static export, so confirm whether this root file participates in any current workflow before deletion.
+Recommended extraction order:
+- site shell/header/footer/navigation
+- certificate/result UI
+- progress/settings UI
+- general typing test/practice surfaces
+- games/rhythm/lessons
 
-`next-env.d.ts` is tracked. This is normal in many Next.js repositories and should not be removed merely because it is generated by Next; the cleanup `.gitignore` intentionally does not ignore it.
+Do not rename the internal `TypewellApp` component merely for cosmetic reasons unless imports are being touched for another purpose.
 
-## Migration map
+### 2. CSS is still historically layered
 
-### Phase 1 — safety and conventions
-- hardened `.gitignore`
-- architecture documentation
-- repository inventory/audit
-- canonical-domain fix
-- no destructive cleanup
+The root layout still imports:
+- `styles.css`
+- `refresh.css`
+- `homepage-v2.css`
+- `homepage-v3.css`
+- `certificate.css`
+- `site-upgrade.css`
 
-### Phase 2 — SEO/content architecture
-- create shared `src/lib/seo/` helpers
-- move major product metadata beside dedicated routes
-- split legacy SEO content by domain as pages are migrated
-- keep public URLs unchanged
-- add `app/blog/` editorial structure
+These files remain active and should not be deleted blindly. Consolidation is a later maintenance task after selector ownership is traced.
 
-### Phase 3 — feature architecture
-- create `src/features/data-entry/`
-- create `src/features/numeric/`
-- create `src/features/careers/`
-- move code from `src/engine/` only when the importing surface is understood
-- begin decomposing `src/App.tsx` by extraction, not rewrite
+### 3. Runtime compatibility scripts remain active
 
-### Phase 4 — CSS/runtime cleanup
-- trace every stylesheet import
-- identify overridden/dead selectors
-- consolidate versioned homepage CSS
-- move safe behavior out of DOM-patching scripts
-- preserve certificate behavior until replacement is tested
+`public/site-upgrade.js` and `public/certificate-flow.js` still perform live behavior. They are not dead files. Future work should migrate safe behavior into owned React/Next components, but only with regression coverage.
 
-### Phase 5 — archive/delete
-Only after dependency checks and build validation:
-- archive useful historical documentation under `docs/archive/`
-- delete confirmed dead runtime code rather than leaving importable obsolete copies
-- remove duplicate styles/configs/routes only after replacement coverage is verified
+### 4. Legacy SEO registry still exists
 
-## Data Entry target architecture
+`src/seo/pages.ts` remains the source for older catch-all routes. New major product families should use dedicated routes instead. Migrate legacy entries incrementally as their pages are modernized; do not perform a wholesale rewrite.
 
-Public URL remains `/data-entry-typing-test/`.
+### 5. Old branches remain cleanup candidates
 
-Implementation target:
+Redundant historical branches should only be deleted after this cleanup PR is merged and verified in production. Do not delete them as part of the pre-merge safety pass.
+
+## Architecture direction
+
+### Routing
+- important indexable experiences: dedicated `app/**/page.tsx`
+- legacy low-risk pages: catch-all during migration
+- dedicated page ownership must remain covered by `tests/route-ownership.test.ts`
+
+### SEO
+- canonical origin: `https://wpmtest.app`
+- dedicated Next metadata for major pages
+- one useful page per distinct search intent
+- no doorway/near-duplicate keyword pages
+- sitemap and internal links must expose important crawlable pages
+
+### Career assessments
+Free tier:
+- standardized assessment per career/category
+- job seeker can practice, test, view results, and use the site-generated certificate
+- employer can share/use the standardized assessment
+
+Future paid tier:
+- company/role-specific custom assessment
+- optional branding and custom skills/content
+- saved candidate/result workflow when backend support exists
+
+### Data Entry target
+Public URL: `/data-entry-typing-test/`
+
+Architecture:
 - dedicated route owns metadata/content/schema
-- `src/features/data-entry/` owns structured-record interaction, field navigation and verification
-- reusable numeric/KPH logic comes from numeric feature code
-- assessment definition is data/config, not a second typing engine
-- blog article at `/blog/data-entry-typing-test-for-employment/` targets informational intent and links to the tool
+- `src/features/data-entry/` owns structured-record models/data
+- assessment definition lives in `src/features/careers/assessments/`
+- numeric/KPH logic remains reusable rather than duplicated
+- supporting article targets informational search intent and links into the tool
 
-## Audit checklist before merge
+## Final checklist before merge
 
-- build passes
-- SEO tests pass
-- sitemap contains all intended indexable URLs once
-- no route collisions
-- canonical URLs all use `wpmtest.app`
-- robots rules still protect generated/private certificate URLs as intended
-- no secrets or generated build output tracked
-- no dead internal links from migrated pages
-- dedicated pages have unique title, description, H1 and useful visible content
-- no unsupported accreditation/employment claims
+- [ ] final head commit CI green
+- [x] strict dependency install/audit configured
+- [x] tests passing on latest confirmed validation
+- [x] production build passing on latest confirmed validation
+- [x] route ownership guarded by automated test
+- [x] canonical production domain is `wpmtest.app`
+- [x] dedicated legal/about routes in place
+- [x] AdSense disclosure present in Privacy
+- [x] contact email intentionally omitted until real address exists
+- [x] sitemap includes dedicated audience pages
+- [x] visible old-brand references removed from audited active surfaces
+- [x] no unsupported accreditation or employment-guarantee claims on migrated career pages
+- [ ] final PR diff review
+- [ ] explicit user approval before merge
+
+## Post-merge follow-up
+
+After production deployment:
+1. verify live `/privacy/`, `/terms/`, `/about/`, `/contact/`, `/ads.txt`, `/robots.txt`, and `/sitemap.xml`
+2. spot-check certificate download/share branding
+3. verify dedicated career pages and internal links
+4. confirm Search Console sees the production sitemap
+5. continue incremental `src/App.tsx` and CSS/runtime decomposition without blocking product growth
