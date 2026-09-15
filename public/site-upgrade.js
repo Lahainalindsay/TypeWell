@@ -34,6 +34,7 @@
         <a href="/data-entry-typing-test/">Data Entry Typing Test</a>
         <a href="/10-key-typing-test/">10-Key Typing Test</a>
         <a href="/typing-test-for-employment/">Employment Typing Tests</a>
+        <a href="/blog/">Typing & Career Guides</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
         <a href="/progress">Typing Progress</a>
@@ -62,6 +63,7 @@
         <p>Practice realistic records, order IDs, dates, amounts, ZIP codes and mixed alphanumeric fields, then measure your accuracy.</p>
         <div class="actions">
           <a class="button primary" href="/data-entry-typing-test/">Take the Data Entry Test</a>
+          <a class="button" href="/blog/data-entry-typing-test-for-employment/">How Data Entry Tests Work</a>
           <a class="button" href="/typing-test-for-employment/">Employment Tests</a>
         </div>`;
       const hero = q('.hero', home);
