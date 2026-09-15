@@ -853,16 +853,26 @@ function WpmCalculator({ go }: { go: (page: Page, route?: string) => void }) {
 }
 
 function TypingCertificate({ progress, go }: { progress: ProgressData; go: (page: Page, route?: string) => void }) {
-  const [name, setName] = useState("");
   const lastTest = [...progress.sessions].reverse().find((session) => session.type === "test");
-  const reference = lastTest ? `TW-${new Date(lastTest.date).getFullYear()}-${lastTest.id.slice(0, 8).toUpperCase()}` : "";
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Create a printable site-generated result certificate from your most recent completed typing test.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div>
-      {lastTest ? <>
-        <div className="panel tool-form"><label>Name for certificate <input value={name} onChange={(event) => setName(event.target.value.slice(0, 80))} placeholder="Optional name" /></label></div>
-        <div className="certificate"><p className="eyebrow">WPMTest Typing Result</p><h2>{lastTest.metrics.wpm} WPM</h2><p>{name || "Typing test participant"}</p><p>{lastTest.metrics.accuracy}% accuracy · {lastTest.metrics.consistency}% consistency</p><p>{lastTest.label} · {new Date(lastTest.date).toLocaleDateString()}</p><p>Reference {reference}</p><small>This certificate records the result of an online typing test completed on this website. It is not an accredited professional certification.</small><div className="actions"><button onClick={() => { trackEvent("certificate_created", { testType: lastTest.label, wpmRange: metricRange(lastTest.metrics.wpm) }); print(); }}><Award size={18} />Print / Save PDF</button><button onClick={() => shareResult(lastTest)}>Share Result</button><InternalLink href="/typing-test/" go={go}>Retake Test</InternalLink></div></div>
-      </> : <div className="panel"><h2>No qualifying test yet</h2><p>Finish a timed typing test first. WPMTest will use only your real local result.</p></div>}
+      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Generate the designed WPMTest certificate from your most recent completed typing test.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div>
+      {lastTest ? (
+        <div className="result-card">
+          <h2>{lastTest.metrics.wpm} WPM · {lastTest.metrics.accuracy}%</h2>
+          <div className="metrics">
+            <Metric label="Net WPM" value={lastTest.metrics.wpm} />
+            <Metric label="Accuracy" value={`${lastTest.metrics.accuracy}%`} />
+            <Metric label="Duration" value={lastTest.label} />
+            <Metric label="Completed" value={new Date(lastTest.date).toLocaleDateString()} />
+          </div>
+          <p>Your certificate uses this completed local test result. Enter your name when you generate it, then download, print, save as PDF, or share it.</p>
+          <div className="actions">
+            <button onClick={() => shareResult(lastTest)}>Share Result</button>
+            <InternalLink href="/typing-test/" go={go}>Retake Test</InternalLink>
+          </div>
+        </div>
+      ) : <div className="panel"><h2>No qualifying test yet</h2><p>Finish a timed typing test first. WPMTest will use only your real local result.</p></div>}
     </section>
   );
 }
