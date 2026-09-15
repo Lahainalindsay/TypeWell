@@ -8,7 +8,7 @@ export interface SeoPage {
   related: Array<{ href: string; label: string }>;
 }
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://typewell.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wpmtest.app";
 
 export const seoPages: SeoPage[] = [
   {

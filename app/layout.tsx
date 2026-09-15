@@ -5,12 +5,13 @@ import "../src/homepage-v2.css";
 import "../src/homepage-v3.css";
 import "../src/certificate.css";
 import "../src/site-upgrade.css";
+import { SITE_NAME, SITE_ORIGIN } from "../src/lib/seo/site";
 
 const adsenseClient = "ca-pub-2169009102905035";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://wpmtest.app"),
-  applicationName: "Typewell",
+  metadataBase: new URL(SITE_ORIGIN),
+  applicationName: SITE_NAME,
   other: {
     "google-adsense-account": adsenseClient
   },
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     icon: "/favicon.svg"
   },
   openGraph: {
-    siteName: "Typewell",
+    siteName: SITE_NAME,
     type: "website"
   },
   twitter: {

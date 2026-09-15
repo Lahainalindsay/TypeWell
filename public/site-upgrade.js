@@ -34,7 +34,7 @@
         <a href="/average-typing-speed/">Average Typing Speed</a>
         <a href="/progress">Typing Progress</a>
         <a href="/settings">Settings</a>
-        <a href="/typing-practice/">Improve Your Typing with Typewell</a>`;
+        <a href="/typing-practice/">Improve Your Typing with WPMTest</a>`;
     }
   }
 

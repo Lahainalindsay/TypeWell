@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl } from "../src/lib/seo/site";
 
 export const dynamic = "force-static";
-const SITE_URL = "https://wpmtest.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: ["/", "/certificate/sample/"],
       disallow: ["/certificate/", "/api/"]
     },
-    sitemap: `${SITE_URL}/sitemap.xml`
+    sitemap: absoluteUrl("/sitemap.xml")
   };
 }

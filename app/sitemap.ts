@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 import { seoPages } from "../src/seo/pages";
+import { absoluteUrl, canonicalPath } from "../src/lib/seo/site";
 
 export const dynamic = "force-static";
-const SITE_URL = "https://wpmtest.app";
 
 const supportingIndexableRoutes = [
   "/typing-test/code/",
@@ -10,15 +10,18 @@ const supportingIndexableRoutes = [
   "/typing-test-for-students/",
   "/typing-test-for-employment/",
   "/certificate/sample/",
-  "/about",
-  "/privacy",
-  "/contact",
-  "/terms"
+  "/blog/data-entry-typing-test-for-employment/",
+  "/educators/",
+  "/professionals/",
+  "/about/",
+  "/privacy/",
+  "/contact/",
+  "/terms/"
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes];
-  return [...new Set(paths)].map((path) => ({
-    url: `${SITE_URL}${path === "/" ? "/" : `${path.replace(/\/$/, "")}/`}`
+  return [...new Set(paths.map(canonicalPath))].map((path) => ({
+    url: absoluteUrl(path)
   }));
 }

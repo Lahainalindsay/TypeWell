@@ -1,6 +1,6 @@
-# Typewell
+# WPMTest
 
-Typewell is a free typing test and typing practice platform focused on search traffic, repeat usage, and responsible ad-supported monetization. It uses a static Next.js SEO shell with an interactive React typing app.
+WPMTest is a free typing test, typing practice, employment-assessment, and career-skills platform focused on useful search traffic, repeat usage, and responsible ad-supported monetization. It uses a static Next.js SEO shell with an interactive React typing app.
 
 ## Stack
 
@@ -22,12 +22,7 @@ npm install
 npm run dev
 ```
 
-Vite compatibility scripts remain available:
-
-```bash
-npm run vite:dev
-npm run vite:build
-```
+The production and local development path is Next.js. Legacy Vite application entry/configuration files have been removed; do not reintroduce a parallel Vite app path.
 
 ## Production Build
 
@@ -36,44 +31,40 @@ npm test
 npm run build
 ```
 
-The static export is written to `out/`. The sitemap and robots files are generated as `out/sitemap.xml` and `out/robots.txt`.
+The static export is written to `out/`. Sitemap and robots files are generated in the export.
 
 ## Deployment
 
-Deploy the `out/` directory to a static host. Configure the canonical production domain with:
+Production domain: `https://wpmtest.app`.
+
+Configure it with:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.example
+NEXT_PUBLIC_SITE_URL=https://wpmtest.app
 ```
 
-The generated sitemap and robots files use `NEXT_PUBLIC_SITE_URL`; rebuild after changing the domain. Do not add a host-wide SPA rewrite that maps unknown URLs to the homepage. The host should serve `out/404/index.html` for missing routes.
+The generated sitemap and robots files use the production origin. Do not add a host-wide SPA rewrite that maps unknown URLs to the homepage.
 
 ## Environment Variables
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://typewell.app
+NEXT_PUBLIC_SITE_URL=https://wpmtest.app
 NEXT_PUBLIC_ANALYTICS_ENABLED=false
 NEXT_PUBLIC_ADS_ENABLED=false
 NEXT_PUBLIC_ADSENSE_PUBLISHER_ID=
 ```
 
-Analytics and ads are disabled unless explicitly enabled.
+Never commit real secrets or local environment files. See `.env.example` when one is introduced.
 
-## Site Architecture
+## Architecture
 
-SEO pages are defined in `src/seo/pages.ts`. Each entry includes:
+See `docs/ARCHITECTURE.md` for current architecture and migration rules and `docs/REPOSITORY-AUDIT.md` for cleanup status.
 
-- URL path
-- title
-- meta description
-- H1
-- intro copy
-- educational content
-- related internal links
+Key rule: established public URLs are preserved, but major product implementations should move into dedicated routes and `src/features/*` domains rather than enlarging `src/App.tsx` or `src/seo/pages.ts`.
 
-The interactive app lives in `src/App.tsx`. The Vite entry remains `src/main.tsx`.
+`src/seo/pages.ts` and `app/[[...slug]]` are legacy compatibility infrastructure. Migrate pages incrementally. New major career/product families should not be added to the monolithic registry.
 
-## Typing Formulas
+## Typing formulas
 
 One standardized typing word equals five characters.
 
@@ -86,22 +77,27 @@ One standardized typing word equals five characters.
 
 Corrected errors are counted separately. Current incorrect characters affect net WPM.
 
-## Local Storage
+## Local storage
 
-Progress is stored under `typewell.progress.v1`. Stored data includes sessions, settings, completed lessons, weak-key strokes, and rhythm best. Storage access uses safe helpers so blocked storage or quota errors do not crash the app.
+Progress is stored under `typewell.progress.v1`. Stored data includes sessions, settings, completed lessons, weak-key strokes, and rhythm best. Preserve compatibility with existing user data when storage models are migrated.
 
-## Adding Passages
+## Content
 
-Edit `src/data/texts.ts`. Keep passages original, public-domain, or properly licensed. Do not copy competitor lessons or copyrighted modern text.
+Typing passages currently live in `src/data/texts.ts`. Keep passages original, public-domain, or properly licensed. Do not copy competitor lessons or copyrighted modern text.
 
-## Adding SEO Pages
+Editorial content should live in dedicated routes/content modules. Product/tool queries belong on interactive tool pages; informational queries belong in editorial/blog pages.
 
-1. Add the page to `src/seo/pages.ts`.
-2. Add the route to `app/[[...slug]]/page.tsx` static route data when it is not part of the primary registry.
-3. Add the route to `app/sitemap.ts` only when it is a public indexable page.
-4. Ensure the route maps to a real tool or useful content in `src/App.tsx`.
-5. Run `npm run build`.
-6. Inspect `out/<route>/index.html` for title, description, canonical, H1, content, and internal links.
+## SEO
+
+For new major pages:
+
+1. Prefer a dedicated Next.js route.
+2. Keep metadata and canonical ownership with the route.
+3. Use shared helpers from the future `src/lib/seo/` layer rather than duplicating schema logic.
+4. Add only public indexable routes to the sitemap.
+5. Provide useful visible content and crawlable internal links.
+6. Preserve existing public URLs when migrating legacy pages.
+7. Run the build and inspect generated HTML before merge.
 
 ## Analytics
 
@@ -109,49 +105,17 @@ Use `trackEvent()` from `src/analytics.ts`. Do not send exact typed text, custom
 
 ## Advertising
 
-Ad configuration is centralized in `src/ads.config.ts`. Ad slots are disabled by default and collapse when disabled. Do not place ads inside typing text, near restart/start controls, or over interactive UI.
+Ad configuration is centralized in `src/ads.config.ts`. Do not place ads inside typing text, near restart/start controls, or over interactive UI. AdSense/CMP code may contribute to performance cost; do not remove monetization solely to chase a perfect Lighthouse score.
 
-## SEO Launch Checklist
+## Repository safety
 
-- [ ] Production domain configured
-- [ ] HTTPS enabled
-- [ ] Canonicals verified
-- [ ] Page titles verified
-- [ ] Meta descriptions verified
-- [ ] H1s verified
-- [ ] Sitemap available
-- [ ] robots.txt available
-- [ ] 404 tested
-- [ ] Google Search Console connected
-- [ ] Sitemap submitted
-- [ ] Bing Webmaster Tools connected
-- [ ] Analytics configured
-- [ ] Ad configuration disabled until approved
-- [ ] Privacy policy reviewed
-- [ ] Mobile pages tested
-- [ ] Structured data validated
-- [ ] Core Web Vitals tested
-- [ ] Open Graph previews tested
-- [ ] Production pages tested without JavaScript where appropriate
-- [ ] No accidental noindex tags
-- [ ] No staging domain indexed
+- Keep `main` deployable.
+- Structural migrations happen on a branch.
+- Do not commit `.env` files, `.next/`, `out/`, `.wrangler/`, dependencies, logs or local caches.
+- Classify suspected legacy files before deletion.
+- Prefer extraction over wholesale rewrites of large active files.
+- Build/test before merging structural changes.
 
-## Performance Checklist
+## Current expansion direction
 
-- [ ] Test homepage LCP
-- [ ] Test typing input responsiveness
-- [ ] Check mobile layout at 390px
-- [ ] Check tablet layout at 768px
-- [ ] Check desktop layout at 1440px
-- [ ] Confirm ad slots do not shift active typing UI
-- [ ] Run Lighthouse after deployment
-
-## Features Not Built Yet
-
-- Accounts
-- Cloud history
-- Teacher dashboards
-- Employer dashboards
-- Real AdSense code
-- Affiliate pages
-- Large programmatic SEO pages
+WPMTest is expanding toward reusable career-skill assessments. Career assessments should compose shared engines for prose, punctuation, numbers, 10-key, currency, dates, addresses, codes, structured records and verification. Standard assessments remain free; custom employer assessments are a future paid product.
