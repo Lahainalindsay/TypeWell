@@ -856,7 +856,7 @@ function TypingCertificate({ progress, go }: { progress: ProgressData; go: (page
   const lastTest = [...progress.sessions].reverse().find((session) => session.type === "test");
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Generate the designed WPMTest certificate from your most recent completed typing test.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div>
+      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Generate the designed WPMTest certificate from your most recent completed typing test.</p></div><div className="actions"><a href="/certificate/sample/">View Sample Certificate</a><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div></div>
       {lastTest ? (
         <div className="result-card">
           <h2>{lastTest.metrics.wpm} WPM · {lastTest.metrics.accuracy}%</h2>
