@@ -5,7 +5,11 @@ import { getSeoPage, seoPages } from "../../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 
 const dedicatedRoutes = new Set([
+  "/blog/data-entry-typing-test-for-employment/",
+  "/certificate/sample/",
   "/data-entry-typing-test/",
+  "/educators/",
+  "/professionals/",
   "/typing-test/code/",
   "/typing-test-for-kids/",
   "/typing-test-for-students/",
