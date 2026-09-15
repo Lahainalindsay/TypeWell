@@ -6,6 +6,7 @@ import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 
 const dedicatedRoutes = new Set([
   "/about/",
+  "/blog/",
   "/blog/data-entry-typing-test-for-employment/",
   "/certificate/sample/",
   "/contact/",
