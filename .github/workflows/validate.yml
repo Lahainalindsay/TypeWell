@@ -9,7 +9,7 @@ on:
       - architecture-cleanup-2026-09
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: validate-${{ github.ref }}
@@ -29,27 +29,11 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Regenerate dependency lockfile during cleanup
-        run: npm install --package-lock-only --ignore-scripts
-
-      - name: Commit regenerated lockfile
-        if: github.event_name == 'push'
-        run: |
-          if git diff --quiet -- package-lock.json; then
-            echo "Lockfile already current."
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add package-lock.json
-            git commit -m "Regenerate dependency lockfile [skip ci]"
-            git push origin HEAD:architecture-cleanup-2026-09
-          fi
-
-      - name: Install dependencies from regenerated lockfile
+      - name: Install dependencies
         run: npm ci
 
-      - name: Report dependency vulnerabilities
-        run: npm audit || true
+      - name: Audit dependencies
+        run: npm audit
 
       - name: Run tests
         run: npm test
