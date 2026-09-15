@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Professional Typing Tests – Data Entry, 10-Key & Job Skills | Typewell",
+  title: "Professional Typing Tests – Data Entry, 10-Key & Job Skills | WPMTest",
   description: "Practice job-specific typing skills with free professional typing tests for data entry, 10-key, numeric keypad, numbers, punctuation, office work and more.",
   alternates: { canonical: "/professionals/" },
   openGraph: {
-    title: "Professional Typing Tests | Typewell",
+    title: "Professional Typing Tests | WPMTest",
     description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
     url: "/professionals/"
   }
