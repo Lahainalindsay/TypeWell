@@ -16,7 +16,7 @@ import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
 import type { Metrics } from "./engine/types";
 
-type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games" | "about" | "privacy" | "contact" | "terms";
+type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
 
 const nav: Array<{ href: string; label: string }> = [
   { href: "/typing-test/", label: "Typing Test" },
@@ -79,10 +79,6 @@ export default function TypewellApp({ initialPath = "/" }: { initialPath?: strin
         {page === "settings" && <Settings progress={progress} setProgress={setProgress} />}
         {page === "tools" && <Tools path={path} go={go} progress={progress} />}
         {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} />}
-        {page === "about" && <About />}
-        {page === "privacy" && <LegalPage kind="privacy" />}
-        {page === "contact" && <LegalPage kind="contact" />}
-        {page === "terms" && <LegalPage kind="terms" />}
       </main>
       {!focus && <Footer go={go} />}
     </div>
@@ -100,7 +96,7 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
 
   return (
     <header className="topbar">
-      <button className="brand" onClick={() => go("home")} aria-label="Typewell home"><span>Typewell</span><small>Free typing mastery</small></button>
+      <button className="brand" onClick={() => go("home")} aria-label="WPMTest home"><span>WPMTEST</span><small>Free typing mastery</small></button>
       <nav aria-label="Primary navigation">
         {nav.map((item) => <a key={item.href} className={routeToPage(item.href) === page ? "active" : ""} href={item.href} onClick={(event) => { event.preventDefault(); go(routeToPage(item.href), item.href); }}>{item.label}</a>)}
         <details ref={moreToolsRef} className="more-tools">
@@ -137,7 +133,7 @@ function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps
       <AdSlot placement="after-home-test" />
       <section className="seo-section philosophy">
         <h2>Improve More Than Just WPM</h2>
-        <p className="section-intro">Fast typing comes from accuracy, rhythm, repetition, and good technique. Typewell shows how well you type, not only how fast.</p>
+        <p className="section-intro">Fast typing comes from accuracy, rhythm, repetition, and good technique. WPMTest shows how well you type, not only how fast.</p>
         <div className="indicator-row">{["Speed", "Accuracy", "Consistency", "Rhythm", "Technique"].map((item) => <article key={item}><strong>{item}</strong><p>{copyFor(item)}</p></article>)}</div>
       </section>
       <section className="seo-section link-section">
@@ -167,7 +163,7 @@ function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps
       </section>
       <section className="seo-section two-column-copy">
         <div><h2>Learn Touch Typing</h2><p>Build keyboard confidence step by step with guided lessons for the home row, top row, bottom row, capital letters, numbers, and punctuation.</p><div className="inline-links">{[["/learn/home-row", "Home Row"], ["/learn/top-row", "Top Row"], ["/learn/bottom-row", "Bottom Row"], ["/learn/capital-letters", "Capital Letters"], ["/learn/numbers", "Numbers"], ["/learn/punctuation", "Punctuation"]].map(([href, label]) => <InternalLink key={href} href={href} go={go}>{label}</InternalLink>)}</div></div>
-        <div><h2>Typing Speed &amp; WPM Guide</h2><p>WPM means words per minute. Typewell uses the standard convention of five characters, including spaces, as one typing word. Accuracy matters because correcting mistakes interrupts flow, while consistency shows whether your pace is sustainable.</p><p>Short daily practice is usually more useful than occasional long sessions. Start with clean keystrokes, then build speed through touch typing practice, weak-key drills, and retesting.</p></div>
+        <div><h2>Typing Speed &amp; WPM Guide</h2><p>WPM means words per minute. WPMTest uses the standard convention of five characters, including spaces, as one typing word. Accuracy matters because correcting mistakes interrupts flow, while consistency shows whether your pace is sustainable.</p><p>Short daily practice is usually more useful than occasional long sessions. Start with clean keystrokes, then build speed through touch typing practice, weak-key drills, and retesting.</p></div>
       </section>
       <AdSlot placement="contentMiddle" />
       <section className="seo-section faq-section">
@@ -202,7 +198,7 @@ function faqAnswer(question: string) {
     "How is WPM calculated?": "WPM is calculated as correct characters divided by five, then divided by elapsed minutes. This makes results comparable across tests.",
     "What is considered fast typing?": "Typing above 60 WPM is often considered fast for general work, but reliable accuracy is more useful than chasing a single number.",
     "How can I improve my typing speed?": "Practice regularly, keep your eyes on the screen, use the correct fingers, fix weak keys, and increase speed only after accuracy is stable.",
-    "Is this typing test free?": "Yes. Typewell's typing test and practice tools are free with no subscription, paywall, or account requirement.",
+    "Is this typing test free?": "Yes. WPMTest's typing test and practice tools are free with no subscription, paywall, or account requirement.",
     "Do I need an account?": "No. You can start an online typing test immediately. Preferences and progress are saved locally in your browser.",
     "Does my progress stay private?": "Your local progress stays on this device unless you choose to export it. Core typing sessions do not require an account or email.",
     "Can I practice typing with numbers?": "Yes. Use the numbers practice and typing test with numbers to work on dates, prices, measurements, percentages, and other number patterns."
@@ -665,11 +661,11 @@ function InternalAction({ href, children }: { href: string; children: React.Reac
 }
 
 async function shareResult(record: SessionRecord) {
-  const text = `I typed ${record.metrics.wpm} WPM with ${record.metrics.accuracy}% accuracy on Typewell.`;
+  const text = `I typed ${record.metrics.wpm} WPM with ${record.metrics.accuracy}% accuracy on WPMTest.`;
   try {
     trackEvent("share_result", { testType: record.type, wpmRange: metricRange(record.metrics.wpm), accuracyRange: metricRange(record.metrics.accuracy) });
     if (navigator.share) {
-      await navigator.share({ title: "Typewell typing result", text });
+      await navigator.share({ title: "WPMTest typing result", text });
       return;
     }
     await navigator.clipboard.writeText(text);
@@ -784,7 +780,7 @@ function Progress({ progress, setProgress }: { progress: ProgressData; setProgre
       <div className="metrics big"><Metric label="Current WPM" value={round(progress.sessions.at(-1)?.metrics.wpm ?? 0)} /><Metric label="Best WPM" value={round(summary.bestWpm)} /><Metric label="Average Accuracy" value={`${round(summary.averageAccuracy)}%`} /><Metric label="Consistency" value={`${round(summary.bestConsistency)}%`} /><Metric label="Practice Time" value={formatTime(summary.totalPracticeTime)} /><Metric label="Lessons Completed" value={`${progress.completedLessons.length}/${lessons.length}`} /></div>
       <div className="panel"><h2>WPM Over Time</h2><Sparkline values={progress.sessions.map((session) => session.metrics.wpm)} /></div>
       <div className="grid-two"><div className="panel"><h2>Weak Keys</h2>{weakKeys.length ? weakKeys.map((key) => <p key={`${key.key}-${key.errorRate}`}>{key.key}: {round(key.errorRate)}% errors</p>) : <p>No weak keys recorded yet.</p>}</div><div className="panel"><h2>Weak Combinations</h2>{combos.length ? combos.map((combo) => <p key={`${combo.combo}-${combo.errorRate}`}>{combo.combo}: {round(combo.errorRate)}% errors</p>) : <p>No difficult combinations recorded yet.</p>}</div></div>
-      <div className="actions"><button onClick={download}>Export Progress</button><label className="button">Import Progress<input type="file" accept="application/json" onChange={(e) => upload(e.target.files?.[0])} hidden /></label><button onClick={() => confirm("Reset local Typewell progress?") && setProgress(defaultProgress)}>Reset Progress</button></div>
+      <div className="actions"><button onClick={download}>Export Progress</button><label className="button">Import Progress<input type="file" accept="application/json" onChange={(e) => upload(e.target.files?.[0])} hidden /></label><button onClick={() => confirm("Reset local WPMTest progress?") && setProgress(defaultProgress)}>Reset Progress</button></div>
     </section>
   );
 }
@@ -826,7 +822,7 @@ function AverageTypingSpeed({ go }: { go: (page: Page, route?: string) => void }
       <div className="trainer-head"><div><h1>Average Typing Speed Guide</h1><p>Interpret WPM carefully. A useful typing result combines speed, accuracy, consistency, and the difficulty of the text.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
       <div className="grid-two">
         <div className="panel"><h2><Gauge size={18} />WPM Interpreter</h2><label>Typing speed <input type="range" min="5" max="120" value={wpm} onChange={(event) => setWpm(Number(event.target.value))} /></label><div className="metrics"><Metric label="Entered WPM" value={wpm} /><Metric label="Range" value={label} /></div><p>A short test can overstate speed. Use 3, 5, or 10 minute tests when you need a more stable result.</p></div>
-        <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. Typewell calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For real work, accuracy above 95% is usually more valuable than brief bursts of high raw WPM.</p></div>
+        <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For real work, accuracy above 95% is usually more valuable than brief bursts of high raw WPM.</p></div>
       </div>
       <AdSlot placement="guide-mid-article" />
       <section className="seo-section two-column-copy"><div><h2>How to Improve</h2><p>Practice clean finger movement, return to home row, slow down around weak keys, and retest after targeted practice. Consistent daily sessions usually beat occasional long sessions.</p></div><div><h2>Related Tools</h2><div className="inline-links"><InternalLink href="/wpm-calculator/" go={go}>WPM Calculator</InternalLink><InternalLink href="/typing-practice/" go={go}>Typing Practice</InternalLink><InternalLink href="/rhythm" go={go}>Rhythm Trainer</InternalLink></div></div></section>
@@ -865,8 +861,8 @@ function TypingCertificate({ progress, go }: { progress: ProgressData; go: (page
       <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Create a printable site-generated result certificate from your most recent completed typing test.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div>
       {lastTest ? <>
         <div className="panel tool-form"><label>Name for certificate <input value={name} onChange={(event) => setName(event.target.value.slice(0, 80))} placeholder="Optional name" /></label></div>
-        <div className="certificate"><p className="eyebrow">Typewell Typing Result</p><h2>{lastTest.metrics.wpm} WPM</h2><p>{name || "Typing test participant"}</p><p>{lastTest.metrics.accuracy}% accuracy · {lastTest.metrics.consistency}% consistency</p><p>{lastTest.label} · {new Date(lastTest.date).toLocaleDateString()}</p><p>Reference {reference}</p><small>This certificate records the result of an online typing test completed on this website. It is not an accredited professional certification.</small><div className="actions"><button onClick={() => { trackEvent("certificate_created", { testType: lastTest.label, wpmRange: metricRange(lastTest.metrics.wpm) }); print(); }}><Award size={18} />Print / Save PDF</button><button onClick={() => shareResult(lastTest)}>Share Result</button><InternalLink href="/typing-test/" go={go}>Retake Test</InternalLink></div></div>
-      </> : <div className="panel"><h2>No qualifying test yet</h2><p>Finish a timed typing test first. Typewell will use only your real local result.</p></div>}
+        <div className="certificate"><p className="eyebrow">WPMTest Typing Result</p><h2>{lastTest.metrics.wpm} WPM</h2><p>{name || "Typing test participant"}</p><p>{lastTest.metrics.accuracy}% accuracy · {lastTest.metrics.consistency}% consistency</p><p>{lastTest.label} · {new Date(lastTest.date).toLocaleDateString()}</p><p>Reference {reference}</p><small>This certificate records the result of an online typing test completed on this website. It is not an accredited professional certification.</small><div className="actions"><button onClick={() => { trackEvent("certificate_created", { testType: lastTest.label, wpmRange: metricRange(lastTest.metrics.wpm) }); print(); }}><Award size={18} />Print / Save PDF</button><button onClick={() => shareResult(lastTest)}>Share Result</button><InternalLink href="/typing-test/" go={go}>Retake Test</InternalLink></div></div>
+      </> : <div className="panel"><h2>No qualifying test yet</h2><p>Finish a timed typing test first. WPMTest will use only your real local result.</p></div>}
     </section>
   );
 }
@@ -908,18 +904,8 @@ function TimingHeatmap({ deviation }: { deviation: number }) {
   return <div className="heatmap"><span>EARLY</span><div><i style={{ left: `${x}%` }} /></div><span>LATE</span></div>;
 }
 
-function About() {
-  return <section className="dashboard"><h1>About Typewell</h1><p>Typewell is a free, local-first typing trainer. It has no login, no subscriptions, no paid tier, and no email collection. Core practice data stays in browser storage on this device.</p></section>;
-}
-
-function LegalPage({ kind }: { kind: "privacy" | "contact" | "terms" }) {
-  if (kind === "privacy") return <section className="legal-page"><h1>Privacy at Typewell</h1><p>Typewell is designed to work without an account, cookies required for core features, or email collection. Typing sessions, settings, and progress are stored locally in your browser on this device.</p><h2>Local storage</h2><p>Your browser stores progress so your history and preferences remain available when you return. You can export a JSON backup, import a previously exported backup, or reset local progress from the Progress page.</p><h2>Typing content</h2><p>Typewell does not send individual keystrokes or custom typing text to a remote service for core practice. Avoid entering sensitive information into custom exercises.</p><h2>Advertising</h2><p>Advertising may be added in reserved areas outside the typing interface. Any future advertising or measurement services will be disclosed and configured separately from local typing functionality.</p></section>;
-  if (kind === "contact") return <section className="legal-page"><h1>Contact Typewell</h1><p>Found a broken route, accessibility issue, calculation problem, or confusing lesson? We welcome focused product feedback.</p><p>For now, contact details are not collected inside the app. Publish a support email address here before submitting the site to an advertising partner.</p><h2>Helpful report details</h2><p>Include the page URL, browser, device width, and a short description of what happened. Do not send private typing content or exported progress unless you have reviewed it first.</p></section>;
-  return <section className="legal-page"><h1>Typewell Terms and Disclaimer</h1><p>Typewell provides free typing practice, typing tests, lessons, rhythm exercises, and locally stored performance summaries for personal educational use.</p><h2>Results</h2><p>WPM, accuracy, consistency, and generated certificates are practice measurements, not official professional certifications or employment guarantees. Results depend on the text, device, timing, and typing conditions.</p><h2>Use of the site</h2><p>Use the site lawfully and responsibly. Typewell may change or remove exercises, content, or features as the product develops.</p></section>;
-}
-
-function Footer({ go }: { go: (page: Page, route?: string) => void }) {
-  return <footer className="site-footer"><span>Typewell · Free typing practice, locally stored.</span><nav aria-label="Footer navigation"><InternalLink href="/about" go={go}>About</InternalLink><InternalLink href="/privacy" go={go}>Privacy</InternalLink><InternalLink href="/contact" go={go}>Contact</InternalLink><InternalLink href="/terms" go={go}>Terms</InternalLink></nav></footer>;
+function Footer({ go: _go }: { go: (page: Page, route?: string) => void }) {
+  return <footer className="site-footer"><span>WPMTest · Free typing practice, locally stored.</span><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a><a href="/terms/">Terms</a></nav></footer>;
 }
 
 function routeToPage(path: string): Page {
@@ -930,7 +916,6 @@ function routeToPage(path: string): Page {
   if (normalizedPath.startsWith("/learn")) return "learn";
   if (["/average-typing-speed", "/wpm-calculator", "/typing-certificate"].includes(normalizedPath)) return "tools";
   if (normalizedPath === "/typing-games") return "games";
-  if (["about", "privacy", "contact", "terms"].includes(value)) return value as Page;
   return ["home", "learn", "practice", "test", "rhythm", "progress", "settings"].includes(value) ? value as Page : "home";
 }
 
@@ -985,216 +970,6 @@ function testModeFromPath(path: string): PracticeMode {
   if (normalizedPath === "/typing-test-with-numbers") return "Numbers";
   if (normalizedPath === "/typing-test-with-punctuation") return "Punctuation";
   return "Sentences";
-}
-
-interface SeoMeta {
-  title: string;
-  description: string;
-}
-
-const seoByPath: Record<string, SeoMeta> = {
-  "/": {
-    title: "Free Typing Test – Check Your WPM & Accuracy",
-    description: "Take a free typing test and check your WPM, accuracy, and consistency instantly. Choose a 1, 3, 5, or 10 minute test. No signup required."
-  },
-  "/practice": {
-    title: "Free Typing Practice — Improve WPM & Accuracy | Typewell",
-    description: "Improve WPM, typing speed, and typing accuracy with free keyboard practice modes for words, punctuation, numbers, custom text, code, weak keys, and endurance."
-  },
-  "/practice/numbers": {
-    title: "Free Number Typing Practice | Typewell",
-    description: "Practice number-row typing with dates, prices, measurements, percentages, and real keyboard patterns while tracking WPM and typing accuracy."
-  },
-  "/practice/punctuation": {
-    title: "Free Punctuation Typing Practice | Typewell",
-    description: "Practice punctuation typing with commas, periods, quotes, questions, semicolons, and sentence patterns while improving typing speed and accuracy."
-  },
-  "/practice/code": {
-    title: "Free Code Typing Practice | Typewell",
-    description: "Practice code-style typing with symbols, punctuation, brackets, and technical text while tracking WPM, raw WPM, and accuracy."
-  },
-  "/practice/weak-keys": {
-    title: "Weak Key Typing Practice — Improve Accuracy | Typewell",
-    description: "Practice the keys you miss most with adaptive weak-key typing exercises that improve keyboard accuracy and typing speed locally."
-  },
-  "/test": {
-    title: "Free Typing Speed Test — Check Your WPM | Typewell",
-    description: "Take a free typing speed test and WPM test with standard 5-character word scoring, raw WPM, typing accuracy, consistency, and local results."
-  },
-  "/typing-test": {
-    title: "Free Typing Speed Test — Check Your WPM | Typewell",
-    description: "Check your WPM with a free typing test that measures speed, raw WPM, accuracy, consistency, errors, and characters typed."
-  },
-  "/typing-test/60-seconds": {
-    title: "60 Second Typing Test — Free WPM Test | Typewell",
-    description: "Take a 60 second typing speed test to measure WPM, raw WPM, typing accuracy, consistency, errors, and local progress."
-  },
-  "/typing-test/": {
-    title: "Free Typing Speed Test — Check Your WPM | Typewell",
-    description: "Take a free online typing test to check typing speed, WPM, accuracy, consistency, errors, and characters typed with no signup."
-  },
-  "/1-minute-typing-test/": {
-    title: "1 Minute Typing Test — Free WPM Test | Typewell",
-    description: "Take a one minute typing speed test to check your WPM, typing accuracy, mistakes, and consistency instantly with no account."
-  },
-  "/3-minute-typing-test/": {
-    title: "3 Minute Typing Test — Free WPM Test | Typewell",
-    description: "Take a three minute typing test to measure sustained typing speed, WPM, accuracy, mistakes, and consistency for free."
-  },
-  "/5-minute-typing-test/": {
-    title: "5 Minute Typing Test — Free WPM Test | Typewell",
-    description: "Take a five minute typing speed test to measure endurance, WPM, accuracy, mistakes, and steady typing consistency."
-  },
-  "/10-minute-typing-test/": {
-    title: "10 Minute Typing Test — Free WPM Test | Typewell",
-    description: "Take a ten minute typing test to measure long-form typing speed, WPM, accuracy, mistakes, and performance stability."
-  },
-  "/typing-practice/": {
-    title: "Free Typing Practice — Improve WPM & Accuracy | Typewell",
-    description: "Practice touch typing online with free words, sentences, weak-key, numbers, punctuation, code, and endurance exercises."
-  },
-  "/touch-typing-practice/": {
-    title: "Free Touch Typing Practice | Typewell",
-    description: "Build touch typing technique with free keyboard practice, finger guidance, WPM feedback, and typing accuracy tracking."
-  },
-  "/typing-test-with-numbers/": {
-    title: "Typing Test With Numbers — Free Number WPM Test | Typewell",
-    description: "Practice a free typing test with numbers, dates, prices, measurements, and percentages while tracking WPM and accuracy."
-  },
-  "/typing-test-with-punctuation/": {
-    title: "Typing Test With Punctuation — Free WPM Test | Typewell",
-    description: "Practice a free typing test with punctuation, capitalization, commas, quotes, and sentence patterns while measuring WPM."
-  },
-  "/data-entry-typing-test/": {
-    title: "Data Entry Typing Test — Free Number Typing Practice | Typewell",
-    description: "Practice data-entry style typing with numbers, dates, prices, and accuracy feedback in a free online typing test."
-  },
-  "/10-key-typing-test/": {
-    title: "10 Key Typing Test — Free Numeric Typing Practice | Typewell",
-    description: "Practice numeric keypad and 10 key typing patterns with WPM, accuracy, consistency, and local progress."
-  },
-  "/numeric-keypad-test/": {
-    title: "Numeric Keypad Test — Free Number Typing Test | Typewell",
-    description: "Practice numeric keypad typing with realistic number patterns, accuracy feedback, and local results."
-  },
-  "/kph-typing-test/": {
-    title: "KPH Typing Test — Free Data Entry Speed Practice | Typewell",
-    description: "Practice data-entry speed with a number-focused KPH typing test and local accuracy feedback."
-  },
-  "/average-typing-speed/": {
-    title: "Average Typing Speed Guide — WPM Ranges | Typewell",
-    description: "Learn how to interpret typing speed, WPM ranges, accuracy, consistency, and how to improve with focused practice."
-  },
-  "/wpm-calculator/": {
-    title: "WPM Calculator — Words Per Minute Formula | Typewell",
-    description: "Calculate typing WPM from characters, errors, and time using the standard five-character word convention."
-  },
-  "/typing-certificate/": {
-    title: "Typing Certificate — Printable WPM Result | Typewell",
-    description: "Create a printable Typewell typing result certificate from your most recent local typing test result."
-  },
-  "/typing-games/": {
-    title: "Typing Games — Free Accuracy and Speed Drills | Typewell",
-    description: "Play lightweight typing games that reinforce real keyboard accuracy, speed bursts, and repeat practice."
-  },
-  "/learn": {
-    title: "Learn Touch Typing — Free Typing Lessons | Typewell",
-    description: "Learn typing with free touch typing lessons for home row, finger placement, top row, bottom row, capital letters, punctuation, numbers, and symbols."
-  },
-  "/rhythm": {
-    title: "Typing Rhythm Trainer — Improve Speed & Consistency | Typewell",
-    description: "Train typing rhythm with a visual keystroke metronome that measures early, on-beat, and late timing to improve speed and consistency."
-  },
-  "/progress": {
-    title: "Typing Progress Tracker | Typewell",
-    description: "Track local typing progress, best WPM, average accuracy, consistency, practice time, completed typing lessons, weak keys, and weak combinations."
-  },
-  "/settings": {
-    title: "Typing Trainer Settings | Typewell",
-    description: "Adjust Typewell typing practice settings including theme, typing font size, live metrics, keyboard guide, sounds, high contrast, and reduced motion."
-  },
-  "/about": {
-    title: "About Typewell — Free Local Typing Practice",
-    description: "Learn how Typewell provides free typing tests, touch typing lessons, rhythm training, and local progress without an account."
-  },
-  "/privacy": {
-    title: "Privacy Policy — Typewell Free Typing Practice",
-    description: "Learn how Typewell stores typing progress locally, avoids account requirements, and handles typing practice data."
-  },
-  "/contact": {
-    title: "Contact Typewell — Typing Practice Support",
-    description: "Contact Typewell about typing test issues, accessibility feedback, lessons, calculations, and product support."
-  },
-  "/terms": {
-    title: "Terms and Disclaimer — Typewell",
-    description: "Read the Typewell terms and disclaimer for free typing tests, practice tools, educational lessons, and locally stored results."
-  }
-};
-
-function applySeo(path: string) {
-  if (typeof document === "undefined") return;
-  const normalizedPath = path.replace(/\/$/, "") || "/";
-  const lesson = lessonFromPath(path);
-  const meta = lesson
-    ? {
-        title: `${lesson.title} — Free Touch Typing Lesson | Typewell`,
-        description: `Learn touch typing with ${lesson.title.toLowerCase()}, finger placement, keyboard practice, WPM targets, and typing accuracy feedback.`
-      }
-    : seoByPath[path] ?? seoByPath[`${normalizedPath}/`] ?? seoByPath[normalizedPath] ?? seoByPath[routeToPage(path) === "home" ? "/" : `/${routeToPage(path)}`] ?? seoByPath["/"];
-  document.title = meta.title;
-  setMeta("description", meta.description);
-  setMeta("og:title", meta.title, "property");
-  setMeta("og:description", meta.description, "property");
-  setMeta("og:type", "website", "property");
-  setMeta("og:url", window.location.origin + normalizedPath, "property");
-  setCanonical(window.location.origin + normalizedPath);
-  setStructuredData(path, meta);
-}
-
-function setMeta(name: string, content: string, attribute = "name") {
-  let node = document.head.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null;
-  if (!node) {
-    node = document.createElement("meta");
-    node.setAttribute(attribute, name);
-    document.head.appendChild(node);
-  }
-  node.content = content;
-}
-
-function setCanonical(href: string) {
-  let node = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-  if (!node) {
-    node = document.createElement("link");
-    node.rel = "canonical";
-    document.head.appendChild(node);
-  }
-  node.href = href;
-}
-
-function setStructuredData(path: string, meta: SeoMeta) {
-  const normalizedPath = path.replace(/\/$/, "") || "/";
-  let node = document.getElementById("typewell-jsonld") as HTMLScriptElement | null;
-  if (!node) {
-    node = document.createElement("script");
-    node.type = "application/ld+json";
-    node.id = "typewell-jsonld";
-    document.head.appendChild(node);
-  }
-  const isLesson = normalizedPath.startsWith("/learn");
-  node.textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": isLesson ? "LearningResource" : "WebSite",
-    name: meta.title.replace(" | Typewell", ""),
-    description: meta.description,
-    url: window.location.origin + normalizedPath,
-    isAccessibleForFree: true,
-    inLanguage: "en-US",
-    provider: {
-      "@type": "Organization",
-      name: "Typewell"
-    },
-    ...(isLesson ? { educationalLevel: "Beginner to advanced", learningResourceType: "Typing lesson" } : {})
-  });
 }
 
 function normalizeKey(key?: string) {
