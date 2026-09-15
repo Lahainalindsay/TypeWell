@@ -10,6 +10,7 @@
 
     const links = [
       ['/typing-test/', 'Typing Tests'],
+      ['/data-entry-typing-test/', 'Data Entry'],
       ['/1-minute-typing-test/', '1 Minute Typing Test'],
       ['/5-minute-typing-test/', '5 Minute Typing Test'],
       ['/typing-certificate/', 'Typing Certificate']
@@ -30,6 +31,9 @@
       if (summary) summary.textContent = 'More';
       const menu = q('div', details);
       if (menu) menu.innerHTML = `
+        <a href="/data-entry-typing-test/">Data Entry Typing Test</a>
+        <a href="/10-key-typing-test/">10-Key Typing Test</a>
+        <a href="/typing-test-for-employment/">Employment Typing Tests</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
         <a href="/progress">Typing Progress</a>
@@ -47,6 +51,23 @@
     if (!home) return;
     home.classList.remove('tw-free-online-typing');
     home.classList.add('tw-wpm-test-home');
+
+    if (!q('.tw-career-entry-card', home)) {
+      const card = document.createElement('section');
+      card.className = 'tw-career-entry-card panel';
+      card.setAttribute('aria-label', 'Employment typing assessments');
+      card.innerHTML = `
+        <p class="eyebrow">JOB SKILLS</p>
+        <h2>Data Entry Typing Test</h2>
+        <p>Practice realistic records, order IDs, dates, amounts, ZIP codes and mixed alphanumeric fields, then measure your accuracy.</p>
+        <div class="actions">
+          <a class="button primary" href="/data-entry-typing-test/">Take the Data Entry Test</a>
+          <a class="button" href="/typing-test-for-employment/">Employment Tests</a>
+        </div>`;
+      const hero = q('.hero', home);
+      if (hero && hero.nextSibling) home.insertBefore(card, hero.nextSibling);
+      else home.appendChild(card);
+    }
   }
 
   /* React renders each prompt space as a non-breaking space so a character can receive its
