@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Typing for Educators – Classroom Typing Lessons & Games | Typewell",
-  description: "Explore Typewell for educators: classroom typing lessons, student practice, typing games, progress tracking, assignments and certificates. Classroom tools coming soon.",
+  title: "Typing for Educators – Classroom Typing Lessons & Games | WPMTest",
+  description: "Explore WPMTest for educators: classroom typing lessons, student practice, typing games, progress tracking, assignments and certificates. Classroom tools coming soon.",
   alternates: { canonical: "/educators/" }
 };
 
@@ -23,6 +23,6 @@ export default function EducatorsPage() {
     <div className="tw-standalone-grid">
       {features.map(([title,text]) => <article className="tw-standalone-card" key={title}><h2>{title}</h2><p>{text}</p></article>)}
     </div>
-    <section className="tw-coming"><h2>Use Typewell now</h2><p>The free typing test, open-ended practice, touch-typing lessons, rhythm trainer and typing games are available now while the classroom management tools are being built.</p><p><a href="/typing-practice/">Start typing practice</a> · <a href="/learn">Explore typing lessons</a> · <a href="/typing-games/">Play typing games</a></p></section>
+    <section className="tw-coming"><h2>Use WPMTest now</h2><p>The free typing test, open-ended practice, touch-typing lessons, rhythm trainer and typing games are available now while the classroom management tools are being built.</p><p><a href="/typing-practice/">Start typing practice</a> · <a href="/learn">Explore typing lessons</a> · <a href="/typing-games/">Play typing games</a></p></section>
   </main>;
 }
