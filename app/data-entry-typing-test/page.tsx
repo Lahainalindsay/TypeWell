@@ -61,7 +61,7 @@ export default function DataEntryTypingTestPage() {
 
   return (
     <>
-      <main>
+      <div className="data-entry-page">
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/typing-test-for-employment/">Employment Tests</a> <span aria-hidden="true">›</span>{" "}
@@ -136,7 +136,7 @@ export default function DataEntryTypingTestPage() {
             professional certifications.
           </p>
         </section>
-      </main>
+      </div>
 
       {schemas.map((schema, index) => (
         <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
