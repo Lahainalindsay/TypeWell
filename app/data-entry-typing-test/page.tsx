@@ -24,16 +24,14 @@ export const metadata: Metadata = {
 };
 
 const practiceSkills = [
-  ["General Data Entry", "Complete realistic records containing names, addresses, dates, numbers and codes."],
-  ["Alphanumeric Entry", "Practice account numbers, IDs and mixed letter-number codes."],
-  ["Names & Addresses", "Build accuracy with contact and address records."],
-  ["Numbers", "Practice numeric entry in common business formats."],
-  ["10-Key / Numeric Keypad", "Build dedicated keypad speed measured with keystroke-based metrics."],
-  ["Currency & Decimals", "Enter prices, balances and decimal values accurately."],
-  ["Dates & Times", "Practice common date and time formats."],
-  ["Phone Numbers", "Enter telephone numbers without losing formatting accuracy."],
-  ["Invoices & Orders", "Practice invoice IDs, quantities, SKUs and amounts."],
-  ["Data Verification", "Compare records and identify mismatched values."]
+  ["/data-entry-practice/", "General Data Entry", "Complete realistic records containing names, dates, numbers and codes."],
+  ["/data-entry-practice/alphanumeric/", "Alphanumeric Entry", "Practice names, order IDs, ZIP codes and mixed letter-number product codes."],
+  ["/data-entry-practice/names-addresses/", "Names & Addresses", "Build accuracy with contact-style records and ZIP codes."],
+  ["/typing-test-with-numbers/", "Numbers", "Practice numeric entry in common business formats."],
+  ["/10-key-typing-test/", "10-Key / Numeric Keypad", "Build dedicated keypad speed measured with keystroke-based metrics."],
+  ["/data-entry-practice/currency-dates/", "Currency & Dates", "Enter prices, balances, decimals and dates accurately."],
+  ["/data-entry-practice/invoices-orders/", "Invoices & Orders", "Practice order IDs, product codes, dates and amounts."],
+  ["/kph-typing-test/", "KPH Test", "Measure keystrokes per hour for data-entry work."]
 ] as const;
 
 export default function DataEntryTypingTestPage() {
@@ -87,10 +85,11 @@ export default function DataEntryTypingTestPage() {
             Practice should therefore target the individual kinds of information you will actually enter.
           </p>
           <div className="seo-card-grid">
-            {practiceSkills.map(([name, description]) => (
-              <article key={name}>
-                <h3>{name}</h3>
+            {practiceSkills.map(([href, name, description]) => (
+              <article key={href}>
+                <h3><a href={href}>{name}</a></h3>
                 <p>{description}</p>
+                <p><a href={href}><strong>Start practice →</strong></a></p>
               </article>
             ))}
           </div>
@@ -146,6 +145,7 @@ export default function DataEntryTypingTestPage() {
             a small difference in raw speed. Once individual field types feel comfortable, combine them into complete
             records and then take the standardized assessment.
           </p>
+          <p><a href="/data-entry-practice/"><strong>Browse all Data Entry Practice →</strong></a></p>
           <nav aria-label="Related data entry tools">
             <a href="/10-key-typing-test/">10-Key Typing Test</a>
             <a href="/numeric-keypad-test/">Numeric Keypad Test</a>
