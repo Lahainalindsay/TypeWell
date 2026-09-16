@@ -1,24 +1,106 @@
 import type { Metadata } from "next";
+import { absoluteUrl } from "../../../src/lib/seo/site";
 
-const SITE_URL="https://wpmtest.app";
-const canonical=`${SITE_URL}/certificate/sample/`;
+const canonical = absoluteUrl("/certificate/sample/");
 
-export const metadata:Metadata={
- title:"Sample Typing Certificate | WPMTest",
- description:"View a sample WPMTest typing certificate showing the speed, accuracy and test information included after a completed typing test.",
- alternates:{canonical},
- robots:{index:true,follow:true},
- openGraph:{title:"Sample Typing Certificate | WPMTest",description:"See what a WPMTest typing certificate looks like before taking a test.",url:canonical,type:"website"}
+export const metadata: Metadata = {
+  title: "Sample Typing Certificate | WPMTest",
+  description: "Preview the WPMTest typing certificate awarded after a completed typing test, including WPM, accuracy, test type and completion date.",
+  alternates: { canonical },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Sample Typing Certificate | WPMTest",
+    description: "See the WPMTest typing certificate before taking a test.",
+    url: canonical,
+    type: "website"
+  }
 };
 
-export default function SampleCertificatePage(){
- const breadcrumb={"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"Home",item:`${SITE_URL}/`},{"@type":"ListItem",position:2,name:"Typing Certificate",item:`${SITE_URL}/typing-certificate/`},{"@type":"ListItem",position:3,name:"Sample Certificate",item:canonical}]};
- return <><main className="tw-standalone">
-  <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-certificate/">Typing Certificate</a> <span aria-hidden="true">›</span> <span>Sample</span></nav>
-  <p className="tw-kicker">WPMTest certificate preview</p><h1>Sample Typing Certificate</h1><p className="lead">This public sample shows the information a WPMTest typing certificate can contain after a completed test. The values below are examples only and are not a real person's result.</p>
-  <section className="tw-coming" aria-label="Example typing certificate">
-   <div style={{textAlign:"center",padding:"2rem 1rem"}}><p style={{letterSpacing:".18em",textTransform:"uppercase",fontWeight:800}}>Certificate of Typing Achievement</p><h2 style={{fontSize:"clamp(2rem,5vw,3.5rem)",margin:"1rem 0"}}>Sample Typist</h2><p>completed a WPMTest typing test</p><div className="tw-standalone-grid"><div className="tw-standalone-card"><h2>62 WPM</h2><p>Typing speed</p></div><div className="tw-standalone-card"><h2>97% Accuracy</h2><p>Typing accuracy</p></div><div className="tw-standalone-card"><h2>5 Minutes</h2><p>Example test length</p></div></div><p style={{marginTop:"1.5rem"}}>SAMPLE — NOT A VERIFIED TEST RESULT</p></div>
-  </section>
-  <section style={{marginTop:"2rem"}}><h2>Earn your own typing certificate</h2><p>Take a WPMTest typing test and use your completed result to create a personal certificate. WPMTest certificates are site-generated practice records, not accredited professional certifications.</p><p><a href="/5-minute-typing-test/">Take a 5 minute typing test</a> · <a href="/typing-certificate/">Learn about typing certificates</a></p></section>
- </main><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(breadcrumb)}} /></>;
+export default function SampleCertificatePage() {
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Typing Certificate", item: absoluteUrl("/typing-certificate/") },
+      { "@type": "ListItem", position: 3, name: "Sample Certificate", item: canonical }
+    ]
+  };
+
+  return (
+    <>
+      <main className="tw-standalone">
+        <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
+          <a href="/typing-certificate/">Typing Certificate</a> <span aria-hidden="true">›</span>{" "}
+          <span>Sample</span>
+        </nav>
+
+        <p className="tw-kicker">Preview before you test</p>
+        <h1>Sample WPMTest Typing Certificate</h1>
+        <p className="lead">
+          This is the style of certificate users can generate after completing a qualifying WPMTest typing test.
+          The name and scores below are examples only.
+        </p>
+
+        <article className="tw-certificate" aria-label="Sample WPMTest typing certificate">
+          <div className="tw-cert-inner">
+            <div className="tw-corner tl"></div><div className="tw-corner tr"></div>
+            <div className="tw-corner bl"></div><div className="tw-corner br"></div>
+
+            <header className="tw-cert-brand">
+              <div><strong>WPM<span>Test</span></strong><small>PRACTICE TODAY · GO FURTHER TOMORROW</small></div>
+              <div className="tw-medallion"><span>⌨</span></div>
+              <small>TYPING SKILLS<br />OPEN DOORS</small>
+            </header>
+
+            <div className="tw-cert-title">
+              <span>CERTIFICATE OF</span>
+              <h2>TYPING PROFICIENCY</h2>
+              <p>THIS CERTIFIES THAT</p>
+            </div>
+
+            <div className="tw-cert-name">Sample Typist</div>
+            <p className="tw-cert-copy">
+              has demonstrated typing proficiency by completing a typing test on <b>WPM<span>Test</span></b><br />
+              and has achieved the following results:
+            </p>
+
+            <div className="tw-cert-stats">
+              <div><b>62</b><span>WORDS PER MINUTE<br />(WPM)</span></div>
+              <div><b>97%</b><span>ACCURACY</span></div>
+              <div><b>5 Minute Typing Test</b><span>TEST TAKEN</span></div>
+              <div><b>Sample</b><span>DATE COMPLETED</span></div>
+            </div>
+
+            <div className="tw-cert-motto"><i></i><span>PRACTICE BUILDS PROGRESS</span><i></i></div>
+
+            <footer className="tw-cert-footer">
+              <div className="tw-signature">WPMTest Team<small>THE WPMTEST TEAM</small></div>
+              <div className="tw-gold-seal"><b>★</b><span>SAMPLE<br />CERTIFICATE</span></div>
+              <div className="tw-signature right">Keep Typing<small>BRIGHTER TOMORROWS</small></div>
+            </footer>
+
+            <small className="tw-cert-disclaimer">
+              SAMPLE — NOT A VERIFIED TEST RESULT. WPMTest certificates are site-generated records of online typing-test results and are not accredited professional certifications.
+            </small>
+          </div>
+        </article>
+
+        <section style={{ marginTop: "2rem" }}>
+          <h2>Earn your own typing certificate</h2>
+          <p>
+            Complete a timed WPMTest typing test to generate your certificate with your own name, WPM, accuracy,
+            test type and completion date.
+          </p>
+          <p>
+            <a href="/5-minute-typing-test/"><strong>Take a 5 minute typing test →</strong></a>{" "}
+            · <a href="/typing-certificate/">Typing certificate details</a>
+          </p>
+        </section>
+      </main>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+    </>
+  );
 }

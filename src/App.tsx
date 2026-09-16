@@ -660,16 +660,81 @@ function InternalAction({ href, children }: { href: string; children: React.Reac
   return <a className="button" href={href}>{children}</a>;
 }
 
+async function createResultShareFile(record: SessionRecord): Promise<File | null> {
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 630;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+    gradient.addColorStop(0, "#071a30");
+    gradient.addColorStop(1, "#0d3158");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    ctx.fillStyle = "#1dc8ff";
+    ctx.fillRect(72, 68, 12, 494);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 48px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillText("WPMTEST", 120, 140);
+
+    ctx.fillStyle = "#9fdcf2";
+    ctx.font = "600 28px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillText("TYPING RESULT", 120, 192);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "800 150px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillText(String(record.metrics.wpm), 116, 380);
+
+    ctx.fillStyle = "#1dc8ff";
+    ctx.font = "700 44px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillText("WPM", 470, 380);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 58px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillText(`${record.metrics.accuracy}% accuracy`, 120, 480);
+
+    ctx.fillStyle = "#c7d7e8";
+    ctx.font = "500 28px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillText("wpmtest.app", 120, 540);
+
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png", 0.95));
+    return blob ? new File([blob], `WPMTest-${record.metrics.wpm}-WPM.png`, { type: "image/png" }) : null;
+  } catch {
+    return null;
+  }
+}
+
 async function shareResult(record: SessionRecord) {
   const text = `I typed ${record.metrics.wpm} WPM with ${record.metrics.accuracy}% accuracy on WPMTest.`;
   try {
     trackEvent("share_result", { testType: record.type, wpmRange: metricRange(record.metrics.wpm), accuracyRange: metricRange(record.metrics.accuracy) });
-    if (navigator.share) {
-      await navigator.share({ title: "WPMTest typing result", text });
+    const file = await createResultShareFile(record);
+
+    if (navigator.share && file && navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ title: "My WPMTest typing result", text, url: "https://wpmtest.app/", files: [file] });
       return;
     }
-    await navigator.clipboard.writeText(text);
-    alert("Result copied to clipboard.");
+
+    if (navigator.share) {
+      await navigator.share({ title: "My WPMTest typing result", text, url: "https://wpmtest.app/" });
+      return;
+    }
+
+    if (file) {
+      const url = URL.createObjectURL(file);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = file.name;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    await navigator.clipboard.writeText(`${text} https://wpmtest.app/`);
+    alert(file ? "Share image downloaded and result link copied." : "Result copied to clipboard.");
   } catch {
     alert(text);
   }
@@ -853,16 +918,26 @@ function WpmCalculator({ go }: { go: (page: Page, route?: string) => void }) {
 }
 
 function TypingCertificate({ progress, go }: { progress: ProgressData; go: (page: Page, route?: string) => void }) {
-  const [name, setName] = useState("");
   const lastTest = [...progress.sessions].reverse().find((session) => session.type === "test");
-  const reference = lastTest ? `TW-${new Date(lastTest.date).getFullYear()}-${lastTest.id.slice(0, 8).toUpperCase()}` : "";
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Create a printable site-generated result certificate from your most recent completed typing test.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div>
-      {lastTest ? <>
-        <div className="panel tool-form"><label>Name for certificate <input value={name} onChange={(event) => setName(event.target.value.slice(0, 80))} placeholder="Optional name" /></label></div>
-        <div className="certificate"><p className="eyebrow">WPMTest Typing Result</p><h2>{lastTest.metrics.wpm} WPM</h2><p>{name || "Typing test participant"}</p><p>{lastTest.metrics.accuracy}% accuracy · {lastTest.metrics.consistency}% consistency</p><p>{lastTest.label} · {new Date(lastTest.date).toLocaleDateString()}</p><p>Reference {reference}</p><small>This certificate records the result of an online typing test completed on this website. It is not an accredited professional certification.</small><div className="actions"><button onClick={() => { trackEvent("certificate_created", { testType: lastTest.label, wpmRange: metricRange(lastTest.metrics.wpm) }); print(); }}><Award size={18} />Print / Save PDF</button><button onClick={() => shareResult(lastTest)}>Share Result</button><InternalLink href="/typing-test/" go={go}>Retake Test</InternalLink></div></div>
-      </> : <div className="panel"><h2>No qualifying test yet</h2><p>Finish a timed typing test first. WPMTest will use only your real local result.</p></div>}
+      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Generate the designed WPMTest certificate from your most recent completed typing test.</p></div><div className="actions"><a href="/certificate/sample/">View Sample Certificate</a><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div></div>
+      {lastTest ? (
+        <div className="result-card">
+          <h2>{lastTest.metrics.wpm} WPM · {lastTest.metrics.accuracy}%</h2>
+          <div className="metrics">
+            <Metric label="Net WPM" value={lastTest.metrics.wpm} />
+            <Metric label="Accuracy" value={`${lastTest.metrics.accuracy}%`} />
+            <Metric label="Duration" value={lastTest.label} />
+            <Metric label="Completed" value={new Date(lastTest.date).toLocaleDateString()} />
+          </div>
+          <p>Your certificate uses this completed local test result. Enter your name when you generate it, then download, print, save as PDF, or share it.</p>
+          <div className="actions">
+            <button onClick={() => shareResult(lastTest)}>Share Result</button>
+            <InternalLink href="/typing-test/" go={go}>Retake Test</InternalLink>
+          </div>
+        </div>
+      ) : <div className="panel"><h2>No qualifying test yet</h2><p>Finish a timed typing test first. WPMTest will use only your real local result.</p></div>}
     </section>
   );
 }
