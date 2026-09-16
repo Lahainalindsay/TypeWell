@@ -45,7 +45,7 @@
   }
 
   function removeHomepageBand() {
-    document.querySelectorAll('.tw-home-feature-band').forEach(el => el.remove());
+    document.querySelectorAll('.tw-home-feature-band, .tw-career-entry-card').forEach(el => el.remove());
   }
 
   function refineHomepage() {
@@ -53,31 +53,10 @@
     if (!home) return;
     home.classList.remove('tw-free-online-typing');
     home.classList.add('tw-wpm-test-home');
-
-    if (!q('.tw-career-entry-card', home)) {
-      const card = document.createElement('section');
-      card.className = 'tw-career-entry-card panel';
-      card.setAttribute('aria-label', 'Employment typing assessments');
-      card.innerHTML = `
-        <p class="eyebrow">JOB SKILLS</p>
-        <h2>Data Entry Typing Test</h2>
-        <p>Practice realistic records, order IDs, dates, amounts, ZIP codes and mixed alphanumeric fields, then measure your accuracy.</p>
-        <div class="actions">
-          <a class="button primary" href="/data-entry-typing-test/">Take the Data Entry Test</a>
-          <a class="button" href="/blog/data-entry-typing-test-for-employment/">How Data Entry Tests Work</a>
-          <a class="button" href="/typing-test-for-employment/">Employment Tests</a>
-        </div>`;
-      const hero = q('.hero', home);
-      if (hero && hero.nextSibling) home.insertBefore(card, hero.nextSibling);
-      else home.appendChild(card);
-    }
   }
 
-  /* React renders each prompt space as a non-breaking space so a character can receive its
-     own status class. That prevents the browser from wrapping at word boundaries and was the
-     real cause of the one endlessly clipped line. Keep one span per character, but turn only
-     prompt NBSP characters back into ordinary spaces after render. The underlying target and
-     keystroke scoring are unchanged. */
+  /* Temporary compatibility for the current character renderer. The React prompt will own
+     ordinary wrapping directly once the stable line-window renderer replaces it. */
   function restoreTypingBreaks() {
     document.querySelectorAll('.typing-text span').forEach((span) => {
       if (span.textContent === '\u00a0') span.textContent = ' ';
@@ -96,7 +75,6 @@
         <button type="button" class="tw-cookie-settings">Cookie Settings</button>`;
       const button = q('.tw-cookie-settings', nav);
       if (button) button.addEventListener('click', () => {
-        /* Google Funding Choices exposes this API when its privacy/CMP script is available. */
         if (window.googlefc && typeof window.googlefc.showRevocationMessage === 'function') {
           window.googlefc.showRevocationMessage();
           return;
