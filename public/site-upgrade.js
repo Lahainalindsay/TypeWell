@@ -138,8 +138,9 @@
     });
     overlay.replaceChildren(fragment);
 
-    const lineHeight = parseFloat(getComputedStyle(overlay).lineHeight) || 40;
-    const verticalPadding = parseFloat(getComputedStyle(overlay).paddingTop) + parseFloat(getComputedStyle(overlay).paddingBottom);
+    const overlayStyle = getComputedStyle(overlay);
+    const lineHeight = parseFloat(overlayStyle.lineHeight) || 40;
+    const verticalPadding = parseFloat(overlayStyle.paddingTop) + parseFloat(overlayStyle.paddingBottom);
     overlay.style.setProperty('--tw-window-height', `${Math.ceil(lineHeight * 3 + verticalPadding + 2)}px`);
     const current = overlay.querySelector('[data-tw-current="1"]');
     if (!(current instanceof HTMLElement) || state.index === 0) {
@@ -147,7 +148,7 @@
       return;
     }
     const lineTop = current.offsetTop;
-    const usableBottom = overlay.scrollTop + overlay.clientHeight - parseFloat(getComputedStyle(overlay).paddingBottom);
+    const usableBottom = overlay.scrollTop + overlay.clientHeight - parseFloat(overlayStyle.paddingBottom);
     if (lineTop + lineHeight > usableBottom - lineHeight * 0.2) {
       const desired = Math.max(0, lineTop - lineHeight);
       overlay.scrollTop = Math.max(0, Math.round(desired / lineHeight) * lineHeight);
@@ -206,5 +207,10 @@
     stabilizeTypingPrompts();
   }), true);
   window.addEventListener('resize', () => requestAnimationFrame(stabilizeTypingPrompts));
-  new MutationObserver(run).observe(document.documentElement, { childList: true, subtree: true });
+  new MutationObserver((mutations) => {
+    const onlyStableWindowChanges = mutations.every((mutation) =>
+      mutation.target instanceof Element && mutation.target.closest('.tw-stable-typing-window')
+    );
+    if (!onlyStableWindowChanges) run();
+  }).observe(document.documentElement, { childList: true, subtree: true });
 })();
