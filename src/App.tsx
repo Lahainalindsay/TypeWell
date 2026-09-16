@@ -300,7 +300,7 @@ function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps
     setCount(Math.max(50, Math.round(nextDuration * 1.8)));
   }, [path]);
   if (testMode === "Data Entry") {
-    return <DataEntryTrainer progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
+    return <DataEntryTrainer path={path} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
   }
   if (testMode === "Numeric Keypad") {
     return <NumericKeypadTrainer title={testTitle} duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
@@ -339,7 +339,18 @@ function utilityMetrics(correctCharacters: number, incorrectCharacters: number, 
   };
 }
 
-function DataEntryTrainer({ progress, setProgress, onRecord, setFocus, go }: Pick<SharedProps, "progress" | "setProgress" | "setFocus" | "go"> & { onRecord: (record: SessionRecord) => void }) {
+function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go }: Pick<SharedProps, "progress" | "setProgress" | "setFocus" | "go" | "path"> & { onRecord: (record: SessionRecord) => void }) {
+  const normalizedPath = path.replace(/\/$/, "") || "/";
+  const profile = normalizedPath.endsWith("/alphanumeric")
+    ? { title: "Alphanumeric Data Entry Practice", description: "Practice names, order IDs, ZIP codes, and product codes.", indexes: [0, 1, 4, 5], labels: ["Name", "Order ID", "ZIP", "Product code"] }
+    : normalizedPath.endsWith("/names-addresses")
+      ? { title: "Names & Address Data Entry Practice", description: "Practice contact-style records with names and ZIP codes before moving into full structured records.", indexes: [0, 4], labels: ["Name", "ZIP"] }
+      : normalizedPath.endsWith("/currency-dates")
+        ? { title: "Currency & Date Data Entry Practice", description: "Practice exact entry of dates, dollar amounts, and decimals.", indexes: [2, 3], labels: ["Date", "Amount"] }
+        : normalizedPath.endsWith("/invoices-orders")
+          ? { title: "Invoices & Orders Data Entry Practice", description: "Practice order IDs, product codes, dates, and amounts used in order-entry work.", indexes: [1, 5, 2, 3], labels: ["Order ID", "Product code", "Date", "Amount"] }
+          : { title: normalizedPath === "/data-entry-typing-test" ? "Data Entry Typing Test" : "General Data Entry Practice", description: "Enter each fictional record field exactly, including dates, amounts, codes, and ZIP codes.", indexes: [0, 1, 2, 3, 4, 5], labels: ["Name", "Order ID", "Date", "Amount", "ZIP", "Product code"] };
+
   const [recordIndex, setRecordIndex] = useState(0);
   const [fieldIndex, setFieldIndex] = useState(0);
   const [actual, setActual] = useState<string[][]>([]);
@@ -348,7 +359,8 @@ function DataEntryTrainer({ progress, setProgress, onRecord, setFocus, go }: Pic
   const [finished, setFinished] = useState<SessionRecord | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const record = fictionalDataEntryRecords[recordIndex];
-  const fields = dataEntryFields(record);
+  const allFields = dataEntryFields(record);
+  const fields = profile.indexes.map((index) => allFields[index]);
   const expected = fields[fieldIndex] ?? "";
 
   useEffect(() => { inputRef.current?.focus(); }, [recordIndex, fieldIndex, finished]);
@@ -364,22 +376,28 @@ function DataEntryTrainer({ progress, setProgress, onRecord, setFocus, go }: Pic
     if (fieldIndex + 1 < fields.length) { setFieldIndex(fieldIndex + 1); return; }
     if (recordIndex + 1 < fictionalDataEntryRecords.length) { setRecordIndex(recordIndex + 1); setFieldIndex(0); return; }
     const elapsedMs = Math.max(1, performance.now() - start);
-    const entryMetrics = calculateDataEntryMetrics(fictionalDataEntryRecords, nextActual);
+    const expectedFields = fictionalDataEntryRecords.flatMap((item) => {
+      const values = dataEntryFields(item);
+      return profile.indexes.map((index) => values[index]);
+    });
+    const actualFields = nextActual.flat();
+    const correct = actualFields.reduce((count, field, index) => count + (field === expectedFields[index] ? 1 : 0), 0);
+    const accuracy = actualFields.length ? Math.round((correct / actualFields.length) * 1000) / 10 : 100;
     const total = nextActual.flat().reduce((sum, item) => sum + item.length, 0);
-    const correct = entryMetrics.correctFields;
     const session: SessionRecord = {
       id: crypto.randomUUID(), date: new Date().toISOString(), type: "test", label: "Data Entry Typing Test",
-      metrics: utilityMetrics(correct, Math.max(0, total - correct), total, elapsedMs), weakKeys: [], weakCombinations: []
+      metrics: utilityMetrics(correct, Math.max(0, actualFields.length - correct), Math.max(1, actualFields.length), elapsedMs), weakKeys: [], weakCombinations: []
     };
-    setFinished(session); onRecord(session); trackEvent("data_entry_completed", { testType: "data-entry", accuracyRange: metricRange(entryMetrics.accuracy) });
+    session.metrics.accuracy = accuracy;
+    setFinished(session); onRecord(session); trackEvent("data_entry_completed", { testType: "data-entry", accuracyRange: metricRange(accuracy) });
   }
 
   function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); }
   return <section className="dashboard utility-test">
-    <div className="trainer-head"><div><h1>Data Entry Typing Test</h1><p>Enter each fictional record field exactly, including dates, amounts, codes, and ZIP codes.</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
-    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{["Name", "Order ID", "Date", "Amount", "ZIP", "Product code"][index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM · {finished.metrics.accuracy}% field accuracy</h2><div className="metrics"><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
+    <div className="trainer-head"><div><h1>{profile.title}</h1><p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
+    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM · {finished.metrics.accuracy}% field accuracy</h2><div className="metrics"><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
     <p className="tool-copy">This test uses fictional records and measures field-level accuracy separately from paragraph typing. Progress is stored locally on this device.</p>
-    <div className="inline-links"><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
+    <div className="inline-links"><InternalLink href="/data-entry-practice/" go={go}>All Data Entry Practice</InternalLink><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
   </section>;
 }
 
@@ -986,7 +1004,7 @@ function Footer({ go: _go }: { go: (page: Page, route?: string) => void }) {
 function routeToPage(path: string): Page {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const value = normalizedPath.split("/")[1] as Page;
-  if (normalizedPath.startsWith("/typing-test") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || ["/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
+  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || ["/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
   if (normalizedPath.startsWith("/practice") || normalizedPath === "/typing-practice" || normalizedPath === "/touch-typing-practice") return "practice";
   if (normalizedPath.startsWith("/learn")) return "learn";
   if (["/average-typing-speed", "/wpm-calculator", "/typing-certificate"].includes(normalizedPath)) return "tools";
@@ -1040,7 +1058,7 @@ function timedTestTitle(path: string) {
 
 function testModeFromPath(path: string): PracticeMode {
   const normalizedPath = path.replace(/\/$/, "");
-  if (normalizedPath === "/data-entry-typing-test") return "Data Entry";
+  if (normalizedPath === "/data-entry-typing-test" || normalizedPath.startsWith("/data-entry-practice")) return "Data Entry";
   if (["/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "Numeric Keypad";
   if (normalizedPath === "/typing-test-with-numbers") return "Numbers";
   if (normalizedPath === "/typing-test-with-punctuation") return "Punctuation";
