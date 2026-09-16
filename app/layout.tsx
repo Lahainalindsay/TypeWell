@@ -5,6 +5,7 @@ import "../src/homepage-v2.css";
 import "../src/homepage-v3.css";
 import "../src/certificate.css";
 import "../src/site-upgrade.css";
+import "../src/stable-typing.css";
 import { SITE_NAME, SITE_ORIGIN } from "../src/lib/seo/site";
 
 const adsenseClient = "ca-pub-2169009102905035";
