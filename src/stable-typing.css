@@ -1,0 +1,48 @@
+/* Stable prompt viewport: keep the active typing line predictable and never move text sideways. */
+.tw-original-typing-source {
+  position: absolute !important;
+  width: 1px !important;
+  min-width: 1px !important;
+  max-width: 1px !important;
+  height: 1px !important;
+  min-height: 1px !important;
+  max-height: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.typing-text.tw-stable-typing-window,
+.home-test .typing-text.tw-stable-typing-window {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 75ch !important;
+  height: var(--tw-window-height, 158px) !important;
+  min-height: var(--tw-window-height, 158px) !important;
+  max-height: var(--tw-window-height, 158px) !important;
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  white-space: pre-wrap !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  contain: layout paint !important;
+  scroll-behavior: auto !important;
+  cursor: text;
+}
+
+.typing-text.tw-stable-typing-window span {
+  white-space: pre-wrap !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+@media (max-width: 900px) {
+  .typing-text.tw-stable-typing-window,
+  .home-test .typing-text.tw-stable-typing-window {
+    max-width: 100% !important;
+  }
+}
