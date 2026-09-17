@@ -5,6 +5,8 @@ import { absoluteUrl, canonicalPath } from "../src/lib/seo/site";
 export const dynamic = "force-static";
 
 const supportingIndexableRoutes = [
+  "/learn/",
+  "/rhythm/",
   "/typing-test/code/",
   "/typing-test-for-kids/",
   "/typing-test-for-students/",
