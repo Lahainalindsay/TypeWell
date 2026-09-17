@@ -34,7 +34,7 @@ export const seoPages: SeoPage[] = [
       { question: "What's a good WPM?", answer: "Typing speed depends on the task and test conditions. Use the Average Typing Speed guide to compare practical ranges and remember that accuracy matters alongside speed." },
       { question: "How is WPM calculated?", answer: "Standard typing WPM treats five characters, including spaces, as one word. The WPM Calculator explains the formula and the difference between gross and error-adjusted speed." }
     ]
-  }
+  },
   {
     path: "/typing-test/",
     title: "Free Typing Speed Test - Check Your WPM | WPMTest",
@@ -73,7 +73,7 @@ export const seoPages: SeoPage[] = [
       { question: "Why does my score jump around between attempts?", answer: "Short tests amplify the effect of a slow start, one missed word, or a brief speed burst. Compare several attempts instead of relying on a single score." },
       { question: "Can I use a 1-minute score for a job application?", answer: "Check the employer's instructions first. When no duration is specified, a longer test gives a more sustained sample than a one-minute burst." }
     ]
-  }
+  },
   {
     path: "/3-minute-typing-test/",
     title: "3 Minute Typing Test - Free Typing Speed Test | WPMTest",
@@ -93,7 +93,7 @@ export const seoPages: SeoPage[] = [
       { question: "Is 3 minutes long enough to be useful?", answer: "For many practice and benchmarking purposes, three minutes provides a more stable sample than a one-minute burst while staying easy to repeat." },
       { question: "How does this compare with the 1-minute test?", answer: "A longer test places more weight on sustained pace and accuracy, so it may differ from your best one-minute burst." }
     ]
-  }
+  },
   {
     path: "/5-minute-typing-test/",
     title: "5 Minute Typing Test - Check WPM & Accuracy | WPMTest",
@@ -114,7 +114,7 @@ export const seoPages: SeoPage[] = [
       { question: "Is a 5-minute test useful for employment practice?", answer: "Yes. It provides a sustained sample that is useful for employment practice, but always follow the exact duration and scoring rules requested by a specific employer." },
       { question: "What WPM should I aim for?", answer: "Requirements vary by role. Use the Average Typing Speed guide for context and prioritize meeting any stated accuracy requirement as well as speed." }
     ]
-  }
+  },
   {
     path: "/10-minute-typing-test/",
     title: "10 Minute Typing Test - Free WPM Test | WPMTest",
@@ -134,7 +134,7 @@ export const seoPages: SeoPage[] = [
       { question: "Should I take the 10-minute test every time?", answer: "No. Shorter tests are convenient for frequent practice. Use the ten-minute format periodically when you want an endurance check." },
       { question: "Why does my WPM drop near the end?", answer: "Longer sessions can expose fatigue, concentration changes, and technique issues that may not appear during a short test." }
     ]
-  }
+  },
   {
     path: "/typing-practice/",
     title: "Typing Practice - Targeted Drills to Improve Weak Keys | WPMTest",
@@ -155,7 +155,7 @@ export const seoPages: SeoPage[] = [
       { question: "How often should I practice typing?", answer: "Short, regular sessions are a practical way to build repeatable keyboard movement. Consistency matters more than making any one session very long." },
       { question: "What should I do if my WPM plateaus?", answer: "Review weak keys and repeated error patterns, isolate them in focused drills, then retest under the same conditions to see whether the change transfers to normal text." }
     ]
-  }
+  },
   {
     path: "/touch-typing-practice/",
     title: "Free Touch Typing Practice | WPMTest",
@@ -283,7 +283,7 @@ export const seoPages: SeoPage[] = [
       { question: "Is KPH the same as WPM?", answer: "No. WPM standardizes prose typing into five-character word units, while KPH counts individual keystrokes over time." },
       { question: "Do I need both WPM and KPH?", answer: "Some roles emphasize prose typing, some emphasize numeric entry, and some may ask for both. Follow the metrics named in the job posting." }
     ]
-  }
+  },
   {
     path: "/wpm-calculator/",
     title: "WPM Calculator - Convert Characters and Time to Words Per Minute | WPMTest",
@@ -303,7 +303,7 @@ export const seoPages: SeoPage[] = [
       { question: "Why are five characters counted as one word?", answer: "Using a fixed five-character unit standardizes WPM across text with different word lengths." },
       { question: "What's the difference between gross and net WPM?", answer: "Gross WPM measures total typing rate. Error-adjusted or net WPM applies an error penalty so inaccurate typing does not receive the same score as accurate typing." }
     ]
-  }
+  },
   {
     path: "/average-typing-speed/",
     title: "Average Typing Speed by Experience - What's a Good WPM? | WPMTest",
@@ -325,7 +325,7 @@ export const seoPages: SeoPage[] = [
       { question: "Is 40 WPM good?", answer: "Forty WPM can be a practical everyday typing speed, but whether it is sufficient depends on the task or job requirement and the accuracy of the result." },
       { question: "How can I improve my WPM?", answer: "Use short, consistent practice sessions, identify weak keys and repeated error patterns, and increase speed only after the movement is accurate and repeatable." }
     ]
-  }
+  },
   {
     path: "/typing-certificate/",
     title: "Free Typing Certificate - Test Your Typing Speed | WPMTest",
