@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Typing Test for Employment - Free WPM Practice | WPMTest",
   description: "Practice for an employment typing test. Check WPM, accuracy and consistency for office, administrative and data-entry jobs. Free, no signup.",
   alternates: { canonical },
-  openGraph: { title:"Typing Test for Employment | WPMTest", description:"Practice typing speed and accuracy for office, administrative and data-entry work.", url:canonical, type:"website" },
-  twitter: { card:"summary", title:"Typing Test for Employment | WPMTest", description:"Practice typing speed and accuracy for office, administrative and data-entry work." },
+  openGraph: { title:"Typing Test for Employment | WPMTest", description:"Practice typing speed and accuracy for office, administrative and data-entry work.", url:canonical, type:"website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title:"Typing Test for Employment | WPMTest", description:"Practice typing speed and accuracy for office, administrative and data-entry work.", images: [`${SITE_URL}/og-default.svg`] },
   robots: { index:true, follow:true }
 };
 
