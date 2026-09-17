@@ -19,7 +19,7 @@ describe("safe storage helpers", () => {
   });
 
   it("removes keys safely", () => {
-    safeSet("typewell.test", "1");
-    expect(safeRemove("typewell.test")).toBe(true);
+    safeSet("wpmtest.test", "1");
+    expect(safeRemove("wpmtest.test")).toBe(true);
   });
 });
