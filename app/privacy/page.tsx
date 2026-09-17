@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: absoluteUrl("/privacy/") },
-  openGraph: { title, description, url: absoluteUrl("/privacy/"), type: "website" },
-  twitter: { card: "summary", title, description }
+  openGraph: { title, description, url: absoluteUrl("/privacy/"), type: "website", images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title, description, images: [absoluteUrl("/og-default.svg")] }
 };
 
 export default function PrivacyPage() {
