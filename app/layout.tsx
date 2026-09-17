@@ -9,6 +9,7 @@ import "../src/stable-typing.css";
 import { SITE_NAME, SITE_ORIGIN } from "../src/lib/seo/site";
 
 const adsenseClient = "ca-pub-2169009102905035";
+const socialImage = "/og-default.svg";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
@@ -21,17 +22,35 @@ export const metadata: Metadata = {
   },
   openGraph: {
     siteName: SITE_NAME,
-    type: "website"
+    type: "website",
+    images: [{ url: socialImage, width: 1200, height: 630, alt: "WPMTest free typing test" }]
   },
   twitter: {
-    card: "summary"
+    card: "summary_large_image",
+    images: [socialImage]
   }
+};
+
+const webApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: SITE_NAME,
+  url: SITE_ORIGIN,
+  applicationCategory: "EducationalApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires a modern web browser",
+  isAccessibleForFree: true,
+  description: "Free online typing tests, typing practice, WPM and accuracy tools, data-entry practice, and job-specific typing assessments."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
+        />
         <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
