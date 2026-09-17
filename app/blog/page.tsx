@@ -7,17 +7,13 @@ export const metadata: Metadata = {
   title: "Typing & Career Guides | WPMTest",
   description: "Practical guides for typing tests, data entry, employment assessments, 10-key practice and job-specific keyboard skills.",
   alternates: { canonical },
-  openGraph: {
-    title: "Typing & Career Guides | WPMTest",
+  openGraph: { title: "Typing & Career Guides | WPMTest",
     description: "Practical guides for typing tests, data entry, employment assessments and job-specific keyboard skills.",
     url: canonical,
-    type: "website"
-  },
-  twitter: {
-    card: "summary",
+    type: "website", images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image",
     title: "Typing & Career Guides | WPMTest",
-    description: "Practical guides for typing tests, data entry, employment assessments and job-specific keyboard skills."
-  },
+    description: "Practical guides for typing tests, data entry, employment assessments and job-specific keyboard skills.", images: [absoluteUrl("/og-default.svg")] },
   robots: { index: true, follow: true }
 };
 
