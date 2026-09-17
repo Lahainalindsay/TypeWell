@@ -1,44 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import TypewellApp from "../../src/ClientApp";
+import WPMTestApp from "../../src/ClientApp";
 import { getSeoPage, seoPages } from "../../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 
 const dedicatedRoutes = new Set([
-  "/about/",
-  "/blog/",
-  "/blog/data-entry-typing-test-for-employment/",
-  "/certificate/sample/",
-  "/contact/",
-  "/data-entry-practice/",
-  "/data-entry-practice/alphanumeric/",
-  "/data-entry-practice/currency-dates/",
-  "/data-entry-practice/invoices-orders/",
-  "/data-entry-practice/names-addresses/",
-  "/data-entry-typing-test/",
-  "/educators/",
-  "/privacy/",
-  "/professionals/",
-  "/terms/",
-  "/typing-test/code/",
-  "/typing-test-for-kids/",
-  "/typing-test-for-students/",
-  "/typing-test-for-employment/",
-  "/typing-test-with-numbers/",
-  "/typing-test-with-punctuation/"
+  "/about/", "/blog/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
+  "/data-entry-practice/", "/data-entry-practice/alphanumeric/", "/data-entry-practice/currency-dates/",
+  "/data-entry-practice/invoices-orders/", "/data-entry-practice/names-addresses/", "/data-entry-typing-test/",
+  "/educators/", "/privacy/", "/professionals/", "/terms/", "/typing-test/code/", "/typing-test-for-kids/",
+  "/typing-test-for-students/", "/typing-test-for-employment/", "/typing-test-with-numbers/", "/typing-test-with-punctuation/"
 ]);
 
 const extraRoutes = [
-  "/learn",
-  "/learn/home-row",
-  "/learn/top-row",
-  "/learn/bottom-row",
-  "/learn/capital-letters",
-  "/learn/punctuation",
-  "/learn/numbers",
-  "/rhythm",
-  "/progress",
-  "/settings"
+  "/learn", "/learn/home-row", "/learn/top-row", "/learn/bottom-row", "/learn/capital-letters",
+  "/learn/punctuation", "/learn/numbers", "/rhythm", "/progress", "/settings"
 ];
 
 const extraSeo = new Map([
@@ -76,12 +52,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const title = seo?.title ?? extra?.[0] ?? SITE_NAME;
   const description = seo?.description ?? extra?.[1] ?? "Free typing tests and typing practice.";
   const url = absoluteUrl(path);
+  const image = absoluteUrl("/og-default.svg");
   return {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, type: "website" },
-    twitter: { card: "summary", title, description },
+    openGraph: { title, description, url, type: "website", siteName: SITE_NAME, images: [{ url: image, width: 1200, height: 630, alt: `${SITE_NAME} - ${seo?.h1 ?? extra?.[2] ?? "Typing Test"}` }] },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
     robots: ["/progress", "/settings"].includes(normalized)
       ? { index: false, follow: false }
       : { index: true, follow: true }
@@ -100,22 +77,22 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   return (
     <>
-      <TypewellApp initialPath={path} />
-      <section className="seo-prerender" aria-label="Page information">
+      <WPMTestApp initialPath={path} />
+      <section className="seo-prerender" aria-label={`${seo?.h1 ?? extra?.[2] ?? SITE_NAME} information`}>
         {seo ? (
           <>
-            <p className="eyebrow">Free typing utility</p>
-            <h2>How this typing tool works</h2>
+            <p className="eyebrow">{SITE_NAME} guide</p>
+            <h2>{seo.h1}: guide and scoring details</h2>
             <p>{seo.intro}</p>
             {seo.content.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            <nav aria-label="Related typing tools">
+            <nav aria-label={`Related ${seo.h1} tools`}>
               {seo.related.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
             </nav>
           </>
         ) : (
           <>
             <p className="eyebrow">{SITE_NAME}</p>
-            <h2>More about this {SITE_NAME} tool</h2>
+            <h2>{extra?.[2]} guide</h2>
             <p>{extra?.[1]}</p>
             <nav aria-label="Useful typing links">
               <a href="/">Typing Test</a>
@@ -137,7 +114,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
             url: absoluteUrl(path),
             isAccessibleForFree: true,
             inLanguage: "en-US",
-            publisher: { "@type": "Organization", name: SITE_NAME }
+            publisher: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") }
           })
         }}
       />
