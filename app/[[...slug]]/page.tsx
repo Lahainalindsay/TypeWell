@@ -78,6 +78,12 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   return (
     <>
       <WPMTestApp initialPath={path} />
+      {path !== "/" ? (
+        <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
+          <span>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</span>
+        </nav>
+      ) : null}
       <section className="seo-prerender" aria-label={`${seo?.h1 ?? extra?.[2] ?? SITE_NAME} information`}>
         {seo ? (
           <>
@@ -129,6 +135,13 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
                 inLanguage: "en-US",
                 publisher: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") }
               },
+              ...(path !== "/" ? [{
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+                  { "@type": "ListItem", position: 2, name: seo?.h1 ?? extra?.[2] ?? SITE_NAME, item: absoluteUrl(path) }
+                ]
+              }] : []),
               ...(seo ? [{
                 "@type": "WebApplication",
                 name: seo.h1,
