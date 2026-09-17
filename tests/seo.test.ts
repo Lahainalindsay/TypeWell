@@ -24,6 +24,13 @@ describe("SEO route registry", () => {
     );
   });
 
+  it("keeps WPMTest branding and page H1s distinct", () => {
+    const serialized = JSON.stringify(seoPages);
+    expect(serialized.toLowerCase()).not.toContain("typewell");
+    const h1s = seoPages.map((page) => page.h1);
+    expect(new Set(h1s).size).toBe(h1s.length);
+  });
+
   it("keeps primary SEO registry paths unique", () => {
     const paths = seoPages.map((page) => page.path.replace(/\/$/, "") || "/");
     expect(new Set(paths).size).toBe(paths.length);
