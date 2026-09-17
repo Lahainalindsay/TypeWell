@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Typing Test With Numbers - Test Number Speed | WPMTest",
   description: "Free typing test with numbers, dates, prices and percentages. Measure WPM, accuracy and errors with instant results and no signup.",
   alternates: { canonical },
-  openGraph: { title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits.", url: canonical, type: "website" },
-  twitter: { card: "summary", title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits." },
+  openGraph: { title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits.", url: canonical, type: "website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits.", images: [`${SITE_URL}/og-default.svg`] },
   robots: { index: true, follow: true }
 };
 
