@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Typing Test for Kids - Free WPM & Accuracy Test | WPMTest",
   description: "Free typing test for kids with clear, age-friendly text. Check WPM and accuracy, practice keyboard skills and get instant results.",
   alternates: { canonical },
-  openGraph: { title: "Free Typing Test for Kids | WPMTest", description: "A simple free typing speed and accuracy test for young typists, students and classrooms.", url: canonical, type: "website" },
-  twitter: { card: "summary", title: "Free Typing Test for Kids | WPMTest", description: "A simple free typing speed and accuracy test for young typists and students." },
+  openGraph: { title: "Free Typing Test for Kids | WPMTest", description: "A simple free typing speed and accuracy test for young typists, students and classrooms.", url: canonical, type: "website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title: "Free Typing Test for Kids | WPMTest", description: "A simple free typing speed and accuracy test for young typists and students.", images: [`${SITE_URL}/og-default.svg`] },
   robots: { index: true, follow: true }
 };
 
