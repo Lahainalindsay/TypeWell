@@ -31,6 +31,25 @@ describe("SEO route registry", () => {
     expect(new Set(h1s).size).toBe(h1s.length);
   });
 
+  it("keeps priority SEO landing pages substantive", () => {
+    const priorityPaths = [
+      "/1-minute-typing-test/",
+      "/3-minute-typing-test/",
+      "/5-minute-typing-test/",
+      "/10-minute-typing-test/",
+      "/typing-practice/",
+      "/kph-typing-test/",
+      "/wpm-calculator/",
+      "/average-typing-speed/"
+    ];
+    for (const path of priorityPaths) {
+      const page = seoPages.find((entry) => entry.path === path);
+      expect(page, path).toBeTruthy();
+      const text = [page!.intro, ...page!.content, ...(page!.faqs ?? []).flatMap((faq) => [faq.question, faq.answer])].join(" ");
+      expect(text.trim().split(/\s+/).length, path).toBeGreaterThanOrEqual(350);
+    }
+  });
+
   it("keeps primary SEO registry paths unique", () => {
     const paths = seoPages.map((page) => page.path.replace(/\/$/, "") || "/");
     expect(new Set(paths).size).toBe(paths.length);
