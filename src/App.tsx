@@ -26,7 +26,7 @@ const nav: Array<{ href: string; label: string }> = [
   { href: "/wpm-calculator/", label: "WPM Calculator" }
 ];
 
-export default function TypewellApp({ initialPath = "/" }: { initialPath?: string }) {
+export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string }) {
   const [page, setPage] = useState<Page>(routeToPage(initialPath));
   const [path, setPath] = useState(initialPath);
   const [progress, setProgress] = useState<ProgressData>(() => typeof window === "undefined" ? defaultProgress : loadProgress());
@@ -843,7 +843,7 @@ function Progress({ progress, setProgress }: { progress: ProgressData; setProgre
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "typewell-progress.json";
+    link.download = "wpmtest-progress.json";
     link.click();
     URL.revokeObjectURL(url);
   }
