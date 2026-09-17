@@ -102,6 +102,16 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
                 ))}
               </section>
             ) : null}
+            <p className="seo-context-links">
+              Continue with{" "}
+              {seo.related.slice(0, 3).map((link, index) => (
+                <span key={link.href}>
+                  {index > 0 ? (index === Math.min(2, seo.related.length - 1) ? ", or " : ", ") : ""}
+                  <a href={link.href}>{link.label}</a>
+                </span>
+              ))}{" "}
+              to compare related typing skills and results.
+            </p>
             <nav aria-label={`Related ${seo.h1} tools`}>
               {seo.related.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
             </nav>
