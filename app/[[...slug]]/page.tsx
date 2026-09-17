@@ -85,6 +85,17 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
             <h2>{seo.h1}: guide and scoring details</h2>
             <p>{seo.intro}</p>
             {seo.content.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {seo.faqs?.length ? (
+              <section className="seo-faq" aria-labelledby="page-faq-heading">
+                <h2 id="page-faq-heading">Frequently asked questions</h2>
+                {seo.faqs.map((faq) => (
+                  <article key={faq.question}>
+                    <h3>{faq.question}</h3>
+                    <p>{faq.answer}</p>
+                  </article>
+                ))}
+              </section>
+            ) : null}
             <nav aria-label={`Related ${seo.h1} tools`}>
               {seo.related.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
             </nav>
@@ -108,13 +119,34 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "WebPage",
-            name: seo?.title ?? extra?.[0],
-            description: seo?.description ?? extra?.[1],
-            url: absoluteUrl(path),
-            isAccessibleForFree: true,
-            inLanguage: "en-US",
-            publisher: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") }
+            "@graph": [
+              {
+                "@type": "WebPage",
+                name: seo?.title ?? extra?.[0],
+                description: seo?.description ?? extra?.[1],
+                url: absoluteUrl(path),
+                isAccessibleForFree: true,
+                inLanguage: "en-US",
+                publisher: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") }
+              },
+              ...(seo ? [{
+                "@type": "WebApplication",
+                name: seo.h1,
+                url: absoluteUrl(path),
+                applicationCategory: "EducationalApplication",
+                operatingSystem: "Any",
+                isAccessibleForFree: true,
+                offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }
+              }] : []),
+              ...(seo?.faqs?.length ? [{
+                "@type": "FAQPage",
+                mainEntity: seo.faqs.map((faq) => ({
+                  "@type": "Question",
+                  name: faq.question,
+                  acceptedAnswer: { "@type": "Answer", text: faq.answer }
+                }))
+              }] : [])
+            ]
           })
         }}
       />
