@@ -125,7 +125,7 @@ function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps
       <div className="hero">
         <div className="hero-copy">
           <p className="eyebrow">FREE • NO SIGNUP • PRIVATE</p>
-          <h1>Free Typing Test - Check Your WPM &amp; Accuracy</h1>
+          <h1>Free Typing Test — Measure Your Speed and Accuracy Instantly</h1>
           <p>Start typing instantly. Test your speed, accuracy, and consistency in 1, 3, 5, or 10 minutes. Free, private, and no account required.</p>
         </div>
       </div>
@@ -261,8 +261,8 @@ function Practice({ progress, setProgress, record, setFocus, path }: SharedProps
   const target = mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom);
   return (
     <Trainer
-      title="Practice"
-      subtitle="Choose a mode, duration, or word-count target. Everything runs locally in your browser."
+      title="Typing Practice — Targeted Drills to Fix Your Weak Keys"
+      subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
       target={target}
       mode="practice"
       duration={duration}
@@ -281,9 +281,9 @@ function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps
   const [count, setCount] = useState(() => Math.max(50, Math.round(testDurationFromPath(path) * 1.8)));
   const testMode = testModeFromPath(path);
   const testTitle = testMode === "Data Entry" ? "Data Entry Typing Test"
-    : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
+    : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
     : testMode === "Numbers"
-    ? path.includes("kph") ? "KPH Typing Test" : path.includes("10-key") || path.includes("numeric-keypad") ? "10 Key Numeric Keypad Test" : "Typing Test with Numbers"
+    ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") || path.includes("numeric-keypad") ? "10 Key Numeric Keypad Test" : "Typing Test with Numbers"
     : testMode === "Punctuation" ? "Typing Test with Punctuation" : timedTestTitle(path);
   const testDescription = testMode === "Data Entry"
     ? "Practice fictional records with names, order IDs, dates, amounts, and ZIP codes."
@@ -902,7 +902,7 @@ function AverageTypingSpeed({ go }: { go: (page: Page, route?: string) => void }
   const label = wpm < 25 ? "Beginner" : wpm < 45 ? "Everyday baseline" : wpm < 65 ? "Productive" : wpm < 85 ? "Fast" : "Advanced";
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Average Typing Speed Guide</h1><p>Interpret WPM carefully. A useful typing result combines speed, accuracy, consistency, and the difficulty of the text.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
+      <div className="trainer-head"><div><h1>Average Typing Speed by Experience — What&apos;s a Good WPM?</h1><p>Interpret WPM carefully. A useful typing result combines speed, accuracy, consistency, and the difficulty of the text.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
       <div className="grid-two">
         <div className="panel"><h2><Gauge size={18} />WPM Interpreter</h2><label>Typing speed <input type="range" min="5" max="120" value={wpm} onChange={(event) => setWpm(Number(event.target.value))} /></label><div className="metrics"><Metric label="Entered WPM" value={wpm} /><Metric label="Range" value={label} /></div><p>A short test can overstate speed. Use 3, 5, or 10 minute tests when you need a more stable result.</p></div>
         <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For real work, accuracy above 95% is usually more valuable than brief bursts of high raw WPM.</p></div>
@@ -926,7 +926,7 @@ function WpmCalculator({ go }: { go: (page: Page, route?: string) => void }) {
   const accuracy = characterBasis ? round((correctCharacters / characterBasis) * 100) : 100;
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>WPM Calculator</h1><p>Calculate words per minute using the standard five-character word convention.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Try Live Test</InternalLink></div>
+      <div className="trainer-head"><div><h1>WPM Calculator — Convert Characters and Time to Words Per Minute</h1><p>Calculate words per minute using the standard five-character word convention.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Try Live Test</InternalLink></div>
       <div className="grid-two">
         <div className="panel tool-form"><h2><Calculator size={18} />Inputs</h2><label>Characters typed <input type="number" min="0" value={characters} onChange={(event) => setCharacters(Number(event.target.value))} /></label><label>Words typed <input type="number" min="0" value={words} onChange={(event) => setWords(Number(event.target.value))} /></label><label>Errors <input type="number" min="0" value={errors} onChange={(event) => setErrors(Number(event.target.value))} /></label><label>Time in seconds <input type="number" min="1" value={seconds} onChange={(event) => setSeconds(Number(event.target.value))} /></label></div>
         <div className="panel"><h2>Result</h2><div className="metrics"><Metric label="WPM" value={wpm} /><Metric label="Raw WPM" value={rawWpm} /><Metric label="Accuracy" value={`${accuracy}%`} /></div><p>Formula: correct characters divided by 5, then divided by elapsed minutes. Raw WPM uses all typed characters before subtracting errors.</p></div>
