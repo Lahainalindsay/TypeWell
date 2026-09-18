@@ -662,12 +662,27 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
         </div>
         <Sparkline values={history.slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
         <p>{recommendation}</p>
+        {record.weakKeys.length > 0 && (
+          <section className="weak-key-summary" aria-labelledby="weak-key-heading">
+            <div>
+              <p className="eyebrow">Target your next practice</p>
+              <h3 id="weak-key-heading">Weak-key snapshot</h3>
+              <p>Your highest-error keys from this session are highlighted below. Practice these before your next timed test.</p>
+            </div>
+            <div className="weak-key-chips" aria-label="Keys to practice">
+              {record.weakKeys.slice(0, 8).map((item) => (
+                <span key={item.key}><kbd>{item.key === " " ? "Space" : item.key}</kbd><small>{round(item.errorRate)}% errors</small></span>
+              ))}
+            </div>
+          </section>
+        )}
         {bestDelta !== null && bestDelta < 0 && <p className="hint">{Math.abs(bestDelta)} WPM below your personal best for this test.</p>}
-        <div className="actions">
+        <div className="actions result-actions">
           <button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button>
+          <InternalAction href="/typing-certificate/">Create Certificate</InternalAction>
           {onPractice && record.weakKeys[0] && <button onClick={onPractice}>Practice weak keys</button>}
-          <InternalAction href="/5-minute-typing-test/">Take a 5-Minute Test</InternalAction>
           <button onClick={() => shareResult(record)}>Share Result</button>
+          <InternalAction href="/5-minute-typing-test/">Take a 5-Minute Test</InternalAction>
         </div>
       </div>
     </div>
