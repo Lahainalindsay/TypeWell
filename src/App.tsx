@@ -40,9 +40,13 @@ export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string
   }, [progress]);
 
   useEffect(() => {
-    // The static route renders a crawlable H1 fallback. The interactive app
-    // supplies the equivalent visible heading once it has mounted.
-    document.querySelector<HTMLElement>("[data-static-page-heading]")?.remove();
+    // The server route owns this crawlable no-JS fallback. Removing it during
+    // React's hydration commit can invalidate the surrounding server tree, so
+    // wait until hydration has yielded back to the browser.
+    const timeout = window.setTimeout(() => {
+      document.querySelector<HTMLElement>("[data-static-page-heading]")?.remove();
+    }, 0);
+    return () => window.clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
