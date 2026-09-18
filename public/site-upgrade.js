@@ -201,16 +201,25 @@
     upgradeLegalFooter();
   }
 
-  run();
   document.addEventListener('keydown', () => requestAnimationFrame(() => {
     restoreTypingBreaks();
     stabilizeTypingPrompts();
   }), true);
   window.addEventListener('resize', () => requestAnimationFrame(stabilizeTypingPrompts));
-  new MutationObserver((mutations) => {
-    const onlyStableWindowChanges = mutations.every((mutation) =>
-      mutation.target instanceof Element && mutation.target.closest('.tw-stable-typing-window')
-    );
-    if (!onlyStableWindowChanges) run();
-  }).observe(document.documentElement, { childList: true, subtree: true });
+
+  function startAfterHydration() {
+    run();
+    new MutationObserver((mutations) => {
+      const onlyStableWindowChanges = mutations.every((mutation) =>
+        mutation.target instanceof Element && mutation.target.closest('.tw-stable-typing-window')
+      );
+      if (!onlyStableWindowChanges) run();
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
+
+  if (document.readyState === 'complete') {
+    window.setTimeout(startAfterHydration, 0);
+  } else {
+    window.addEventListener('load', () => window.setTimeout(startAfterHydration, 0), { once: true });
+  }
 })();
