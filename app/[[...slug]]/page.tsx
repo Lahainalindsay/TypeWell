@@ -77,19 +77,23 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   return (
     <>
-      <WPMTestApp initialPath={path} />
       {path !== "/" ? (
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <span>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</span>
         </nav>
       ) : null}
+      <header className="seo-mode-intro static-page-heading" data-static-page-heading>
+        <p className="eyebrow">{path === "/" ? "Free • no signup • private" : `${SITE_NAME} tool`}</p>
+        <h1>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</h1>
+        <p>{seo?.intro ?? extra?.[1]}</p>
+      </header>
+      <WPMTestApp initialPath={path} />
       <section className="seo-prerender" aria-label={`${seo?.h1 ?? extra?.[2] ?? SITE_NAME} information`}>
         {seo ? (
           <>
             <p className="eyebrow">{SITE_NAME} guide</p>
-            <h2>{seo.h1}: guide and scoring details</h2>
-            <p>{seo.intro}</p>
+            <h2>How to use this tool and understand your results</h2>
             {seo.content.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             {seo.faqs?.length ? (
               <section className="seo-faq" aria-labelledby="page-faq-heading">

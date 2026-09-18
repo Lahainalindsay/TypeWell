@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import sitemap from "../app/sitemap";
 import { seoPages } from "../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_ORIGIN } from "../src/lib/seo/site";
@@ -29,6 +31,12 @@ describe("SEO route registry", () => {
     expect(serialized.toLowerCase()).not.toContain("typewell");
     const h1s = seoPages.map((page) => page.h1);
     expect(new Set(h1s).size).toBe(h1s.length);
+  });
+
+  it("renders a crawlable H1 fallback before the client-only app", () => {
+    const routeSource = readFileSync(join(process.cwd(), "app/[[...slug]]/page.tsx"), "utf8");
+    expect(routeSource).toContain("data-static-page-heading");
+    expect(routeSource).toContain("<h1>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</h1>");
   });
 
   it("keeps priority SEO landing pages substantive", () => {

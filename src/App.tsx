@@ -40,6 +40,12 @@ export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string
   }, [progress]);
 
   useEffect(() => {
+    // The static route renders a crawlable H1 fallback. The interactive app
+    // supplies the equivalent visible heading once it has mounted.
+    document.querySelector<HTMLElement>("[data-static-page-heading]")?.remove();
+  }, []);
+
+  useEffect(() => {
     const onPop = () => {
       setPath(window.location.pathname);
       setPage(routeToPage(window.location.pathname));
@@ -617,11 +623,33 @@ function FingerGuide({ current }: { current: string }) {
   );
 }
 
+function WeakKeyHeatmap({ weakKeys }: { weakKeys: SessionRecord["weakKeys"] }) {
+  const errorRates = new Map(weakKeys.map((item) => [keyboardKey(item.key), item.errorRate]));
+  return (
+    <div className="weak-key-heatmap" aria-label="Weak-key keyboard heatmap">
+      {rows.map((row, rowIndex) => (
+        <div className="weak-key-row" key={rowIndex}>
+          {row.map((key) => {
+            const errorRate = errorRates.get(key) ?? 0;
+            const severity = errorRate >= 40 ? "high" : errorRate >= 20 ? "medium" : errorRate > 0 ? "low" : "none";
+            return (
+              <span className={`weak-key-cell ${severity}${key === "space" ? " space" : ""}`} title={errorRate ? `${key}: ${round(errorRate)}% errors` : key} key={key}>
+                {key === "space" ? "Space" : key}
+              </span>
+            );
+          })}
+        </div>
+      ))}
+      <small>Darker keys had a higher error rate in this session.</small>
+    </div>
+  );
+}
+
 function ResultScreen({ record, history, reset, onPractice }: { record: SessionRecord; history: SessionRecord[]; reset: () => void; onPractice?: () => void }) {
-  const comparable = history.filter((item) => item.type === record.type && item.label === record.label);
+  const comparable = history.filter((item) => item.id !== record.id && item.type === record.type && item.label === record.label);
   const previous = comparable.at(-1);
   const previousBest = Math.max(0, ...comparable.map((item) => item.metrics.wpm));
-  const newBest = record.metrics.wpm > previousBest;
+  const newBest = !comparable.length || record.metrics.wpm > previousBest;
   const previousDelta = previous ? round(record.metrics.wpm - previous.metrics.wpm) : null;
   const bestDelta = previousBest ? round(record.metrics.wpm - previousBest) : null;
   const recommendation = record.metrics.accuracy < 95
@@ -660,7 +688,7 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
           <Metric label="Active Time" value={formatTime(record.metrics.activeMs)} />
           <Metric label="Completed" value={new Date(record.date).toLocaleDateString()} />
         </div>
-        <Sparkline values={history.slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
+        <Sparkline values={history.filter((item) => item.id !== record.id).slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
         <p>{recommendation}</p>
         {record.weakKeys.length > 0 && (
           <section className="weak-key-summary" aria-labelledby="weak-key-heading">
@@ -674,6 +702,7 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
                 <span key={item.key}><kbd>{item.key === " " ? "Space" : item.key}</kbd><small>{round(item.errorRate)}% errors</small></span>
               ))}
             </div>
+            <WeakKeyHeatmap weakKeys={record.weakKeys} />
           </section>
         )}
         {bestDelta !== null && bestDelta < 0 && <p className="hint">{Math.abs(bestDelta)} WPM below your personal best for this test.</p>}
