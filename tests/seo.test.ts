@@ -76,6 +76,15 @@ describe("SEO route registry", () => {
     }
   });
 
+  it("does not publish crawlable links to client-only practice states", () => {
+    const appSource = readFileSync(join(process.cwd(), "src/App.tsx"), "utf8");
+    const professionalsSource = readFileSync(join(process.cwd(), "app/professionals/page.tsx"), "utf8");
+    expect(appSource).not.toContain('["/practice/numbers",');
+    expect(appSource).not.toContain('["/practice/punctuation",');
+    expect(professionalsSource).not.toContain('["/practice/code",');
+    expect(professionalsSource).toContain('["/typing-test/code/",');
+  });
+
   it("keeps priority SEO landing pages substantive", () => {
     const priorityPaths = [
       "/1-minute-typing-test/",

@@ -158,9 +158,9 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
         <h2>Practice What Slows You Down</h2>
         <div className="link-grid compact-links">{[
           ["/typing-practice/", "Typing Practice", "Flexible words and sentence drills."],
-          ["/practice/weak-keys", "Weak-Key Practice", "Adaptive drills for difficult keys."],
-          ["/practice/numbers", "Numbers", "Number-row practice for real work."],
-          ["/practice/punctuation", "Punctuation", "Punctuation and capitalization control."],
+          ["/typing-practice/", "Weak-Key Practice", "Adaptive drills for difficult keys."],
+          ["/typing-test-with-numbers/", "Numbers", "Number-row practice for real work."],
+          ["/typing-test-with-punctuation/", "Punctuation", "Punctuation and capitalization control."],
           ["/touch-typing-practice/", "Touch Typing", "Build reliable finger placement."],
           ["/rhythm", "Rhythm Trainer", "Practice smooth, even timing."],
           ["/average-typing-speed/", "Average Typing Speed", "Interpret WPM without fake rankings."],

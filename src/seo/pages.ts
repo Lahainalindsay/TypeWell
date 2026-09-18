@@ -311,7 +311,7 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/wpm-calculator/",
-    title: "WPM Calculator - Convert Characters and Time to Words Per Minute | WPMTest",
+    title: "WPM Calculator - Calculate Words Per Minute | WPMTest",
     description: "Calculate typing WPM from characters, time, and errors using the standard five-character word convention.",
     h1: "WPM Calculator — Convert Characters and Time to Words Per Minute",
     intro: "Use the WPM calculator when you already have typing data such as characters typed, elapsed time, and errors and want to convert it to words per minute.",
