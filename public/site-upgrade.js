@@ -218,8 +218,8 @@
   }
 
   if (document.readyState === 'complete') {
-    window.setTimeout(startAfterHydration, 0);
+    window.setTimeout(startAfterHydration, 1200);
   } else {
-    window.addEventListener('load', () => window.setTimeout(startAfterHydration, 0), { once: true });
+    window.addEventListener('load', () => window.setTimeout(startAfterHydration, 1200), { once: true });
   }
 })();
