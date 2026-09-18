@@ -26,7 +26,7 @@ const nav: Array<{ href: string; label: string }> = [
   { href: "/wpm-calculator/", label: "WPM Calculator" }
 ];
 
-export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string }) {
+export default function WPMTestApp({ initialPath = "/", embedded = false }: { initialPath?: string; embedded?: boolean }) {
   const [page, setPage] = useState<Page>(routeToPage(initialPath));
   const [path, setPath] = useState(initialPath);
   const [progress, setProgress] = useState<ProgressData>(defaultProgress);
@@ -71,7 +71,7 @@ export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string
     }));
   }
 
-  const props = { progress, setProgress, record, go, setFocus, path };
+  const props = { progress, setProgress, record, go, setFocus, path, embedded };
 
   return (
     <div className={focus ? "app focus-active" : "app"}>
@@ -85,7 +85,7 @@ export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string
         {page === "progress" && <Progress progress={progress} setProgress={setProgress} />}
         {page === "settings" && <Settings progress={progress} setProgress={setProgress} />}
         {page === "tools" && <Tools path={path} go={go} progress={progress} />}
-        {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} />}
+        {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />}
       </main>
       {!focus && <Footer go={go} />}
     </div>
@@ -126,7 +126,7 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
   );
 }
 
-function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
+function Home({ progress, setProgress, record, setFocus, path, go, embedded }: SharedProps) {
   return (
     <section className="home">
       <div className="hero">
@@ -136,7 +136,7 @@ function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps
           <p>Start typing instantly. Test your speed, accuracy, and consistency in 1, 3, 5, or 10 minutes. Free, private, and no account required.</p>
         </div>
       </div>
-      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} />
+      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
       <AdSlot placement="after-home-test" />
       <section className="seo-section philosophy">
         <h2>Improve More Than Just WPM</h2>
@@ -258,7 +258,7 @@ function Learn({ progress, setProgress, record, setFocus, path, go }: SharedProp
   );
 }
 
-function Practice({ progress, setProgress, record, setFocus, path }: SharedProps) {
+function Practice({ progress, setProgress, record, setFocus, path, embedded }: SharedProps) {
   const [mode, setMode] = useState<PracticeMode>(() => practiceModeFromPath(path));
   const [duration, setDuration] = useState(60);
   const [count, setCount] = useState(50);
@@ -269,6 +269,7 @@ function Practice({ progress, setProgress, record, setFocus, path }: SharedProps
   return (
     <Trainer
       title="Typing Practice — Targeted Drills to Fix Your Weak Keys"
+      heading={embedded ? "h2" : undefined}
       subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
       target={target}
       mode="practice"
@@ -283,7 +284,7 @@ function Practice({ progress, setProgress, record, setFocus, path }: SharedProps
   );
 }
 
-function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
+function Test({ progress, setProgress, record, setFocus, path, go, embedded }: SharedProps) {
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   const [count, setCount] = useState(() => Math.max(50, Math.round(testDurationFromPath(path) * 1.8)));
   const testMode = testModeFromPath(path);
@@ -307,7 +308,7 @@ function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps
     setCount(Math.max(50, Math.round(nextDuration * 1.8)));
   }, [path]);
   if (testMode === "Data Entry") {
-    return <DataEntryTrainer path={path} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
+    return <DataEntryTrainer path={path} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} embedded={embedded} />;
   }
   if (testMode === "Numeric Keypad") {
     return <NumericKeypadTrainer title={testTitle} duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
@@ -315,6 +316,7 @@ function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps
   return (
     <Trainer
       title={testTitle}
+      heading={embedded ? "h2" : undefined}
       subtitle="Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."
       target={buildPracticeText(testMode, count)}
       mode="test"
@@ -346,7 +348,7 @@ function utilityMetrics(correctCharacters: number, incorrectCharacters: number, 
   };
 }
 
-function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go }: Pick<SharedProps, "progress" | "setProgress" | "setFocus" | "go" | "path"> & { onRecord: (record: SessionRecord) => void }) {
+function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go, embedded }: Pick<SharedProps, "progress" | "setProgress" | "setFocus" | "go" | "path" | "embedded"> & { onRecord: (record: SessionRecord) => void }) {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const profile = normalizedPath.endsWith("/alphanumeric")
     ? { title: "Alphanumeric Data Entry Practice", description: "Practice names, order IDs, ZIP codes, and product codes.", indexes: [0, 1, 4, 5], labels: ["Name", "Order ID", "ZIP", "Product code"] }
@@ -401,7 +403,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go 
 
   function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); }
   return <section className="dashboard utility-test">
-    <div className="trainer-head"><div><h1>{profile.title}</h1><p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
+    <div className="trainer-head"><div>{embedded ? <h2>{profile.title}</h2> : <h1>{profile.title}</h1>}<p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
     {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM · {finished.metrics.accuracy}% field accuracy</h2><div className="metrics"><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
     <p className="tool-copy">This test uses fictional records and measures field-level accuracy separately from paragraph typing. Progress is stored locally on this device.</p>
     <div className="inline-links"><InternalLink href="/data-entry-practice/" go={go}>All Data Entry Practice</InternalLink><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
@@ -431,6 +433,7 @@ interface SharedProps {
   go: (page: Page, route?: string) => void;
   setFocus: (focus: boolean) => void;
   path: string;
+  embedded: boolean;
 }
 
 function Trainer(props: {
@@ -1009,7 +1012,7 @@ function TypingGames({ progress, setProgress, record, setFocus, path, go }: Shar
   return (
     <section className="dashboard">
       <div className="trainer-head"><div><h1>Typing Games</h1><p>Lightweight drills that reinforce real typing accuracy without accounts or leaderboards.</p></div><Gamepad2 aria-hidden="true" /></div>
-      <Trainer title="Word Rush" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
+      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
     </section>
   );
 }

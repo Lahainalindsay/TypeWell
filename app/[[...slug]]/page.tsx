@@ -19,6 +19,12 @@ const extraRoutes = [
 
 const extraSeo = new Map([
   ["/learn", ["Learn Touch Typing - Free Typing Lessons | WPMTest", "Learn touch typing with guided lessons for home row, top row, bottom row, capitals, punctuation, numbers, and symbols.", "Learn Touch Typing"]],
+  ["/learn/home-row", ["Home Row Typing Lesson | WPMTest", "Learn the home-row keys with a guided touch-typing lesson, live accuracy feedback, and local progress tracking.", "Home Row Typing Lesson"]],
+  ["/learn/top-row", ["Top Row Typing Lesson | WPMTest", "Practice the top-row letter keys with guided finger placement, live accuracy feedback, and local progress tracking.", "Top Row Typing Lesson"]],
+  ["/learn/bottom-row", ["Bottom Row Typing Lesson | WPMTest", "Practice the bottom-row letter keys with guided finger placement, live accuracy feedback, and local progress tracking.", "Bottom Row Typing Lesson"]],
+  ["/learn/capital-letters", ["Capital Letters Typing Lesson | WPMTest", "Practice Shift-key technique and capital letters with a guided typing lesson and live accuracy feedback.", "Capital Letters Typing Lesson"]],
+  ["/learn/punctuation", ["Punctuation Typing Lesson | WPMTest", "Practice punctuation keys and accurate Shift-key reaches with a guided touch-typing lesson.", "Punctuation Typing Lesson"]],
+  ["/learn/numbers", ["Number Row Typing Lesson | WPMTest", "Practice number-row typing with guided finger placement, live accuracy feedback, and local progress tracking.", "Number Row Typing Lesson"]],
   ["/rhythm", ["Typing Rhythm Trainer - Improve Speed & Consistency | WPMTest", "Train typing rhythm with a visual keystroke metronome that measures early, on-beat, and late timing.", "Typing Rhythm Trainer"]],
   ["/progress", ["Typing Progress Tracker | WPMTest", "Track local typing progress, best WPM, average accuracy, practice time, weak keys, and completed lessons.", "Typing Progress Tracker"]],
   ["/settings", ["Typing Trainer Settings | WPMTest", "Adjust typing display, theme, keyboard guide, sound, high contrast, and reduced motion settings.", "Typing Settings"]]

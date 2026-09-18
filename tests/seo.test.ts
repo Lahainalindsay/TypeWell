@@ -40,6 +40,42 @@ describe("SEO route registry", () => {
     expect(clientSource).not.toContain("ssr: false");
   });
 
+  it("keeps every generated lesson route backed by page metadata instead of a 404 fallback", () => {
+    const routeSource = readFileSync(join(process.cwd(), "app/[[...slug]]/page.tsx"), "utf8");
+    for (const path of [
+      "/learn/home-row",
+      "/learn/top-row",
+      "/learn/bottom-row",
+      "/learn/capital-letters",
+      "/learn/punctuation",
+      "/learn/numbers"
+    ]) {
+      expect(routeSource, path).toContain(`["${path}", [`);
+    }
+  });
+
+  it("uses secondary headings when an interactive tool is embedded below a page H1", () => {
+    const appSource = readFileSync(join(process.cwd(), "src/App.tsx"), "utf8");
+    expect(appSource).toContain('heading={embedded ? "h2" : undefined}');
+    expect(appSource).toContain('title="Word Rush" heading="h2"');
+
+    for (const path of [
+      "app/typing-test-for-kids/page.tsx",
+      "app/typing-test-for-students/page.tsx",
+      "app/typing-test-for-employment/page.tsx",
+      "app/typing-test-with-numbers/page.tsx",
+      "app/typing-test-with-punctuation/page.tsx",
+      "app/typing-test/code/page.tsx",
+      "app/data-entry-practice/page.tsx",
+      "app/data-entry-practice/alphanumeric/page.tsx",
+      "app/data-entry-practice/currency-dates/page.tsx",
+      "app/data-entry-practice/invoices-orders/page.tsx",
+      "app/data-entry-practice/names-addresses/page.tsx"
+    ]) {
+      expect(readFileSync(join(process.cwd(), path), "utf8"), path).toContain(" embedded");
+    }
+  });
+
   it("keeps priority SEO landing pages substantive", () => {
     const priorityPaths = [
       "/1-minute-typing-test/",
