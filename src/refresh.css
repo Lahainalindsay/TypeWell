@@ -229,3 +229,53 @@ main { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
   .typing-text { height: 150px; font-size: 1.05rem; line-height: 1.62; }
   .key { min-width: 24px; height: 31px; font-size: 0.68rem; }
 }
+
+
+/* Results: make the score the hero, then direct users into sharing, certificates, and targeted practice. */
+.result-card > h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+}
+.weak-key-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 1.25fr);
+  gap: 1rem;
+  align-items: center;
+  margin: 1.25rem 0;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--panel) 92%, var(--accent) 8%);
+}
+.weak-key-summary h3 { margin: 0.2rem 0 0.45rem; }
+.weak-key-summary p { margin: 0; }
+.weak-key-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+.weak-key-chips > span {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 70px;
+  text-align: center;
+}
+.weak-key-chips kbd {
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  background: var(--surface);
+  font: 700 1rem/1 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+.weak-key-chips small { color: var(--muted); }
+.result-actions { margin-top: 1.25rem; }
+@media (max-width: 720px) {
+  .weak-key-summary { grid-template-columns: 1fr; }
+  .weak-key-chips { justify-content: flex-start; }
+}
