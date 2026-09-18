@@ -77,18 +77,13 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   return (
     <>
+      <WPMTestApp initialPath={path} />
       {path !== "/" ? (
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <span>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</span>
         </nav>
       ) : null}
-      <header className="seo-mode-intro static-page-heading" data-static-page-heading>
-        <p className="eyebrow">{path === "/" ? "Free • no signup • private" : `${SITE_NAME} tool`}</p>
-        <h1>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</h1>
-        <p>{seo?.intro ?? extra?.[1]}</p>
-      </header>
-      <WPMTestApp initialPath={path} />
       <section className="seo-prerender" aria-label={`${seo?.h1 ?? extra?.[2] ?? SITE_NAME} information`}>
         {seo ? (
           <>

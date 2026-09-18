@@ -33,10 +33,11 @@ describe("SEO route registry", () => {
     expect(new Set(h1s).size).toBe(h1s.length);
   });
 
-  it("renders a crawlable H1 fallback before the client-only app", () => {
+  it("server-renders the application instead of hiding it behind a client-only boundary", () => {
     const routeSource = readFileSync(join(process.cwd(), "app/[[...slug]]/page.tsx"), "utf8");
-    expect(routeSource).toContain("data-static-page-heading");
-    expect(routeSource).toContain("<h1>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</h1>");
+    const clientSource = readFileSync(join(process.cwd(), "src/ClientApp.tsx"), "utf8");
+    expect(routeSource).toContain("<WPMTestApp initialPath={path} />");
+    expect(clientSource).not.toContain("ssr: false");
   });
 
   it("keeps priority SEO landing pages substantive", () => {

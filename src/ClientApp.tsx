@@ -1,10 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const WPMTestApp = dynamic(() => import("./App"), {
-  ssr: false,
-  loading: () => <div className="app-loading" style={{ minHeight: "100vh" }} aria-hidden="true" />
-});
+import WPMTestApp from "./App";
 
 export default WPMTestApp;

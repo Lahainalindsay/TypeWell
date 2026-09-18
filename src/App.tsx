@@ -29,25 +29,22 @@ const nav: Array<{ href: string; label: string }> = [
 export default function WPMTestApp({ initialPath = "/" }: { initialPath?: string }) {
   const [page, setPage] = useState<Page>(routeToPage(initialPath));
   const [path, setPath] = useState(initialPath);
-  const [progress, setProgress] = useState<ProgressData>(() => typeof window === "undefined" ? defaultProgress : loadProgress());
+  const [progress, setProgress] = useState<ProgressData>(defaultProgress);
+  const [storageReady, setStorageReady] = useState(false);
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
+    setProgress(loadProgress());
+    setStorageReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!storageReady) return;
     saveProgress(progress);
     document.documentElement.dataset.theme = progress.settings.theme === "system" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : progress.settings.theme;
     document.documentElement.dataset.contrast = String(progress.settings.highContrast);
     document.documentElement.dataset.motion = progress.settings.reducedMotion ? "reduced" : "ok";
-  }, [progress]);
-
-  useEffect(() => {
-    // The server route owns this crawlable no-JS fallback. Removing it during
-    // React's hydration commit can invalidate the surrounding server tree, so
-    // wait until hydration has yielded back to the browser.
-    const timeout = window.setTimeout(() => {
-      document.querySelector<HTMLElement>("[data-static-page-heading]")?.remove();
-    }, 0);
-    return () => window.clearTimeout(timeout);
-  }, []);
+  }, [progress, storageReady]);
 
   useEffect(() => {
     const onPop = () => {
