@@ -6,6 +6,12 @@ export const dynamic = "force-static";
 
 const supportingIndexableRoutes = [
   "/learn/",
+  "/learn/home-row/",
+  "/learn/top-row/",
+  "/learn/bottom-row/",
+  "/learn/capital-letters/",
+  "/learn/punctuation/",
+  "/learn/numbers/",
   "/rhythm/",
   "/typing-test/code/",
   "/typing-test-for-kids/",

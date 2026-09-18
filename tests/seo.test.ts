@@ -17,6 +17,20 @@ describe("SEO route registry", () => {
     expect(urls).not.toContain(`${SITE_ORIGIN}/settings/`);
   });
 
+  it("includes every indexable typing lesson in the sitemap", () => {
+    const urls = sitemap().map((entry) => entry.url);
+    for (const path of [
+      "/learn/home-row/",
+      "/learn/top-row/",
+      "/learn/bottom-row/",
+      "/learn/capital-letters/",
+      "/learn/punctuation/",
+      "/learn/numbers/"
+    ]) {
+      expect(urls).toContain(`${SITE_ORIGIN}${path}`);
+    }
+  });
+
   it("normalizes canonical paths with a leading and trailing slash", () => {
     expect(canonicalPath("data-entry-typing-test")).toBe("/data-entry-typing-test/");
     expect(canonicalPath("/data-entry-typing-test/")).toBe("/data-entry-typing-test/");

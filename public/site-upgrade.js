@@ -39,6 +39,8 @@
         <a href="/blog/">Typing & Career Guides</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
+        <a href="/typing-test-for-students/">Student Typing Test</a>
+        <a href="/educators/">For Educators</a>
         <a href="/progress">Typing Progress</a>
         <a href="/settings">Settings</a>
         <a href="/typing-practice/">Improve Your Typing with WPMTest</a>`;

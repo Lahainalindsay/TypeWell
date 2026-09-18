@@ -26,6 +26,11 @@ const nav: Array<{ href: string; label: string }> = [
   { href: "/wpm-calculator/", label: "WPM Calculator" }
 ];
 
+const clientManagedRoutes = new Set([
+  "/typing-test/", "/typing-practice/", "/10-key-typing-test/", "/wpm-calculator/",
+  "/typing-certificate/", "/average-typing-speed/", "/rhythm", "/progress", "/settings", "/learn"
+]);
+
 export default function WPMTestApp({ initialPath = "/", embedded = false }: { initialPath?: string; embedded?: boolean }) {
   const [page, setPage] = useState<Page>(routeToPage(initialPath));
   const [path, setPath] = useState(initialPath);
@@ -96,8 +101,9 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
   const moreToolsRef = useRef<HTMLDetailsElement | null>(null);
 
   function navigateFromMenu(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    event.preventDefault();
     moreToolsRef.current?.removeAttribute("open");
+    if (!clientManagedRoutes.has(href)) return;
+    event.preventDefault();
     go(routeToPage(href), href);
   }
 
@@ -105,7 +111,7 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
     <header className="topbar">
       <button className="brand" onClick={() => go("home")} aria-label="WPMTest home"><span>WPMTEST</span><small>Free typing mastery</small></button>
       <nav aria-label="Primary navigation">
-        {nav.map((item) => <a key={item.href} className={routeToPage(item.href) === page ? "active" : ""} href={item.href} onClick={(event) => { event.preventDefault(); go(routeToPage(item.href), item.href); }}>{item.label}</a>)}
+        {nav.map((item) => <a key={item.href} className={routeToPage(item.href) === page ? "active" : ""} href={item.href} onClick={(event) => navigateFromMenu(event, item.href)}>{item.label}</a>)}
         <details ref={moreToolsRef} className="more-tools">
           <summary>More Tools</summary>
           <div>
@@ -117,6 +123,9 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
               ["/settings", "Settings"],
               ["/typing-test-with-numbers/", "Numbers Test"],
               ["/typing-test-with-punctuation/", "Punctuation Test"],
+              ["/typing-test-for-students/", "Student Typing Test"],
+              ["/educators/", "For Educators"],
+              ["/blog/", "Typing & Career Guides"],
               ["/learn", "Lessons"]
             ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
           </div>
