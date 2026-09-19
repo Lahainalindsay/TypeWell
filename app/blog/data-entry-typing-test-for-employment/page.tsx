@@ -7,17 +7,13 @@ export const metadata: Metadata = {
   title: "Data Entry Typing Test for Employment: What to Expect | WPMTest",
   description: "Learn what employers may measure in a data entry typing test, including accuracy, KPH, structured records, numbers and verification, and how to practice.",
   alternates: { canonical },
-  openGraph: {
-    title: "Data Entry Typing Test for Employment: What to Expect",
+  openGraph: { title: "Data Entry Typing Test for Employment: What to Expect",
     description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.",
     url: canonical,
-    type: "article"
-  },
-  twitter: {
-    card: "summary",
+    type: "article", images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest Data Entry employment guide" }] },
+  twitter: { card: "summary_large_image",
     title: "Data Entry Typing Test for Employment: What to Expect",
-    description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation."
-  },
+    description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.", images: [absoluteUrl("/og-default.svg")] },
   robots: { index: true, follow: true }
 };
 

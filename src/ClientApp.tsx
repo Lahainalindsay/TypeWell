@@ -1,10 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import WPMTestApp from "./App";
 
-const TypewellApp = dynamic(() => import("./App"), {
-  ssr: false,
-  loading: () => <div className="app-loading" style={{ minHeight: "100vh" }} aria-hidden="true" />
-});
-
-export default TypewellApp;
+export default WPMTestApp;

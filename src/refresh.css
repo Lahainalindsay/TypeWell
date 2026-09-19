@@ -1,4 +1,4 @@
-/* Typewell visual refinement: compact, tool-first, ad-friendly. Loaded after styles.css. */
+/* WPMTest visual refinement: compact, tool-first, ad-friendly. Loaded after styles.css. */
 
 :root {
   --content-width: 1120px;
@@ -228,4 +228,101 @@ main { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
   .metric:nth-child(even) { border-right: 0; }
   .typing-text { height: 150px; font-size: 1.05rem; line-height: 1.62; }
   .key { min-width: 24px; height: 31px; font-size: 0.68rem; }
+}
+
+
+/* Results: make the score the hero, then direct users into sharing, certificates, and targeted practice. */
+.result-card > h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 1.25rem;
+}
+.weak-key-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 1.25fr);
+  gap: 1rem;
+  align-items: center;
+  margin: 1.25rem 0;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--panel) 92%, var(--accent) 8%);
+}
+.weak-key-summary h3 { margin: 0.2rem 0 0.45rem; }
+.weak-key-summary p { margin: 0; }
+.weak-key-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+.weak-key-chips > span {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 70px;
+  text-align: center;
+}
+.weak-key-chips kbd {
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 3px;
+  border-radius: 10px;
+  background: var(--surface);
+  font: 700 1rem/1 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+.weak-key-chips small { color: var(--muted); }
+.weak-key-heatmap {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.2rem;
+}
+.weak-key-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+}
+.weak-key-cell {
+  display: grid;
+  place-items: center;
+  width: clamp(24px, 4vw, 42px);
+  min-height: 31px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface), transparent 10%);
+  color: var(--muted);
+  font: 700 0.72rem/1 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  text-transform: uppercase;
+}
+.weak-key-cell.low {
+  border-color: color-mix(in srgb, #f4b942, var(--line) 45%);
+  background: color-mix(in srgb, #f4b942 18%, var(--surface));
+  color: var(--text);
+}
+.weak-key-cell.medium {
+  border-color: color-mix(in srgb, #f28c3a, var(--line) 25%);
+  background: color-mix(in srgb, #f28c3a 34%, var(--surface));
+  color: var(--text);
+}
+.weak-key-cell.high {
+  border-color: color-mix(in srgb, #ef5350, var(--line) 18%);
+  background: color-mix(in srgb, #ef5350 54%, var(--surface));
+  color: #fff;
+}
+.weak-key-cell.space {
+  flex: 0 1 250px;
+  width: clamp(110px, 28vw, 250px);
+}
+.weak-key-heatmap small {
+  margin-top: 0.15rem;
+  color: var(--muted);
+  text-align: center;
+}
+.result-actions { margin-top: 1.25rem; }
+@media (max-width: 720px) {
+  .weak-key-summary { grid-template-columns: 1fr; }
+  .weak-key-chips { justify-content: flex-start; }
 }

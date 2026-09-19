@@ -30,7 +30,7 @@ export function trackEvent(event: AnalyticsEvent, properties: AnalyticsPropertie
     Object.entries(properties).filter(([key, value]) => value !== undefined && !["text", "customText", "name", "email"].includes(key))
   ) as Record<string, string | number | boolean | null>;
   provider?.track(event, sanitized);
-  window.dispatchEvent(new CustomEvent("typewell:analytics", { detail: { event, properties: sanitized } }));
+  window.dispatchEvent(new CustomEvent("wpmtest:analytics", { detail: { event, properties: sanitized } }));
 }
 
 export function metricRange(value: number, step = 10) {

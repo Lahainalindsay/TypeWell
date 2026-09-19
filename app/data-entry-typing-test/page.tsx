@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import TypewellApp from "../../src/App";
+import WPMTestApp from "../../src/App";
 import { dataEntryAssessment } from "../../src/features/careers/assessments/data-entry";
 import { absoluteUrl } from "../../src/lib/seo/site";
+
+const socialImage = absoluteUrl("/og-default.svg");
 
 const canonical = absoluteUrl(dataEntryAssessment.publicPath);
 
@@ -13,12 +15,14 @@ export const metadata: Metadata = {
     title: "Data Entry Typing Test & Practice | WPMTest",
     description: "Practice job-relevant structured data entry and prepare for a standardized data entry proficiency test.",
     url: canonical,
-    type: "website"
+    type: "website",
+    images: [{ url: socialImage, width: 1200, height: 630, alt: "WPMTest Data Entry Typing Test" }]
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Data Entry Typing Test & Practice | WPMTest",
-    description: "Practice job-relevant structured data entry and prepare for a standardized data entry proficiency test."
+    description: "Practice job-relevant structured data entry and prepare for a standardized data entry proficiency test.",
+    images: [socialImage]
   },
   robots: { index: true, follow: true }
 };
@@ -54,6 +58,27 @@ export default function DataEntryTypingTestPage() {
         { "@type": "ListItem", position: 2, name: "Typing Test for Employment", item: absoluteUrl("/typing-test-for-employment/") },
         { "@type": "ListItem", position: 3, name: "Data Entry Typing Test", item: canonical }
       ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What does a data entry typing test measure?",
+          acceptedAnswer: { "@type": "Answer", text: "It measures how accurately and efficiently you enter structured information such as names, dates, amounts, identifiers and numeric values rather than only continuous prose." }
+        },
+        {
+          "@type": "Question",
+          name: "How is this different from a regular typing test?",
+          acceptedAnswer: { "@type": "Answer", text: "A regular typing test focuses on continuous text. Data entry adds field-to-field movement, exact formatting, numbers and codes where a single incorrect character can change a record." }
+        },
+        {
+          "@type": "Question",
+          name: "What is KPH and when should I use it?",
+          acceptedAnswer: { "@type": "Answer", text: "Keystrokes per hour measures individual keystrokes over time and is useful for numeric keypad and data-entry work. If a job posting asks for KPH or 10-key speed, use the dedicated KPH or 10-key test and follow the employer's stated requirements." }
+        }
+      ]
     }
   ];
 
@@ -75,7 +100,7 @@ export default function DataEntryTypingTestPage() {
           <p><strong>Designed for:</strong> {dataEntryAssessment.audience.join(" · ")}</p>
         </section>
 
-        <TypewellApp initialPath="/data-entry-typing-test/" />
+        <WPMTestApp initialPath="/data-entry-typing-test/" />
 
         <section className="seo-prerender" aria-label="Data entry practice and assessment guide">
           <h2>Practice data entry skills</h2>
@@ -118,6 +143,22 @@ export default function DataEntryTypingTestPage() {
           <p>
             <a href="/blog/data-entry-typing-test-for-employment/"><strong>Read the full guide: Data Entry Typing Test for Employment →</strong></a>
           </p>
+
+          <h2>Data entry typing test FAQ</h2>
+          <div className="seo-faq">
+            <article>
+              <h3>What does a data entry typing test measure?</h3>
+              <p>It measures how accurately and efficiently you enter structured information such as names, dates, amounts, identifiers and numeric values rather than only continuous prose.</p>
+            </article>
+            <article>
+              <h3>How is this different from a regular typing test?</h3>
+              <p>A regular typing test focuses on continuous text. Data entry adds field-to-field movement, exact formatting, numbers and codes where a single incorrect character can change a record.</p>
+            </article>
+            <article>
+              <h3>What is KPH and when should I use it?</h3>
+              <p>Keystrokes per hour measures individual keystrokes over time and is useful for numeric keypad and data-entry work. If a job posting asks for KPH or 10-key speed, use the dedicated KPH or 10-key test and follow the employer's stated requirements.</p>
+            </article>
+          </div>
 
           <h2>Standardized Data Entry Proficiency Test</h2>
           <p>

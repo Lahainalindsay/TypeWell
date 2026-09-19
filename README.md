@@ -79,7 +79,7 @@ Corrected errors are counted separately. Current incorrect characters affect net
 
 ## Local storage
 
-Progress is stored under `typewell.progress.v1`. Stored data includes sessions, settings, completed lessons, weak-key strokes, and rhythm best. Preserve compatibility with existing user data when storage models are migrated.
+Progress is stored under `wpmtest.progress.v1`. Stored data includes sessions, settings, completed lessons, weak-key strokes, and rhythm best. Preserve compatibility with existing user data when storage models are migrated.
 
 ## Content
 

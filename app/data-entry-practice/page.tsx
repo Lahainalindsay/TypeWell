@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import TypewellApp from "../../src/App";
+import WPMTestApp from "../../src/App";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
 const canonical = absoluteUrl("/data-entry-practice/");
@@ -47,7 +47,7 @@ export default function DataEntryPracticePage() {
             ))}
           </div>
         </section>
-        <TypewellApp initialPath="/data-entry-practice/" />
+        <WPMTestApp initialPath="/data-entry-practice/" embedded />
         <section className="seo-prerender">
           <h2>Practice first, test second</h2>
           <p>

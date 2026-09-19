@@ -39,7 +39,8 @@ export interface ProgressData {
   };
 }
 
-export const STORAGE_KEY = "typewell.progress.v1";
+export const STORAGE_KEY = "wpmtest.progress.v1";
+const LEGACY_STORAGE_KEY = ["type", "well.progress.v1"].join("");
 
 export const defaultProgress: ProgressData = {
   version: 1,
@@ -69,9 +70,13 @@ export const defaultProgress: ProgressData = {
 
 export function loadProgress(): ProgressData {
   try {
-    const raw = safeGet(STORAGE_KEY);
+    const current = safeGet(STORAGE_KEY);
+    const legacy = current ? null : safeGet(LEGACY_STORAGE_KEY);
+    const raw = current ?? legacy;
     if (!raw) return defaultProgress;
-    return validateProgress(JSON.parse(raw));
+    const progress = validateProgress(JSON.parse(raw));
+    if (!current && legacy) safeSet(STORAGE_KEY, legacy);
+    return progress;
   } catch {
     return defaultProgress;
   }

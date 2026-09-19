@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import TypewellApp from "../../src/App";
+import WPMTestApp from "../../src/App";
 
 const SITE_URL = "https://wpmtest.app";
 const canonical = `${SITE_URL}/typing-test-with-numbers/`;
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Typing Test With Numbers - Test Number Speed | WPMTest",
   description: "Free typing test with numbers, dates, prices and percentages. Measure WPM, accuracy and errors with instant results and no signup.",
   alternates: { canonical },
-  openGraph: { title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits.", url: canonical, type: "website" },
-  twitter: { card: "summary", title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits." },
+  openGraph: { title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits.", url: canonical, type: "website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title: "Typing Test With Numbers | WPMTest", description: "Test number-row typing speed and accuracy with realistic mixed text and digits.", images: [`${SITE_URL}/og-default.svg`] },
   robots: { index: true, follow: true }
 };
 
@@ -26,7 +26,7 @@ export default function NumbersTypingTestPage() {
     <main>
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Numbers Test</span></nav>
       <section className="seo-mode-intro"><p className="eyebrow">Free number typing test</p><h1>Typing Test With Numbers</h1><p>Test how quickly and accurately you type numbers mixed with everyday text. Practice dates, prices, percentages, measurements, phone-style numbers and IDs while tracking WPM and accuracy.</p></section>
-      <TypewellApp initialPath="/typing-test-with-numbers/" />
+      <WPMTestApp initialPath="/typing-test-with-numbers/" embedded />
       <section className="seo-prerender" aria-label="Number typing test guide">
         <h2>Why typing numbers feels different</h2>
         <p>Ordinary typing tests contain many familiar words that your hands learn as repeated patterns. Numbers interrupt those patterns. Reaching to the number row while maintaining your place in surrounding text can reduce both speed and accuracy, especially when a passage mixes dates, prices, percentages and identifiers.</p>

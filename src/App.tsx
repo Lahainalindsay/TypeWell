@@ -26,18 +26,30 @@ const nav: Array<{ href: string; label: string }> = [
   { href: "/wpm-calculator/", label: "WPM Calculator" }
 ];
 
-export default function TypewellApp({ initialPath = "/" }: { initialPath?: string }) {
+const clientManagedRoutes = new Set([
+  "/typing-test/", "/typing-practice/", "/10-key-typing-test/", "/wpm-calculator/",
+  "/typing-certificate/", "/average-typing-speed/", "/rhythm", "/progress", "/settings", "/learn"
+]);
+
+export default function WPMTestApp({ initialPath = "/", embedded = false }: { initialPath?: string; embedded?: boolean }) {
   const [page, setPage] = useState<Page>(routeToPage(initialPath));
   const [path, setPath] = useState(initialPath);
-  const [progress, setProgress] = useState<ProgressData>(() => typeof window === "undefined" ? defaultProgress : loadProgress());
+  const [progress, setProgress] = useState<ProgressData>(defaultProgress);
+  const [storageReady, setStorageReady] = useState(false);
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
+    setProgress(loadProgress());
+    setStorageReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!storageReady) return;
     saveProgress(progress);
     document.documentElement.dataset.theme = progress.settings.theme === "system" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : progress.settings.theme;
     document.documentElement.dataset.contrast = String(progress.settings.highContrast);
     document.documentElement.dataset.motion = progress.settings.reducedMotion ? "reduced" : "ok";
-  }, [progress]);
+  }, [progress, storageReady]);
 
   useEffect(() => {
     const onPop = () => {
@@ -64,7 +76,7 @@ export default function TypewellApp({ initialPath = "/" }: { initialPath?: strin
     }));
   }
 
-  const props = { progress, setProgress, record, go, setFocus, path };
+  const props = { progress, setProgress, record, go, setFocus, path, embedded };
 
   return (
     <div className={focus ? "app focus-active" : "app"}>
@@ -78,7 +90,7 @@ export default function TypewellApp({ initialPath = "/" }: { initialPath?: strin
         {page === "progress" && <Progress progress={progress} setProgress={setProgress} />}
         {page === "settings" && <Settings progress={progress} setProgress={setProgress} />}
         {page === "tools" && <Tools path={path} go={go} progress={progress} />}
-        {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} />}
+        {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />}
       </main>
       {!focus && <Footer go={go} />}
     </div>
@@ -89,8 +101,9 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
   const moreToolsRef = useRef<HTMLDetailsElement | null>(null);
 
   function navigateFromMenu(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    event.preventDefault();
     moreToolsRef.current?.removeAttribute("open");
+    if (!clientManagedRoutes.has(href)) return;
+    event.preventDefault();
     go(routeToPage(href), href);
   }
 
@@ -98,7 +111,7 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
     <header className="topbar">
       <button className="brand" onClick={() => go("home")} aria-label="WPMTest home"><span>WPMTEST</span><small>Free typing mastery</small></button>
       <nav aria-label="Primary navigation">
-        {nav.map((item) => <a key={item.href} className={routeToPage(item.href) === page ? "active" : ""} href={item.href} onClick={(event) => { event.preventDefault(); go(routeToPage(item.href), item.href); }}>{item.label}</a>)}
+        {nav.map((item) => <a key={item.href} className={routeToPage(item.href) === page ? "active" : ""} href={item.href} onClick={(event) => navigateFromMenu(event, item.href)}>{item.label}</a>)}
         <details ref={moreToolsRef} className="more-tools">
           <summary>More Tools</summary>
           <div>
@@ -110,6 +123,9 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
               ["/settings", "Settings"],
               ["/typing-test-with-numbers/", "Numbers Test"],
               ["/typing-test-with-punctuation/", "Punctuation Test"],
+              ["/typing-test-for-students/", "Student Typing Test"],
+              ["/educators/", "For Educators"],
+              ["/blog/", "Typing & Career Guides"],
               ["/learn", "Lessons"]
             ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
           </div>
@@ -119,17 +135,17 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
   );
 }
 
-function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
+function Home({ progress, setProgress, record, setFocus, path, go, embedded }: SharedProps) {
   return (
     <section className="home">
       <div className="hero">
         <div className="hero-copy">
           <p className="eyebrow">FREE • NO SIGNUP • PRIVATE</p>
-          <h1>Free Typing Test - Check Your WPM &amp; Accuracy</h1>
+          <h1>Free Typing Test — Measure Your Speed and Accuracy Instantly</h1>
           <p>Start typing instantly. Test your speed, accuracy, and consistency in 1, 3, 5, or 10 minutes. Free, private, and no account required.</p>
         </div>
       </div>
-      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} />
+      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
       <AdSlot placement="after-home-test" />
       <section className="seo-section philosophy">
         <h2>Improve More Than Just WPM</h2>
@@ -151,9 +167,9 @@ function Home({ progress, setProgress, record, setFocus, path, go }: SharedProps
         <h2>Practice What Slows You Down</h2>
         <div className="link-grid compact-links">{[
           ["/typing-practice/", "Typing Practice", "Flexible words and sentence drills."],
-          ["/practice/weak-keys", "Weak-Key Practice", "Adaptive drills for difficult keys."],
-          ["/practice/numbers", "Numbers", "Number-row practice for real work."],
-          ["/practice/punctuation", "Punctuation", "Punctuation and capitalization control."],
+          ["/typing-practice/", "Weak-Key Practice", "Adaptive drills for difficult keys."],
+          ["/typing-test-with-numbers/", "Numbers", "Number-row practice for real work."],
+          ["/typing-test-with-punctuation/", "Punctuation", "Punctuation and capitalization control."],
           ["/touch-typing-practice/", "Touch Typing", "Build reliable finger placement."],
           ["/rhythm", "Rhythm Trainer", "Practice smooth, even timing."],
           ["/average-typing-speed/", "Average Typing Speed", "Interpret WPM without fake rankings."],
@@ -251,7 +267,7 @@ function Learn({ progress, setProgress, record, setFocus, path, go }: SharedProp
   );
 }
 
-function Practice({ progress, setProgress, record, setFocus, path }: SharedProps) {
+function Practice({ progress, setProgress, record, setFocus, path, embedded }: SharedProps) {
   const [mode, setMode] = useState<PracticeMode>(() => practiceModeFromPath(path));
   const [duration, setDuration] = useState(60);
   const [count, setCount] = useState(50);
@@ -261,8 +277,9 @@ function Practice({ progress, setProgress, record, setFocus, path }: SharedProps
   const target = mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom);
   return (
     <Trainer
-      title="Practice"
-      subtitle="Choose a mode, duration, or word-count target. Everything runs locally in your browser."
+      title="Typing Practice — Targeted Drills to Fix Your Weak Keys"
+      heading={embedded ? "h2" : undefined}
+      subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
       target={target}
       mode="practice"
       duration={duration}
@@ -276,14 +293,14 @@ function Practice({ progress, setProgress, record, setFocus, path }: SharedProps
   );
 }
 
-function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
+function Test({ progress, setProgress, record, setFocus, path, go, embedded }: SharedProps) {
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   const [count, setCount] = useState(() => Math.max(50, Math.round(testDurationFromPath(path) * 1.8)));
   const testMode = testModeFromPath(path);
   const testTitle = testMode === "Data Entry" ? "Data Entry Typing Test"
-    : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
+    : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
     : testMode === "Numbers"
-    ? path.includes("kph") ? "KPH Typing Test" : path.includes("10-key") || path.includes("numeric-keypad") ? "10 Key Numeric Keypad Test" : "Typing Test with Numbers"
+    ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") || path.includes("numeric-keypad") ? "10 Key Numeric Keypad Test" : "Typing Test with Numbers"
     : testMode === "Punctuation" ? "Typing Test with Punctuation" : timedTestTitle(path);
   const testDescription = testMode === "Data Entry"
     ? "Practice fictional records with names, order IDs, dates, amounts, and ZIP codes."
@@ -300,7 +317,7 @@ function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps
     setCount(Math.max(50, Math.round(nextDuration * 1.8)));
   }, [path]);
   if (testMode === "Data Entry") {
-    return <DataEntryTrainer path={path} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
+    return <DataEntryTrainer path={path} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} embedded={embedded} />;
   }
   if (testMode === "Numeric Keypad") {
     return <NumericKeypadTrainer title={testTitle} duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} go={go} />;
@@ -308,6 +325,7 @@ function Test({ progress, setProgress, record, setFocus, path, go }: SharedProps
   return (
     <Trainer
       title={testTitle}
+      heading={embedded ? "h2" : undefined}
       subtitle="Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."
       target={buildPracticeText(testMode, count)}
       mode="test"
@@ -339,7 +357,7 @@ function utilityMetrics(correctCharacters: number, incorrectCharacters: number, 
   };
 }
 
-function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go }: Pick<SharedProps, "progress" | "setProgress" | "setFocus" | "go" | "path"> & { onRecord: (record: SessionRecord) => void }) {
+function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go, embedded }: Pick<SharedProps, "progress" | "setProgress" | "setFocus" | "go" | "path" | "embedded"> & { onRecord: (record: SessionRecord) => void }) {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const profile = normalizedPath.endsWith("/alphanumeric")
     ? { title: "Alphanumeric Data Entry Practice", description: "Practice names, order IDs, ZIP codes, and product codes.", indexes: [0, 1, 4, 5], labels: ["Name", "Order ID", "ZIP", "Product code"] }
@@ -394,7 +412,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go 
 
   function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); }
   return <section className="dashboard utility-test">
-    <div className="trainer-head"><div><h1>{profile.title}</h1><p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
+    <div className="trainer-head"><div>{embedded ? <h2>{profile.title}</h2> : <h1>{profile.title}</h1>}<p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
     {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM · {finished.metrics.accuracy}% field accuracy</h2><div className="metrics"><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
     <p className="tool-copy">This test uses fictional records and measures field-level accuracy separately from paragraph typing. Progress is stored locally on this device.</p>
     <div className="inline-links"><InternalLink href="/data-entry-practice/" go={go}>All Data Entry Practice</InternalLink><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
@@ -424,6 +442,7 @@ interface SharedProps {
   go: (page: Page, route?: string) => void;
   setFocus: (focus: boolean) => void;
   path: string;
+  embedded: boolean;
 }
 
 function Trainer(props: {
@@ -617,11 +636,33 @@ function FingerGuide({ current }: { current: string }) {
   );
 }
 
+function WeakKeyHeatmap({ weakKeys }: { weakKeys: SessionRecord["weakKeys"] }) {
+  const errorRates = new Map(weakKeys.map((item) => [keyboardKey(item.key), item.errorRate]));
+  return (
+    <div className="weak-key-heatmap" aria-label="Weak-key keyboard heatmap">
+      {rows.map((row, rowIndex) => (
+        <div className="weak-key-row" key={rowIndex}>
+          {row.map((key) => {
+            const errorRate = errorRates.get(key) ?? 0;
+            const severity = errorRate >= 40 ? "high" : errorRate >= 20 ? "medium" : errorRate > 0 ? "low" : "none";
+            return (
+              <span className={`weak-key-cell ${severity}${key === "space" ? " space" : ""}`} title={errorRate ? `${key}: ${round(errorRate)}% errors` : key} key={key}>
+                {key === "space" ? "Space" : key}
+              </span>
+            );
+          })}
+        </div>
+      ))}
+      <small>Darker keys had a higher error rate in this session.</small>
+    </div>
+  );
+}
+
 function ResultScreen({ record, history, reset, onPractice }: { record: SessionRecord; history: SessionRecord[]; reset: () => void; onPractice?: () => void }) {
-  const comparable = history.filter((item) => item.type === record.type && item.label === record.label);
+  const comparable = history.filter((item) => item.id !== record.id && item.type === record.type && item.label === record.label);
   const previous = comparable.at(-1);
   const previousBest = Math.max(0, ...comparable.map((item) => item.metrics.wpm));
-  const newBest = record.metrics.wpm > previousBest;
+  const newBest = !comparable.length || record.metrics.wpm > previousBest;
   const previousDelta = previous ? round(record.metrics.wpm - previous.metrics.wpm) : null;
   const bestDelta = previousBest ? round(record.metrics.wpm - previousBest) : null;
   const recommendation = record.metrics.accuracy < 95
@@ -660,14 +701,30 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
           <Metric label="Active Time" value={formatTime(record.metrics.activeMs)} />
           <Metric label="Completed" value={new Date(record.date).toLocaleDateString()} />
         </div>
-        <Sparkline values={history.slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
+        <Sparkline values={history.filter((item) => item.id !== record.id).slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
         <p>{recommendation}</p>
+        {record.weakKeys.length > 0 && (
+          <section className="weak-key-summary" aria-labelledby="weak-key-heading">
+            <div>
+              <p className="eyebrow">Target your next practice</p>
+              <h3 id="weak-key-heading">Weak-key snapshot</h3>
+              <p>Your highest-error keys from this session are highlighted below. Practice these before your next timed test.</p>
+            </div>
+            <div className="weak-key-chips" aria-label="Keys to practice">
+              {record.weakKeys.slice(0, 8).map((item) => (
+                <span key={item.key}><kbd>{item.key === " " ? "Space" : item.key}</kbd><small>{round(item.errorRate)}% errors</small></span>
+              ))}
+            </div>
+            <WeakKeyHeatmap weakKeys={record.weakKeys} />
+          </section>
+        )}
         {bestDelta !== null && bestDelta < 0 && <p className="hint">{Math.abs(bestDelta)} WPM below your personal best for this test.</p>}
-        <div className="actions">
+        <div className="actions result-actions">
           <button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button>
+          <InternalAction href="/typing-certificate/">Create Certificate</InternalAction>
           {onPractice && record.weakKeys[0] && <button onClick={onPractice}>Practice weak keys</button>}
-          <InternalAction href="/5-minute-typing-test/">Take a 5-Minute Test</InternalAction>
           <button onClick={() => shareResult(record)}>Share Result</button>
+          <InternalAction href="/5-minute-typing-test/">Take a 5-Minute Test</InternalAction>
         </div>
       </div>
     </div>
@@ -843,7 +900,7 @@ function Progress({ progress, setProgress }: { progress: ProgressData; setProgre
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "typewell-progress.json";
+    link.download = "wpmtest-progress.json";
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -902,7 +959,7 @@ function AverageTypingSpeed({ go }: { go: (page: Page, route?: string) => void }
   const label = wpm < 25 ? "Beginner" : wpm < 45 ? "Everyday baseline" : wpm < 65 ? "Productive" : wpm < 85 ? "Fast" : "Advanced";
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Average Typing Speed Guide</h1><p>Interpret WPM carefully. A useful typing result combines speed, accuracy, consistency, and the difficulty of the text.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
+      <div className="trainer-head"><div><h1>Average Typing Speed by Experience — What&apos;s a Good WPM?</h1><p>Interpret WPM carefully. A useful typing result combines speed, accuracy, consistency, and the difficulty of the text.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
       <div className="grid-two">
         <div className="panel"><h2><Gauge size={18} />WPM Interpreter</h2><label>Typing speed <input type="range" min="5" max="120" value={wpm} onChange={(event) => setWpm(Number(event.target.value))} /></label><div className="metrics"><Metric label="Entered WPM" value={wpm} /><Metric label="Range" value={label} /></div><p>A short test can overstate speed. Use 3, 5, or 10 minute tests when you need a more stable result.</p></div>
         <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For real work, accuracy above 95% is usually more valuable than brief bursts of high raw WPM.</p></div>
@@ -926,7 +983,7 @@ function WpmCalculator({ go }: { go: (page: Page, route?: string) => void }) {
   const accuracy = characterBasis ? round((correctCharacters / characterBasis) * 100) : 100;
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>WPM Calculator</h1><p>Calculate words per minute using the standard five-character word convention.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Try Live Test</InternalLink></div>
+      <div className="trainer-head"><div><h1>WPM Calculator — Convert Characters and Time to Words Per Minute</h1><p>Calculate words per minute using the standard five-character word convention.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Try Live Test</InternalLink></div>
       <div className="grid-two">
         <div className="panel tool-form"><h2><Calculator size={18} />Inputs</h2><label>Characters typed <input type="number" min="0" value={characters} onChange={(event) => setCharacters(Number(event.target.value))} /></label><label>Words typed <input type="number" min="0" value={words} onChange={(event) => setWords(Number(event.target.value))} /></label><label>Errors <input type="number" min="0" value={errors} onChange={(event) => setErrors(Number(event.target.value))} /></label><label>Time in seconds <input type="number" min="1" value={seconds} onChange={(event) => setSeconds(Number(event.target.value))} /></label></div>
         <div className="panel"><h2>Result</h2><div className="metrics"><Metric label="WPM" value={wpm} /><Metric label="Raw WPM" value={rawWpm} /><Metric label="Accuracy" value={`${accuracy}%`} /></div><p>Formula: correct characters divided by 5, then divided by elapsed minutes. Raw WPM uses all typed characters before subtracting errors.</p></div>
@@ -964,7 +1021,7 @@ function TypingGames({ progress, setProgress, record, setFocus, path, go }: Shar
   return (
     <section className="dashboard">
       <div className="trainer-head"><div><h1>Typing Games</h1><p>Lightweight drills that reinforce real typing accuracy without accounts or leaderboards.</p></div><Gamepad2 aria-hidden="true" /></div>
-      <Trainer title="Word Rush" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
+      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
     </section>
   );
 }

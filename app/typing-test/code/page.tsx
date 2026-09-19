@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import TypewellApp from "../../../src/App";
+import WPMTestApp from "../../../src/App";
 
 const SITE_URL = "https://wpmtest.app";
 const canonical = `${SITE_URL}/typing-test/code/`;
@@ -8,13 +8,11 @@ export const metadata: Metadata = {
   title: "Code Typing Test - Programming Speed & Accuracy | WPMTest",
   description: "Free code typing test for developers. Practice programming syntax, brackets, punctuation, and symbols while measuring WPM and accuracy.",
   alternates: { canonical },
-  openGraph: {
-    title: "Code Typing Test for Developers | WPMTest",
+  openGraph: { title: "Code Typing Test for Developers | WPMTest",
     description: "Practice programming syntax and measure code typing speed, accuracy, and errors.",
     url: canonical,
-    type: "website"
-  },
-  twitter: { card: "summary", title: "Code Typing Test for Developers | WPMTest", description: "Practice programming syntax and measure code typing speed and accuracy." },
+    type: "website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title: "Code Typing Test for Developers | WPMTest", description: "Practice programming syntax and measure code typing speed and accuracy.", images: [`${SITE_URL}/og-default.svg`] },
   robots: { index: true, follow: true }
 };
 
@@ -58,7 +56,7 @@ export default function CodeTypingTestPage() {
           <h1>Code Typing Test for Developers</h1>
           <p>Test programming typing speed with real code-style syntax instead of ordinary prose. Measure WPM and accuracy while practicing the punctuation, brackets, operators, quotes, and symbols developers use constantly.</p>
         </section>
-        <TypewellApp initialPath="/practice/code/" />
+        <WPMTestApp initialPath="/practice/code/" embedded />
         <section className="seo-prerender" aria-label="Programming typing test guide">
           <h2>Why code typing is different from prose</h2>
           <p>Programming makes your hands solve a different problem from paragraph typing. Source code mixes short identifiers with brackets, parentheses, quotes, semicolons, commas, periods, comparison operators, assignment operators, and capitalization. Those characters interrupt the familiar word patterns that make ordinary prose fast.</p>

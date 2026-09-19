@@ -6,13 +6,13 @@ Status: cleanup foundation substantially complete on `architecture-cleanup-2026-
 
 ### Resolved in this cleanup
 
-1. **Canonical production origin** now resolves to `https://wpmtest.app` rather than the old `typewell.app` fallback.
+1. **Canonical production origin** now resolves to `https://wpmtest.app` rather than the old `wpmtest.app` fallback.
 2. **Vite application artifacts** were confirmed obsolete for the production Next.js static export and removed: `vite.config.ts`, `src/main.tsx`, and root `index.html`.
 3. **Dependency validation** now uses a generated lockfile, strict `npm ci`, strict `npm audit`, tests, and a production build in CI.
 4. **Dedicated route ownership** is explicit. The legacy catch-all excludes dedicated Next.js pages, and `tests/route-ownership.test.ts` fails if a future dedicated page is not registered.
 5. **About, Privacy, Contact, and Terms** were moved to dedicated Next routes with WPMTest metadata and current copy. The privacy page now accurately discloses Google AdSense/cookie usage. Contact intentionally publishes no email until a real support address exists.
 6. **Duplicate client-side SEO mutation** was removed from `src/App.tsx`. Next.js server metadata is now the SEO authority for migrated pages rather than client code rewriting titles, canonicals, OpenGraph metadata, and JSON-LD.
-7. **Visible Typewell branding** found during the migration was removed from the active navigation upgrade, educator/professional pages, the core app copy, and the printable/shareable certificate flow. The remaining `TypewellApp` identifier is internal code only.
+7. **Visible WPMTest branding** found during the migration was removed from the active navigation upgrade, educator/professional pages, the core app copy, and the printable/shareable certificate flow. The remaining `WPMTestApp` identifier is internal code only.
 8. **Data Entry feature foundations** now live under `src/features/data-entry/` and career assessment configuration under `src/features/careers/`.
 9. **Data Entry employment content** has a dedicated article route and the main Data Entry assessment page has dedicated metadata, schema, practice guidance, assessment sections, results guidance, and certificate language.
 10. **Sitemap coverage** now includes the dedicated audience pages `/educators/` and `/professionals/` in addition to the other dedicated routes.
@@ -46,7 +46,7 @@ Recommended extraction order:
 - general typing test/practice surfaces
 - games/rhythm/lessons
 
-Do not rename the internal `TypewellApp` component merely for cosmetic reasons unless imports are being touched for another purpose.
+Do not rename the internal `WPMTestApp` component merely for cosmetic reasons unless imports are being touched for another purpose.
 
 ### 2. CSS is still historically layered
 
