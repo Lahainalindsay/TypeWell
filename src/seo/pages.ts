@@ -47,10 +47,34 @@ export const seoPages: SeoPage[] = [
       "Choose a shorter test for a quick check or a longer test for a steadier sample. Your local history makes it easier to compare like-for-like sessions."
     ],
     related: [
+      { href: "/mobile-typing-test/", label: "Mobile Typing Test" },
       { href: "/1-minute-typing-test/", label: "1 Minute Test" },
       { href: "/3-minute-typing-test/", label: "3 Minute Test" },
       { href: "/typing-test-with-numbers/", label: "Numbers Test" },
       { href: "/typing-test-with-punctuation/", label: "Punctuation Test" }
+    ]
+  },
+  {
+    path: "/mobile-typing-test/",
+    title: "Mobile Typing Test - Test Speed on Phone or Tablet | WPMTest",
+    description: "Take a free mobile typing test on your phone or tablet. Measure touchscreen WPM, accuracy, consistency, and errors with no signup required.",
+    h1: "Mobile Typing Test — Test Your Speed on a Phone or Tablet",
+    intro: "Use your phone or tablet's on-screen keyboard to measure touchscreen typing speed and accuracy. Tap the input below to open your keyboard; the timer begins with your first character.",
+    content: [
+      "A mobile typing score measures a different skill from typing on a physical keyboard. Autocorrect, predictive text, keyboard size, swipe input, and thumb technique can all change the result, so compare mobile attempts with other mobile attempts made on the same device and keyboard settings.",
+      "For touch-typing lessons, job assessments, and traditional WPM benchmarks, a physical keyboard is still the better practice tool because those tasks depend on finger placement and key travel. You can connect a hardware keyboard to many phones and tablets, or return on a computer when you want to measure conventional keyboard speed.",
+      "For a useful mobile baseline, turn off swipe typing and avoid accepting predicted words during the test. Keep the same orientation and keyboard settings between sessions, then review both WPM and accuracy rather than chasing speed alone. Your result remains stored locally in this browser."
+    ],
+    related: [
+      { href: "/typing-practice/", label: "Mobile Typing Practice" },
+      { href: "/typing-test/", label: "Standard Typing Test" },
+      { href: "/average-typing-speed/", label: "Average Typing Speed" },
+      { href: "/typing-test-with-numbers/", label: "Numbers Typing Test" }
+    ],
+    faqs: [
+      { question: "Does mobile WPM equal physical keyboard WPM?", answer: "No. Touchscreen and physical-keyboard scores measure different input methods, so compare each type only with similar tests." },
+      { question: "Can I practice typing on a phone?", answer: "Yes. Mobile practice can improve touchscreen accuracy and thumb typing, but it does not replace physical-keyboard practice for touch-typing technique." },
+      { question: "Should I disable autocorrect for a mobile typing test?", answer: "Yes when possible. Autocorrect and predictive suggestions can change what reaches the test and make results harder to compare." }
     ]
   },
   {
