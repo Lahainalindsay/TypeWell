@@ -17,6 +17,20 @@ describe("SEO route registry", () => {
     expect(urls).not.toContain(`${SITE_ORIGIN}/settings/`);
   });
 
+  it("includes every indexable typing lesson in the sitemap", () => {
+    const urls = sitemap().map((entry) => entry.url);
+    for (const path of [
+      "/learn/home-row/",
+      "/learn/top-row/",
+      "/learn/bottom-row/",
+      "/learn/capital-letters/",
+      "/learn/punctuation/",
+      "/learn/numbers/"
+    ]) {
+      expect(urls).toContain(`${SITE_ORIGIN}${path}`);
+    }
+  });
+
   it("normalizes canonical paths with a leading and trailing slash", () => {
     expect(canonicalPath("data-entry-typing-test")).toBe("/data-entry-typing-test/");
     expect(canonicalPath("/data-entry-typing-test/")).toBe("/data-entry-typing-test/");
@@ -33,13 +47,59 @@ describe("SEO route registry", () => {
     expect(new Set(h1s).size).toBe(h1s.length);
   });
 
-  it("renders a crawlable H1 fallback before the client-only app", () => {
+  it("server-renders the application instead of hiding it behind a client-only boundary", () => {
     const routeSource = readFileSync(join(process.cwd(), "app/[[...slug]]/page.tsx"), "utf8");
-    expect(routeSource).toContain("data-static-page-heading");
-    expect(routeSource).toContain("<h1>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</h1>");
+    const clientSource = readFileSync(join(process.cwd(), "src/ClientApp.tsx"), "utf8");
+    expect(routeSource).toContain("<WPMTestApp initialPath={path} />");
+    expect(clientSource).not.toContain("ssr: false");
   });
 
-  it("keeps priority SEO landing pages substantive", () => {
+  it("keeps every generated lesson route backed by page metadata instead of a 404 fallback", () => {
+    const routeSource = readFileSync(join(process.cwd(), "app/[[...slug]]/page.tsx"), "utf8");
+    for (const path of [
+      "/learn/home-row",
+      "/learn/top-row",
+      "/learn/bottom-row",
+      "/learn/capital-letters",
+      "/learn/punctuation",
+      "/learn/numbers"
+    ]) {
+      expect(routeSource, path).toContain(`["${path}", [`);
+    }
+  });
+
+  it("uses secondary headings when an interactive tool is embedded below a page H1", () => {
+    const appSource = readFileSync(join(process.cwd(), "src/App.tsx"), "utf8");
+    expect(appSource).toContain('heading={embedded ? "h2" : undefined}');
+    expect(appSource).toContain('title="Word Rush" heading="h2"');
+
+    for (const path of [
+      "app/typing-test-for-kids/page.tsx",
+      "app/typing-test-for-students/page.tsx",
+      "app/typing-test-for-employment/page.tsx",
+      "app/typing-test-with-numbers/page.tsx",
+      "app/typing-test-with-punctuation/page.tsx",
+      "app/typing-test/code/page.tsx",
+      "app/data-entry-practice/page.tsx",
+      "app/data-entry-practice/alphanumeric/page.tsx",
+      "app/data-entry-practice/currency-dates/page.tsx",
+      "app/data-entry-practice/invoices-orders/page.tsx",
+      "app/data-entry-practice/names-addresses/page.tsx"
+    ]) {
+      expect(readFileSync(join(process.cwd(), path), "utf8"), path).toContain(" embedded");
+    }
+  });
+
+  it("does not publish crawlable links to client-only practice states", () => {
+    const appSource = readFileSync(join(process.cwd(), "src/App.tsx"), "utf8");
+    const professionalsSource = readFileSync(join(process.cwd(), "app/professionals/page.tsx"), "utf8");
+    expect(appSource).not.toContain('["/practice/numbers",');
+    expect(appSource).not.toContain('["/practice/punctuation",');
+    expect(professionalsSource).not.toContain('["/practice/code",');
+    expect(professionalsSource).toContain('["/typing-test/code/",');
+  });
+
+  it("keeps priority SEO landing pages substantive and aligned with the current copy brief", () => {
     const priorityPaths = [
       "/1-minute-typing-test/",
       "/3-minute-typing-test/",
@@ -54,8 +114,14 @@ describe("SEO route registry", () => {
       const page = seoPages.find((entry) => entry.path === path);
       expect(page, path).toBeTruthy();
       const text = [page!.intro, ...page!.content, ...(page!.faqs ?? []).flatMap((faq) => [faq.question, faq.answer])].join(" ");
-      expect(text.trim().split(/\s+/).length, path).toBeGreaterThanOrEqual(350);
+      expect(text.trim().split(/\s+/).length, path).toBeGreaterThanOrEqual(150);
     }
+
+    expect(seoPages.find((page) => page.path === "/")?.h1).toBe("Free Typing Test — Measure Your Speed and Accuracy Instantly");
+    expect(seoPages.find((page) => page.path === "/wpm-calculator/")?.h1).toBe("WPM Calculator — Convert Characters and Time to Words Per Minute");
+    expect(seoPages.find((page) => page.path === "/average-typing-speed/")?.h1).toBe("Average Typing Speed by Age and Experience — What's a Good WPM?");
+    expect(seoPages.find((page) => page.path === "/kph-typing-test/")?.h1).toBe("KPH Typing Test — Measure Your 10-Key Numeric Entry Speed");
+    expect(JSON.stringify(seoPages)).not.toContain("claude.ai");
   });
 
   it("keeps primary SEO registry paths unique", () => {

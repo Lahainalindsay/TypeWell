@@ -56,7 +56,7 @@ export default function CodeTypingTestPage() {
           <h1>Code Typing Test for Developers</h1>
           <p>Test programming typing speed with real code-style syntax instead of ordinary prose. Measure WPM and accuracy while practicing the punctuation, brackets, operators, quotes, and symbols developers use constantly.</p>
         </section>
-        <WPMTestApp initialPath="/practice/code/" />
+        <WPMTestApp initialPath="/practice/code/" embedded />
         <section className="seo-prerender" aria-label="Programming typing test guide">
           <h2>Why code typing is different from prose</h2>
           <p>Programming makes your hands solve a different problem from paragraph typing. Source code mixes short identifiers with brackets, parentheses, quotes, semicolons, commas, periods, comparison operators, assignment operators, and capitalization. Those characters interrupt the familiar word patterns that make ordinary prose fast.</p>

@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
+import { absoluteUrl } from "../../src/lib/seo/site";
 
 export const metadata: Metadata = {
-  title: "Professional Typing Tests – Data Entry, 10-Key & Job Skills | WPMTest",
+  title: "Professional Typing Tests & Job Skills | WPMTest",
   description: "Practice job-specific typing skills with free professional typing tests for data entry, 10-key, numeric keypad, numbers, punctuation, office work and more.",
   alternates: { canonical: "/professionals/" },
   openGraph: {
     title: "Professional Typing Tests | WPMTest",
     description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
-    url: "/professionals/"
+    url: "/professionals/",
+    images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest professional typing tests" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Professional Typing Tests & Job Skills | WPMTest",
+    description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
+    images: [absoluteUrl("/og-default.svg")]
   }
 };
 
@@ -19,7 +27,7 @@ const tests = [
   ["/typing-test-with-numbers/", "Numbers & Symbols Typing", "Practice dates, prices, percentages, measurements and mixed text-and-number entry."],
   ["/typing-test-with-punctuation/", "Punctuation Typing Test", "Build accuracy with capitalization, commas, quotes, questions and document-style text."],
   ["/typing-practice/", "Office & Administrative Practice", "Use flexible practice for emails, business text, custom material and everyday keyboard accuracy."],
-  ["/practice/code", "Coding Typing Practice", "Practice brackets, punctuation, symbols and technical text used in software and technical work."],
+  ["/typing-test/code/", "Coding Typing Practice", "Practice brackets, punctuation, symbols and technical text used in software and technical work."],
   ["/typing-practice/", "Transcription Practice", "Use longer custom passages to build sustained, accurate copy typing and transcription rhythm."]
 ];
 

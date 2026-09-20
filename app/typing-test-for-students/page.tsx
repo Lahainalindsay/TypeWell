@@ -25,7 +25,7 @@ export default function StudentTypingTestPage() {
   return <><main>
     <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Students</span></nav>
     <section className="seo-mode-intro"><p className="eyebrow">Free • no signup</p><h1>Typing Test for Students</h1><p>Check your typing speed, accuracy and consistency with a free student typing test. Use your result as a practical benchmark for essays, research, online assignments and everyday school computer work.</p></section>
-    <WPMTestApp initialPath="/3-minute-typing-test/" />
+    <WPMTestApp initialPath="/3-minute-typing-test/" embedded />
     <section className="seo-prerender" aria-label="Student typing test guide">
       <h2>Typing speed for real schoolwork</h2><p>Students type under different conditions than a short word-list challenge. Essays, notes and assignments require sustained attention, capitalization, punctuation and corrections. A timed test gives you a repeatable baseline you can compare after practice.</p><p>WPM is useful, but accuracy matters just as much. A faster score that creates more corrections may not save time when writing an actual assignment. Aim for controlled speed and clean text first, then build pace.</p>
       <h2>How students can improve their typing</h2><p>Practice regularly in short sessions and pay attention to recurring mistakes. Keep your hands relaxed, return to consistent finger positions, and practice difficult keys or combinations instead of repeatedly racing through the same test. Retest under similar conditions so your results are easier to compare.</p>

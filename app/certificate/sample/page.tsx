@@ -12,7 +12,14 @@ export const metadata: Metadata = {
     title: "Sample Typing Certificate | WPMTest",
     description: "See the WPMTest typing certificate before taking a test.",
     url: canonical,
-    type: "website"
+    type: "website",
+    images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "Sample WPMTest typing certificate" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sample Typing Certificate | WPMTest",
+    description: "See the WPMTest typing certificate before taking a test.",
+    images: [absoluteUrl("/og-default.svg")]
   }
 };
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "../src/styles.css";
 import "../src/refresh.css";
 import "../src/homepage-v2.css";
@@ -45,21 +46,21 @@ const webApplicationSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
         />
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
-          crossOrigin="anonymous"
-        />
         <script defer src="/certificate-flow.js" />
         <script defer src="/site-upgrade.js" />
       </head>
       <body>{children}</body>
+      <Script
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+        strategy="afterInteractive"
+        crossOrigin="anonymous"
+      />
     </html>
   );
 }
