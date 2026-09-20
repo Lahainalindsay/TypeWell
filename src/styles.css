@@ -80,7 +80,7 @@ nav button.active, nav a.active { color: var(--accent); background: var(--panel-
 .more-tools summary::-webkit-details-marker { display: none; }
 .more-tools div { position: absolute; right: 0; top: calc(100% + 0.4rem); z-index: 30; min-width: 220px; display: grid; gap: 0.2rem; padding: 0.45rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-2); box-shadow: var(--shadow); }
 .more-tools div a { justify-content: flex-start; }
-main { padding: clamp(0.85rem, 3vw, 2rem); }
+main, .app-content { padding: clamp(0.85rem, 3vw, 2rem); }
 .hero { min-height: auto; display: block; max-width: 1180px; margin: 0 auto; padding: clamp(1rem, 3vw, 2.25rem) 0 0.85rem; }
 .hero-copy h1 { font-size: clamp(2rem, 4vw, 3.65rem); line-height: 1.04; margin: 0 0 0.7rem; letter-spacing: 0; max-width: 780px; }
 .hero-copy p { color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.12rem); line-height: 1.58; max-width: 740px; }
@@ -257,7 +257,7 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 .seo-prerender nav a:hover { background: var(--panel-strong); }
 .not-found-page { min-height: 100vh; display: grid; place-items: center; padding: clamp(1rem, 4vw, 3rem); }
 .not-found-page .panel { width: min(900px, 100%); }
-.focus-active main { padding: 0; }
+.focus-active main, .focus-active .app-content { padding: 0; }
 .focus-active .workspace { display: block; }
 .focus-active .side, .focus-active .trainer-head, .focus-active .metrics, .focus-active .keyboard, .focus-active .finger-guide { display: none; }
 .focus-active .trainer { min-height: 100vh; border: 0; border-radius: 0; justify-content: center; box-shadow: none; background: transparent; }

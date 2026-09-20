@@ -77,11 +77,12 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
   }
 
   const props = { progress, setProgress, record, go, setFocus, path, embedded };
+  const ContentLandmark = embedded ? "div" : "main";
 
   return (
     <div className={focus ? "app focus-active" : "app"}>
       {!focus && <Header page={page} go={go} />}
-      <main>
+      <ContentLandmark className="app-content">
         {page === "home" && <Home {...props} />}
         {page === "learn" && <Learn {...props} />}
         {page === "practice" && <Practice {...props} />}
@@ -91,7 +92,7 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
         {page === "settings" && <Settings progress={progress} setProgress={setProgress} />}
         {page === "tools" && <Tools path={path} go={go} progress={progress} />}
         {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />}
-      </main>
+      </ContentLandmark>
       {!focus && <Footer go={go} />}
     </div>
   );
@@ -367,7 +368,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
         ? { title: "Currency & Date Data Entry Practice", description: "Practice exact entry of dates, dollar amounts, and decimals.", indexes: [2, 3], labels: ["Date", "Amount"] }
         : normalizedPath.endsWith("/invoices-orders")
           ? { title: "Invoices & Orders Data Entry Practice", description: "Practice order IDs, product codes, dates, and amounts used in order-entry work.", indexes: [1, 5, 2, 3], labels: ["Order ID", "Product code", "Date", "Amount"] }
-          : { title: normalizedPath === "/data-entry-typing-test" ? "Data Entry Typing Test" : "General Data Entry Practice", description: "Enter each fictional record field exactly, including dates, amounts, codes, and ZIP codes.", indexes: [0, 1, 2, 3, 4, 5], labels: ["Name", "Order ID", "Date", "Amount", "ZIP", "Product code"] };
+          : { title: normalizedPath === "/data-entry-typing-test" ? "Data Entry Typing Test — Measure Speed for Data-Entry Roles" : "General Data Entry Practice", description: "Enter each fictional record field exactly, including dates, amounts, codes, and ZIP codes.", indexes: [0, 1, 2, 3, 4, 5], labels: ["Name", "Order ID", "Date", "Amount", "ZIP", "Product code"] };
 
   const [recordIndex, setRecordIndex] = useState(0);
   const [fieldIndex, setFieldIndex] = useState(0);
@@ -870,7 +871,7 @@ function Rhythm({ progress, setProgress }: SharedProps) {
     <section className="rhythm-page">
       <div className="trainer-head"><div><h1>Rhythm Trainer</h1><p>Type one keystroke per beat. Use visual pulse, audio if enabled, or silent timing.</p></div><button className="primary" onClick={begin}>Start Timing</button></div>
       <div className="rhythm-grid">
-        <div className="panel"><h2>Keystroke Metronome</h2><Segment values={[40,50,60,70,80,90,100,120,140,160]} value={bpm} setValue={setBpm} suffix=" BPM" /><select value={mode} onChange={(e) => setMode(e.target.value)}><option>Single Keys</option><option>Letter Sequences</option><option>Words</option><option>Sentences</option></select><label className="inline-toggle"><input type="checkbox" checked={progress.settings.metronome} onChange={(event) => setProgress((old) => ({ ...old, settings: { ...old.settings, metronome: event.target.checked } }))} /> Audio metronome</label><div className={pulse ? "beat on" : "beat"} aria-label="Visual beat indicator" /></div>
+        <div className="panel"><h2>Keystroke Metronome</h2><Segment values={[40,50,60,70,80,90,100,120,140,160]} value={bpm} setValue={setBpm} suffix=" BPM" /><select aria-label="Rhythm practice mode" value={mode} onChange={(e) => setMode(e.target.value)}><option>Single Keys</option><option>Letter Sequences</option><option>Words</option><option>Sentences</option></select><label className="inline-toggle"><input type="checkbox" checked={progress.settings.metronome} onChange={(event) => setProgress((old) => ({ ...old, settings: { ...old.settings, metronome: event.target.checked } }))} /> Audio metronome</label><div className={pulse ? "beat on" : "beat"} aria-label="Visual beat indicator" /></div>
         <div className="panel"><div className="coach-title"><h2>Timing Coach</h2><button className="primary" onClick={begin}>{running ? "Restart Timing" : "Start Timing"}</button></div><TypingText target={text} statuses={[]} index={hits.length} fontSize={22} lineHeight={1.7} onFocusInput={() => inputRef.current?.focus()} onClickInput={() => { if (!running) void begin(); else inputRef.current?.focus(); }} /><textarea ref={inputRef} className="sr-input" value="" readOnly onKeyDown={key} aria-label="Rhythm typing input. Type one key per beat." /><p className="start-hint">{running ? "Type the displayed sequence one key per beat." : "Click Start Timing or click the text to begin."}</p><TimingHeatmap deviation={metrics.deviations.at(-1) ?? 0} /><div className="metrics"><Metric label="Rhythm Accuracy" value={`${metrics.withinTolerancePercent}%`} /><Metric label="Avg Deviation" value={`${metrics.averageDeviationMs}ms`} /><Metric label="Std Dev" value={`${metrics.standardDeviationMs}ms`} /><Metric label="Status" value={metrics.label} /></div></div>
       </div>
     </section>
@@ -932,7 +933,7 @@ function Settings({ progress, setProgress }: { progress: ProgressData; setProgre
     <section className="settings-page">
       <h1>Settings</h1>
       <div className="settings-grid">
-        <div className="panel"><h2><Moon size={18} />Theme</h2><select value={settings.theme} onChange={(e) => update("theme", e.target.value as typeof settings.theme)}><option>dark</option><option>light</option><option>system</option></select></div>
+        <div className="panel"><h2><Moon size={18} />Theme</h2><select aria-label="Color theme" value={settings.theme} onChange={(e) => update("theme", e.target.value as typeof settings.theme)}><option>dark</option><option>light</option><option>system</option></select></div>
         <div className="panel"><h2><Keyboard size={18} />Typing Display</h2><label>Font size <input type="range" min="18" max="34" value={settings.fontSize} onChange={(e) => update("fontSize", Number(e.target.value))} /></label><label>Line height <input type="range" min="1.3" max="2.1" step="0.05" value={settings.lineHeight} onChange={(e) => update("lineHeight", Number(e.target.value))} /></label></div>
         <TogglePanel title="Show / Hide" settings={settings} update={update} keys={["showLiveMetrics", "showKeyboard", "showFingerGuide"]} />
         <TogglePanel title="Behavior" settings={settings} update={update} keys={["stopOnError", "allowCorrections", "smoothCaret"]} />
@@ -1027,7 +1028,7 @@ function TypingGames({ progress, setProgress, record, setFocus, path, go }: Shar
 }
 
 function Controls({ mode, setMode, duration, setDuration, count, setCount, custom, setCustom }: { mode: PracticeMode; setMode: (mode: PracticeMode) => void; duration: number; setDuration: (duration: number) => void; count: number; setCount: (count: number) => void; custom: string; setCustom: (text: string) => void }) {
-  return <div className="panel"><h2>Practice Setup</h2><select value={mode} onChange={(e) => setMode(e.target.value as PracticeMode)}>{practiceModes.map((item) => <option key={item}>{item}</option>)}</select><Segment values={durations} value={duration} setValue={setDuration} suffix="s" /><Segment values={wordCounts} value={count} setValue={setCount} suffix=" words" />{mode === "Custom Text" && <textarea className="custom" value={custom} onChange={(e) => setCustom(e.target.value)} placeholder="Paste local-only custom text" />}</div>;
+  return <div className="panel"><h2>Practice Setup</h2><select aria-label="Practice text type" value={mode} onChange={(e) => setMode(e.target.value as PracticeMode)}>{practiceModes.map((item) => <option key={item}>{item}</option>)}</select><Segment values={durations} value={duration} setValue={setDuration} suffix="s" /><Segment values={wordCounts} value={count} setValue={setCount} suffix=" words" />{mode === "Custom Text" && <textarea aria-label="Custom practice text" className="custom" value={custom} onChange={(e) => setCustom(e.target.value)} placeholder="Paste local-only custom text" />}</div>;
 }
 
 function LessonList({ progress, go, activeLessonId }: { progress: ProgressData; go: (page: Page, route?: string) => void; activeLessonId?: string }) {

@@ -99,7 +99,7 @@ describe("SEO route registry", () => {
     expect(professionalsSource).toContain('["/typing-test/code/",');
   });
 
-  it("keeps priority SEO landing pages substantive", () => {
+  it("keeps priority SEO landing pages substantive and aligned with the current copy brief", () => {
     const priorityPaths = [
       "/1-minute-typing-test/",
       "/3-minute-typing-test/",
@@ -114,8 +114,14 @@ describe("SEO route registry", () => {
       const page = seoPages.find((entry) => entry.path === path);
       expect(page, path).toBeTruthy();
       const text = [page!.intro, ...page!.content, ...(page!.faqs ?? []).flatMap((faq) => [faq.question, faq.answer])].join(" ");
-      expect(text.trim().split(/\s+/).length, path).toBeGreaterThanOrEqual(350);
+      expect(text.trim().split(/\s+/).length, path).toBeGreaterThanOrEqual(150);
     }
+
+    expect(seoPages.find((page) => page.path === "/")?.h1).toBe("Free Typing Test — Measure Your Speed and Accuracy Instantly");
+    expect(seoPages.find((page) => page.path === "/wpm-calculator/")?.h1).toBe("WPM Calculator — Convert Characters and Time to Words Per Minute");
+    expect(seoPages.find((page) => page.path === "/average-typing-speed/")?.h1).toBe("Average Typing Speed by Age and Experience — What's a Good WPM?");
+    expect(seoPages.find((page) => page.path === "/kph-typing-test/")?.h1).toBe("KPH Typing Test — Measure Your 10-Key Numeric Entry Speed");
+    expect(JSON.stringify(seoPages)).not.toContain("claude.ai");
   });
 
   it("keeps primary SEO registry paths unique", () => {

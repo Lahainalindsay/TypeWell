@@ -29,7 +29,7 @@ nav button, nav a, nav summary {
   font-size: 0.88rem;
 }
 
-main { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
+main, .app-content { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
 
 /* Preserve the keyword-rich H1, but stop letting it dominate the viewport. */
 .hero {

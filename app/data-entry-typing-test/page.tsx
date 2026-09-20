@@ -65,18 +65,18 @@ export default function DataEntryTypingTestPage() {
       mainEntity: [
         {
           "@type": "Question",
-          name: "What does a data entry typing test measure?",
-          acceptedAnswer: { "@type": "Answer", text: "It measures how accurately and efficiently you enter structured information such as names, dates, amounts, identifiers and numeric values rather than only continuous prose." }
+          name: "What WPM do data entry jobs usually require?",
+          acceptedAnswer: { "@type": "Answer", text: "Many postings ask for 40–60+ WPM at 95%+ accuracy. Requirements vary, so follow the specific job posting." }
         },
         {
           "@type": "Question",
-          name: "How is this different from a regular typing test?",
-          acceptedAnswer: { "@type": "Answer", text: "A regular typing test focuses on continuous text. Data entry adds field-to-field movement, exact formatting, numbers and codes where a single incorrect character can change a record." }
+          name: "What is the difference between this and the regular typing test?",
+          acceptedAnswer: { "@type": "Answer", text: "This test emphasizes numeric sequences and structured data-entry patterns rather than natural-language prose." }
         },
         {
           "@type": "Question",
-          name: "What is KPH and when should I use it?",
-          acceptedAnswer: { "@type": "Answer", text: "Keystrokes per hour measures individual keystrokes over time and is useful for numeric keypad and data-entry work. If a job posting asks for KPH or 10-key speed, use the dedicated KPH or 10-key test and follow the employer's stated requirements." }
+          name: "What is KPH and do I need it?",
+          acceptedAnswer: { "@type": "Answer", text: "Keystrokes Per Hour measures 10-key numeric entry speed specifically and is common in accounting and bookkeeping postings. Use the KPH Test when a posting asks for it." }
         }
       ]
     }
@@ -94,8 +94,8 @@ export default function DataEntryTypingTestPage() {
         <section className="seo-mode-intro" aria-label="Data entry assessment introduction">
           <p className="eyebrow">Free employment skills assessment</p>
           <p className="section-intro">
-            Practice the keyboard skills used in professional data-entry work. Enter realistic records containing names,
-            addresses, dates, numbers, amounts and codes, then take the standardized Data Entry Proficiency Test.
+            Data-entry work has different demands than general typing: it is often numeric-heavy, repetitive, and
+            accuracy-critical in a way prose typing is not.
           </p>
           <p><strong>Designed for:</strong> {dataEntryAssessment.audience.join(" · ")}</p>
         </section>
@@ -103,6 +103,19 @@ export default function DataEntryTypingTestPage() {
         <WPMTestApp initialPath="/data-entry-typing-test/" />
 
         <section className="seo-prerender" aria-label="Data entry practice and assessment guide">
+          <h2>Measure the skills data-entry roles actually use</h2>
+          <p>
+            A single transposed digit in a data-entry job can matter far more than a typo in an email. This test is
+            structured around that reality, mixing numeric sequences with structured text rather than pure prose
+            paragraphs, so your result better reflects real data-entry performance than a standard prose-based typing
+            test would.
+          </p>
+          <p>
+            Most data-entry job postings specify a minimum WPM, commonly 40–60, and a separate accuracy threshold,
+            often 95–98%, sometimes alongside a 10-key numeric-keypad speed requirement measured in KPH rather than
+            WPM. See the <a href="/kph-typing-test/">KPH Test</a> if a posting asks for that specifically. If you are
+            applying to roles with both requirements, run both tests and report whichever the posting actually asks for.
+          </p>
           <h2>Practice data entry skills</h2>
           <p>
             Data entry is different from ordinary paragraph typing. Job-related entry often requires moving between
@@ -147,16 +160,16 @@ export default function DataEntryTypingTestPage() {
           <h2>Data entry typing test FAQ</h2>
           <div className="seo-faq">
             <article>
-              <h3>What does a data entry typing test measure?</h3>
-              <p>It measures how accurately and efficiently you enter structured information such as names, dates, amounts, identifiers and numeric values rather than only continuous prose.</p>
+              <h3>What WPM do data entry jobs usually require?</h3>
+              <p>Many postings ask for 40–60+ WPM at 95%+ accuracy. See the <a href="/average-typing-speed/">Average Typing Speed</a> guide for broader ranges.</p>
             </article>
             <article>
-              <h3>How is this different from a regular typing test?</h3>
-              <p>A regular typing test focuses on continuous text. Data entry adds field-to-field movement, exact formatting, numbers and codes where a single incorrect character can change a record.</p>
+              <h3>What is the difference between this and the regular typing test?</h3>
+              <p>This test emphasizes numeric sequences and structured data-entry patterns rather than natural-language prose.</p>
             </article>
             <article>
-              <h3>What is KPH and when should I use it?</h3>
-              <p>Keystrokes per hour measures individual keystrokes over time and is useful for numeric keypad and data-entry work. If a job posting asks for KPH or 10-key speed, use the dedicated KPH or 10-key test and follow the employer's stated requirements.</p>
+              <h3>What is KPH and do I need it?</h3>
+              <p>Keystrokes Per Hour measures 10-key numeric entry speed specifically and is common in accounting and bookkeeping postings. See the <a href="/kph-typing-test/">KPH Test</a>.</p>
             </article>
           </div>
 
