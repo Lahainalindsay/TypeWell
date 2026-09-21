@@ -11,6 +11,7 @@ describe("SEO route registry", () => {
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(`${SITE_ORIGIN}/`);
     expect(urls).toContain(`${SITE_ORIGIN}/1-minute-typing-test/`);
+    expect(urls).toContain(`${SITE_ORIGIN}/mobile-typing-test/`);
     expect(urls).toContain(`${SITE_ORIGIN}/data-entry-typing-test/`);
     expect(urls).toContain(`${SITE_ORIGIN}/blog/data-entry-typing-test-for-employment/`);
     expect(urls).not.toContain(`${SITE_ORIGIN}/progress/`);
@@ -105,6 +106,7 @@ describe("SEO route registry", () => {
       "/3-minute-typing-test/",
       "/5-minute-typing-test/",
       "/10-minute-typing-test/",
+      "/mobile-typing-test/",
       "/typing-practice/",
       "/kph-typing-test/",
       "/wpm-calculator/",
@@ -121,6 +123,7 @@ describe("SEO route registry", () => {
     expect(seoPages.find((page) => page.path === "/wpm-calculator/")?.h1).toBe("WPM Calculator — Convert Characters and Time to Words Per Minute");
     expect(seoPages.find((page) => page.path === "/average-typing-speed/")?.h1).toBe("Average Typing Speed by Age and Experience — What's a Good WPM?");
     expect(seoPages.find((page) => page.path === "/kph-typing-test/")?.h1).toBe("KPH Typing Test — Measure Your 10-Key Numeric Entry Speed");
+    expect(seoPages.find((page) => page.path === "/mobile-typing-test/")?.h1).toBe("Mobile Typing Test — Test Your Speed on a Phone or Tablet");
     expect(JSON.stringify(seoPages)).not.toContain("claude.ai");
   });
 

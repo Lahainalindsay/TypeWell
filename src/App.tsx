@@ -14,6 +14,7 @@ import { defaultProgress, exportProgress, loadProgress, saveProgress, summarizeP
 import { adsConfig, adsEnabledForLocalPreview } from "./ads.config";
 import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
+import { keysFromTextInput } from "./engine/textInput";
 import type { Metrics } from "./engine/types";
 
 type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
@@ -28,7 +29,7 @@ const nav: Array<{ href: string; label: string }> = [
 
 const clientManagedRoutes = new Set([
   "/typing-test/", "/typing-practice/", "/10-key-typing-test/", "/wpm-calculator/",
-  "/typing-certificate/", "/average-typing-speed/", "/rhythm", "/progress", "/settings", "/learn"
+  "/typing-certificate/", "/average-typing-speed/", "/mobile-typing-test/", "/rhythm", "/progress", "/settings", "/learn"
 ]);
 
 export default function WPMTestApp({ initialPath = "/", embedded = false }: { initialPath?: string; embedded?: boolean }) {
@@ -302,7 +303,9 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
     : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
     : testMode === "Numbers"
     ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") || path.includes("numeric-keypad") ? "10 Key Numeric Keypad Test" : "Typing Test with Numbers"
-    : testMode === "Punctuation" ? "Typing Test with Punctuation" : timedTestTitle(path);
+    : testMode === "Punctuation" ? "Typing Test with Punctuation"
+    : path.replace(/\/$/, "") === "/mobile-typing-test" ? "Mobile Typing Test — Test Your Speed on a Phone or Tablet"
+    : timedTestTitle(path);
   const testDescription = testMode === "Data Entry"
     ? "Practice fictional records with names, order IDs, dates, amounts, and ZIP codes."
     : testMode === "Numeric Keypad"
@@ -311,7 +314,9 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
     ? "Practice dates, prices, measurements, and percentages in a realistic number-focused typing test."
     : testMode === "Punctuation"
       ? "Practice commas, quotes, questions, and capitalization while measuring typing speed and accuracy."
-      : `${duration / 60}-minute typing speed test with standard WPM scoring, accuracy, consistency, and local results.`;
+      : path.replace(/\/$/, "") === "/mobile-typing-test"
+        ? "Measure touchscreen typing speed using your phone or tablet's on-screen keyboard."
+        : `${duration / 60}-minute typing speed test with standard WPM scoring, accuracy, consistency, and local results.`;
   useEffect(() => {
     const nextDuration = testDurationFromPath(path);
     setDuration(nextDuration);
@@ -433,7 +438,27 @@ function NumericKeypadTrainer({ title, duration, progress, setProgress, onRecord
   useEffect(() => { if (startedAt && elapsedMs >= duration * 1000 && !finished) complete(); }, [elapsedMs, startedAt, finished]);
   function complete() { const finalMs = Math.max(1, Math.min(duration * 1000, performance.now() - (startedAt ?? performance.now()))); const result = calculateNumericMetrics(target, typed, finalMs); const session: SessionRecord = { id: crypto.randomUUID(), date: new Date().toISOString(), type: "test", label: title, metrics: utilityMetrics(result.correctKeystrokes, result.incorrectKeystrokes, result.totalKeystrokes, finalMs), weakKeys: [], weakCombinations: [] }; setFinished(session); onRecord(session); trackEvent("ten_key_completed", { testType: title, duration, accuracyRange: metricRange(result.accuracy) }); }
   function reset() { setTyped(""); setStartedAt(null); setFinished(null); requestAnimationFrame(() => inputRef.current?.focus()); }
-  return <section className="dashboard utility-test"><div className="trainer-head"><div><h1>{title}</h1><p>Type the numeric groups using your physical or on-screen keypad. KPM and KPH count every entered keystroke.</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>{!finished ? <><div className="metrics"><Metric label="KPM" value={numeric.kpm} /><Metric label="KPH" value={numeric.kph} /><Metric label="Accuracy" value={`${numeric.accuracy}%`} /><Metric label="Time" value={formatTime(Math.max(0, duration * 1000 - elapsedMs))} /></div><div className="typing-text numeric-prompt" onClick={() => inputRef.current?.focus()}>{Array.from(target).map((char, index) => <span className={index < typed.length ? typed[index] === char ? "correct" : "incorrect" : index === typed.length ? "current" : "pending"} key={`${index}-${char}`}>{char === " " ? "·" : char}</span>)}</div><textarea ref={inputRef} className="sr-input" value="" readOnly onKeyDown={(event) => { if (event.key.length !== 1 && event.key !== "Backspace") return; event.preventDefault(); if (event.key === "Backspace") { setTyped((old) => old.slice(0, -1)); return; } if (!startedAt) setStartedAt(performance.now()); setTyped((old) => old.length < target.length ? old + event.key : old); }} aria-label="Numeric keypad typing input" /><p className="start-hint">The timer begins on your first keystroke and ends when the duration expires or the sequence is complete.</p></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM equivalent · {finished.metrics.accuracy}% accuracy</h2><div className="metrics"><Metric label="KPM" value={calculateKpm(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="KPH" value={calculateKph(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="Correct Keystrokes" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Keystrokes" value={finished.metrics.incorrectCharacters} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/data-entry-typing-test/">Data Entry Test</InternalAction><InternalAction href="/kph-typing-test/">KPH Test</InternalAction></div></div>}<p className="tool-copy">KPM is keystrokes per minute. KPH is KPM multiplied by 60. Accuracy compares correct numeric keystrokes with all entered keystrokes; backspaces remove an entry before it is scored.</p><div className="inline-links"><InternalLink href="/data-entry-typing-test/" go={go}>Data Entry Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Typing Test</InternalLink><InternalLink href="/typing-test-with-numbers/" go={go}>Typing Test With Numbers</InternalLink></div></section>;
+  function applyNumericKeys(keys: string[]) {
+    if (!keys.length) return;
+    if (!startedAt && keys.some((key) => key !== "Backspace")) setStartedAt(performance.now());
+    setTyped((old) => keys.reduce((value, key) => {
+      if (key === "Backspace") return value.slice(0, -1);
+      let nextValue = value;
+      if (key !== " ") {
+        while (target[nextValue.length] === " ") nextValue += " ";
+      }
+      return nextValue.length < target.length ? nextValue + key : nextValue;
+    }, old));
+  }
+  function numericBeforeInput(event: React.FormEvent<HTMLTextAreaElement>) {
+    const inputEvent = event.nativeEvent as InputEvent;
+    if (inputEvent.isComposing) return;
+    const keys = keysFromTextInput(inputEvent.inputType, inputEvent.data);
+    if (!keys.length) return;
+    event.preventDefault();
+    applyNumericKeys(keys);
+  }
+  return <section className="dashboard utility-test"><div className="trainer-head"><div><h1>{title}</h1><p>Type the numeric groups using your physical or on-screen keypad. KPM and KPH count every entered keystroke.</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>{!finished ? <><div className="metrics"><Metric label="KPM" value={numeric.kpm} /><Metric label="KPH" value={numeric.kph} /><Metric label="Accuracy" value={`${numeric.accuracy}%`} /><Metric label="Time" value={formatTime(Math.max(0, duration * 1000 - elapsedMs))} /></div><div className="typing-text numeric-prompt" onClick={() => inputRef.current?.focus()}>{Array.from(target).map((char, index) => <span className={index < typed.length ? typed[index] === char ? "correct" : "incorrect" : index === typed.length ? "current" : "pending"} key={`${index}-${char}`}>{char === " " ? "·" : char}</span>)}</div><textarea ref={inputRef} className="typing-capture-input" value="" rows={1} onKeyDown={(event) => { if (event.key.length !== 1 && event.key !== "Backspace") return; event.preventDefault(); applyNumericKeys([event.key]); }} onBeforeInput={numericBeforeInput} onChange={(event) => applyNumericKeys(keysFromTextInput("insertText", event.currentTarget.value))} autoComplete="off" autoCorrect="off" spellCheck={false} inputMode="decimal" enterKeyHint="done" aria-label="Numeric keypad typing input" placeholder="Tap here to open your numeric keyboard" /><p className="start-hint">Tap the number sequence or input field to begin. Spaces between number groups advance automatically on mobile.</p><p className="mobile-typing-note">An on-screen number pad measures touchscreen entry. Use a physical 10-key keypad when preparing for a hardware-keyboard employment assessment.</p></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM equivalent · {finished.metrics.accuracy}% accuracy</h2><div className="metrics"><Metric label="KPM" value={calculateKpm(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="KPH" value={calculateKph(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="Correct Keystrokes" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Keystrokes" value={finished.metrics.incorrectCharacters} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/data-entry-typing-test/">Data Entry Test</InternalAction><InternalAction href="/kph-typing-test/">KPH Test</InternalAction></div></div>}<p className="tool-copy">KPM is keystrokes per minute. KPH is KPM multiplied by 60. Accuracy compares correct numeric keystrokes with all entered keystrokes; backspaces remove an entry before it is scored.</p><div className="inline-links"><InternalLink href="/data-entry-typing-test/" go={go}>Data Entry Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Typing Test</InternalLink><InternalLink href="/typing-test-with-numbers/" go={go}>Typing Test With Numbers</InternalLink></div></section>;
 }
 
 interface SharedProps {
@@ -543,21 +568,41 @@ function Trainer(props: {
     props.onRecord(record);
   }
 
+  function applyKeys(keys: string[]) {
+    if (!keys.length) return;
+    setSession((old) => {
+      let nextState = old;
+      keys.forEach((key, index) => {
+        if (key === "Backspace" && !props.progress.settings.allowCorrections) return;
+        const candidate = applyInput(nextState, key, performance.now() + index);
+        if (props.progress.settings.stopOnError && candidate.statuses[candidate.typed.length - 1] === "incorrect") return;
+        nextState = candidate;
+      });
+      if (!old.startedAt && nextState.startedAt) trackEvent("typing_test_started", { testType: props.mode, duration: props.duration ?? null });
+      return nextState;
+    });
+  }
+
   function onKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === "Tab") return;
-    if (event.key === "Backspace" && !props.progress.settings.allowCorrections) {
-      event.preventDefault();
-      return;
-    }
     if (event.key.length === 1 || event.key === "Backspace") {
       event.preventDefault();
-      setSession((old) => {
-        const nextState = applyInput(old, event.key, performance.now());
-        if (!old.startedAt && nextState.startedAt) trackEvent("typing_test_started", { testType: props.mode, duration: props.duration ?? null });
-        if (props.progress.settings.stopOnError && nextState.statuses[nextState.typed.length - 1] === "incorrect") return old;
-        return nextState;
-      });
+      applyKeys([event.key]);
     }
+  }
+
+  function onBeforeInput(event: React.FormEvent<HTMLTextAreaElement>) {
+    const inputEvent = event.nativeEvent as InputEvent;
+    if (inputEvent.isComposing) return;
+    const keys = keysFromTextInput(inputEvent.inputType, inputEvent.data);
+    if (!keys.length) return;
+    event.preventDefault();
+    applyKeys(keys);
+  }
+
+  function onTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+    const value = event.currentTarget.value;
+    if (value) applyKeys(keysFromTextInput("insertText", value));
   }
 
   return (
@@ -575,8 +620,25 @@ function Trainer(props: {
         {props.keys && <div className="key-strip">{props.keys.map((key) => <span key={key}>{key}</span>)}<small>Target {props.targetWpm} WPM · {props.targetAccuracy}% accuracy</small></div>}
         {props.progress.settings.showLiveMetrics && <div className="metrics"><Metric label="WPM" value={metrics.wpm} /><Metric label="Accuracy" value={`${metrics.accuracy}%`} /><Metric label="Consistency" value={`${metrics.consistency}%`} /><Metric label="Time" value={formatTime(metrics.elapsedMs)} />{props.duration && <Metric label="Remaining" value={formatTime(Math.max(0, props.duration * 1000 - metrics.elapsedMs))} />}</div>}
         <TypingText target={props.target} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
-        {!session.startedAt && <p className="start-hint">Click the text, then start typing. The timer begins on your first keystroke.</p>}
-        <textarea ref={inputRef} className="sr-input" value="" readOnly onKeyDown={onKeyDown} aria-label="Typing input area. Type the displayed text." />
+        {!session.startedAt && <p className="start-hint">Tap or click the text, then start typing. The timer begins on your first keystroke.</p>}
+        <p className="mobile-typing-note">Touchscreen mode measures speed on your phone or tablet's on-screen keyboard. For physical typing technique, job assessments, and finger training, use a hardware keyboard when possible.</p>
+        <textarea
+          ref={inputRef}
+          className="typing-capture-input"
+          value=""
+          rows={1}
+          onKeyDown={onKeyDown}
+          onBeforeInput={onBeforeInput}
+          onChange={onTextChange}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="none"
+          spellCheck={false}
+          inputMode="text"
+          enterKeyHint="done"
+          aria-label="Typing input area. Type the displayed text."
+          placeholder="Tap here to open your keyboard"
+        />
         {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
         {props.progress.settings.showFingerGuide && <FingerGuide current={current} />}
         {props.progress.settings.showKeyboard && <KeyboardView current={current} next={next} last={session.typed.at(-1)} incorrect={session.statuses[session.typed.length - 1] === "incorrect" ? session.typed.at(-1) : undefined} />}
@@ -1062,7 +1124,7 @@ function Footer({ go: _go }: { go: (page: Page, route?: string) => void }) {
 function routeToPage(path: string): Page {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const value = normalizedPath.split("/")[1] as Page;
-  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || ["/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
+  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || ["/mobile-typing-test", "/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
   if (normalizedPath.startsWith("/practice") || normalizedPath === "/typing-practice" || normalizedPath === "/touch-typing-practice") return "practice";
   if (normalizedPath.startsWith("/learn")) return "learn";
   if (["/average-typing-speed", "/wpm-calculator", "/typing-certificate"].includes(normalizedPath)) return "tools";
