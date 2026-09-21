@@ -40,4 +40,13 @@ describe("client app hydration boundary", () => {
     expect(styles).toContain(".typing-capture-input");
     expect(styles).toContain(".mobile-typing-note");
   });
+
+  it("keeps sitewide AdSense loading after hydration with an early connection hint", () => {
+    const layout = readFileSync(resolve("app/layout.tsx"), "utf8");
+
+    expect(layout).toContain("pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
+    expect(layout).toContain('strategy="afterInteractive"');
+    expect(layout).toContain('rel="preconnect" href="https://pagead2.googlesyndication.com"');
+    expect(layout).toContain('crossOrigin="anonymous"');
+  });
 });

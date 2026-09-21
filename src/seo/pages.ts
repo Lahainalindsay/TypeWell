@@ -191,10 +191,10 @@ export const seoPages: SeoPage[] = [
       "Accuracy matters first. Speed improves as correct movement becomes automatic."
     ],
     related: [
-      { href: "/learn/home-row", label: "Home Row Lesson" },
+      { href: "/learn/home-row/", label: "Home Row Lesson" },
       { href: "/typing-practice/", label: "Typing Practice" },
       { href: "/1-minute-typing-test/", label: "Check WPM" },
-      { href: "/rhythm", label: "Rhythm Trainer" }
+      { href: "/rhythm/", label: "Rhythm Trainer" }
     ]
   },
   {
@@ -384,7 +384,7 @@ export const seoPages: SeoPage[] = [
     related: [
       { href: "/typing-practice/", label: "Typing Practice" },
       { href: "/1-minute-typing-test/", label: "1 Minute Test" },
-      { href: "/rhythm", label: "Rhythm Trainer" },
+      { href: "/rhythm/", label: "Rhythm Trainer" },
       { href: "/progress", label: "Progress" }
     ]
   }

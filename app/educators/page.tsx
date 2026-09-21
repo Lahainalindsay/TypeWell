@@ -23,6 +23,6 @@ export default function EducatorsPage() {
     <div className="tw-standalone-grid">
       {features.map(([title,text]) => <article className="tw-standalone-card" key={title}><h2>{title}</h2><p>{text}</p></article>)}
     </div>
-    <section className="tw-coming"><h2>Use WPMTest now</h2><p>The free typing test, open-ended practice, touch-typing lessons, rhythm trainer and typing games are available now while the classroom management tools are being built.</p><p><a href="/typing-practice/">Start typing practice</a> · <a href="/learn">Explore typing lessons</a> · <a href="/typing-games/">Play typing games</a></p></section>
+    <section className="tw-coming"><h2>Use WPMTest now</h2><p>The free typing test, open-ended practice, touch-typing lessons, rhythm trainer and typing games are available now while the classroom management tools are being built.</p><p><a href="/typing-practice/">Start typing practice</a> · <a href="/learn/">Explore typing lessons</a> · <a href="/typing-games/">Play typing games</a></p></section>
   </main>;
 }

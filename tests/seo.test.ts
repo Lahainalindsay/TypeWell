@@ -7,7 +7,8 @@ import { absoluteUrl, canonicalPath, SITE_ORIGIN } from "../src/lib/seo/site";
 
 describe("SEO route registry", () => {
   it("generates unique canonical sitemap URLs from public routes", () => {
-    const urls = sitemap().map((entry) => entry.url);
+    const entries = sitemap();
+    const urls = entries.map((entry) => entry.url);
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain(`${SITE_ORIGIN}/`);
     expect(urls).toContain(`${SITE_ORIGIN}/1-minute-typing-test/`);
@@ -16,6 +17,18 @@ describe("SEO route registry", () => {
     expect(urls).toContain(`${SITE_ORIGIN}/blog/data-entry-typing-test-for-employment/`);
     expect(urls).not.toContain(`${SITE_ORIGIN}/progress/`);
     expect(urls).not.toContain(`${SITE_ORIGIN}/settings/`);
+    expect(entries.every((entry) => entry.lastModified instanceof Date)).toBe(true);
+  });
+
+  it("uses canonical trailing-slash URLs for crawlable internal links", () => {
+    const appSource = readFileSync(join(process.cwd(), "src/App.tsx"), "utf8");
+    const pageRegistry = readFileSync(join(process.cwd(), "src/seo/pages.ts"), "utf8");
+    const educators = readFileSync(join(process.cwd(), "app/educators/page.tsx"), "utf8");
+
+    expect(appSource).not.toContain('href="/rhythm"');
+    expect(pageRegistry).not.toContain('href: "/learn/home-row"');
+    expect(pageRegistry).not.toContain('href: "/rhythm"');
+    expect(educators).not.toContain('href="/learn"');
   });
 
   it("includes every indexable typing lesson in the sitemap", () => {
