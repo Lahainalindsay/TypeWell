@@ -213,6 +213,8 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 .faq-section summary { cursor: pointer; font-weight: 700; }
 .faq-section details p { max-width: 760px; color: var(--muted); line-height: 1.65; margin-bottom: 0; }
 .ad-slot { min-height: 90px; display: grid; place-items: center; margin: 2rem auto; border: 1px dashed var(--line); color: var(--muted); font-size: 0.75rem; }
+.typing-language-links { width: min(1180px, calc(100% - 2rem)); margin: 1rem auto; padding: .9rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.typing-language-links a { color: var(--accent); font-weight: 750; }
 .legal-page { width: min(820px, 100%); margin: 0 auto; }
 .legal-page h2 { margin-top: 2rem; }
 .legal-page p { color: var(--muted); line-height: 1.75; }

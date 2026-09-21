@@ -13,4 +13,8 @@ describe("mobile text input normalization", () => {
   it("treats a mobile return as a space for continuous typing passages", () => {
     expect(keysFromTextInput("insertLineBreak", "\n")).toEqual([" "]);
   });
+
+  it("keeps composed Devanagari input in grapheme clusters", () => {
+    expect(keysFromTextInput("insertCompositionText", "कि")).toEqual(["कि"]);
+  });
 });
