@@ -72,9 +72,17 @@
 .metric strong { display: block; margin-top: 5px; font-size: clamp(1rem, 2vw, 1.35rem); overflow-wrap: anywhere; }
 
 .typingText {
-  min-height: 210px;
-  max-height: 300px;
-  overflow: hidden;
+  width: 100%;
+  max-width: 75ch;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  margin-inline: auto;
+  overflow: visible;
+  white-space: pre-wrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
   padding: clamp(18px, 3vw, 30px);
   border: 2px solid #c7d9e9;
   border-radius: 16px;
@@ -85,7 +93,7 @@
   cursor: text;
 }
 .typingText:focus-within, .typingText:focus { border-color: #0878ef; box-shadow: 0 0 0 4px rgba(8,120,239,.12); }
-.character { color: #5f7184; border-radius: 3px; white-space: pre-wrap; }
+.character { color: #5f7184; border-radius: 3px; white-space: pre-wrap; overflow-wrap: normal; word-break: normal; }
 .correct { color: #178351; }
 .incorrect { color: #c72d3b; background: #ffe7ea; text-decoration: underline; }
 .current { color: #10233f; background: #d9ebff; box-shadow: inset 2px 0 #0878ef; }
@@ -145,7 +153,7 @@
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .keyboardSection, .guideGrid { grid-template-columns: 1fr; }
   .certificateStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .typingText { min-height: 180px; }
+  .typingText { min-height: 0; }
 }
 
 @media print {
