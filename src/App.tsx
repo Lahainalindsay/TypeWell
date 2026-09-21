@@ -1028,7 +1028,7 @@ function AverageTypingSpeed({ go }: { go: (page: Page, route?: string) => void }
         <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For real work, accuracy above 95% is usually more valuable than brief bursts of high raw WPM.</p></div>
       </div>
       <AdSlot placement="guide-mid-article" />
-      <section className="seo-section two-column-copy"><div><h2>How to Improve</h2><p>Practice clean finger movement, return to home row, slow down around weak keys, and retest after targeted practice. Consistent daily sessions usually beat occasional long sessions.</p></div><div><h2>Related Tools</h2><div className="inline-links"><InternalLink href="/wpm-calculator/" go={go}>WPM Calculator</InternalLink><InternalLink href="/typing-practice/" go={go}>Typing Practice</InternalLink><InternalLink href="/rhythm" go={go}>Rhythm Trainer</InternalLink></div></div></section>
+      <section className="seo-section two-column-copy"><div><h2>How to Improve</h2><p>Practice clean finger movement, return to home row, slow down around weak keys, and retest after targeted practice. Consistent daily sessions usually beat occasional long sessions.</p></div><div><h2>Related Tools</h2><div className="inline-links"><InternalLink href="/wpm-calculator/" go={go}>WPM Calculator</InternalLink><InternalLink href="/typing-practice/" go={go}>Typing Practice</InternalLink><InternalLink href="/rhythm/" go={go}>Rhythm Trainer</InternalLink></div></div></section>
     </section>
   );
 }

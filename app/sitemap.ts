@@ -4,6 +4,11 @@ import { absoluteUrl, canonicalPath } from "../src/lib/seo/site";
 
 export const dynamic = "force-static";
 
+// The public SEO pages received substantial content, metadata, schema, and
+// internal-link updates in the September 20 release. Keep this date honest:
+// Google may use lastmod when it matches a significant page update.
+const SEO_CONTENT_LAST_MODIFIED = new Date("2026-09-20T00:00:00.000Z");
+
 const supportingIndexableRoutes = [
   "/learn/",
   "/learn/home-row/",
@@ -36,6 +41,7 @@ const supportingIndexableRoutes = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes];
   return [...new Set(paths.map(canonicalPath))].map((path) => ({
-    url: absoluteUrl(path)
+    url: absoluteUrl(path),
+    lastModified: SEO_CONTENT_LAST_MODIFIED
   }));
 }
