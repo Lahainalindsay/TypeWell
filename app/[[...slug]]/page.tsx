@@ -6,7 +6,7 @@ import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 import { typingTestLanguageAlternates, typingTestLanguagePaths } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
-  "/about/", "/blog/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
+  "/about/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
   "/data-entry-practice/", "/data-entry-practice/alphanumeric/", "/data-entry-practice/currency-dates/",
   "/data-entry-practice/invoices-orders/", "/data-entry-practice/names-addresses/", "/data-entry-typing-test/",
   "/educators/", "/fr/test-de-vitesse-de-frappe/", "/hi/hindi-typing-test/", "/it/test-di-velocita-di-scrittura/",

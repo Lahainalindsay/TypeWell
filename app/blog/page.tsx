@@ -43,6 +43,15 @@ export default function BlogPage() {
 
         <div className="seo-card-grid">
           <article>
+            <p className="eyebrow">Comparison</p>
+            <h2><a href="/blog/best-typing-test-websites/">The 9 Best Free Typing Test Websites (2026), Compared</a></h2>
+            <p>
+              A side-by-side look at 10FastFingers, Typing.com, Monkeytype and more, including which tools fit
+              data-entry and employment-test practice.
+            </p>
+            <p><a href="/blog/best-typing-test-websites/">Read the comparison →</a></p>
+          </article>
+          <article>
             <p className="eyebrow">Data Entry</p>
             <h2><a href="/blog/data-entry-typing-test-for-employment/">Data Entry Typing Test for Employment: What to Expect</a></h2>
             <p>
