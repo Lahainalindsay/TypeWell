@@ -3,12 +3,14 @@ import { notFound } from "next/navigation";
 import WPMTestApp from "../../src/ClientApp";
 import { getSeoPage, seoPages } from "../../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
+import { typingTestLanguageAlternates, typingTestLanguagePaths } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
   "/about/", "/blog/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
   "/data-entry-practice/", "/data-entry-practice/alphanumeric/", "/data-entry-practice/currency-dates/",
   "/data-entry-practice/invoices-orders/", "/data-entry-practice/names-addresses/", "/data-entry-typing-test/",
-  "/educators/", "/privacy/", "/professionals/", "/terms/", "/typing-test/code/", "/typing-test-for-kids/",
+  "/educators/", "/fr/test-de-vitesse-de-frappe/", "/hi/hindi-typing-test/", "/it/test-di-velocita-di-scrittura/",
+  "/privacy/", "/professionals/", "/terms/", "/typing-test/code/", "/typing-test-for-kids/",
   "/typing-test-for-students/", "/typing-test-for-employment/", "/typing-test-with-numbers/", "/typing-test-with-punctuation/"
 ]);
 
@@ -62,7 +64,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      ...(normalized === "/typing-test" ? { languages: typingTestLanguageAlternates } : {})
+    },
     openGraph: { title, description, url, type: "website", siteName: SITE_NAME, images: [{ url: image, width: 1200, height: 630, alt: `${SITE_NAME} - ${seo?.h1 ?? extra?.[2] ?? "Typing Test"}` }] },
     twitter: { card: "summary_large_image", title, description, images: [image] },
     robots: ["/progress", "/settings"].includes(normalized)
@@ -84,6 +89,15 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   return (
     <>
       <WPMTestApp initialPath={path} />
+      {normalized === "/typing-test" ? (
+        <nav className="typing-language-links" aria-label="Typing test languages">
+          <strong>Typing test languages:</strong>
+          <a href={typingTestLanguagePaths.en} hrefLang="en">English</a>
+          <a href={typingTestLanguagePaths.fr} hrefLang="fr" lang="fr">Français</a>
+          <a href={typingTestLanguagePaths.it} hrefLang="it" lang="it">Italiano</a>
+          <a href={typingTestLanguagePaths.hi} hrefLang="hi" lang="hi">हिन्दी</a>
+        </nav>
+      ) : null}
       {path !== "/" ? (
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}

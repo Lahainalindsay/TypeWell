@@ -14,6 +14,7 @@ import { defaultProgress, exportProgress, loadProgress, saveProgress, summarizeP
 import { adsConfig, adsEnabledForLocalPreview } from "./ads.config";
 import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
+import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
 import type { Metrics } from "./engine/types";
 
@@ -496,8 +497,9 @@ function Trainer(props: {
   const [pausedAt, setPausedAt] = useState<number | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const metrics = calculateMetrics(session, pausedAt ?? now);
-  const current = props.target[session.typed.length] ?? "";
-  const next = props.target[session.typed.length + 1] ?? "";
+  const targetCharacters = splitGraphemes(props.target);
+  const current = targetCharacters[session.typed.length] ?? "";
+  const next = targetCharacters[session.typed.length + 1] ?? "";
 
   useEffect(() => reset(), [props.target, props.duration]);
   useEffect(() => {
@@ -658,8 +660,9 @@ function TypingText({ target, statuses, index, fontSize, lineHeight, onFocusInpu
     return () => window.removeEventListener("resize", updateWindowSize);
   }, []);
   const start = Math.max(0, index - Math.floor(windowSize * 0.42));
-  const end = Math.min(target.length, start + windowSize);
-  const visible = Array.from(target.slice(start, end));
+  const targetCharacters = splitGraphemes(target);
+  const end = Math.min(targetCharacters.length, start + windowSize);
+  const visible = targetCharacters.slice(start, end);
   return (
     <div className="typing-text" style={{ fontSize, lineHeight }} tabIndex={0} role="textbox" aria-label="Typing prompt. Start typing to begin." onFocus={onFocusInput} onClick={onClickInput ?? onFocusInput}>
       {start > 0 && <span className="edge-fade" aria-hidden="true">...</span>}
@@ -667,7 +670,7 @@ function TypingText({ target, statuses, index, fontSize, lineHeight, onFocusInpu
         const targetIndex = start + i;
         return <span key={`${targetIndex}-${char}`} className={`${statuses[targetIndex] ?? "pending"} ${targetIndex === index ? "current" : ""}`}>{char === " " ? "\u00a0" : char}</span>;
       })}
-      {end < target.length && <span className="edge-fade" aria-hidden="true">...</span>}
+      {end < targetCharacters.length && <span className="edge-fade" aria-hidden="true">...</span>}
     </div>
   );
 }

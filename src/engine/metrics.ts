@@ -1,13 +1,15 @@
 import type { Keystroke, Metrics, SessionState } from "./types";
+import { splitGraphemes } from "./graphemes";
 
 const MINUTE = 60000;
 const IDLE_THRESHOLD_MS = 3000;
 
 export function createSession(target: string): SessionState {
+  const targetCharacters = splitGraphemes(target);
   return {
-    target,
+    target: target.normalize("NFC"),
     typed: [],
-    statuses: Array.from({ length: target.length }, () => "pending"),
+    statuses: Array.from({ length: targetCharacters.length }, () => "pending"),
     keystrokes: [],
     startedAt: null,
     endedAt: null,
@@ -19,26 +21,29 @@ export function createSession(target: string): SessionState {
 
 export function applyInput(state: SessionState, key: string, now = performance.now()): SessionState {
   if (key === "Backspace") return applyBackspace(state, now);
-  if (key.length !== 1 || state.typed.length >= state.target.length) return state;
+  const input = splitGraphemes(key);
+  const target = splitGraphemes(state.target);
+  if (input.length !== 1 || state.typed.length >= target.length) return state;
 
   const startedAt = state.startedAt ?? now;
   const idleMs = state.lastInputAt && now - state.lastInputAt > IDLE_THRESHOLD_MS
     ? state.idleMs + (now - state.lastInputAt)
     : state.idleMs;
   const index = state.typed.length;
-  const expected = state.target[index];
-  const correct = key === expected;
-  const typed = [...state.typed, key];
+  const expected = target[index];
+  const actual = input[0];
+  const correct = actual === expected;
+  const typed = [...state.typed, actual];
   const statuses = [...state.statuses];
   statuses[index] = correct ? "correct" : "incorrect";
-  const keystrokes: Keystroke[] = [...state.keystrokes, { expected, actual: key, correct, timestamp: now }];
+  const keystrokes: Keystroke[] = [...state.keystrokes, { expected, actual, correct, timestamp: now }];
   return {
     ...state,
     typed,
     statuses,
     keystrokes,
     startedAt,
-    endedAt: typed.length === state.target.length ? now : null,
+    endedAt: typed.length === target.length ? now : null,
     idleMs,
     lastInputAt: now
   };
@@ -116,7 +121,7 @@ export function calculateWordStats(state: SessionState): { correctWords: number;
   let mistypedWords = 0;
   for (const word of targetWords) {
     const start = cursor;
-    const end = start + word.length;
+    const end = start + splitGraphemes(word).length;
     cursor = end + 1;
     if (state.typed.length < end) break;
     const statuses = state.statuses.slice(start, end);

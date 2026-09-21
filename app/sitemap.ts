@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { seoPages } from "../src/seo/pages";
 import { absoluteUrl, canonicalPath } from "../src/lib/seo/site";
+import { typingTestLanguageAlternates, typingTestLanguagePaths } from "../src/lib/seo/localized";
 
 export const dynamic = "force-static";
 
@@ -8,6 +9,8 @@ export const dynamic = "force-static";
 // internal-link updates in the September 20 release. Keep this date honest:
 // Google may use lastmod when it matches a significant page update.
 const SEO_CONTENT_LAST_MODIFIED = new Date("2026-09-20T00:00:00.000Z");
+const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-21T00:00:00.000Z");
+const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
   "/learn/",
@@ -35,13 +38,17 @@ const supportingIndexableRoutes = [
   "/about/",
   "/privacy/",
   "/contact/",
-  "/terms/"
+  "/terms/",
+  typingTestLanguagePaths.fr,
+  typingTestLanguagePaths.it,
+  typingTestLanguagePaths.hi
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes];
   return [...new Set(paths.map(canonicalPath))].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: SEO_CONTENT_LAST_MODIFIED
+    lastModified: localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED : SEO_CONTENT_LAST_MODIFIED,
+    ...(localizedTypingPaths.has(path) ? { alternates: { languages: typingTestLanguageAlternates } } : {})
   }));
 }
