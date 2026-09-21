@@ -35,6 +35,7 @@ function interpolate(template: string, values: Record<string, string | number>):
 
 export default function LocalizedTypingTest({ content }: { content: LocalizedTypingContent }) {
   const [duration, setDuration] = useState<(typeof DURATIONS)[number]>(60);
+  const [windowSize, setWindowSize] = useState(260);
   const target = useMemo(() => buildTarget(content.passages, duration), [content.passages, duration]);
   const [session, setSession] = useState<SessionState>(() => createSession(target));
   const [now, setNow] = useState(0);
@@ -52,6 +53,13 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
   useEffect(() => {
     const id = window.setInterval(() => setNow(performance.now()), 200);
     return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const updateWindowSize = () => setWindowSize(window.innerWidth < 520 ? 145 : window.innerWidth < 900 ? 210 : 320);
+    updateWindowSize();
+    window.addEventListener("resize", updateWindowSize);
+    return () => window.removeEventListener("resize", updateWindowSize);
   }, []);
 
   useEffect(() => {
@@ -104,8 +112,9 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
     setCaptureValue("");
   }
 
-  const start = Math.max(0, session.typed.length - 70);
-  const visible = targetCharacters.slice(start, start + 260);
+  const start = Math.max(0, session.typed.length - Math.floor(windowSize * 0.42));
+  const end = Math.min(targetCharacters.length, start + windowSize);
+  const visible = targetCharacters.slice(start, end);
   const resultTitle = result
     ? interpolate(content.ui.resultHeading, { wpm: result.wpm, accuracy: result.accuracy })
     : "";
@@ -161,10 +170,11 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
               className={`${styles.character} ${styles[status]} ${index === session.typed.length ? styles.current : ""}`}
               key={`${index}-${character}`}
             >
-              {character === " " ? "\u00a0" : character}
+              {character}
             </span>
           );
         })}
+        {end < targetCharacters.length ? <span className={styles.fade} aria-hidden="true">…</span> : null}
       </div>
 
       {!session.startedAt ? <p className={styles.startHint}>{content.ui.startHint}</p> : null}
