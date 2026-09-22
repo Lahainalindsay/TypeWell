@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
+import JsonLd from "../../src/components/JsonLd";
 import { dataEntryAssessment } from "../../src/features/careers/assessments/data-entry";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
@@ -269,9 +270,7 @@ export default function DataEntryTypingTestPage() {
         </section>
       </div>
 
-      {schemas.map((schema, index) => (
-        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      ))}
+      {schemas.map((schema, index) => <JsonLd key={index} data={schema} />)}
     </>
   );
 }

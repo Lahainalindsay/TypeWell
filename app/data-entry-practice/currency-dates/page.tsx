@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import WPMTestApp from "../../../src/App";
+import JsonLd from "../../../src/components/JsonLd";
 import { absoluteUrl } from "../../../src/lib/seo/site";
 
 const canonical = absoluteUrl("/data-entry-practice/currency-dates/");
@@ -122,9 +123,7 @@ export default function Page() {
           </div>
         </section>
       </main>
-      {schemas.map((schema, index) => (
-        <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      ))}
+      {schemas.map((schema, index) => <JsonLd key={index} data={schema} />)}
     </>
   );
 }
