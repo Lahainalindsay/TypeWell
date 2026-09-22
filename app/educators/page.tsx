@@ -1,9 +1,27 @@
 import type { Metadata } from "next";
+import { absoluteUrl } from "../../src/lib/seo/site";
+
+const canonical = absoluteUrl("/educators/");
+const ogImage = absoluteUrl("/og-default.svg");
 
 export const metadata: Metadata = {
   title: "Typing for Educators – Classroom Typing Lessons & Games | WPMTest",
   description: "Explore WPMTest for educators: classroom typing lessons, student practice, typing games, progress tracking, assignments and certificates. Classroom tools coming soon.",
-  alternates: { canonical: "/educators/" }
+  alternates: { canonical },
+  openGraph: {
+    title: "Typing for Educators – Classroom Typing Lessons & Games | WPMTest",
+    description: "Explore WPMTest for educators: classroom typing lessons, student practice, typing games, progress tracking, assignments and certificates. Classroom tools coming soon.",
+    url: canonical,
+    type: "website",
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "WPMTest typing tools" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Typing for Educators – Classroom Typing Lessons & Games | WPMTest",
+    description: "Explore WPMTest for educators: classroom typing lessons, student practice, typing games, progress tracking, assignments and certificates. Classroom tools coming soon.",
+    images: [ogImage]
+  },
+  robots: { index: true, follow: true }
 };
 
 const features = [

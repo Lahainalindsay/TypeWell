@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
+const canonical = absoluteUrl("/professionals/");
+const ogImage = absoluteUrl("/og-default.svg");
+
 export const metadata: Metadata = {
   title: "Professional Typing Tests & Job Skills | WPMTest",
   description: "Practice job-specific typing skills with free professional typing tests for data entry, 10-key, numeric keypad, numbers, punctuation, office work and more.",
-  alternates: { canonical: "/professionals/" },
+  alternates: { canonical },
   openGraph: {
     title: "Professional Typing Tests | WPMTest",
     description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
-    url: "/professionals/",
-    images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest professional typing tests" }]
+    url: canonical,
+    type: "website",
+    images: [{ url: ogImage, width: 1200, height: 630, alt: "WPMTest professional typing tests" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "Professional Typing Tests & Job Skills | WPMTest",
     description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
-    images: [absoluteUrl("/og-default.svg")]
-  }
+    images: [ogImage]
+  },
+  robots: { index: true, follow: true }
 };
 
 const tests = [
@@ -37,7 +42,7 @@ export default function ProfessionalsPage() {
     "@type": "CollectionPage",
     name: "Professional Typing Tests",
     description: "Job-specific typing tests and practice for professional keyboard skills.",
-    url: "https://wpmtest.app/professionals/",
+    url: canonical,
     isAccessibleForFree: true,
     inLanguage: "en-US"
   };
