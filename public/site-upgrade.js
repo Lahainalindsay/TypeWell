@@ -37,6 +37,7 @@
         <a href="/typing-test-for-employment/">Employment Typing Tests</a>
         <a href="/certificate/sample/">View Sample Certificate</a>
         <a href="/blog/">Typing & Career Guides</a>
+        <a href="/blog/best-typing-test-websites/">Best Typing Test Websites</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
         <a href="/typing-test-for-students/">Student Typing Test</a>

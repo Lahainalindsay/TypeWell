@@ -41,6 +41,19 @@ describe("client app hydration boundary", () => {
     expect(styles).toContain(".mobile-typing-note");
   });
 
+  it("keeps mobile navigation and completed-test actions reachable", () => {
+    const app = readFileSync(resolve("src/App.tsx"), "utf8");
+    const styles = readFileSync(resolve("src/styles.css"), "utf8");
+    const refresh = readFileSync(resolve("src/refresh.css"), "utf8");
+    const upgrade = readFileSync(resolve("public/site-upgrade.js"), "utf8");
+
+    expect(app).toContain('aria-label="Exit results and return to the typing test"');
+    expect(app).toContain('["/blog/best-typing-test-websites/", "Best Typing Test Websites"]');
+    expect(upgrade).toContain('/blog/best-typing-test-websites/');
+    expect(styles).toContain("overflow-y: auto; overscroll-behavior: contain");
+    expect(refresh).toContain("overflow: visible; flex-wrap: wrap");
+  });
+
   it("keeps sitewide AdSense loading after hydration with an early connection hint", () => {
     const layout = readFileSync(resolve("app/layout.tsx"), "utf8");
 
