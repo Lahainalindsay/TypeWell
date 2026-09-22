@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Award, BarChart3, Calculator, Gamepad2, Gauge, Keyboard, LineChart, Moon, RotateCcw, Timer, Zap } from "lucide-react";
+import { Award, BarChart3, Calculator, Gamepad2, Gauge, Keyboard, LineChart, Moon, RotateCcw, Timer, X, Zap } from "lucide-react";
 import { applyInput, calculateMetrics, createSession, round } from "./engine/metrics";
 import { calculateRhythmMetrics, nearestBeat } from "./engine/rhythm";
 import { calculateKph, calculateKpm, calculateNumericMetrics } from "./engine/numeric";
@@ -129,6 +129,7 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
               ["/typing-test-for-students/", "Student Typing Test"],
               ["/educators/", "For Educators"],
               ["/blog/", "Typing & Career Guides"],
+              ["/blog/best-typing-test-websites/", "Best Typing Test Websites"],
               ["/learn", "Lessons"]
             ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
           </div>
@@ -741,6 +742,9 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
   return (
     <div className="result" role="dialog" aria-label="Session results">
       <div className="result-card">
+        <button className="result-close" type="button" onClick={reset} aria-label="Exit results and return to the typing test">
+          <X size={18} aria-hidden="true" /> Exit results
+        </button>
         <p className="eyebrow">{newBest ? "New personal best" : "Session complete"}</p>
         <h2>{record.metrics.wpm} WPM · {record.metrics.accuracy}% accuracy</h2>
         <div className="metrics big">
