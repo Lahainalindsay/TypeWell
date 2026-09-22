@@ -220,7 +220,8 @@ main, .app-content { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
   nav { width: 100%; justify-content: flex-start; overflow: visible; flex-wrap: wrap; padding-bottom: 0.15rem; }
   nav a, nav summary { white-space: nowrap; }
   .more-tools { position: relative; }
-  .more-tools div { left: 0; right: auto; width: min(310px, calc(100vw - 1.7rem)); max-height: min(70vh, 520px); overflow-y: auto; }
+  .more-tools div { left: auto; right: 0; width: min(340px, calc(100vw - 1.7rem)); max-width: calc(100vw - 1.7rem); max-height: min(70vh, 520px); overflow-y: auto; }
+  .more-tools div a { white-space: normal; line-height: 1.35; }
   .hero { padding-top: 0.35rem; }
   .hero-copy .eyebrow { display: none; }
   .hero-copy h1,
