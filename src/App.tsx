@@ -238,7 +238,7 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
       <AdSlot placement="contentMiddle" />
       <section className="seo-section faq-section">
         <h2>Frequently Asked Questions</h2>
-        {["What is a good typing speed?", "How is WPM calculated?", "What is considered fast typing?", "How can I improve my typing speed?", "Is this typing test free?", "Do I need an account?", "Does my progress stay private?", "Can I practice typing with numbers?"].map((question) => <details key={question}><summary>{question}</summary><p>{faqAnswer(question)}</p></details>)}
+        {["What is a good typing speed?", "How is WPM calculated?", "What is considered fast typing?", "How can I improve my typing speed?", "Is this typing test free?", "Do I need an account?", "Does my progress stay private?", "Can I practice typing with numbers?", "Can I practice on my phone?"].map((question) => <details key={question}><summary>{question}</summary><p>{faqAnswer(question)}</p></details>)}
       </section>
     </section>
   );
@@ -298,7 +298,8 @@ function faqAnswer(question: string) {
     "Is this typing test free?": "Yes. WPMTest's typing test and practice tools are free with no subscription, paywall, or account requirement.",
     "Do I need an account?": "No. You can start an online typing test immediately. Preferences and progress are saved locally in your browser.",
     "Does my progress stay private?": "Your local progress stays on this device unless you choose to export it. Core typing sessions do not require an account or email.",
-    "Can I practice typing with numbers?": "Yes. Use the numbers practice and typing test with numbers to work on dates, prices, measurements, percentages, and other number patterns."
+    "Can I practice typing with numbers?": "Yes. Use the numbers practice and typing test with numbers to work on dates, prices, measurements, percentages, and other number patterns.",
+    "Can I practice on my phone?": "Yes. You can take a typing test with your phone's on-screen keyboard. To develop ten-finger touch typing for a computer keyboard, practice with a physical keyboard when you can."
   };
   return answers[question];
 }

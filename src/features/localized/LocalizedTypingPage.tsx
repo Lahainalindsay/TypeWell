@@ -3,6 +3,16 @@ import type { LocalizedTypingContent } from "./content";
 import { typingTestLanguagePaths } from "../../lib/seo/localized";
 import styles from "./LocalizedTypingPage.module.css";
 
+const mobileQuestions = {
+  fr: "Puis-je m'entraîner sur mon téléphone ?",
+  it: "Posso esercitarmi sul telefono?",
+  hi: "क्या मैं फ़ोन पर टाइपिंग का अभ्यास कर सकता हूँ?",
+  es: "¿Puedo practicar en mi teléfono?",
+  de: "Kann ich auf dem Smartphone üben?",
+  pt: "Posso praticar no celular?",
+  ru: "Можно ли тренироваться на телефоне?"
+};
+
 export default function LocalizedTypingPage({ content }: { content: LocalizedTypingContent }) {
   return (
     <main className={styles.page} lang={content.lang}>
@@ -69,6 +79,10 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
             <p>{faq.answer}</p>
           </details>
         ))}
+        <details>
+          <summary>{mobileQuestions[content.lang as keyof typeof mobileQuestions]}</summary>
+          <p>{content.ui.mobileNote}</p>
+        </details>
       </section>
 
       <footer className={styles.footer}>

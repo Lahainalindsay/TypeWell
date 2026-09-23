@@ -177,7 +177,6 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
         {end < targetCharacters.length ? <span className={styles.fade} aria-hidden="true">…</span> : null}
       </div>
 
-      {!session.startedAt ? <p className={styles.startHint}>{content.ui.startHint}</p> : null}
       <textarea
         ref={inputRef}
         className={styles.captureInput}
@@ -200,9 +199,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
         spellCheck={false}
         inputMode="text"
         aria-label={content.ui.inputLabel}
-        placeholder={content.ui.inputPlaceholder}
       />
-      <p className={styles.mobileNote}>{content.ui.mobileNote}</p>
 
       {result ? (
         <div className={styles.result} role="dialog" aria-label={content.ui.complete}>
