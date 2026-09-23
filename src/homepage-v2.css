@@ -13,9 +13,10 @@
   margin: 0.25rem auto 1rem;
 }
 .home > .hero { order: 2; }
-.home > .home-test { order: 3; }
+.home > .language-suggestion { order: 3; }
+.home > .home-test { order: 4; }
 .home > .seo-section,
-.home > .ad-slot:not([data-placement="after-home-test"]) { order: 4; }
+.home > .ad-slot:not([data-placement="after-home-test"]) { order: 5; }
 
 /* Brand treatment from the approved mockup, without changing the underlying app name/SEO. */
 .topbar {

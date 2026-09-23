@@ -8,7 +8,7 @@ import { calculateKph, calculateKpm, calculateNumericMetrics } from "./engine/nu
 import { isLessonPassed, nextLessonId } from "./engine/lessons";
 import { analyzeWeakCombinations, analyzeWeakKeys, generateWeakKeyExercise } from "./engine/weakKeys";
 import { lessons } from "./data/lessons";
-import { buildPracticeText, durations, practiceModes, testDurations, wordCounts, type PracticeMode } from "./data/texts";
+import { buildPageTestText, buildPracticeText, durations, practiceModes, testDurations, wordCounts, type PracticeMode } from "./data/texts";
 import { keyInfo, rows, fingerClass } from "./data/keyboard";
 import { defaultProgress, exportProgress, loadProgress, saveProgress, summarizeProgress, validateProgress, type ProgressData, type SessionRecord } from "./storage/progress";
 import { adsConfig, adsEnabledForLocalPreview } from "./ads.config";
@@ -16,16 +16,27 @@ import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
 import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
+import { typingTestLanguagePaths } from "./lib/seo/localized";
 import type { Metrics } from "./engine/types";
 
 type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
 
-const nav: Array<{ href: string; label: string }> = [
-  { href: "/typing-test/", label: "Typing Test" },
-  { href: "/typing-practice/", label: "Practice" },
+const primaryLinks = [
   { href: "/data-entry-typing-test/", label: "Data Entry" },
-  { href: "/10-key-typing-test/", label: "10-Key" },
-  { href: "/wpm-calculator/", label: "WPM Calculator" }
+  { href: "/typing-practice/", label: "Practice" },
+  { href: "/typing-certificate/", label: "Certificate" },
+  { href: "/blog/", label: "Guides" }
+];
+
+const languageLinks = [
+  { key: "en", label: "English", path: typingTestLanguagePaths.en },
+  { key: "fr", label: "Français", path: typingTestLanguagePaths.fr },
+  { key: "it", label: "Italiano", path: typingTestLanguagePaths.it },
+  { key: "hi", label: "हिन्दी", path: typingTestLanguagePaths.hi },
+  { key: "es", label: "Español", path: typingTestLanguagePaths.es },
+  { key: "de", label: "Deutsch", path: typingTestLanguagePaths.de },
+  { key: "pt-BR", label: "Português (Brasil)", path: typingTestLanguagePaths.pt },
+  { key: "ru", label: "Русский", path: typingTestLanguagePaths.ru }
 ];
 
 const clientManagedRoutes = new Set([
@@ -83,7 +94,7 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
 
   return (
     <div className={focus ? "app focus-active" : "app"}>
-      {!focus && <Header page={page} go={go} />}
+      {!focus && <Header path={path} go={go} />}
       <ContentLandmark className="app-content">
         {page === "home" && <Home {...props} />}
         {page === "learn" && <Learn {...props} />}
@@ -100,11 +111,23 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
   );
 }
 
-function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => void }) {
+function Header({ path, go }: { path: string; go: (page: Page, route?: string) => void }) {
   const moreToolsRef = useRef<HTMLDetailsElement | null>(null);
+  const testsRef = useRef<HTMLDetailsElement | null>(null);
+  const languageRef = useRef<HTMLDetailsElement | null>(null);
+  const currentLanguage = languageLinks.find((item) => item.path === path)?.label ?? "English";
+
+  function keepOneMenuOpen(menu: HTMLDetailsElement) {
+    if (!menu.open) return;
+    for (const other of [testsRef.current, languageRef.current, moreToolsRef.current]) {
+      if (other && other !== menu) other.removeAttribute("open");
+    }
+  }
 
   function navigateFromMenu(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
     moreToolsRef.current?.removeAttribute("open");
+    testsRef.current?.removeAttribute("open");
+    languageRef.current?.removeAttribute("open");
     if (!clientManagedRoutes.has(href)) return;
     event.preventDefault();
     go(routeToPage(href), href);
@@ -114,13 +137,32 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
     <header className="topbar">
       <button className="brand" onClick={() => go("home")} aria-label="WPMTest home"><span>WPMTEST</span><small>Free typing mastery</small></button>
       <nav aria-label="Primary navigation">
-        {nav.map((item) => <a key={item.href} className={routeToPage(item.href) === page ? "active" : ""} href={item.href} onClick={(event) => navigateFromMenu(event, item.href)}>{item.label}</a>)}
-        <details ref={moreToolsRef} className="more-tools">
-          <summary>More Tools</summary>
+        <details ref={testsRef} className="nav-dropdown tests-menu" onToggle={(event) => keepOneMenuOpen(event.currentTarget)}>
+          <summary>Typing Tests</summary>
+          <div className="nav-dropdown-panel">
+            <strong>Timed tests</strong>
+            {([1, 3, 5, 10] as const).map((minutes) => <a href={`/${minutes}-minute-typing-test/`} key={minutes}>{minutes} Minute Test</a>)}
+            <strong>Page tests · finish the passage</strong>
+            {([1, 2, 3] as const).map((pages) => <a href={`/${pages}-page-typing-test/`} key={pages}>{pages} Page Test</a>)}
+          </div>
+        </details>
+        {primaryLinks.map((item) => <a key={item.href} className={path === item.href ? "active" : ""} href={item.href} onClick={(event) => navigateFromMenu(event, item.href)}>{item.label}</a>)}
+        <details ref={languageRef} className="nav-dropdown language-menu" onToggle={(event) => keepOneMenuOpen(event.currentTarget)}>
+          <summary aria-label={`Typing test language: ${currentLanguage}`}>{currentLanguage}</summary>
+          <div className="nav-dropdown-panel">
+            {languageLinks.map((item) => <a key={item.key} href={item.path} hrefLang={item.key} lang={item.key} aria-current={path === item.path ? "page" : undefined}>{item.label}</a>)}
+          </div>
+        </details>
+        <details ref={moreToolsRef} className="more-tools" onToggle={(event) => keepOneMenuOpen(event.currentTarget)}>
+          <summary>More</summary>
           <div>
             {[
-              ["/typing-certificate/", "Typing Certificate"],
+              ["/typing-test/", "All Typing Tests"],
+              ["/10-key-typing-test/", "10-Key Typing Test"],
+              ["/typing-test-for-employment/", "Employment Typing Test"],
+              ["/certificate/sample/", "View Sample Certificate"],
               ["/average-typing-speed/", "Average Typing Speed"],
+              ["/wpm-calculator/", "WPM Calculator"],
               ["/rhythm", "Rhythm Trainer"],
               ["/progress", "Progress"],
               ["/settings", "Settings"],
@@ -128,7 +170,6 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
               ["/typing-test-with-punctuation/", "Punctuation Test"],
               ["/typing-test-for-students/", "Student Typing Test"],
               ["/educators/", "For Educators"],
-              ["/blog/", "Typing & Career Guides"],
               ["/blog/best-typing-test-websites/", "Best Typing Test Websites"],
               ["/learn", "Lessons"]
             ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
@@ -147,8 +188,12 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
           <p className="eyebrow">FREE • NO SIGNUP • PRIVATE</p>
           <h1>Free Typing Test — Measure Your Speed and Accuracy Instantly</h1>
           <p>Start typing instantly. Test your speed, accuracy, and consistency in 1, 3, 5, or 10 minutes. Free, private, and no account required.</p>
+          <p className="hero-typing-line" aria-label="Type better. Go further.">
+            {Array.from("TYPE BETTER. GO FURTHER.").map((character, index) => <span aria-hidden="true" key={index} style={{ animationDelay: `${index * 65}ms` }}>{character === " " ? "\u00a0" : character}</span>)}
+          </p>
         </div>
       </div>
+      <BrowserLanguageSuggestion />
       <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
       <AdSlot placement="after-home-test" />
       <section className="seo-section philosophy">
@@ -166,6 +211,11 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
           ["/typing-test-with-numbers/", "Typing Test With Numbers", "Practice dates, prices, measurements, and percentages."],
           ["/typing-test-with-punctuation/", "Typing Test With Punctuation", "Improve accuracy across punctuation and capitalization."]
         ].map(([href, title, text]) => <InternalLink key={href} href={href} go={go}><strong>{title}</strong><span>{text}</span></InternalLink>)}</div>
+      </section>
+      <section className="seo-section link-section">
+        <h2>Page Length Typing Tests</h2>
+        <p>Finish a set passage at your own pace. The clock measures how long you take; there is no time limit.</p>
+        <div className="link-grid">{([1, 2, 3] as const).map((pages) => <a key={pages} href={`/${pages}-page-typing-test/`}><strong>{pages} Page Typing Test</strong><span>Complete approximately {pages * 250} words and see your WPM and accuracy.</span></a>)}</div>
       </section>
       <section className="seo-section link-section">
         <h2>Practice What Slows You Down</h2>
@@ -192,6 +242,33 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
       </section>
     </section>
   );
+}
+
+type SupportedLocalizedLanguage = Exclude<keyof typeof typingTestLanguagePaths, "en">;
+const languageNames: Record<SupportedLocalizedLanguage, string> = {
+  fr: "French", it: "Italian", hi: "Hindi", es: "Spanish", de: "German", pt: "Brazilian Portuguese", ru: "Russian"
+};
+
+function BrowserLanguageSuggestion() {
+  const [language, setLanguage] = useState<SupportedLocalizedLanguage | null>(null);
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("typing-language-suggestion-dismissed")) return;
+    } catch { /* Private browsing can restrict storage. */ }
+    const preferred = (navigator.languages?.[0] ?? navigator.language ?? "en").split("-")[0].toLowerCase() as SupportedLocalizedLanguage;
+    if (preferred in languageNames) setLanguage(preferred);
+  }, []);
+
+  if (!language) return null;
+  return <aside className="language-suggestion" aria-label="Suggested typing test language">
+    <span>Your browser is set to {languageNames[language]}. Try the test in your language.</span>
+    <a href={typingTestLanguagePaths[language]}>Open {languageNames[language]} test</a>
+    <button type="button" onClick={() => {
+      try { sessionStorage.setItem("typing-language-suggestion-dismissed", "1"); } catch { /* Dismiss for this page. */ }
+      setLanguage(null);
+    }} aria-label="Dismiss language suggestion">×</button>
+  </aside>;
 }
 
 function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
@@ -300,15 +377,19 @@ function Practice({ progress, setProgress, record, setFocus, path, embedded }: S
 function Test({ progress, setProgress, record, setFocus, path, go, embedded }: SharedProps) {
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   const [count, setCount] = useState(() => Math.max(50, Math.round(testDurationFromPath(path) * 1.8)));
+  const pageCount = pageCountFromPath(path);
   const testMode = testModeFromPath(path);
-  const testTitle = testMode === "Data Entry" ? "Data Entry Typing Test"
+  const testTitle = pageCount ? `${pageCount} Page Typing Test`
+    : testMode === "Data Entry" ? "Data Entry Typing Test"
     : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
     : testMode === "Numbers"
     ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") || path.includes("numeric-keypad") ? "10 Key Numeric Keypad Test" : "Typing Test with Numbers"
     : testMode === "Punctuation" ? "Typing Test with Punctuation"
     : path.replace(/\/$/, "") === "/mobile-typing-test" ? "Mobile Typing Test — Test Your Speed on a Phone or Tablet"
     : timedTestTitle(path);
-  const testDescription = testMode === "Data Entry"
+  const testDescription = pageCount
+    ? `Complete approximately ${pageCount * 250} words at your own pace. The test ends when you finish the passage, and your WPM is calculated from your actual time.`
+    : testMode === "Data Entry"
     ? "Practice fictional records with names, order IDs, dates, amounts, and ZIP codes."
     : testMode === "Numeric Keypad"
       ? "Practice numeric keypad groups while tracking speed, accuracy, and errors."
@@ -334,17 +415,19 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
     <Trainer
       title={testTitle}
       heading={embedded ? "h2" : undefined}
-      subtitle="Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."
-      target={buildPracticeText(testMode, count)}
+      subtitle={pageCount ? "Finish the whole passage at your own pace. No countdown or account required." : "Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."}
+      target={pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count)}
       mode="test"
-      duration={duration}
+      duration={pageCount ? undefined : duration}
       progress={progress}
       setProgress={setProgress}
       onRecord={(session) => record(session)}
       setFocus={setFocus}
       onPractice={() => go("practice", "/practice/weak-keys")}
       seoCopy={<p className="tool-copy">{testDescription} No signup is required, and your result stays in this browser.</p>}
-      side={<div className="panel"><h2>Test Setup</h2><Segment values={testDurations} value={duration} setValue={setDuration} suffix="s" /><Segment values={wordCounts} value={count} setValue={setCount} suffix=" words" /><p className="hint">Restart shortcut: press Tab, then Enter on Restart.</p></div>}
+      side={pageCount
+        ? <div className="panel"><h2>Page Tests</h2><p>One page is approximately 250 words. Complete the passage to see your result.</p><div className="inline-links">{([1, 2, 3] as const).map((pages) => <a key={pages} href={`/${pages}-page-typing-test/`}>{pages} Page{pages > 1 ? "s" : ""}</a>)}</div></div>
+        : <div className="panel"><h2>Test Setup</h2><Segment values={testDurations} value={duration} setValue={setDuration} suffix="s" /><Segment values={wordCounts} value={count} setValue={setCount} suffix=" words" /><p className="hint">Restart shortcut: press Tab, then Enter on Restart.</p></div>}
     />
   );
 }
@@ -624,7 +707,6 @@ function Trainer(props: {
         {props.progress.settings.showLiveMetrics && <div className="metrics"><Metric label="WPM" value={metrics.wpm} /><Metric label="Accuracy" value={`${metrics.accuracy}%`} /><Metric label="Consistency" value={`${metrics.consistency}%`} /><Metric label="Time" value={formatTime(metrics.elapsedMs)} />{props.duration && <Metric label="Remaining" value={formatTime(Math.max(0, props.duration * 1000 - metrics.elapsedMs))} />}</div>}
         <TypingText target={props.target} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
         {!session.startedAt && <p className="start-hint">Tap or click the text, then start typing. The timer begins on your first keystroke.</p>}
-        <p className="mobile-typing-note">Touchscreen mode measures speed on your phone or tablet's on-screen keyboard. For physical typing technique, job assessments, and finger training, use a hardware keyboard when possible.</p>
         <textarea
           ref={inputRef}
           className="typing-capture-input"
@@ -640,7 +722,6 @@ function Trainer(props: {
           inputMode="text"
           enterKeyHint="done"
           aria-label="Typing input area. Type the displayed text."
-          placeholder="Tap here to open your keyboard"
         />
         {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
         {props.progress.settings.showFingerGuide && <FingerGuide current={current} />}
@@ -1131,7 +1212,7 @@ function Footer({ go: _go }: { go: (page: Page, route?: string) => void }) {
 function routeToPage(path: string): Page {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const value = normalizedPath.split("/")[1] as Page;
-  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || ["/mobile-typing-test", "/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
+  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || pageCountFromPath(normalizedPath) || ["/mobile-typing-test", "/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
   if (normalizedPath.startsWith("/practice") || normalizedPath === "/typing-practice" || normalizedPath === "/touch-typing-practice") return "practice";
   if (normalizedPath.startsWith("/learn")) return "learn";
   if (["/average-typing-speed", "/wpm-calculator", "/typing-certificate"].includes(normalizedPath)) return "tools";
@@ -1174,6 +1255,11 @@ function testDurationFromPath(path: string) {
   if (normalizedPath === "/typing-test/60-seconds") return 60;
   const match = normalizedPath.match(/^\/(1|3|5|10)-minute-typing-test$/);
   return match ? Number(match[1]) * 60 : 60;
+}
+
+function pageCountFromPath(path: string): 1 | 2 | 3 | null {
+  const match = path.replace(/\/$/, "").match(/^\/(1|2|3)-page-typing-test$/);
+  return match ? Number(match[1]) as 1 | 2 | 3 : null;
 }
 
 function timedTestTitle(path: string) {

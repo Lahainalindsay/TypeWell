@@ -9,7 +9,8 @@ export const dynamic = "force-static";
 // internal-link updates in the September 20 release. Keep this date honest:
 // Google may use lastmod when it matches a significant page update.
 const SEO_CONTENT_LAST_MODIFIED = new Date("2026-09-20T00:00:00.000Z");
-const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-21T00:00:00.000Z");
+const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
+const NEW_TEST_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
 const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
@@ -42,14 +43,20 @@ const supportingIndexableRoutes = [
   "/terms/",
   typingTestLanguagePaths.fr,
   typingTestLanguagePaths.it,
-  typingTestLanguagePaths.hi
+  typingTestLanguagePaths.hi,
+  typingTestLanguagePaths.es,
+  typingTestLanguagePaths.de,
+  typingTestLanguagePaths.pt,
+  typingTestLanguagePaths.ru
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes];
   return [...new Set(paths.map(canonicalPath))].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED : SEO_CONTENT_LAST_MODIFIED,
+    lastModified: localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
+      : path === "/" || /^\/[123]-page-typing-test\/$/.test(path) ? NEW_TEST_CONTENT_LAST_MODIFIED
+      : SEO_CONTENT_LAST_MODIFIED,
     ...(localizedTypingPaths.has(path) ? { alternates: { languages: typingTestLanguageAlternates } } : {})
   }));
 }

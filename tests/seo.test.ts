@@ -13,6 +13,9 @@ describe("SEO route registry", () => {
     expect(urls).toContain(`${SITE_ORIGIN}/`);
     expect(urls).toContain(`${SITE_ORIGIN}/1-minute-typing-test/`);
     expect(urls).toContain(`${SITE_ORIGIN}/mobile-typing-test/`);
+    expect(urls).toContain(`${SITE_ORIGIN}/1-page-typing-test/`);
+    expect(urls).toContain(`${SITE_ORIGIN}/2-page-typing-test/`);
+    expect(urls).toContain(`${SITE_ORIGIN}/3-page-typing-test/`);
     expect(urls).toContain(`${SITE_ORIGIN}/data-entry-typing-test/`);
     expect(urls).toContain(`${SITE_ORIGIN}/blog/data-entry-typing-test-for-employment/`);
     expect(urls).not.toContain(`${SITE_ORIGIN}/progress/`);

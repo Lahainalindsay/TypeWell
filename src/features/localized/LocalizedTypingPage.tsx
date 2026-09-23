@@ -9,17 +9,21 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
       <header className={styles.siteHeader}>
         <a className={styles.brand} href="/" aria-label={content.nav.home}>WPM<span>Test</span></a>
         <nav aria-label={content.nav.languageLabel}>
-          {(Object.keys(typingTestLanguagePaths) as Array<keyof typeof typingTestLanguagePaths>).map((language) => (
-            <a
-              className={language === content.lang ? styles.currentLanguage : ""}
-              href={typingTestLanguagePaths[language]}
-              hrefLang={language}
-              lang={language}
-              key={language}
-            >
-              {content.nav.languages[language]}
-            </a>
-          ))}
+          <details className={styles.languageMenu}>
+            <summary aria-label={content.nav.languageLabel}>{content.nav.languages[content.lang]}</summary>
+            <div>
+              {(Object.keys(typingTestLanguagePaths) as Array<keyof typeof typingTestLanguagePaths>).map((language) => (
+                <a
+                  className={language === content.lang ? styles.currentLanguage : ""}
+                  href={typingTestLanguagePaths[language]}
+                  hrefLang={language === "pt" ? "pt-BR" : language}
+                  lang={language === "pt" ? "pt-BR" : language}
+                  aria-current={language === content.lang ? "page" : undefined}
+                  key={language}
+                >{content.nav.languages[language]}</a>
+              ))}
+            </div>
+          </details>
         </nav>
       </header>
 

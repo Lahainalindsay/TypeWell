@@ -1,6 +1,8 @@
+export type TypingLanguage = "en" | "fr" | "it" | "hi" | "es" | "de" | "pt" | "ru";
+
 export type LocalizedTypingContent = {
-  lang: "fr" | "it" | "hi";
-  locale: "fr-FR" | "it-IT" | "hi-IN";
+  lang: Exclude<TypingLanguage, "en">;
+  locale: "fr-FR" | "it-IT" | "hi-IN" | "es-ES" | "de-DE" | "pt-BR" | "ru-RU";
   path: string;
   title: string;
   description: string;
@@ -13,7 +15,7 @@ export type LocalizedTypingContent = {
     languageLabel: string;
     privacy: string;
     terms: string;
-    languages: Record<"en" | "fr" | "it" | "hi", string>;
+    languages: Record<TypingLanguage, string>;
   };
   ui: {
     testHeading: string;
@@ -95,7 +97,7 @@ export const frenchTypingContent: LocalizedTypingContent = {
     languageLabel: "Changer de langue",
     privacy: "Confidentialité",
     terms: "Conditions d'utilisation",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी" }
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" }
   },
   ui: {
     testHeading: "Commencer le test de frappe",
@@ -209,7 +211,7 @@ export const italianTypingContent: LocalizedTypingContent = {
     languageLabel: "Cambia lingua",
     privacy: "Privacy",
     terms: "Condizioni d'uso",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी" }
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" }
   },
   ui: {
     testHeading: "Inizia il test di scrittura",
@@ -323,7 +325,7 @@ export const hindiTypingContent: LocalizedTypingContent = {
     languageLabel: "भाषा बदलें",
     privacy: "गोपनीयता",
     terms: "उपयोग की शर्तें",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी" }
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" }
   },
   ui: {
     testHeading: "हिंदी टाइपिंग टेस्ट शुरू करें",
@@ -416,8 +418,14 @@ export const hindiTypingContent: LocalizedTypingContent = {
   }
 };
 
+import { spanishTypingContent, germanTypingContent, portugueseTypingContent, russianTypingContent } from "./additionalContent";
+
 export const localizedTypingContents = {
   fr: frenchTypingContent,
   it: italianTypingContent,
-  hi: hindiTypingContent
+  hi: hindiTypingContent,
+  es: spanishTypingContent,
+  de: germanTypingContent,
+  pt: portugueseTypingContent,
+  ru: russianTypingContent
 } as const;

@@ -55,7 +55,7 @@ export function localizedTypingSchema(content: LocalizedTypingContent) {
         operatingSystem: "Any",
         browserRequirements: "Requires a modern browser with Unicode text input",
         isAccessibleForFree: true,
-        offers: { "@type": "Offer", price: "0", priceCurrency: content.lang === "hi" ? "INR" : "EUR" }
+        offers: { "@type": "Offer", price: "0", priceCurrency: ({ hi: "INR", pt: "BRL", ru: "RUB" } as Record<string, string>)[content.lang] ?? "EUR" }
       },
       {
         "@type": "FAQPage",
