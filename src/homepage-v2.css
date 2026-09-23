@@ -14,6 +14,7 @@
 }
 .home > .hero { order: 2; }
 .home > .home-test { order: 3; }
+.home > .home-language-links { order: 4; }
 .home > .seo-section,
 .home > .ad-slot:not([data-placement="after-home-test"]) { order: 4; }
 

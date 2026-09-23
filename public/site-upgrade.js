@@ -38,6 +38,9 @@
         <a href="/certificate/sample/">View Sample Certificate</a>
         <a href="/blog/">Typing & Career Guides</a>
         <a href="/blog/best-typing-test-websites/">Best Typing Test Websites</a>
+        <a href="/fr/test-de-vitesse-de-frappe/" lang="fr">Français — French Typing Test</a>
+        <a href="/it/test-di-velocita-di-scrittura/" lang="it">Italiano — Italian Typing Test</a>
+        <a href="/hi/hindi-typing-test/" lang="hi">हिन्दी — Hindi Typing Test</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
         <a href="/typing-test-for-students/">Student Typing Test</a>

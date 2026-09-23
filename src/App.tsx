@@ -16,6 +16,7 @@ import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
 import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
+import { typingTestLanguagePaths } from "./lib/seo/localized";
 import type { Metrics } from "./engine/types";
 
 type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
@@ -130,6 +131,9 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
               ["/educators/", "For Educators"],
               ["/blog/", "Typing & Career Guides"],
               ["/blog/best-typing-test-websites/", "Best Typing Test Websites"],
+              [typingTestLanguagePaths.fr, "French Typing Test"],
+              [typingTestLanguagePaths.it, "Italian Typing Test"],
+              [typingTestLanguagePaths.hi, "Hindi Typing Test"],
               ["/learn", "Lessons"]
             ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
           </div>
@@ -150,6 +154,12 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
         </div>
       </div>
       <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
+      <nav className="home-language-links" aria-label="Typing tests in other languages">
+        <strong>Typing tests in other languages</strong>
+        <a href={typingTestLanguagePaths.fr} hrefLang="fr" lang="fr">Français</a>
+        <a href={typingTestLanguagePaths.it} hrefLang="it" lang="it">Italiano</a>
+        <a href={typingTestLanguagePaths.hi} hrefLang="hi" lang="hi">हिन्दी</a>
+      </nav>
       <AdSlot placement="after-home-test" />
       <section className="seo-section philosophy">
         <h2>Improve More Than Just WPM</h2>
@@ -624,7 +634,6 @@ function Trainer(props: {
         {props.progress.settings.showLiveMetrics && <div className="metrics"><Metric label="WPM" value={metrics.wpm} /><Metric label="Accuracy" value={`${metrics.accuracy}%`} /><Metric label="Consistency" value={`${metrics.consistency}%`} /><Metric label="Time" value={formatTime(metrics.elapsedMs)} />{props.duration && <Metric label="Remaining" value={formatTime(Math.max(0, props.duration * 1000 - metrics.elapsedMs))} />}</div>}
         <TypingText target={props.target} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
         {!session.startedAt && <p className="start-hint">Tap or click the text, then start typing. The timer begins on your first keystroke.</p>}
-        <p className="mobile-typing-note">Touchscreen mode measures speed on your phone or tablet's on-screen keyboard. For physical typing technique, job assessments, and finger training, use a hardware keyboard when possible.</p>
         <textarea
           ref={inputRef}
           className="typing-capture-input"
@@ -640,7 +649,6 @@ function Trainer(props: {
           inputMode="text"
           enterKeyHint="done"
           aria-label="Typing input area. Type the displayed text."
-          placeholder="Tap here to open your keyboard"
         />
         {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
         {props.progress.settings.showFingerGuide && <FingerGuide current={current} />}

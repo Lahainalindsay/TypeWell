@@ -29,16 +29,17 @@ describe("client app hydration boundary", () => {
     expect(app).toContain('aria-label="Custom practice text"');
   });
 
-  it("uses editable mobile input capture instead of a read-only keyboard trap", () => {
+  it("keeps mobile input editable while focusing it through the typing prompt", () => {
     const app = readFileSync(resolve("src/App.tsx"), "utf8");
     const styles = readFileSync(resolve("src/styles.css"), "utf8");
 
     expect(app).toContain('className="typing-capture-input"');
     expect(app).toContain("onBeforeInput={onBeforeInput}");
-    expect(app).toContain("Touchscreen mode measures speed");
+    expect(app).toContain("onFocusInput={() => inputRef.current?.focus()}");
+    expect(app).not.toContain("Touchscreen mode measures speed");
     expect(app).not.toContain('className="typing-capture-input" value="" readOnly');
     expect(styles).toContain(".typing-capture-input");
-    expect(styles).toContain(".mobile-typing-note");
+    expect(styles).toContain(".trainer .typing-capture-input");
   });
 
   it("keeps mobile navigation and completed-test actions reachable", () => {
