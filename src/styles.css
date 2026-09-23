@@ -59,7 +59,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
