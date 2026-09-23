@@ -38,3 +38,35 @@
 @media print {
   .tw-preview-step .tw-certificate { aspect-ratio: 1.6 / 1; }
 }
+
+@media (max-width: 800px) {
+  .tw-standalone .tw-certificate { min-width: 0; width: 100%; height: auto; aspect-ratio: auto; padding: 7px; }
+  .tw-standalone .tw-cert-inner { height: auto; padding: 22px 13px 16px; border-width: 5px; overflow: visible; }
+  .tw-standalone .tw-cert-inner::before { inset: 10px; }
+  .tw-standalone .tw-cert-brand { grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+  .tw-standalone .tw-cert-brand strong { font-size: clamp(20px, 6vw, 28px); }
+  .tw-standalone .tw-cert-brand small { font-size: 8px; letter-spacing: 1px; }
+  .tw-standalone .tw-cert-brand > small { display: none; }
+  .tw-standalone .tw-medallion { width: 48px; height: 48px; margin: 0; border-width: 4px; }
+  .tw-standalone .tw-medallion span { font-size: 20px; }
+  .tw-standalone .tw-cert-title { margin-top: 24px; }
+  .tw-standalone .tw-cert-title > span { font-size: 13px; letter-spacing: 3px; }
+  .tw-standalone .tw-cert-title h2 { font-size: clamp(23px, 7vw, 38px); line-height: 1.1; margin: 8px 0 16px; }
+  .tw-standalone .tw-cert-title p { font-size: 9px; letter-spacing: 3px; }
+  .tw-standalone .tw-cert-name { width: 92%; margin: 14px auto; font-size: clamp(28px, 9vw, 50px); white-space: normal; overflow-wrap: anywhere; line-height: 1.12; }
+  .tw-standalone .tw-cert-copy { font-size: 13px; line-height: 1.45; margin: 16px auto; }
+  .tw-standalone .tw-cert-copy br { display: none; }
+  .tw-standalone .tw-cert-stats { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .tw-standalone .tw-cert-stats > div { min-width: 0; min-height: 76px; padding: 8px 5px; border: 1px solid #ddcba8; border-radius: 7px; overflow-wrap: anywhere; }
+  .tw-standalone .tw-cert-stats b { font-size: clamp(14px, 4.5vw, 23px); }
+  .tw-standalone .tw-cert-stats span { font-size: 8px; letter-spacing: .4px; }
+  .tw-standalone .tw-cert-motto { gap: 8px; margin: 20px 0 10px; font-size: 8px; letter-spacing: 1px; }
+  .tw-standalone .tw-cert-motto i { width: 18px; }
+  .tw-standalone .tw-cert-footer { grid-template-columns: 1fr 54px 1fr; gap: 4px; min-height: 55px; }
+  .tw-standalone .tw-signature { font-size: 12px; }
+  .tw-standalone .tw-signature small { font-size: 6px; letter-spacing: 0; }
+  .tw-standalone .tw-gold-seal { width: 46px; height: 46px; }
+  .tw-standalone .tw-gold-seal b { font-size: 12px; margin-bottom: -8px; }
+  .tw-standalone .tw-gold-seal span { font-size: 5px; }
+  .tw-standalone .tw-cert-disclaimer { font-size: 8px; line-height: 1.4; margin-top: 14px; }
+}
