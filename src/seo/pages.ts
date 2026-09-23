@@ -390,6 +390,37 @@ export const seoPages: SeoPage[] = [
   }
 ];
 
+const pageTestDescriptions = {
+  1: "A single page is a focused, untimed check of your everyday typing. Finish the passage to see your WPM, accuracy, and mistakes based on the time you actually used.",
+  2: "Two pages give you more room to settle into a steady rhythm. The test continues until the passage is complete, making it useful when a short timed attempt feels rushed.",
+  3: "Three pages test endurance as well as speed. You can work at a comfortable pace while watching whether your accuracy holds through a longer passage."
+} as const;
+
+seoPages.push(...([1, 2, 3] as const).map((pages): SeoPage => ({
+  path: `/${pages}-page-typing-test/`,
+  title: `${pages} Page Typing Test - Untimed WPM & Accuracy | WPMTest`,
+  description: `Take a free ${pages} page typing test. Finish approximately ${pages * 250} words at your own pace and see your WPM, accuracy, and consistency. No signup or time limit.`,
+  h1: `${pages} Page Typing Test`,
+  intro: pageTestDescriptions[pages],
+  content: [
+    `This is a passage-length test of approximately ${pages * 250} words. Unlike a timed test, it ends when you reach the last character. The clock starts with your first keystroke and records the actual time taken, so you can pause your hands briefly without an artificial deadline. A longer test gives you more evidence about how consistently you type through ordinary text.`,
+    "Words per minute uses the usual five-character convention, including spaces. Accuracy compares the characters you entered with the passage, while consistency looks at changes in your rhythm. The score is calculated locally in your browser and can be compared with other attempts of the same page length.",
+    "Choose one page for a manageable baseline, two pages when you want to practice holding your pace, or three pages for endurance. If you need a score under a strict deadline, choose one of the timed tests instead. A physical keyboard is best for comparing desktop typing skill; a phone's on-screen keyboard measures a different input method."
+  ],
+  related: [
+    { href: "/1-page-typing-test/", label: "1 Page Test" },
+    { href: "/2-page-typing-test/", label: "2 Page Test" },
+    { href: "/3-page-typing-test/", label: "3 Page Test" },
+    { href: "/5-minute-typing-test/", label: "5 Minute Timed Test" },
+    { href: "/typing-practice/", label: "Typing Practice" }
+  ].filter((link) => link.href !== `/${pages}-page-typing-test/`),
+  faqs: [
+    { question: "Is there a time limit?", answer: "No. The test finishes when you complete the passage. Your actual elapsed time is used to calculate WPM." },
+    { question: "How long is one page?", answer: "One page is approximately 250 words. The final sentence is kept whole, so the exact length can differ slightly." },
+    { question: "Can I stop and come back later?", answer: "Your progress in the current test is not saved after you leave or reload the page. Finish it in one session for a useful score." }
+  ]
+})));
+
 export const seoPageMap = new Map(seoPages.map((page) => [page.path.replace(/\/$/, "") || "/", page]));
 
 export function normalizePath(path: string): string {

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import WPMTestApp from "../../src/ClientApp";
 import { getSeoPage, seoPages } from "../../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
-import { typingTestLanguageAlternates, typingTestLanguagePaths } from "../../src/lib/seo/localized";
+import { typingTestLanguageAlternates } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
   "/about/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
@@ -90,19 +90,6 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
   return (
     <>
       <WPMTestApp initialPath={path} />
-      {normalized === "/typing-test" ? (
-        <nav className="typing-language-links" aria-label="Typing test languages">
-          <strong>Typing test languages:</strong>
-          <a href={typingTestLanguagePaths.en} hrefLang="en">English</a>
-          <a href={typingTestLanguagePaths.fr} hrefLang="fr" lang="fr">Français</a>
-          <a href={typingTestLanguagePaths.it} hrefLang="it" lang="it">Italiano</a>
-          <a href={typingTestLanguagePaths.hi} hrefLang="hi" lang="hi">हिन्दी</a>
-          <a href={typingTestLanguagePaths.es} hrefLang="es" lang="es">Español</a>
-          <a href={typingTestLanguagePaths.de} hrefLang="de" lang="de">Deutsch</a>
-          <a href={typingTestLanguagePaths.pt} hrefLang="pt-BR" lang="pt-BR">Português (Brasil)</a>
-          <a href={typingTestLanguagePaths.ru} hrefLang="ru" lang="ru">Русский</a>
-        </nav>
-      ) : null}
       {path !== "/" ? (
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}

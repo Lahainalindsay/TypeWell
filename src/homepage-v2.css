@@ -13,7 +13,6 @@
   margin: 0.25rem auto 1rem;
 }
 .home > .hero { order: 2; }
-.home > .home-language-links { order: 3; }
 .home > .language-suggestion { order: 3; }
 .home > .home-test { order: 4; }
 .home > .seo-section,

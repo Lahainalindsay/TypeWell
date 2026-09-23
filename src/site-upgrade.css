@@ -69,6 +69,13 @@
   line-height:1.45 !important;
   letter-spacing:normal;
 }
+.home.tw-wpm-test-home .hero-copy > p.hero-typing-line {
+  display:flex !important;
+  max-width:100%;
+  font-size:clamp(.88rem, 2vw, 1.15rem) !important;
+  letter-spacing:.045em !important;
+  margin:.45rem 0 0 !important;
+}
 
 /* Test controls stay compact; passage + keyboard are the visual center of the first screen. */
 .home.tw-wpm-test-home .home-test {

@@ -2,59 +2,6 @@
   const q = (s, root = document) => root.querySelector(s);
   const promptStates = new WeakMap();
 
-  function upgradeNav() {
-    const nav = q('.topbar nav');
-    if (!nav || nav.dataset.twWpmFocus) return;
-    nav.dataset.twWpmFocus = '1';
-    const details = q('.more-tools', nav);
-    Array.from(nav.querySelectorAll(':scope > a')).forEach(a => a.remove());
-
-    const links = [
-      ['/typing-test/', 'Typing Tests'],
-      ['/data-entry-typing-test/', 'Data Entry'],
-      ['/1-minute-typing-test/', '1 Minute Typing Test'],
-      ['/5-minute-typing-test/', '5 Minute Typing Test'],
-      ['/typing-certificate/', 'Typing Certificate']
-    ];
-
-    links.forEach(([href, label]) => {
-      const a = document.createElement('a');
-      a.href = href;
-      a.textContent = label;
-      const path = location.pathname.replace(/\/$/, '') || '/';
-      const target = href.replace(/\/$/, '') || '/';
-      if (path === target || path.startsWith(target + '/')) a.className = 'active';
-      nav.insertBefore(a, details || null);
-    });
-
-    if (details) {
-      const summary = q('summary', details);
-      if (summary) summary.textContent = 'More';
-      const menu = q('div', details);
-      if (menu) menu.innerHTML = `
-        <a href="/data-entry-typing-test/">Data Entry Typing Test</a>
-        <a href="/10-key-typing-test/">10-Key Typing Test</a>
-        <a href="/typing-test-for-employment/">Employment Typing Tests</a>
-        <a href="/certificate/sample/">View Sample Certificate</a>
-        <a href="/blog/">Typing & Career Guides</a>
-        <a href="/blog/best-typing-test-websites/">Best Typing Test Websites</a>
-        <a href="/fr/test-de-vitesse-de-frappe/" lang="fr">Français — French Typing Test</a>
-        <a href="/it/test-di-velocita-di-scrittura/" lang="it">Italiano — Italian Typing Test</a>
-        <a href="/hi/hindi-typing-test/" lang="hi">हिन्दी — Hindi Typing Test</a>
-        <a href="/es/prueba-de-velocidad-de-escritura/" lang="es">Español — Spanish Typing Test</a>
-        <a href="/de/schreibtest/" lang="de">Deutsch — German Typing Test</a>
-        <a href="/pt/teste-de-digitacao/" lang="pt-BR">Português — Brazilian Typing Test</a>
-        <a href="/ru/test-skorosti-pechati/" lang="ru">Русский — Russian Typing Test</a>
-        <a href="/wpm-calculator/">WPM Calculator</a>
-        <a href="/average-typing-speed/">Average Typing Speed</a>
-        <a href="/typing-test-for-students/">Student Typing Test</a>
-        <a href="/educators/">For Educators</a>
-        <a href="/progress">Typing Progress</a>
-        <a href="/settings">Settings</a>
-        <a href="/typing-practice/">Improve Your Typing with WPMTest</a>`;
-    }
-  }
-
   function removeHomepageBand() {
     document.querySelectorAll('.tw-home-feature-band, .tw-career-entry-card').forEach(el => el.remove());
   }
@@ -203,7 +150,6 @@
   }
 
   function run() {
-    upgradeNav();
     removeHomepageBand();
     refineHomepage();
     restoreTypingBreaks();

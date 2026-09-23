@@ -80,11 +80,24 @@ nav button.active, nav a.active { color: var(--accent); background: var(--panel-
 .more-tools summary::-webkit-details-marker { display: none; }
 .more-tools div { position: absolute; right: 0; top: calc(100% + 0.4rem); z-index: 30; min-width: 220px; display: grid; gap: 0.2rem; padding: 0.45rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-2); box-shadow: var(--shadow); }
 .more-tools div a { justify-content: flex-start; }
+.nav-dropdown { position: relative; }
+.nav-dropdown summary { list-style: none; border: 1px solid var(--line); background: var(--panel); }
+.nav-dropdown summary::-webkit-details-marker { display: none; }
+.nav-dropdown summary::after, .more-tools summary::after { content: "⌄"; margin-left: .35rem; color: var(--accent); }
+.nav-dropdown-panel { position: absolute; z-index: 30; top: calc(100% + .4rem); left: 0; width: min(280px, calc(100vw - 1.7rem)); max-height: 65vh; overflow-y: auto; overscroll-behavior: contain; display: grid; gap: .1rem; padding: .55rem; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); box-shadow: var(--shadow); }
+.nav-dropdown-panel strong { color: var(--muted); font-size: .72rem; padding: .65rem .7rem .2rem; text-transform: uppercase; letter-spacing: .08em; }
+.nav-dropdown-panel a { justify-content: flex-start; white-space: normal; }
+.nav-dropdown-panel a:hover, .nav-dropdown-panel a[aria-current="page"] { background: var(--panel-strong); color: var(--accent); }
+.language-menu .nav-dropdown-panel { left: auto; right: 0; }
 main, .app-content { padding: clamp(0.85rem, 3vw, 2rem); }
 .hero { min-height: auto; display: block; max-width: 1180px; margin: 0 auto; padding: clamp(1rem, 3vw, 2.25rem) 0 0.85rem; }
 .hero-copy h1 { font-size: clamp(2rem, 4vw, 3.65rem); line-height: 1.04; margin: 0 0 0.7rem; letter-spacing: 0; max-width: 780px; }
 .hero-copy p { color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.12rem); line-height: 1.58; max-width: 740px; }
 .hero-copy .tool-copy { font-size: 0.92rem; margin-top: 1.1rem; }
+.hero-typing-line { display: flex; flex-wrap: wrap; width: fit-content; min-height: 1.5em; margin: .4rem 0 0; font-family: ui-monospace, monospace; font-size: clamp(.9rem, 2vw, 1.18rem) !important; font-weight: 800; letter-spacing: .045em; color: var(--accent) !important; }
+.hero-typing-line span { opacity: 0; animation: hero-letter-fill .24s ease-out forwards; }
+@keyframes hero-letter-fill { from { opacity: 0; transform: translateY(.35rem); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .hero-typing-line span { animation: none; opacity: 1; } }
 .eyebrow { color: var(--accent) !important; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.78rem !important; font-weight: 900; }
 .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
 .product-preview, .panel, .trainer, .metric, .feature-grid article, .philosophy article {
@@ -213,12 +226,6 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 .faq-section summary { cursor: pointer; font-weight: 700; }
 .faq-section details p { max-width: 760px; color: var(--muted); line-height: 1.65; margin-bottom: 0; }
 .ad-slot { min-height: 90px; display: grid; place-items: center; margin: 2rem auto; border: 1px dashed var(--line); color: var(--muted); font-size: 0.75rem; }
-.typing-language-links { width: min(1180px, calc(100% - 2rem)); margin: 1rem auto; padding: .9rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
-.typing-language-links a { color: var(--accent); font-weight: 750; }
-.home-language-links { width: min(1180px, 100%); margin: 1rem auto; padding: .85rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: .6rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
-.home-language-links strong { margin-right: .35rem; }
-.home-language-links a { color: var(--text); text-decoration: none; padding: .45rem .7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-strong); }
-.home-language-links a:hover, .home-language-links a:focus-visible { border-color: var(--accent); }
 .language-suggestion { width: min(1180px, 100%); margin: 0 auto 1rem; padding: .7rem 1rem; border-left: 3px solid var(--accent); background: var(--panel); display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
 .language-suggestion a { color: var(--accent); font-weight: 750; }
 .language-suggestion button { margin-left: auto; min-height: 32px; padding: .2rem .55rem; }

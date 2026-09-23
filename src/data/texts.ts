@@ -80,6 +80,48 @@ export function buildPracticeText(mode: PracticeMode, count = 50, customText = "
   return repeatToLength(pool, count * 6);
 }
 
+// A page test has a fixed amount of text and no countdown. Keep sentence
+// boundaries intact so the final prompt never stops in the middle of a word.
+const pageTestSentences = [
+  "The morning light reached the kitchen table as Maya opened her notebook and planned the day ahead.",
+  "She wanted to finish a letter, organize her files, and take a short walk before the afternoon rain.",
+  "Outside, the neighborhood was waking up slowly, with buses passing the corner and neighbors greeting one another.",
+  "At the library, she found a quiet desk near a window and began to write with careful attention.",
+  "A steady pace helped her avoid small mistakes that would have taken extra time to correct later.",
+  "When a sentence felt difficult, she paused, breathed, and returned to the next word without rushing.",
+  "Across the room, someone turned a page while the librarian arranged new books on a low shelf.",
+  "By lunchtime, the letter was complete and the remaining tasks looked much easier to manage.",
+  "Maya saved her work, checked the details one last time, and stepped outside into the fresh air.",
+  "The walk home gave her a chance to notice the trees, the storefronts, and the changing sky.",
+  "Near the corner, a gardener watered a row of flowers and brushed loose soil from the stone path.",
+  "A friend waved from the café and asked whether they could meet later in the week.",
+  "Maya checked her calendar, suggested Thursday, and promised to bring the book they had discussed.",
+  "The conversation was brief, but it made the rest of the afternoon feel a little brighter.",
+  "At home, she put away her coat and opened a window to let the cool breeze into the room.",
+  "There was still enough time to prepare dinner without hurrying through the small tasks along the way.",
+  "She rinsed the vegetables, set a pot on the stove, and listened to the rain begin outside.",
+  "While the water warmed, she read over tomorrow's schedule and made a short list of priorities.",
+  "The list helped her separate urgent work from the things that could wait until another day.",
+  "When dinner was ready, the kitchen smelled warm and the rain had become a gentle background sound.",
+  "She shared the meal with her family and asked everyone to name one good thing from the day.",
+  "Afterward, the dishes were washed, the table was cleared, and the house grew quiet again.",
+  "Maya returned to her notebook and wrote a few lines about what she had learned from the day.",
+  "She noticed that patient work had made the difficult letter easier than she expected.",
+  "Before bed, she placed the notebook by the door so it would be ready for the next morning."
+];
+
+export function buildPageTestText(pages: 1 | 2 | 3): string {
+  const targetWords = pages * 250;
+  const sentences: string[] = [];
+  let words = 0;
+  for (let index = 0; words < targetWords; index += 1) {
+    const sentence = pageTestSentences[index % pageTestSentences.length];
+    sentences.push(sentence);
+    words += sentence.split(/\s+/).length;
+  }
+  return sentences.join(" ");
+}
+
 const numericGroups = [
   "48291 10577 63.42 921004 782.15 34008 19.76 55021",
   "71420 88.03 602911 147.28 90017 30556 42.10 781009",
