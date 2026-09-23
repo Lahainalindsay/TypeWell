@@ -41,6 +41,10 @@
         <a href="/fr/test-de-vitesse-de-frappe/" lang="fr">Français — French Typing Test</a>
         <a href="/it/test-di-velocita-di-scrittura/" lang="it">Italiano — Italian Typing Test</a>
         <a href="/hi/hindi-typing-test/" lang="hi">हिन्दी — Hindi Typing Test</a>
+        <a href="/es/prueba-de-velocidad-de-escritura/" lang="es">Español — Spanish Typing Test</a>
+        <a href="/de/schreibtest/" lang="de">Deutsch — German Typing Test</a>
+        <a href="/pt/teste-de-digitacao/" lang="pt-BR">Português — Brazilian Typing Test</a>
+        <a href="/ru/test-skorosti-pechati/" lang="ru">Русский — Russian Typing Test</a>
         <a href="/wpm-calculator/">WPM Calculator</a>
         <a href="/average-typing-speed/">Average Typing Speed</a>
         <a href="/typing-test-for-students/">Student Typing Test</a>

@@ -13,8 +13,8 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
             <a
               className={language === content.lang ? styles.currentLanguage : ""}
               href={typingTestLanguagePaths[language]}
-              hrefLang={language}
-              lang={language}
+              hrefLang={language === "pt" ? "pt-BR" : language}
+              lang={language === "pt" ? "pt-BR" : language}
               key={language}
             >
               {content.nav.languages[language]}

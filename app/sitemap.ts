@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 // internal-link updates in the September 20 release. Keep this date honest:
 // Google may use lastmod when it matches a significant page update.
 const SEO_CONTENT_LAST_MODIFIED = new Date("2026-09-20T00:00:00.000Z");
-const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-21T00:00:00.000Z");
+const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
 const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
@@ -42,7 +42,11 @@ const supportingIndexableRoutes = [
   "/terms/",
   typingTestLanguagePaths.fr,
   typingTestLanguagePaths.it,
-  typingTestLanguagePaths.hi
+  typingTestLanguagePaths.hi,
+  typingTestLanguagePaths.es,
+  typingTestLanguagePaths.de,
+  typingTestLanguagePaths.pt,
+  typingTestLanguagePaths.ru
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

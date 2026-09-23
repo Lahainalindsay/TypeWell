@@ -8,7 +8,7 @@ import { typingTestLanguageAlternates, typingTestLanguagePaths } from "../src/li
 import { absoluteUrl } from "../src/lib/seo/site";
 
 describe("localized typing tests", () => {
-  it("publishes French, Italian, and Hindi routes with reciprocal language alternates", () => {
+  it("publishes every localized route with reciprocal language alternates", () => {
     const entries = sitemap();
     for (const content of Object.values(localizedTypingContents)) {
       const entry = entries.find((candidate) => candidate.url === absoluteUrl(content.path));
@@ -41,11 +41,26 @@ describe("localized typing tests", () => {
     }
   });
 
+  it("uses the matching script and distinctive keys for the new layouts", () => {
+    expect(localizedTypingContents.es.passages.join(" ")).toMatch(/[¿ñá]/i);
+    expect(localizedTypingContents.es.keyboard.rows.flat()).toContain("Ñ");
+    expect(localizedTypingContents.de.passages.join(" ")).toMatch(/[äöüß]/i);
+    expect(localizedTypingContents.de.keyboard.rows[1].slice(4, 6)).toEqual(["T", "Z"]);
+    expect(localizedTypingContents.pt.passages.join(" ")).toMatch(/[ãç]/i);
+    expect(localizedTypingContents.pt.keyboard.rows.flat()).toContain("Ç");
+    expect(localizedTypingContents.ru.passages.join(" ")).toMatch(/[А-Яа-я]/);
+    expect(localizedTypingContents.ru.keyboard.rows[1].slice(0, 6)).toEqual(["Й", "Ц", "У", "К", "Е", "Н"]);
+  });
+
   it("backs each localized URL with a dedicated static page", () => {
     for (const relativePath of [
       "app/fr/test-de-vitesse-de-frappe/page.tsx",
       "app/it/test-di-velocita-di-scrittura/page.tsx",
-      "app/hi/hindi-typing-test/page.tsx"
+      "app/hi/hindi-typing-test/page.tsx",
+      "app/es/prueba-de-velocidad-de-escritura/page.tsx",
+      "app/de/schreibtest/page.tsx",
+      "app/pt/teste-de-digitacao/page.tsx",
+      "app/ru/test-skorosti-pechati/page.tsx"
     ]) {
       expect(existsSync(join(process.cwd(), relativePath)), relativePath).toBe(true);
       expect(readFileSync(join(process.cwd(), relativePath), "utf8")).toContain("localizedTypingMetadata");

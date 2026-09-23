@@ -134,6 +134,10 @@ function Header({ page, go }: { page: Page; go: (page: Page, route?: string) => 
               [typingTestLanguagePaths.fr, "French Typing Test"],
               [typingTestLanguagePaths.it, "Italian Typing Test"],
               [typingTestLanguagePaths.hi, "Hindi Typing Test"],
+              [typingTestLanguagePaths.es, "Spanish Typing Test"],
+              [typingTestLanguagePaths.de, "German Typing Test"],
+              [typingTestLanguagePaths.pt, "Portuguese Typing Test"],
+              [typingTestLanguagePaths.ru, "Russian Typing Test"],
               ["/learn", "Lessons"]
             ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
           </div>
@@ -153,13 +157,19 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
           <p>Start typing instantly. Test your speed, accuracy, and consistency in 1, 3, 5, or 10 minutes. Free, private, and no account required.</p>
         </div>
       </div>
-      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
       <nav className="home-language-links" aria-label="Typing tests in other languages">
-        <strong>Typing tests in other languages</strong>
+        <strong>Choose a typing language</strong>
+        <a href={typingTestLanguagePaths.en} hrefLang="en">English</a>
         <a href={typingTestLanguagePaths.fr} hrefLang="fr" lang="fr">Français</a>
         <a href={typingTestLanguagePaths.it} hrefLang="it" lang="it">Italiano</a>
         <a href={typingTestLanguagePaths.hi} hrefLang="hi" lang="hi">हिन्दी</a>
+        <a href={typingTestLanguagePaths.es} hrefLang="es" lang="es">Español</a>
+        <a href={typingTestLanguagePaths.de} hrefLang="de" lang="de">Deutsch</a>
+        <a href={typingTestLanguagePaths.pt} hrefLang="pt-BR" lang="pt-BR">Português (Brasil)</a>
+        <a href={typingTestLanguagePaths.ru} hrefLang="ru" lang="ru">Русский</a>
       </nav>
+      <BrowserLanguageSuggestion />
+      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
       <AdSlot placement="after-home-test" />
       <section className="seo-section philosophy">
         <h2>Improve More Than Just WPM</h2>
@@ -202,6 +212,33 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
       </section>
     </section>
   );
+}
+
+type SupportedLocalizedLanguage = Exclude<keyof typeof typingTestLanguagePaths, "en">;
+const languageNames: Record<SupportedLocalizedLanguage, string> = {
+  fr: "French", it: "Italian", hi: "Hindi", es: "Spanish", de: "German", pt: "Brazilian Portuguese", ru: "Russian"
+};
+
+function BrowserLanguageSuggestion() {
+  const [language, setLanguage] = useState<SupportedLocalizedLanguage | null>(null);
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("typing-language-suggestion-dismissed")) return;
+    } catch { /* Private browsing can restrict storage. */ }
+    const preferred = (navigator.languages?.[0] ?? navigator.language ?? "en").split("-")[0].toLowerCase() as SupportedLocalizedLanguage;
+    if (preferred in languageNames) setLanguage(preferred);
+  }, []);
+
+  if (!language) return null;
+  return <aside className="language-suggestion" aria-label="Suggested typing test language">
+    <span>Your browser is set to {languageNames[language]}. Try the test in your language.</span>
+    <a href={typingTestLanguagePaths[language]}>Open {languageNames[language]} test</a>
+    <button type="button" onClick={() => {
+      try { sessionStorage.setItem("typing-language-suggestion-dismissed", "1"); } catch { /* Dismiss for this page. */ }
+      setLanguage(null);
+    }} aria-label="Dismiss language suggestion">×</button>
+  </aside>;
 }
 
 function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedProps) {

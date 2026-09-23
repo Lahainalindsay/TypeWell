@@ -10,6 +10,7 @@ const dedicatedRoutes = new Set([
   "/data-entry-practice/", "/data-entry-practice/alphanumeric/", "/data-entry-practice/currency-dates/",
   "/data-entry-practice/invoices-orders/", "/data-entry-practice/names-addresses/", "/data-entry-typing-test/",
   "/educators/", "/fr/test-de-vitesse-de-frappe/", "/hi/hindi-typing-test/", "/it/test-di-velocita-di-scrittura/",
+  "/es/prueba-de-velocidad-de-escritura/", "/de/schreibtest/", "/pt/teste-de-digitacao/", "/ru/test-skorosti-pechati/",
   "/privacy/", "/professionals/", "/terms/", "/typing-test/code/", "/typing-test-for-kids/",
   "/typing-test-for-students/", "/typing-test-for-employment/", "/typing-test-with-numbers/", "/typing-test-with-punctuation/"
 ]);
@@ -96,6 +97,10 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
           <a href={typingTestLanguagePaths.fr} hrefLang="fr" lang="fr">Français</a>
           <a href={typingTestLanguagePaths.it} hrefLang="it" lang="it">Italiano</a>
           <a href={typingTestLanguagePaths.hi} hrefLang="hi" lang="hi">हिन्दी</a>
+          <a href={typingTestLanguagePaths.es} hrefLang="es" lang="es">Español</a>
+          <a href={typingTestLanguagePaths.de} hrefLang="de" lang="de">Deutsch</a>
+          <a href={typingTestLanguagePaths.pt} hrefLang="pt-BR" lang="pt-BR">Português (Brasil)</a>
+          <a href={typingTestLanguagePaths.ru} hrefLang="ru" lang="ru">Русский</a>
         </nav>
       ) : null}
       {path !== "/" ? (
