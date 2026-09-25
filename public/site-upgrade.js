@@ -124,37 +124,11 @@
     });
   }
 
-  function upgradeLegalFooter() {
-    document.querySelectorAll('.site-footer').forEach((footer) => {
-      if (footer.dataset.twLegalFooter) return;
-      footer.dataset.twLegalFooter = '1';
-      const nav = q('nav', footer) || footer.appendChild(document.createElement('nav'));
-      nav.setAttribute('aria-label', 'Legal and privacy');
-      nav.innerHTML = `
-        <a href="/terms/">Terms of Service</a>
-        <a href="/privacy/">Privacy Policy</a>
-        <button type="button" class="tw-cookie-settings">Cookie Settings</button>`;
-      const button = q('.tw-cookie-settings', nav);
-      if (button) button.addEventListener('click', () => {
-        if (window.googlefc && typeof window.googlefc.showRevocationMessage === 'function') {
-          window.googlefc.showRevocationMessage();
-          return;
-        }
-        if (window.__tcfapi) {
-          window.__tcfapi('displayConsentUi', 2, () => {});
-          return;
-        }
-        window.location.href = '/privacy/';
-      });
-    });
-  }
-
   function run() {
     removeHomepageBand();
     refineHomepage();
     restoreTypingBreaks();
     stabilizeTypingPrompts();
-    upgradeLegalFooter();
   }
 
   document.addEventListener('keydown', () => requestAnimationFrame(() => {

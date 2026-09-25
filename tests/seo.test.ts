@@ -113,7 +113,7 @@ describe("SEO route registry", () => {
     expect(appSource).not.toContain('["/practice/numbers",');
     expect(appSource).not.toContain('["/practice/punctuation",');
     expect(professionalsSource).not.toContain('["/practice/code",');
-    expect(professionalsSource).toContain('["/typing-test/code/",');
+    expect(professionalsSource).toContain('href="/typing-test/code/"');
   });
 
   it("keeps priority SEO landing pages substantive and aligned with the current copy brief", () => {

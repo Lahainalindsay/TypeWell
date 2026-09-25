@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "../src/styles.css";
 import "../src/refresh.css";
-import "../src/homepage-v2.css";
-import "../src/homepage-v3.css";
 import "../src/certificate.css";
 import "../src/site-upgrade.css";
 import "../src/stable-typing.css";
+import "../src/redesign.css";
+import { SiteHeader, SiteFooter } from "../src/components/SiteShell";
 import { SITE_NAME, SITE_ORIGIN } from "../src/lib/seo/site";
 
 const adsenseClient = "ca-pub-2169009102905035";
@@ -57,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script defer src="/certificate-flow.js" />
         <script defer src="/site-upgrade.js" />
       </head>
-      <body>{children}</body>
+      <body><SiteHeader />{children}<SiteFooter /></body>
       <Script
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
         strategy="afterInteractive"

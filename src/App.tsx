@@ -11,37 +11,15 @@ import { lessons } from "./data/lessons";
 import { buildPageTestText, buildPracticeText, durations, practiceModes, testDurations, wordCounts, type PracticeMode } from "./data/texts";
 import { keyInfo, rows, fingerClass } from "./data/keyboard";
 import { defaultProgress, exportProgress, loadProgress, saveProgress, summarizeProgress, validateProgress, type ProgressData, type SessionRecord } from "./storage/progress";
-import { adsConfig, adsEnabledForLocalPreview } from "./ads.config";
+import { AdSlot } from "./components/AdSlot";
+import { HomePage } from "./components/HomePage";
 import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
 import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
-import { typingTestLanguagePaths } from "./lib/seo/localized";
 import type { Metrics } from "./engine/types";
 
 type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
-
-const primaryLinks = [
-  { href: "/data-entry-typing-test/", label: "Data Entry" },
-  { href: "/typing-practice/", label: "Practice" },
-  { href: "/blog/", label: "Blog" }
-];
-
-const languageLinks = [
-  { key: "en", label: "English", path: typingTestLanguagePaths.en },
-  { key: "fr", label: "Français", path: typingTestLanguagePaths.fr },
-  { key: "it", label: "Italiano", path: typingTestLanguagePaths.it },
-  { key: "hi", label: "हिन्दी", path: typingTestLanguagePaths.hi },
-  { key: "es", label: "Español", path: typingTestLanguagePaths.es },
-  { key: "de", label: "Deutsch", path: typingTestLanguagePaths.de },
-  { key: "pt-BR", label: "Português (Brasil)", path: typingTestLanguagePaths.pt },
-  { key: "ru", label: "Русский", path: typingTestLanguagePaths.ru }
-];
-
-const clientManagedRoutes = new Set([
-  "/typing-test/", "/typing-practice/", "/10-key-typing-test/", "/wpm-calculator/",
-  "/typing-certificate/", "/average-typing-speed/", "/mobile-typing-test/", "/rhythm", "/progress", "/settings", "/learn"
-]);
 
 export default function WPMTestApp({ initialPath = "/", embedded = false }: { initialPath?: string; embedded?: boolean }) {
   const [page, setPage] = useState<Page>(routeToPage(initialPath));
@@ -93,7 +71,6 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
 
   return (
     <div className={focus ? "app focus-active" : "app"}>
-      {!focus && <Header path={path} go={go} />}
       <ContentLandmark className="app-content">
         {page === "home" && <Home {...props} />}
         {page === "learn" && <Learn {...props} />}
@@ -105,169 +82,12 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
         {page === "tools" && <Tools path={path} go={go} progress={progress} />}
         {page === "games" && <TypingGames progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />}
       </ContentLandmark>
-      {!focus && <Footer go={go} />}
     </div>
   );
 }
 
-function Header({ path, go }: { path: string; go: (page: Page, route?: string) => void }) {
-  const moreToolsRef = useRef<HTMLDetailsElement | null>(null);
-  const testsRef = useRef<HTMLDetailsElement | null>(null);
-  const languageRef = useRef<HTMLDetailsElement | null>(null);
-  const currentLanguage = languageLinks.find((item) => item.path === path)?.label ?? "English";
-
-  function keepOneMenuOpen(menu: HTMLDetailsElement) {
-    if (!menu.open) return;
-    for (const other of [testsRef.current, languageRef.current, moreToolsRef.current]) {
-      if (other && other !== menu) other.removeAttribute("open");
-    }
-  }
-
-  function navigateFromMenu(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    moreToolsRef.current?.removeAttribute("open");
-    testsRef.current?.removeAttribute("open");
-    languageRef.current?.removeAttribute("open");
-    if (!clientManagedRoutes.has(href)) return;
-    event.preventDefault();
-    go(routeToPage(href), href);
-  }
-
-  return (
-    <header className="topbar">
-      <button className="brand" onClick={() => go("home")} aria-label="WPMTest home"><span>WPMTEST</span><small>Free typing mastery</small></button>
-      <nav aria-label="Primary navigation">
-        <details ref={testsRef} className="nav-dropdown tests-menu" onToggle={(event) => keepOneMenuOpen(event.currentTarget)}>
-          <summary>Typing Tests</summary>
-          <div className="nav-dropdown-panel">
-            <strong>Timed tests</strong>
-            {([1, 3, 5, 10] as const).map((minutes) => <a href={`/${minutes}-minute-typing-test/`} key={minutes}>{minutes} Minute Test</a>)}
-            <strong>Page tests · finish the passage</strong>
-            {([1, 2, 3] as const).map((pages) => <a href={`/${pages}-page-typing-test/`} key={pages}>{pages} Page Test</a>)}
-          </div>
-        </details>
-        {primaryLinks.map((item) => <a key={item.href} className={path === item.href ? "active" : ""} href={item.href} onClick={(event) => navigateFromMenu(event, item.href)}>{item.label}</a>)}
-        <details ref={languageRef} className="nav-dropdown language-menu" onToggle={(event) => keepOneMenuOpen(event.currentTarget)}>
-          <summary aria-label={`Typing test language: ${currentLanguage}`}>{currentLanguage}</summary>
-          <div className="nav-dropdown-panel">
-            {languageLinks.map((item) => <a key={item.key} href={item.path} hrefLang={item.key} lang={item.key} aria-current={path === item.path ? "page" : undefined}>{item.label}</a>)}
-          </div>
-        </details>
-        <details ref={moreToolsRef} className="more-tools" onToggle={(event) => keepOneMenuOpen(event.currentTarget)}>
-          <summary>More</summary>
-          <div>
-            {[
-              ["/typing-test/", "All Typing Tests"],
-              ["/10-key-typing-test/", "10-Key Typing Test"],
-              ["/typing-test-for-employment/", "Employment Typing Test"],
-              ["/certificate/sample/", "View Sample Certificate"],
-              ["/average-typing-speed/", "Average Typing Speed"],
-              ["/wpm-calculator/", "WPM Calculator"],
-              ["/rhythm", "Rhythm Trainer"],
-              ["/progress", "Progress"],
-              ["/settings", "Settings"],
-              ["/typing-test-with-numbers/", "Numbers Test"],
-              ["/typing-test-with-punctuation/", "Punctuation Test"],
-              ["/typing-test-for-students/", "Student Typing Test"],
-              ["/educators/", "For Educators"],
-              ["/blog/best-typing-test-websites/", "Best Typing Test Websites"],
-              ["/learn", "Lessons"]
-            ].map(([href, label]) => <a key={href} href={href} onClick={(event) => navigateFromMenu(event, href)}>{label}</a>)}
-          </div>
-        </details>
-      </nav>
-    </header>
-  );
-}
-
 function Home({ progress, setProgress, record, setFocus, path, go, embedded }: SharedProps) {
-  return (
-    <section className="home">
-      <div className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">FREE • NO SIGNUP • PRIVATE</p>
-          <h1>Free Typing Test — Measure Your Speed and Accuracy Instantly</h1>
-          <p>Start typing instantly. Test your speed, accuracy, and consistency in 1, 3, 5, or 10 minutes. Free, private, and no account required.</p>
-          <p className="hero-typing-line" aria-label="Type better. Go further.">
-            {Array.from("TYPE BETTER. GO FURTHER.").map((character, index) => <span aria-hidden="true" key={index} style={{ animationDelay: `${index * 65}ms` }}>{character === " " ? "\u00a0" : character}</span>)}
-          </p>
-        </div>
-      </div>
-      <BrowserLanguageSuggestion />
-      <HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />
-      <AdSlot placement="after-home-test" />
-      <section className="seo-section philosophy">
-        <h2>Improve More Than Just WPM</h2>
-        <p className="section-intro">Fast typing comes from accuracy, rhythm, repetition, and good technique. WPMTest shows how well you type, not only how fast.</p>
-        <div className="indicator-row">{["Speed", "Accuracy", "Consistency", "Rhythm", "Technique"].map((item) => <article key={item}><strong>{item}</strong><p>{copyFor(item)}</p></article>)}</div>
-      </section>
-      <section className="seo-section link-section">
-        <h2>Choose Your Typing Test</h2>
-        <div className="link-grid">{[
-          ["/1-minute-typing-test/", "1 Minute Typing Test", "A quick WPM test for a fast, focused baseline."],
-          ["/3-minute-typing-test/", "3 Minute Typing Test", "Measure speed and accuracy with a steadier sample."],
-          ["/5-minute-typing-test/", "5 Minute Typing Test", "Build endurance while watching consistency."],
-          ["/10-minute-typing-test/", "10 Minute Typing Test", "See how your typing holds up over long-form work."],
-          ["/typing-test-with-numbers/", "Typing Test With Numbers", "Practice dates, prices, measurements, and percentages."],
-          ["/typing-test-with-punctuation/", "Typing Test With Punctuation", "Improve accuracy across punctuation and capitalization."]
-        ].map(([href, title, text]) => <InternalLink key={href} href={href} go={go}><strong>{title}</strong><span>{text}</span></InternalLink>)}</div>
-      </section>
-      <section className="seo-section link-section">
-        <h2>Page Length Typing Tests</h2>
-        <p>Finish a set passage at your own pace. The clock measures how long you take; there is no time limit.</p>
-        <div className="link-grid">{([1, 2, 3] as const).map((pages) => <a key={pages} href={`/${pages}-page-typing-test/`}><strong>{pages} Page Typing Test</strong><span>Complete approximately {pages * 250} words and see your WPM and accuracy.</span></a>)}</div>
-      </section>
-      <section className="seo-section link-section">
-        <h2>Practice What Slows You Down</h2>
-        <div className="link-grid compact-links">{[
-          ["/typing-practice/", "Typing Practice", "Flexible words and sentence drills."],
-          ["/typing-practice/", "Weak-Key Practice", "Adaptive drills for difficult keys."],
-          ["/typing-test-with-numbers/", "Numbers", "Number-row practice for real work."],
-          ["/typing-test-with-punctuation/", "Punctuation", "Punctuation and capitalization control."],
-          ["/touch-typing-practice/", "Touch Typing", "Build reliable finger placement."],
-          ["/rhythm", "Rhythm Trainer", "Practice smooth, even timing."],
-          ["/average-typing-speed/", "Average Typing Speed", "Interpret WPM without fake rankings."],
-          ["/wpm-calculator/", "WPM Calculator", "Calculate words per minute from characters and time."],
-          ["/typing-games/", "Typing Games", "Short drills for repeat practice."]
-        ].map(([href, title, text]) => <InternalLink key={href} href={href} go={go}><strong>{title}</strong><span>{text}</span></InternalLink>)}</div>
-      </section>
-      <section className="seo-section two-column-copy">
-        <div><h2>Learn Touch Typing</h2><p>Build keyboard confidence step by step with guided lessons for the home row, top row, bottom row, capital letters, numbers, and punctuation.</p><div className="inline-links">{[["/learn/home-row", "Home Row"], ["/learn/top-row", "Top Row"], ["/learn/bottom-row", "Bottom Row"], ["/learn/capital-letters", "Capital Letters"], ["/learn/numbers", "Numbers"], ["/learn/punctuation", "Punctuation"]].map(([href, label]) => <InternalLink key={href} href={href} go={go}>{label}</InternalLink>)}</div></div>
-        <div><h2>Typing Speed &amp; WPM Guide</h2><p>WPM means words per minute. WPMTest uses the standard convention of five characters, including spaces, as one typing word. Accuracy matters because correcting mistakes interrupts flow, while consistency shows whether your pace is sustainable.</p><p>Short daily practice is usually more useful than occasional long sessions. Start with clean keystrokes, then build speed through touch typing practice, weak-key drills, and retesting.</p></div>
-      </section>
-      <AdSlot placement="contentMiddle" />
-      <section className="seo-section faq-section">
-        <h2>Frequently Asked Questions</h2>
-        {["What is a good typing speed?", "How is WPM calculated?", "What is considered fast typing?", "How can I improve my typing speed?", "Is this typing test free?", "Do I need an account?", "Does my progress stay private?", "Can I practice typing with numbers?", "Can I practice on my phone?"].map((question) => <details key={question}><summary>{question}</summary><p>{faqAnswer(question)}</p></details>)}
-      </section>
-    </section>
-  );
-}
-
-type SupportedLocalizedLanguage = Exclude<keyof typeof typingTestLanguagePaths, "en">;
-const languageNames: Record<SupportedLocalizedLanguage, string> = {
-  fr: "French", it: "Italian", hi: "Hindi", es: "Spanish", de: "German", pt: "Brazilian Portuguese", ru: "Russian"
-};
-
-function BrowserLanguageSuggestion() {
-  const [language, setLanguage] = useState<SupportedLocalizedLanguage | null>(null);
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem("typing-language-suggestion-dismissed")) return;
-    } catch { /* Private browsing can restrict storage. */ }
-    const preferred = (navigator.languages?.[0] ?? navigator.language ?? "en").split("-")[0].toLowerCase() as SupportedLocalizedLanguage;
-    if (preferred in languageNames) setLanguage(preferred);
-  }, []);
-
-  if (!language) return null;
-  return <aside className="language-suggestion" aria-label="Suggested typing test language">
-    <span>Your browser is set to {languageNames[language]}. Try the test in your language.</span>
-    <a href={typingTestLanguagePaths[language]}>Open {languageNames[language]} test</a>
-    <button type="button" onClick={() => {
-      try { sessionStorage.setItem("typing-language-suggestion-dismissed", "1"); } catch { /* Dismiss for this page. */ }
-      setLanguage(null);
-    }} aria-label="Dismiss language suggestion">×</button>
-  </aside>;
+  return <HomePage test={<HomeTest progress={progress} setProgress={setProgress} record={record} setFocus={setFocus} path={path} go={go} embedded={embedded} />} />;
 }
 
 function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
@@ -279,39 +99,6 @@ function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedP
 
 function InternalLink({ href, go, children }: { href: string; go: (page: Page, route?: string) => void; children: React.ReactNode }) {
   return <a href={href} onClick={(event) => { event.preventDefault(); go(routeToPage(href), href); }}>{children}</a>;
-}
-
-function AdSlot({ placement }: { placement: string }) {
-  const enabled = adsConfig.enabled || adsEnabledForLocalPreview();
-  if (!enabled) return null;
-  const slot = adsConfig.slots[placement as keyof typeof adsConfig.slots] ?? adsConfig.slots.contentMiddle;
-  return <div className="ad-slot" data-placement={placement} aria-label="Ad placement" style={{ minHeight: slot.minHeight }}>Ad placement</div>;
-}
-
-function faqAnswer(question: string) {
-  const answers: Record<string, string> = {
-    "What is a good typing speed?": "Around 40 WPM is a useful everyday baseline. Faster professional typing depends on accuracy, consistency, and the kind of work you do.",
-    "How is WPM calculated?": "WPM is calculated as correct characters divided by five, then divided by elapsed minutes. This makes results comparable across tests.",
-    "What is considered fast typing?": "Typing above 60 WPM is often considered fast for general work, but reliable accuracy is more useful than chasing a single number.",
-    "How can I improve my typing speed?": "Practice regularly, keep your eyes on the screen, use the correct fingers, fix weak keys, and increase speed only after accuracy is stable.",
-    "Is this typing test free?": "Yes. WPMTest's typing test and practice tools are free with no subscription, paywall, or account requirement.",
-    "Do I need an account?": "No. You can start an online typing test immediately. Preferences and progress are saved locally in your browser.",
-    "Does my progress stay private?": "Your local progress stays on this device unless you choose to export it. Core typing sessions do not require an account or email.",
-    "Can I practice typing with numbers?": "Yes. Use the numbers practice and typing test with numbers to work on dates, prices, measurements, percentages, and other number patterns.",
-    "Can I practice on my phone?": "Yes. You can take a typing test with your phone's on-screen keyboard. To develop ten-finger touch typing for a computer keyboard, practice with a physical keyboard when you can."
-  };
-  return answers[question];
-}
-
-function ProductPreview() {
-  return (
-    <div className="product-preview" aria-label="Typing trainer preview">
-      <div className="metrics"><Metric icon={<Gauge />} label="WPM" value="72" /><Metric icon={<BarChart3 />} label="Accuracy" value="98%" /><Metric icon={<LineChart />} label="Consistency" value="91%" /></div>
-      <div className="typing-line"><span className="done">steady rhythm</span><span className="cursor"> </span><span>builds confident typing</span></div>
-      <KeyboardView current="r" next="h" compact />
-      <div className="mini-map"><span /><span /><span /><span /><span /></div>
-    </div>
-  );
 }
 
 function Learn({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
@@ -358,7 +145,7 @@ function Practice({ progress, setProgress, record, setFocus, path, embedded }: S
   const target = mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom);
   return (
     <Trainer
-      title="Typing Practice — Targeted Drills to Fix Your Weak Keys"
+      title={mode === "Weak Keys" ? "Weak-Key Typing Practice" : "Typing Practice — Targeted Drills to Fix Your Weak Keys"}
       heading={embedded ? "h2" : undefined}
       subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
       target={target}
@@ -504,7 +291,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
   function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); }
   return <section className="dashboard utility-test">
     <div className="trainer-head"><div>{embedded ? <h2>{profile.title}</h2> : <h1>{profile.title}</h1>}<p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
-    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM · {finished.metrics.accuracy}% field accuracy</h2><div className="metrics"><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
+    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>Data entry results</h2><div className="metrics"><Metric label="Field Accuracy" value={`${finished.metrics.accuracy}%`} /><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
     <p className="tool-copy">This test uses fictional records and measures field-level accuracy separately from paragraph typing. Progress is stored locally on this device.</p>
     <div className="inline-links"><InternalLink href="/data-entry-practice/" go={go}>All Data Entry Practice</InternalLink><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
   </section>;
@@ -543,7 +330,7 @@ function NumericKeypadTrainer({ title, duration, progress, setProgress, onRecord
     event.preventDefault();
     applyNumericKeys(keys);
   }
-  return <section className="dashboard utility-test"><div className="trainer-head"><div><h1>{title}</h1><p>Type the numeric groups using your physical or on-screen keypad. KPM and KPH count every entered keystroke.</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>{!finished ? <><div className="metrics"><Metric label="KPM" value={numeric.kpm} /><Metric label="KPH" value={numeric.kph} /><Metric label="Accuracy" value={`${numeric.accuracy}%`} /><Metric label="Time" value={formatTime(Math.max(0, duration * 1000 - elapsedMs))} /></div><div className="typing-text numeric-prompt" onClick={() => inputRef.current?.focus()}>{Array.from(target).map((char, index) => <span className={index < typed.length ? typed[index] === char ? "correct" : "incorrect" : index === typed.length ? "current" : "pending"} key={`${index}-${char}`}>{char === " " ? "·" : char}</span>)}</div><textarea ref={inputRef} className="typing-capture-input" value="" rows={1} onKeyDown={(event) => { if (event.key.length !== 1 && event.key !== "Backspace") return; event.preventDefault(); applyNumericKeys([event.key]); }} onBeforeInput={numericBeforeInput} onChange={(event) => applyNumericKeys(keysFromTextInput("insertText", event.currentTarget.value))} autoComplete="off" autoCorrect="off" spellCheck={false} inputMode="decimal" enterKeyHint="done" aria-label="Numeric keypad typing input" placeholder="Tap here to open your numeric keyboard" /><p className="start-hint">Tap the number sequence or input field to begin. Spaces between number groups advance automatically on mobile.</p><p className="mobile-typing-note">An on-screen number pad measures touchscreen entry. Use a physical 10-key keypad when preparing for a hardware-keyboard employment assessment.</p></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{finished.metrics.wpm} WPM equivalent · {finished.metrics.accuracy}% accuracy</h2><div className="metrics"><Metric label="KPM" value={calculateKpm(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="KPH" value={calculateKph(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="Correct Keystrokes" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Keystrokes" value={finished.metrics.incorrectCharacters} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button><InternalAction href="/data-entry-typing-test/">Data Entry Test</InternalAction><InternalAction href="/kph-typing-test/">KPH Test</InternalAction></div></div>}<p className="tool-copy">KPM is keystrokes per minute. KPH is KPM multiplied by 60. Accuracy compares correct numeric keystrokes with all entered keystrokes; backspaces remove an entry before it is scored.</p><div className="inline-links"><InternalLink href="/data-entry-typing-test/" go={go}>Data Entry Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Typing Test</InternalLink><InternalLink href="/typing-test-with-numbers/" go={go}>Typing Test With Numbers</InternalLink></div></section>;
+  return <section className="dashboard utility-test"><div className="trainer-head"><div><h1>{title}</h1><p>Type the numeric groups using your physical or on-screen keypad. KPM and KPH count every entered keystroke.</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>{!finished ? <><div className="metrics"><Metric label="KPM" value={numeric.kpm} /><Metric label="KPH" value={numeric.kph} /><Metric label="Accuracy" value={`${numeric.accuracy}%`} /><Metric label="Time" value={formatTime(Math.max(0, duration * 1000 - elapsedMs))} /></div><div className="typing-text numeric-prompt" onClick={() => inputRef.current?.focus()}>{Array.from(target).map((char, index) => <span className={index < typed.length ? typed[index] === char ? "correct" : "incorrect" : index === typed.length ? "current" : "pending"} key={`${index}-${char}`}>{char === " " ? "·" : char}</span>)}</div><textarea ref={inputRef} className="typing-capture-input" value="" rows={1} onKeyDown={(event) => { if (event.key.length !== 1 && event.key !== "Backspace") return; event.preventDefault(); applyNumericKeys([event.key]); }} onBeforeInput={numericBeforeInput} onChange={(event) => applyNumericKeys(keysFromTextInput("insertText", event.currentTarget.value))} autoComplete="off" autoCorrect="off" spellCheck={false} inputMode="decimal" enterKeyHint="done" aria-label="Numeric keypad typing input" placeholder="Tap here to open your numeric keyboard" /><p className="start-hint">Tap the number sequence or input field to begin. Spaces between number groups advance automatically on mobile.</p><p className="mobile-typing-note">An on-screen number pad measures touchscreen entry. Use a physical 10-key keypad when preparing for a hardware-keyboard employment assessment.</p></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>{calculateKph(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} KPH · {finished.metrics.accuracy}% accuracy</h2><div className="metrics"><Metric label="KPM" value={calculateKpm(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="KPH" value={calculateKph(finished.metrics.totalKeystrokes, finished.metrics.elapsedMs)} /><Metric label="Correct Keystrokes" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Keystrokes" value={finished.metrics.incorrectCharacters} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button><InternalAction href="/data-entry-typing-test/">Data Entry Test</InternalAction><InternalAction href="/kph-typing-test/">KPH Test</InternalAction></div></div>}<p className="tool-copy">KPM is keystrokes per minute. KPH is KPM multiplied by 60. Accuracy compares correct numeric keystrokes with all entered keystrokes; backspaces remove an entry before it is scored.</p><div className="inline-links"><InternalLink href="/data-entry-typing-test/" go={go}>Data Entry Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Typing Test</InternalLink><InternalLink href="/typing-test-with-numbers/" go={go}>Typing Test With Numbers</InternalLink></div></section>;
 }
 
 interface SharedProps {
@@ -816,31 +603,35 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
         </button>
         <p className="eyebrow">{newBest ? "New personal best" : "Session complete"}</p>
         <h2>{record.metrics.wpm} WPM · {record.metrics.accuracy}% accuracy</h2>
-        <div className="metrics big">
-          <Metric label="Raw WPM" value={record.metrics.rawWpm} />
-          <Metric label="Gross WPM" value={record.metrics.grossWpm} />
-          <Metric label="Net WPM" value={record.metrics.netWpm} />
+        <div className="metrics big result-primary-metrics">
+          <Metric label="WPM" value={record.metrics.wpm} />
+          <Metric label="Accuracy" value={`${record.metrics.accuracy}%`} />
           <Metric label="Consistency" value={`${record.metrics.consistency}%`} />
           <Metric label="Errors" value={record.metrics.uncorrectedErrors} />
-          <Metric label="Characters" value={record.metrics.totalKeystrokes} />
-          <Metric label="CPM" value={record.metrics.charactersPerMinute} />
         </div>
-        {(record.label.includes("KPH") || record.label.includes("10 Key") || record.label.includes("Numeric")) && <div className="metrics"><Metric label="KPM" value={calculateKpm(record.metrics.totalKeystrokes, record.metrics.elapsedMs)} /><Metric label="KPH" value={calculateKph(record.metrics.totalKeystrokes, record.metrics.elapsedMs)} /><Metric label="Correct Keystrokes" value={record.metrics.correctCharacters} /><Metric label="Incorrect Keystrokes" value={record.metrics.incorrectCharacters} /></div>}
-        <div className="metrics">
-          <Metric label="Correct Chars" value={record.metrics.correctCharacters} />
-          <Metric label="Incorrect Chars" value={record.metrics.incorrectCharacters} />
-          <Metric label="Correct Words" value={record.metrics.correctWords} />
-          <Metric label="Mistyped Words" value={record.metrics.mistypedWords} />
+        <div className="actions result-actions">
+          <button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button>
+          {onPractice && <button onClick={onPractice}>Practice Weak Keys</button>}
+          <InternalAction href="/typing-certificate/">Create Certificate</InternalAction>
         </div>
-        <div className="metrics">
-          <Metric label="Previous" value={previous ? `${previous.metrics.wpm} WPM` : "None"} />
-          <Metric label="Change" value={previousDelta === null ? "First try" : `${previousDelta >= 0 ? "+" : ""}${previousDelta} WPM`} />
-          <Metric label="Personal Best" value={previousBest ? `${previousBest} WPM` : `${record.metrics.wpm} WPM`} />
-          <Metric label="Duration" value={formatTime(record.metrics.elapsedMs)} />
-          <Metric label="Active Time" value={formatTime(record.metrics.activeMs)} />
-          <Metric label="Completed" value={new Date(record.date).toLocaleDateString()} />
-        </div>
-        <Sparkline values={history.filter((item) => item.id !== record.id).slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
+        <details className="result-details">
+          <summary>Detailed breakdown and progress</summary>
+          <div className="metrics">
+            <Metric label="Raw WPM" value={record.metrics.rawWpm} />
+            <Metric label="Net WPM" value={record.metrics.netWpm} />
+            <Metric label="Characters" value={record.metrics.totalKeystrokes} />
+            <Metric label="CPM" value={record.metrics.charactersPerMinute} />
+            <Metric label="Correct Chars" value={record.metrics.correctCharacters} />
+            <Metric label="Incorrect Chars" value={record.metrics.incorrectCharacters} />
+            <Metric label="Personal Best" value={`${previousBest || record.metrics.wpm} WPM`} />
+            <Metric label="Change" value={previousDelta === null ? "First try" : `${previousDelta >= 0 ? "+" : ""}${previousDelta} WPM`} />
+            <Metric label="Duration" value={formatTime(record.metrics.elapsedMs)} />
+            <Metric label="Active Time" value={formatTime(record.metrics.activeMs)} />
+          </div>
+          {(record.label.includes("KPH") || record.label.includes("10 Key") || record.label.includes("Numeric")) && <div className="metrics"><Metric label="KPM" value={calculateKpm(record.metrics.totalKeystrokes, record.metrics.elapsedMs)} /><Metric label="KPH" value={calculateKph(record.metrics.totalKeystrokes, record.metrics.elapsedMs)} /></div>}
+          <Sparkline values={history.filter((item) => item.id !== record.id).slice(-12).map((item) => item.metrics.wpm).concat(record.metrics.wpm)} />
+          {bestDelta !== null && bestDelta < 0 && <p className="hint">{Math.abs(bestDelta)} WPM below your personal best for this test.</p>}
+        </details>
         <p>{recommendation}</p>
         {record.weakKeys.length > 0 && (
           <section className="weak-key-summary" aria-labelledby="weak-key-heading">
@@ -857,14 +648,7 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
             <WeakKeyHeatmap weakKeys={record.weakKeys} />
           </section>
         )}
-        {bestDelta !== null && bestDelta < 0 && <p className="hint">{Math.abs(bestDelta)} WPM below your personal best for this test.</p>}
-        <div className="actions result-actions">
-          <button className="primary" onClick={reset}><RotateCcw size={18} />Try Again</button>
-          <InternalAction href="/typing-certificate/">Create Certificate</InternalAction>
-          {onPractice && record.weakKeys[0] && <button onClick={onPractice}>Practice weak keys</button>}
-          <button onClick={() => shareResult(record)}>Share Result</button>
-          <InternalAction href="/5-minute-typing-test/">Take a 5-Minute Test</InternalAction>
-        </div>
+        <nav className="result-next" aria-label="Related tests"><a href="/5-minute-typing-test/">Take a 5 Minute Test</a><a href="/typing-practice/">Explore practice</a></nav>
       </div>
     </div>
   );
@@ -1193,10 +977,6 @@ function TimingHeatmap({ deviation }: { deviation: number }) {
   return <div className="heatmap"><span>EARLY</span><div><i style={{ left: `${x}%` }} /></div><span>LATE</span></div>;
 }
 
-function Footer({ go: _go }: { go: (page: Page, route?: string) => void }) {
-  return <footer className="site-footer"><span>WPMTest · Free typing practice, locally stored.</span><nav aria-label="Footer navigation"><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a><a href="/terms/">Terms</a></nav></footer>;
-}
-
 function routeToPage(path: string): Page {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const value = normalizedPath.split("/")[1] as Page;
@@ -1284,15 +1064,4 @@ function formatTime(ms: number) {
 
 function human(key: string) {
   return key.replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase());
-}
-
-function copyFor(item: string) {
-  const map: Record<string, string> = {
-    Speed: "Measured with the standard 5 characters per word convention.",
-    Accuracy: "Correct keystrokes matter more than noisy top speed.",
-    Consistency: "Short-window speed variation reveals whether your pace is steady.",
-    Rhythm: "Beat training teaches smooth spacing instead of frantic bursts.",
-    Technique: "Finger placement and home-row return build confident touch typing."
-  };
-  return map[item];
 }

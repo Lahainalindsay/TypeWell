@@ -14,6 +14,7 @@ const NEW_TEST_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
 const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
+  "/practice/weak-keys/",
   "/learn/",
   "/learn/home-row/",
   "/learn/top-row/",
