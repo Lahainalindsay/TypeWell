@@ -16,11 +16,12 @@ const dedicatedRoutes = new Set([
 ]);
 
 const extraRoutes = [
-  "/learn", "/learn/home-row", "/learn/top-row", "/learn/bottom-row", "/learn/capital-letters",
+  "/practice/weak-keys", "/learn", "/learn/home-row", "/learn/top-row", "/learn/bottom-row", "/learn/capital-letters",
   "/learn/punctuation", "/learn/numbers", "/rhythm", "/progress", "/settings"
 ];
 
 const extraSeo = new Map([
+  ["/practice/weak-keys", ["Weak-Key Typing Practice | WPMTest", "Adaptive typing drills focused on difficult keys and error patterns saved locally in your browser.", "Weak-Key Typing Practice"]],
   ["/learn", ["Learn Touch Typing - Free Typing Lessons | WPMTest", "Learn touch typing with guided lessons for home row, top row, bottom row, capitals, punctuation, numbers, and symbols.", "Learn Touch Typing"]],
   ["/learn/home-row", ["Home Row Typing Lesson | WPMTest", "Learn the home-row keys with a guided touch-typing lesson, live accuracy feedback, and local progress tracking.", "Home Row Typing Lesson"]],
   ["/learn/top-row", ["Top Row Typing Lesson | WPMTest", "Practice the top-row letter keys with guided finger placement, live accuracy feedback, and local progress tracking.", "Top Row Typing Lesson"]],

@@ -19,17 +19,26 @@ export const metadata: Metadata = {
   }
 };
 
-const tests = [
-  ["/data-entry-typing-test/", "Data Entry Typing Test", "Practice realistic mixed records with names, dates, IDs, amounts and other accuracy-sensitive data."],
-  ["/10-key-typing-test/", "10-Key Typing Test", "Build numeric keypad speed and accuracy for accounting, bookkeeping, billing and data-entry work."],
-  ["/numeric-keypad-test/", "Numeric Keypad Test", "Practice number groups, decimals and repeated numeric patterns with KPM and KPH feedback."],
-  ["/kph-typing-test/", "KPH Typing Test", "Measure keystrokes per hour for number-heavy and data-entry work where WPM is not the best metric."],
-  ["/typing-test-with-numbers/", "Numbers & Symbols Typing", "Practice dates, prices, percentages, measurements and mixed text-and-number entry."],
-  ["/typing-test-with-punctuation/", "Punctuation Typing Test", "Build accuracy with capitalization, commas, quotes, questions and document-style text."],
-  ["/typing-practice/", "Office & Administrative Practice", "Use flexible practice for emails, business text, custom material and everyday keyboard accuracy."],
-  ["/typing-test/code/", "Coding Typing Practice", "Practice brackets, punctuation, symbols and technical text used in software and technical work."],
-  ["/typing-practice/", "Transcription Practice", "Use longer custom passages to build sustained, accurate copy typing and transcription rhythm."]
-];
+const categories = [
+  { heading: "General employment", description: "Build and document reliable speed for common workplace assessments.", links: [
+    ["/typing-test-for-employment/", "Employment Typing Test", "A longer prose assessment for job preparation."],
+    ["/5-minute-typing-test/", "5 Minute Typing Test", "Check sustained WPM, accuracy and consistency."],
+    ["/typing-certificate/", "Typing Certificate", "Create a certificate after finishing a test."]
+  ] },
+  { heading: "Data entry", description: "Train exact field entry across realistic fictional records.", links: [
+    ["/data-entry-typing-test/", "Data Entry Typing Test", "Combine names, IDs, dates, amounts and ZIP codes."],
+    ["/data-entry-practice/alphanumeric/", "Alphanumeric", "Work across letters, digits and codes."],
+    ["/data-entry-practice/names-addresses/", "Names & Addresses", "Focus on exact contact records."],
+    ["/data-entry-practice/currency-dates/", "Currency & Dates", "Practice amounts, decimals and dates."],
+    ["/data-entry-practice/invoices-orders/", "Invoices & Orders", "Train order details and identifiers."]
+  ] },
+  { heading: "Numeric", description: "Measure keypad fluency with metrics that suit number-heavy work.", links: [
+    ["/10-key-typing-test/", "10-Key Test", "Practice number groups on a physical or on-screen keypad."],
+    ["/numeric-keypad-test/", "Numeric Keypad Test", "Build speed and accuracy across numeric groups."],
+    ["/kph-typing-test/", "KPH Test", "See keystrokes per hour and accuracy."],
+    ["/typing-test-with-numbers/", "Numbers Typing Test", "Enter numbers inside realistic text."]
+  ] }
+] as const;
 
 export default function ProfessionalsPage() {
   const jsonLd = {
@@ -45,10 +54,12 @@ export default function ProfessionalsPage() {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <span className="tw-kicker">Professional keyboard skills</span>
     <h1>Professional Typing Tests</h1>
-    <p className="lead">Prepare for real keyboard work with specialized typing tests and practice for data entry, 10-key, numeric keypad work, office tasks, transcription and technical typing. Choose the skill that matches the work you actually need to do.</p>
-    <div className="tw-standalone-grid">
-      {tests.map(([href,title,text]) => <a className="tw-standalone-card" href={href} key={title}><h2>{title}</h2><p>{text}</p></a>)}
-    </div>
-    <section className="tw-coming"><h2>More industry-specific tests are coming</h2><p>We're expanding professional practice for medical terminology, legal typing, accounting and bookkeeping, customer support, claims and insurance, and other job-specific keyboard tasks. Each test will use relevant formats and measurements rather than relabeling the same generic paragraph.</p></section>
+    <p className="lead">Prepare for workplace typing and data-entry assessments. Choose prose typing, structured records, or numeric keypad work based on the job you want.</p>
+    <div className="professional-categories">{categories.map((category) => <section className="professional-category" key={category.heading}>
+      <div><h2>{category.heading}</h2><p>{category.description}</p></div>
+      <div className="professional-links">{category.links.map(([href, title, description]) => <a href={href} key={href}><strong>{title}</strong><span>{description}</span><span aria-hidden="true">↗</span></a>)}</div>
+    </section>)}</div>
+    <nav className="professional-other" aria-label="More workplace typing skills"><span>More workplace skills</span><a href="/typing-test/code/">Coding symbols</a><a href="/typing-test-with-punctuation/">Punctuation</a><a href="/typing-practice/">Office and transcription practice</a></nav>
+    <section className="professional-explainer"><h2>Which score matters?</h2><p><strong>WPM</strong> measures prose typing in five-character words. <strong>KPM</strong> counts keystrokes per minute; <strong>KPH</strong> projects that rate across an hour. For data entry, field accuracy matters alongside speed because an incorrect date or amount can change a record.</p><a href="/data-entry-practice/">Explore all data entry practice →</a></section>
   </main>;
 }

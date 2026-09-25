@@ -44,14 +44,16 @@ describe("client app hydration boundary", () => {
 
   it("keeps mobile navigation and completed-test actions reachable", () => {
     const app = readFileSync(resolve("src/App.tsx"), "utf8");
-    const styles = readFileSync(resolve("src/styles.css"), "utf8");
-    const refresh = readFileSync(resolve("src/refresh.css"), "utf8");
+    const shell = readFileSync(resolve("src/components/SiteShell.tsx"), "utf8");
+    const layout = readFileSync(resolve("app/layout.tsx"), "utf8");
+    const styles = readFileSync(resolve("src/redesign.css"), "utf8");
 
     expect(app).toContain('aria-label="Exit results and return to the typing test"');
-    expect(app).toContain('["/blog/best-typing-test-websites/", "Best Typing Test Websites"]');
-    expect(app).toContain('className="nav-dropdown language-menu"');
-    expect(styles).toContain("overflow-y: auto; overscroll-behavior: contain");
-    expect(refresh).toContain("overflow: visible; flex-wrap: wrap");
+    expect(shell).toContain('className="site-mobile-toggle"');
+    expect(shell).toContain('label: "Professional"');
+    expect(shell).toContain('href="/blog/">Articles');
+    expect(layout).toContain('<SiteHeader />{children}<SiteFooter />');
+    expect(styles).toContain('max-height: calc(100dvh - 58px)');
   });
 
   it("keeps sitewide AdSense loading after hydration with an early connection hint", () => {

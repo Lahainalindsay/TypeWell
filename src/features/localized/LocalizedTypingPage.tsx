@@ -1,6 +1,5 @@
 import LocalizedTypingTest from "./LocalizedTypingTest";
 import type { LocalizedTypingContent } from "./content";
-import { typingTestLanguagePaths } from "../../lib/seo/localized";
 import styles from "./LocalizedTypingPage.module.css";
 
 const mobileQuestions = {
@@ -16,27 +15,6 @@ const mobileQuestions = {
 export default function LocalizedTypingPage({ content }: { content: LocalizedTypingContent }) {
   return (
     <main className={styles.page} lang={content.lang}>
-      <header className={styles.siteHeader}>
-        <a className={styles.brand} href="/" aria-label={content.nav.home}>WPM<span>Test</span></a>
-        <nav aria-label={content.nav.languageLabel}>
-          <details className={styles.languageMenu}>
-            <summary aria-label={content.nav.languageLabel}>{content.nav.languages[content.lang]}</summary>
-            <div>
-              {(Object.keys(typingTestLanguagePaths) as Array<keyof typeof typingTestLanguagePaths>).map((language) => (
-                <a
-                  className={language === content.lang ? styles.currentLanguage : ""}
-                  href={typingTestLanguagePaths[language]}
-                  hrefLang={language === "pt" ? "pt-BR" : language}
-                  lang={language === "pt" ? "pt-BR" : language}
-                  aria-current={language === content.lang ? "page" : undefined}
-                  key={language}
-                >{content.nav.languages[language]}</a>
-              ))}
-            </div>
-          </details>
-        </nav>
-      </header>
-
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{content.eyebrow}</p>
         <h1>{content.h1}</h1>
@@ -78,14 +56,7 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
         </details>
       </section>
 
-      <footer className={styles.footer}>
-        <strong>WPMTest</strong>
-        <span>{content.footer}</span>
-        <nav aria-label={content.nav.languageLabel}>
-          <a href="/privacy/">{content.nav.privacy}</a>
-          <a href="/terms/">{content.nav.terms}</a>
-        </nav>
-      </footer>
+
     </main>
   );
 }
