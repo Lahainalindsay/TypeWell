@@ -53,13 +53,6 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
           <ol>{content.keyboard.steps.map((step) => <li key={step}>{step}</li>)}</ol>
           <p className={styles.keyboardNote}>{content.keyboard.note}</p>
         </div>
-        <div className={styles.keyboard} aria-label={content.keyboard.name}>
-          {content.keyboard.rows.map((row, rowIndex) => (
-            <div className={styles.keyboardRow} key={rowIndex}>
-              {row.map((key, keyIndex) => <span className={key.length > 5 ? styles.wideKey : ""} key={`${key}-${keyIndex}`}>{key}</span>)}
-            </div>
-          ))}
-        </div>
       </section>
 
       <div className={styles.guideGrid}>

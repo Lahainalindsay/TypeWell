@@ -117,13 +117,18 @@
 .resultActions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 
 .keyboardSection, .guideGrid, .faq, .footer { width: min(1180px, calc(100% - 32px)); margin-left: auto; margin-right: auto; }
-.keyboardSection { display: grid; grid-template-columns: .9fr 1.1fr; gap: 42px; align-items: center; padding: 56px 0; }
+.keyboardSection { padding: 36px 0 56px; }
+.keyboardSection > div { max-width: 800px; }
 .keyboardSection ol { color: #40566e; line-height: 1.7; padding-left: 1.3rem; }
 .keyboardNote { padding: 14px; border-radius: 10px; background: #edf6ff; }
-.keyboard { min-width: 0; padding: 18px; border-radius: 18px; background: #17324f; box-shadow: 0 20px 50px rgba(16,43,74,.2); overflow-x: auto; }
-.keyboardRow { display: flex; justify-content: center; gap: 6px; min-width: 520px; margin: 6px 0; }
-.keyboardRow span { display: grid; place-items: center; min-width: 36px; height: 42px; padding: 0 7px; border-radius: 7px; color: #15304d; background: #f8fbff; box-shadow: 0 3px 0 #8ca4ba; font-weight: 800; }
-.keyboardRow .wideKey { min-width: 105px; }
+.keyboard { width: min(100%, 1030px); min-width: 0; margin: 20px auto 0; padding: .7rem .85rem 1rem; border: 1px solid rgba(75,151,218,.36); border-radius: 18px; background: linear-gradient(180deg, #061422, #05101c); box-shadow: inset 0 0 36px rgba(35,128,205,.05), 0 20px 55px rgba(0,0,0,.25); overflow-x: auto; }
+.keyboardRow { display: flex; justify-content: center; gap: .4rem; min-width: 520px; margin: 6px 0; }
+.key { display: grid; flex: 1 0 0; place-items: center; min-width: 28px; height: 43px; padding: 0 4px; border: 1px solid rgba(104,156,205,.32); border-bottom: 3px solid #3fe08f; border-radius: 8px; color: #f0f7ff; background: linear-gradient(180deg, #162b41, #0d1f30); box-shadow: inset 0 1px 0 rgba(255,255,255,.045), inset 0 -3px 0 rgba(0,0,0,.24); font-weight: 800; transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease; }
+.keyboardRow:nth-child(2) .key { border-bottom-color: #1e9cff; }
+.keyboardRow:nth-child(3) .key { border-bottom-color: #ffca4b; }
+.keyboardRow:nth-child(4) .key { border-bottom-color: #ff6bd6; }
+.keyboardRow .spaceKey { flex: 0 1 45%; border-bottom-color: #4ba4ff; }
+.targetKey, .keyboardRow:nth-child(n) .targetKey { transform: translateY(-2px) scale(1.035); color: #fff; border-color: #39d8ff; background: #11699a; box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 0 24px #39d8ff, inset 0 0 20px rgba(255,255,255,.12); }
 
 .guideGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 28px 0 56px; }
 .guideCard { padding: clamp(22px, 4vw, 34px); border: 1px solid #d8e5f0; border-radius: 18px; background: #fff; }
@@ -157,9 +162,17 @@
   .siteHeader nav { justify-content: flex-start; }
   .hero { padding-top: 48px; }
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .keyboardSection, .guideGrid { grid-template-columns: 1fr; }
+  .guideGrid { grid-template-columns: 1fr; }
+  .key { height: 34px; }
   .certificateStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .typingText { min-height: 0; }
+}
+
+@media (max-width: 560px) {
+  .keyboard { padding: .5rem; }
+  .keyboardRow { min-width: 0; gap: 2px; margin: 4px 0; }
+  .key { min-width: 0; height: 30px; padding: 0 1px; font-size: clamp(.5rem, 2.3vw, .7rem); }
+  .keyboardRow .spaceKey { flex-basis: 44%; }
 }
 
 @media print {

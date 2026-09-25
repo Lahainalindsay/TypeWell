@@ -33,7 +33,7 @@ export const spanishTypingContent: LocalizedTypingContent = {
       ["º", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "'", "¡"],
       ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "`", "+"],
       ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ", "´", "Ç"],
-      ["<", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "-"]
+      ["<", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "-", ";", "¿", "?"]
     ],
     intro: "La guía muestra una distribución española habitual de España. La Ñ tiene tecla propia y las tildes se escriben con una tecla de acento antes de la vocal. En América Latina algunas teclas cambian de posición.",
     steps: [
@@ -261,7 +261,7 @@ export const russianTypingContent: LocalizedTypingContent = {
       ["Ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
       ["Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ"],
       ["Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э"],
-      ["Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "."]
+      ["Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ".", ","]
     ],
     intro: "ЙЦУКЕН — распространённая русская раскладка. Буквы расположены иначе, чем в латинском QWERTY; клавиша Ё обычно находится слева от цифры 1.",
     steps: [

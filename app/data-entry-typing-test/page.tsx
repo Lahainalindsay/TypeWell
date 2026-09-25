@@ -97,6 +97,7 @@ export default function DataEntryTypingTestPage() {
             Data-entry work has different demands than general typing: it is often numeric-heavy, repetitive, and
             accuracy-critical in a way prose typing is not.
           </p>
+          <p>Learn how data-entry assessments work, what job-specific keyboard skills employers may measure, and how to practice before a test.</p>
           <p><strong>Designed for:</strong> {dataEntryAssessment.audience.join(" · ")}</p>
         </section>
 
@@ -200,12 +201,14 @@ export default function DataEntryTypingTestPage() {
             records and then take the standardized assessment.
           </p>
           <p><a href="/data-entry-practice/"><strong>Browse all Data Entry Practice →</strong></a></p>
-          <nav aria-label="Related data entry tools">
+          <h2>Practice job-specific typing skills</h2>
+          <nav aria-label="Employment typing tools">
             <a href="/10-key-typing-test/">10-Key Typing Test</a>
             <a href="/numeric-keypad-test/">Numeric Keypad Test</a>
             <a href="/kph-typing-test/">KPH Typing Test</a>
             <a href="/typing-test-with-numbers/">Typing Test With Numbers</a>
             <a href="/typing-test-for-employment/">Typing Test for Employment</a>
+            <a href="/professionals/">Professional Typing Tests</a>
           </nav>
 
           <h2>Certificate</h2>

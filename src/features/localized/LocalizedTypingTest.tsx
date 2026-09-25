@@ -6,6 +6,7 @@ import { splitGraphemes } from "../../engine/graphemes";
 import { keysFromTextInput } from "../../engine/textInput";
 import type { Metrics, SessionState } from "../../engine/types";
 import type { LocalizedTypingContent } from "./content";
+import { localizedKeyboardKey } from "./keyboardKey";
 import styles from "./LocalizedTypingPage.module.css";
 
 const DURATIONS = [60, 180, 300] as const;
@@ -115,6 +116,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
   const start = Math.max(0, session.typed.length - Math.floor(windowSize * 0.42));
   const end = Math.min(targetCharacters.length, start + windowSize);
   const visible = targetCharacters.slice(start, end);
+  const currentCharacter = targetCharacters[session.typed.length] ?? "";
   const resultTitle = result
     ? interpolate(content.ui.resultHeading, { wpm: result.wpm, accuracy: result.accuracy })
     : "";
@@ -201,6 +203,8 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
         aria-label={content.ui.inputLabel}
       />
 
+      {!result && <LocalizedKeyboard rows={content.keyboard.rows} current={currentCharacter} lang={content.lang} label={content.keyboard.name} />}
+
       {result ? (
         <div className={styles.result} role="dialog" aria-label={content.ui.complete}>
           <p className={styles.eyebrow}>{content.ui.complete}</p>
@@ -245,6 +249,26 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
         </div>
       ) : null}
     </section>
+  );
+}
+
+function LocalizedKeyboard({ rows, current, lang, label }: { rows: string[][]; current: string; lang: string; label: string }) {
+  const keys = rows.flat();
+  const key = localizedKeyboardKey(current, rows, lang);
+
+  return (
+    <div className={styles.keyboard} aria-label={label}>
+      {[...rows, ...(keys.some((item) => item.toLowerCase() === "space") ? [] : [["Space"]])].map((row, rowIndex) => (
+        <div className={styles.keyboardRow} key={rowIndex}>
+          {row.map((item, keyIndex) => (
+            <span
+              className={`${styles.key} ${item.toLowerCase() === "space" ? styles.spaceKey : ""} ${key?.toLowerCase() === item.toLowerCase() ? styles.targetKey : ""}`}
+              key={`${item}-${keyIndex}`}
+            >{item}</span>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 }
 

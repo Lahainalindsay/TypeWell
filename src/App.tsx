@@ -24,8 +24,7 @@ type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "se
 const primaryLinks = [
   { href: "/data-entry-typing-test/", label: "Data Entry" },
   { href: "/typing-practice/", label: "Practice" },
-  { href: "/typing-certificate/", label: "Certificate" },
-  { href: "/blog/", label: "Guides" }
+  { href: "/blog/", label: "Blog" }
 ];
 
 const languageLinks = [
@@ -725,7 +724,6 @@ function Trainer(props: {
           aria-label="Typing input area. Type the displayed text."
         />
         {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
-        {props.progress.settings.showFingerGuide && <FingerGuide current={current} />}
         {props.progress.settings.showKeyboard && <KeyboardView current={current} next={next} last={session.typed.at(-1)} incorrect={session.statuses[session.typed.length - 1] === "incorrect" ? session.typed.at(-1) : undefined} />}
         {props.footer}
         {finished && <ResultScreen record={finished} history={props.progress.sessions} reset={reset} onPractice={props.onPractice} />}
@@ -770,17 +768,6 @@ function KeyboardView({ current, next, last, incorrect, compact }: { current?: s
         const wrong = keyboardKey(incorrect) === key;
         return <div title={`${display}: ${info.finger}`} className={`key ${fingerClass(info.finger)} ${active ? "target" : ""} ${upcoming ? "next" : ""} ${wasLast ? "last" : ""} ${wrong ? "wrong" : ""}`} key={key}>{display}</div>;
       })}</div>)}
-    </div>
-  );
-}
-
-function FingerGuide({ current }: { current: string }) {
-  const info = keyInfo(current || "f");
-  const fingers = ["Left pinky", "Left ring", "Left middle", "Left index", "Thumbs", "Right index", "Right middle", "Right ring", "Right pinky"];
-  return (
-    <div className="finger-guide" aria-label="Finger placement guide">
-      <div><h2>{info.finger}</h2><p>Home key <strong>{info.home}</strong> · Target <strong>{current === " " ? "Space" : current || "ready"}</strong></p></div>
-      <div className="hands">{fingers.map((finger) => <span key={finger} className={finger === info.finger ? "active" : ""}>{finger.replace("Left ", "L ").replace("Right ", "R ")}</span>)}</div>
     </div>
   );
 }
@@ -1086,7 +1073,7 @@ function Settings({ progress, setProgress }: { progress: ProgressData; setProgre
       <div className="settings-grid">
         <div className="panel"><h2><Moon size={18} />Theme</h2><select aria-label="Color theme" value={settings.theme} onChange={(e) => update("theme", e.target.value as typeof settings.theme)}><option>dark</option><option>light</option><option>system</option></select></div>
         <div className="panel"><h2><Keyboard size={18} />Typing Display</h2><label>Font size <input type="range" min="18" max="34" value={settings.fontSize} onChange={(e) => update("fontSize", Number(e.target.value))} /></label><label>Line height <input type="range" min="1.3" max="2.1" step="0.05" value={settings.lineHeight} onChange={(e) => update("lineHeight", Number(e.target.value))} /></label></div>
-        <TogglePanel title="Show / Hide" settings={settings} update={update} keys={["showLiveMetrics", "showKeyboard", "showFingerGuide"]} />
+        <TogglePanel title="Show / Hide" settings={settings} update={update} keys={["showLiveMetrics", "showKeyboard"]} />
         <TogglePanel title="Behavior" settings={settings} update={update} keys={["stopOnError", "allowCorrections", "smoothCaret"]} />
         <TogglePanel title="Sound" settings={settings} update={update} keys={["keySound", "errorSound", "metronome"]} />
         <div className="panel"><h2>Accessibility</h2><label><input type="checkbox" checked={settings.highContrast} onChange={(e) => update("highContrast", e.target.checked)} /> High contrast</label><label><input type="checkbox" checked={settings.reducedMotion} onChange={(e) => update("reducedMotion", e.target.checked)} /> Reduced motion</label></div>
