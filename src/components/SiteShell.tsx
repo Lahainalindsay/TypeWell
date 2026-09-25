@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { typingTestLanguagePaths } from "../lib/seo/localized";
 
 const groups = [
@@ -22,11 +22,13 @@ const groups = [
 
 export function SiteHeader() {
   const header = useRef<HTMLElement>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => {
     const close = (event: Event) => {
       if (event instanceof KeyboardEvent && event.key !== "Escape") return;
       if (event.type === "pointerdown" && header.current?.contains(event.target as Node)) return;
       header.current?.querySelectorAll("details[open]").forEach((item) => item.removeAttribute("open"));
+      setMobileOpen(false);
     };
     document.addEventListener("pointerdown", close);
     document.addEventListener("keydown", close);
@@ -35,9 +37,8 @@ export function SiteHeader() {
   return <header className="site-header" ref={header}>
     <div className="site-header-inner">
       <a className="site-brand" href="/" aria-label="WPMTest home">WPMTEST<span>.</span></a>
-      <details className="site-mobile-toggle">
-        <summary>Menu <span aria-hidden="true">☰</span></summary>
-        <nav className="site-navigation" aria-label="Primary navigation">
+      <button type="button" className="site-mobile-toggle" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button>
+        <nav id="site-navigation" className="site-navigation" data-open={mobileOpen} aria-label="Primary navigation">
           {groups.map((group) => <details className="site-menu" key={group.label} onToggle={(event) => {
             if (!event.currentTarget.open) return;
             header.current?.querySelectorAll(".site-menu[open]").forEach((item) => { if (item !== event.currentTarget) item.removeAttribute("open"); });
@@ -53,7 +54,6 @@ export function SiteHeader() {
           </details>)}
           <a className="site-articles" href="/blog/">Articles</a>
         </nav>
-      </details>
     </div>
   </header>;
 }
