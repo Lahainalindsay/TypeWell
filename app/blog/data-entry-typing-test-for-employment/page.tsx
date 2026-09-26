@@ -114,9 +114,9 @@ export default function DataEntryEmploymentGuidePage() {
 
           <h2>Take a free Data Entry Typing Test</h2>
           <p>
-            WPMTest provides a free Data Entry Typing Test and practice experience for structured records, alphanumeric
-            entry, numeric entry and verification. The standardized assessment is intended to provide a consistent
-            practice and proficiency record; it is not an accredited professional certification.
+            WPMTest offers a free practice test with fictional records containing names, dates, amounts and codes.
+            The result shows exact field accuracy and directs you to drills for the field types you missed. It is
+            self-administered practice, not a proctored test or an employer-approved certification.
           </p>
           <p><a href="/data-entry-typing-test/"><strong>Practice data entry and take the free assessment →</strong></a></p>
 

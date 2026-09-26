@@ -15,7 +15,19 @@ export interface DataEntryMetrics {
   correctFields: number;
   incorrectFields: number;
   accuracy: number;
+  fieldsPerMinute: number;
+  byType: { label: string; correct: number; total: number; practice: string }[];
+  mistakes: { record: number; label: string; expected: string; entered: string }[];
 }
+
+export const dataEntryFieldTypes = [
+  { label: "Names", practice: "/data-entry-practice/names-addresses/" },
+  { label: "Order IDs", practice: "/data-entry-practice/alphanumeric/" },
+  { label: "Dates", practice: "/data-entry-practice/currency-dates/" },
+  { label: "Amounts", practice: "/data-entry-practice/currency-dates/" },
+  { label: "ZIP codes", practice: "/data-entry-practice/names-addresses/" },
+  { label: "Product codes", practice: "/data-entry-practice/invoices-orders/" }
+] as const;
 
 export const fictionalDataEntryRecords: DataEntryRecord[] = [
   { name: "Morgan Ellis", order: "A48291", date: "08/14/2026", amount: "$147.28", zip: "98104", product: "KB-2047" },
@@ -28,13 +40,30 @@ export function dataEntryFields(record: DataEntryRecord): string[] {
   return [record.name, record.order, record.date, record.amount, record.zip, record.product];
 }
 
-export function calculateDataEntryMetrics(expected: DataEntryRecord[], actual: string[][]): DataEntryMetrics {
-  const expectedFields = expected.flatMap(dataEntryFields);
-  const actualFields = actual.flat();
-  const fieldsAttempted = actualFields.length;
-  const correctFields = actualFields.reduce((count, field, index) => count + (field === expectedFields[index] ? 1 : 0), 0);
-  const recordsAttempted = actual.length;
-  const correctRecords = actual.reduce((count, fields, index) => count + (fields.length === dataEntryFields(expected[index]).length && fields.every((field, fieldIndex) => field === dataEntryFields(expected[index])[fieldIndex]) ? 1 : 0), 0);
+export function calculateDataEntryMetrics(expected: DataEntryRecord[], actual: string[][], elapsedMs = 0, indexes: number[] = [0, 1, 2, 3, 4, 5]): DataEntryMetrics {
+  const byType = indexes.map((index) => ({ ...dataEntryFieldTypes[index], correct: 0, total: 0 }));
+  const mistakes: DataEntryMetrics["mistakes"] = [];
+  let correctFields = 0;
+  let correctRecords = 0;
+  let fieldsAttempted = 0;
+  const recordsAttempted = Math.min(actual.length, expected.length);
+  expected.slice(0, recordsAttempted).forEach((record, recordIndex) => {
+    const fields = dataEntryFields(record);
+    let recordCorrect = true;
+    indexes.forEach((index, position) => {
+      const entered = actual[recordIndex]?.[position];
+      if (entered === undefined) { recordCorrect = false; return; }
+      fieldsAttempted += 1;
+      const group = byType[position];
+      group.total += 1;
+      if (entered === fields[index]) { correctFields += 1; group.correct += 1; }
+      else {
+        recordCorrect = false;
+        mistakes.push({ record: recordIndex + 1, label: group.label, expected: fields[index], entered });
+      }
+    });
+    if (recordCorrect) correctRecords += 1;
+  });
   return {
     recordsAttempted,
     correctRecords,
@@ -42,7 +71,10 @@ export function calculateDataEntryMetrics(expected: DataEntryRecord[], actual: s
     fieldsAttempted,
     correctFields,
     incorrectFields: Math.max(0, fieldsAttempted - correctFields),
-    accuracy: fieldsAttempted ? round((correctFields / fieldsAttempted) * 100) : 100
+    accuracy: fieldsAttempted ? round((correctFields / fieldsAttempted) * 100) : 0,
+    fieldsPerMinute: elapsedMs > 0 ? round(fieldsAttempted * 60000 / elapsedMs) : 0,
+    byType,
+    mistakes
   };
 }
 

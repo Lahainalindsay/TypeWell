@@ -26,5 +26,18 @@ describe("numeric and data-entry engines", () => {
     expect(result.correctFields).toBe(11);
     expect(result.incorrectFields).toBe(1);
     expect(result.accuracy).toBe(91.7);
+    expect(result.byType[4]).toMatchObject({ label: "ZIP codes", correct: 1, total: 2, practice: "/data-entry-practice/names-addresses/" });
+    expect(result.mistakes).toEqual([{ record: 2, label: "ZIP codes", expected: "30318", entered: "00000" }]);
+  });
+
+  it("counts a blank submitted field as an error and rates only submitted fields", () => {
+    const first = dataEntryFields(fictionalDataEntryRecords[0]);
+    const result = calculateDataEntryMetrics(fictionalDataEntryRecords, [[first[0], ""]], 60000, [0, 1]);
+    expect(result.fieldsAttempted).toBe(2);
+    expect(result.correctFields).toBe(1);
+    expect(result.accuracy).toBe(50);
+    expect(result.fieldsPerMinute).toBe(2);
+    expect(result.correctRecords).toBe(0);
+    expect(result.mistakes[0].entered).toBe("");
   });
 });

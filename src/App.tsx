@@ -14,7 +14,7 @@ import { defaultProgress, exportProgress, loadProgress, saveProgress, summarizeP
 import { AdSlot } from "./components/AdSlot";
 import { HomePage } from "./components/HomePage";
 import { metricRange, trackEvent } from "./analytics";
-import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords } from "./engine/dataEntry";
+import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords, type DataEntryMetrics } from "./engine/dataEntry";
 import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
 import type { Metrics } from "./engine/types";
@@ -253,6 +253,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
   const [value, setValue] = useState("");
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [finished, setFinished] = useState<SessionRecord | null>(null);
+  const [report, setReport] = useState<DataEntryMetrics | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const record = fictionalDataEntryRecords[recordIndex];
   const allFields = dataEntryFields(record);
@@ -262,7 +263,6 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
   useEffect(() => { inputRef.current?.focus(); }, [recordIndex, fieldIndex, finished]);
 
   function submitField() {
-    if (!value && !startedAt) return;
     const start = startedAt ?? performance.now();
     if (!startedAt) { setStartedAt(start); trackEvent("data_entry_started", { testType: "data-entry" }); }
     const nextActual = actual.map((fields) => [...fields]);
@@ -272,26 +272,23 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
     if (fieldIndex + 1 < fields.length) { setFieldIndex(fieldIndex + 1); return; }
     if (recordIndex + 1 < fictionalDataEntryRecords.length) { setRecordIndex(recordIndex + 1); setFieldIndex(0); return; }
     const elapsedMs = Math.max(1, performance.now() - start);
-    const expectedFields = fictionalDataEntryRecords.flatMap((item) => {
-      const values = dataEntryFields(item);
-      return profile.indexes.map((index) => values[index]);
-    });
-    const actualFields = nextActual.flat();
-    const correct = actualFields.reduce((count, field, index) => count + (field === expectedFields[index] ? 1 : 0), 0);
-    const accuracy = actualFields.length ? Math.round((correct / actualFields.length) * 1000) / 10 : 100;
+    const result = calculateDataEntryMetrics(fictionalDataEntryRecords, nextActual, elapsedMs, profile.indexes);
     const total = nextActual.flat().reduce((sum, item) => sum + item.length, 0);
+    const correctCharacters = nextActual.flatMap((values, recordNumber) => values.map((item, position) => {
+      const target = dataEntryFields(fictionalDataEntryRecords[recordNumber])[profile.indexes[position]];
+      return [...item].filter((character, index) => character === target[index]).length;
+    })).reduce((sum, count) => sum + count, 0);
     const session: SessionRecord = {
-      id: crypto.randomUUID(), date: new Date().toISOString(), type: "test", label: "Data Entry Typing Test",
-      metrics: utilityMetrics(correct, Math.max(0, actualFields.length - correct), Math.max(1, actualFields.length), elapsedMs), weakKeys: [], weakCombinations: []
+      id: crypto.randomUUID(), date: new Date().toISOString(), type: "test", label: profile.title,
+      metrics: utilityMetrics(correctCharacters, Math.max(0, total - correctCharacters), Math.max(1, total), elapsedMs), weakKeys: [], weakCombinations: []
     };
-    session.metrics.accuracy = accuracy;
-    setFinished(session); onRecord(session); trackEvent("data_entry_completed", { testType: "data-entry", accuracyRange: metricRange(accuracy) });
+    setReport(result); setFinished(session); onRecord(session); trackEvent("data_entry_completed", { testType: "data-entry", accuracyRange: metricRange(result.accuracy) });
   }
 
-  function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); }
+  function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); setReport(null); requestAnimationFrame(() => inputRef.current?.focus()); }
   return <section className="dashboard utility-test">
     <div className="trainer-head"><div>{embedded ? <h2>{profile.title}</h2> : <h1>{profile.title}</h1>}<p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
-    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => setValue(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" /><p className="hint">Press Enter after each field. The next record appears automatically.</p></div></> : <div className="result-card inline-result"><p className="eyebrow">Session complete</p><h2>Data entry results</h2><div className="metrics"><Metric label="Field Accuracy" value={`${finished.metrics.accuracy}%`} /><Metric label="Records" value={fictionalDataEntryRecords.length} /><Metric label="Correct Fields" value={finished.metrics.correctCharacters} /><Metric label="Incorrect Fields" value={finished.metrics.incorrectCharacters} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button><InternalAction href="/10-key-typing-test/">Try 10-Key Test</InternalAction><InternalAction href="/typing-certificate/">Create Certificate</InternalAction></div></div>}
+    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => { if (!startedAt) { setStartedAt(performance.now()); trackEvent("data_entry_started", { testType: "data-entry" }); } setValue(event.target.value); }} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" autoCapitalize="off" spellCheck={false} /><button className="primary data-entry-next" type="button" onClick={submitField}>{fieldIndex === fields.length - 1 && recordIndex === fictionalDataEntryRecords.length - 1 ? "See results" : "Next field"}</button><p className="hint">Type the value exactly, then press Enter or tap Next field. An empty field counts as an error.</p></div></> : report && <div className="result-card inline-result data-entry-report"><p className="eyebrow">Session complete · {new Date(finished.date).toLocaleDateString()}</p><h2>Data entry practice result</h2><p>Four fictional records · {report.fieldsAttempted} fields · exact matches, including punctuation and leading zeroes.</p><div className="metrics"><Metric label="Field accuracy" value={`${report.accuracy}%`} /><Metric label="Correct fields" value={`${report.correctFields}/${report.fieldsAttempted}`} /><Metric label="Complete records" value={`${report.correctRecords}/${report.recordsAttempted}`} /><Metric label="Fields/min" value={report.fieldsPerMinute} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><h3>Where to practice next</h3><div className="data-entry-breakdown">{report.byType.map((group) => <div key={group.label}><span>{group.label}</span><strong>{group.correct}/{group.total}</strong>{group.correct < group.total && <a href={group.practice}>Practice this skill →</a>}</div>)}</div>{report.mistakes.length > 0 ? <details><summary>Review {report.mistakes.length} incorrect {report.mistakes.length === 1 ? "field" : "fields"}</summary><ul>{report.mistakes.map((mistake, index) => <li key={index}>Record {mistake.record}, {mistake.label}: entered <code>{mistake.entered || "(blank)"}</code>; expected <code>{mistake.expected}</code></li>)}</ul></details> : <p>All fields matched. Try the 10-key test or retake this assessment for consistency.</p>}<p className="hint">This is a self-administered practice result. It is not proctored or an employer-approved certification. Check each employer’s requirements.</p><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button><button type="button" onClick={() => window.print()}>Print or save result</button><a href="/data-entry-practice/">All practice drills</a></div></div>}
     <p className="tool-copy">This test uses fictional records and measures field-level accuracy separately from paragraph typing. Progress is stored locally on this device.</p>
     <div className="inline-links"><InternalLink href="/data-entry-practice/" go={go}>All Data Entry Practice</InternalLink><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
   </section>;

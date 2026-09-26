@@ -2,9 +2,9 @@ import type { CareerAssessmentDefinition } from "../types";
 
 export const dataEntryAssessment: CareerAssessmentDefinition = {
   id: "data-entry",
-  name: "Data Entry Proficiency Test",
+  name: "Data Entry Practice Test",
   publicPath: "/data-entry-typing-test/",
-  description: "A standardized assessment of structured record entry, alphanumeric accuracy, numeric entry and data verification.",
+  description: "A self-administered practice test of exact entry across fictional records, with field accuracy and targeted drills.",
   audience: [
     "Data Entry Clerks",
     "Records Clerks",
@@ -43,5 +43,5 @@ export const dataEntryAssessment: CareerAssessmentDefinition = {
       durationSeconds: 90
     }
   ],
-  certificateTitle: "Data Entry Proficiency"
+  certificateTitle: "Data Entry Practice Result"
 };

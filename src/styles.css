@@ -276,6 +276,21 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 .data-entry-input input { width: 100%; min-height: 48px; border: 1px solid var(--accent); border-radius: 8px; background: rgba(0, 0, 0, 0.16); color: var(--text); padding: 0.65rem 0.8rem; font-family: "SFMono-Regular", "Cascadia Code", "Roboto Mono", ui-monospace, monospace; }
 .numeric-prompt { font-size: clamp(1.25rem, 3vw, 2rem) !important; letter-spacing: 0.04em; }
 .inline-result { width: 100%; }
+.data-entry-next { justify-self: start; min-height: 44px; }
+.data-entry-breakdown { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; margin: 1rem 0; text-align: left; }
+.data-entry-breakdown > div { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 0.75rem; border: 1px solid var(--line); border-radius: 8px; }
+.data-entry-breakdown strong { margin-left: auto; }
+.data-entry-breakdown a { width: 100%; color: var(--accent); }
+.data-entry-report details { text-align: left; margin: 1rem 0; }
+.data-entry-report details li { margin: 0.4rem 0; overflow-wrap: anywhere; }
+.data-entry-report code { white-space: normal; }
+@media (max-width: 640px) { .data-entry-breakdown { grid-template-columns: 1fr; } }
+@media print {
+  body * { visibility: hidden !important; }
+  .data-entry-report, .data-entry-report * { visibility: visible !important; }
+  .data-entry-report { position: absolute; top: 0; left: 0; width: 100%; color: #111; background: white; box-shadow: none; border: 0; }
+  .data-entry-report .actions, .data-entry-report details, .data-entry-report a { display: none !important; }
+}
 .dashboard > .workspace { max-width: 1180px; margin: 0 auto; }
 .seo-prerender { max-width: 1180px; margin: clamp(2rem, 6vw, 4rem) auto; padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .seo-prerender h2 { font-size: clamp(1.55rem, 3vw, 2.5rem); margin: 0 0 0.75rem; }

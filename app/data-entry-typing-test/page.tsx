@@ -9,11 +9,11 @@ const canonical = absoluteUrl(dataEntryAssessment.publicPath);
 
 export const metadata: Metadata = {
   title: "Data Entry Typing Test & Practice for Employment | WPMTest",
-  description: "Practice realistic data entry with names, addresses, dates, numbers, amounts and codes, then take a free standardized data entry proficiency test.",
+  description: "Practice job-style data entry with fictional names, dates, amounts and codes. Get exact field accuracy, mistake review and targeted drills. Free, no signup.",
   alternates: { canonical },
   openGraph: {
     title: "Data Entry Typing Test & Practice | WPMTest",
-    description: "Practice job-relevant structured data entry and prepare for a standardized data entry proficiency test.",
+    description: "Take a free structured-record practice test with field accuracy, mistake review and targeted data-entry drills.",
     url: canonical,
     type: "website",
     images: [{ url: socialImage, width: 1200, height: 630, alt: "WPMTest Data Entry Typing Test" }]
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Data Entry Typing Test & Practice | WPMTest",
-    description: "Practice job-relevant structured data entry and prepare for a standardized data entry proficiency test.",
+    description: "Take a free structured-record practice test with field accuracy, mistake review and targeted data-entry drills.",
     images: [socialImage]
   },
   robots: { index: true, follow: true }
@@ -92,7 +92,7 @@ export default function DataEntryTypingTestPage() {
         </nav>
 
         <section className="seo-mode-intro" aria-label="Data entry assessment introduction">
-          <p className="eyebrow">Free employment skills assessment</p>
+          <p className="eyebrow">Free data entry practice test</p>
           <p className="section-intro">
             Data-entry work has different demands than general typing: it is often numeric-heavy, repetitive, and
             accuracy-critical in a way prose typing is not.
@@ -174,25 +174,14 @@ export default function DataEntryTypingTestPage() {
             </article>
           </div>
 
-          <h2>Standardized Data Entry Proficiency Test</h2>
+          <h2>What this practice test measures</h2>
           <p>
-            The free assessment uses a consistent set of job-relevant tasks so results can be compared under the same
-            conditions. It is not a custom employer test and does not claim professional accreditation.
+            Enter four fictional records with six fields each. Exact matches count as correct; an empty field counts as an
+            error. Your result shows field accuracy, complete records, fields per minute and mistakes by field type.
+            This self-administered practice test is not proctored or approved by any employer.
           </p>
-          <ol>
-            {dataEntryAssessment.sections.map((section) => (
-              <li key={section.id}>
-                <strong>{section.title}</strong> — {section.description}
-              </li>
-            ))}
-          </ol>
-
-          <h2>What your results should measure</h2>
-          <p>
-            A useful data-entry result goes beyond ordinary WPM. The complete assessment is designed to support metrics
-            such as data accuracy, numeric keystroke rate, records completed, fields entered, correct fields, entry
-            errors and verification accuracy as the new assessment interface is rolled out.
-          </p>
+          <p>If an employer requires a certified or proctored typing result, follow that employer’s instructions. A
+            self-administered practice result cannot replace a required proctored test.</p>
 
           <h2>Practice before taking the assessment</h2>
           <p>
@@ -211,11 +200,10 @@ export default function DataEntryTypingTestPage() {
             <a href="/professionals/">Professional Typing Tests</a>
           </nav>
 
-          <h2>Certificate</h2>
+          <h2>Save your practice result</h2>
           <p>
-            The completed career assessment will use a Data Entry Proficiency certificate that reports the skills
-            measured by WPMTest. WPMTest certificates are site-generated records of an online assessment, not accredited
-            professional certifications.
+            Print or save your result after the test. It includes the date, task, speed and exact field accuracy.
+            It is a personal record of unproctored practice, not an accredited or nationally recognized certification.
           </p>
         </section>
       </div>
