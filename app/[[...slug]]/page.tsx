@@ -6,6 +6,7 @@ import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 import { typingTestLanguageAlternates } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
+  "/blog/wpm-vs-kph/", "/blog/data-entry-accuracy/", "/blog/avoid-data-entry-errors/", "/blog/prepare-employment-typing-test/",
   "/about/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
   "/data-entry-practice/", "/data-entry-practice/alphanumeric/", "/data-entry-practice/currency-dates/",
   "/data-entry-practice/invoices-orders/", "/data-entry-practice/names-addresses/", "/data-entry-typing-test/",
@@ -97,7 +98,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
           <span>{seo?.h1 ?? extra?.[2] ?? SITE_NAME}</span>
         </nav>
       ) : null}
-      <section className="seo-prerender" aria-label={`${seo?.h1 ?? extra?.[2] ?? SITE_NAME} information`}>
+      {path !== "/" && <section className="seo-prerender" aria-label={`${seo?.h1 ?? extra?.[2] ?? SITE_NAME} information`}>
         {seo ? (
           <>
             <p className="eyebrow">{SITE_NAME} guide</p>
@@ -141,7 +142,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
             </nav>
           </>
         )}
-      </section>
+      </section>}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

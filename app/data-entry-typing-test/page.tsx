@@ -66,7 +66,7 @@ export default function DataEntryTypingTestPage() {
         {
           "@type": "Question",
           name: "What WPM do data entry jobs usually require?",
-          acceptedAnswer: { "@type": "Answer", text: "Many postings ask for 40–60+ WPM at 95%+ accuracy. Requirements vary, so follow the specific job posting." }
+          acceptedAnswer: { "@type": "Answer", text: "Follow the actual employer’s required speed, accuracy, duration and provider. Requirements vary, so follow the specific job posting." }
         },
         {
           "@type": "Question",
@@ -112,10 +112,7 @@ export default function DataEntryTypingTestPage() {
             test would.
           </p>
           <p>
-            Most data-entry job postings specify a minimum WPM, commonly 40–60, and a separate accuracy threshold,
-            often 95–98%, sometimes alongside a 10-key numeric-keypad speed requirement measured in KPH rather than
-            WPM. See the <a href="/kph-typing-test/">KPH Test</a> if a posting asks for that specifically. If you are
-            applying to roles with both requirements, run both tests and report whichever the posting actually asks for.
+            Requirements vary by employer. Use the duration, input method, speed metric and accuracy threshold in the actual posting. For numeric keypad work, use the <a href="/kph-typing-test/">KPH test</a>; prose WPM and exact field accuracy measure different tasks.
           </p>
           <h2>Practice data entry skills</h2>
           <p>
@@ -162,7 +159,7 @@ export default function DataEntryTypingTestPage() {
           <div className="seo-faq">
             <article>
               <h3>What WPM do data entry jobs usually require?</h3>
-              <p>Many postings ask for 40–60+ WPM at 95%+ accuracy. See the <a href="/average-typing-speed/">Average Typing Speed</a> guide for broader ranges.</p>
+              <p>Follow the actual employer’s required speed, accuracy, duration and provider. See the <a href="/average-typing-speed/">Average Typing Speed</a> guide for broader ranges.</p>
             </article>
             <article>
               <h3>What is the difference between this and the regular typing test?</h3>
@@ -183,7 +180,7 @@ export default function DataEntryTypingTestPage() {
           <p>If an employer requires a certified or proctored typing result, follow that employer’s instructions. A
             self-administered practice result cannot replace a required proctored test.</p>
 
-          <h2>Practice before taking the assessment</h2>
+          <h2>Worked field-accuracy example</h2><p>If 23 of 24 fields match exactly, field accuracy is 23 ÷ 24 × 100 = 95.8%. If one record contains that mistake, only 3 of 4 records are completely correct. A high character score can still hide a wrong amount or identifier.</p><p><a href="/blog/data-entry-accuracy/">Understand field and record accuracy</a> or <a href="/blog/avoid-data-entry-errors/">practice finding transpositions and missing zeroes</a>.</p><h2>Practice before taking the assessment</h2>
           <p>
             Start with accuracy. Repeated errors in account numbers, amounts or dates matter more in structured data than
             a small difference in raw speed. Once individual field types feel comfortable, combine them into complete

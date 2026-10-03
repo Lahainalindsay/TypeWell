@@ -16,11 +16,13 @@ export default function ContactPage() {
   return (
     <main className="legal-page">
       <h1>Contact WPMTest</h1>
-      <p>Support contact information will be published here when the WPMTest support address is ready.</p>
+      <p>Report a bug, request an accessibility improvement, or suggest a practice exercise through the WPMTest project’s public issue tracker.</p>
+      <p><a className="button primary" href="https://github.com/Lahainalindsay/TypeWell/issues/new">Submit a support report →</a></p>
+      <p>A free GitHub account is required to submit a report. Reports are public: share device and browser details, but never private information. You can <a href="https://github.com/Lahainalindsay/TypeWell/issues">read existing reports</a> without signing in. The project maintainer reviews reports; response times vary.</p>
       <h2>Helpful report details</h2>
       <p>When reporting a broken route, accessibility issue, calculation problem, or confusing assessment, include the page URL, browser, device type, and a short description of what happened.</p>
       <h2>Protect your information</h2>
-      <p>Do not include passwords, private typing content, or exported progress data in a support report unless you have reviewed the material and intentionally chosen to share it.</p>
+      <p>Do not post passwords, your certificate name, email address, private typing content, or exported progress data. Hide personal information in screenshots before posting a public report.</p>
     </main>
   );
 }

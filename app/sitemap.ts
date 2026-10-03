@@ -1,3 +1,4 @@
+import { guides } from "../src/features/editorial/guides";
 import type { MetadataRoute } from "next";
 import { seoPages } from "../src/seo/pages";
 import { absoluteUrl, canonicalPath } from "../src/lib/seo/site";
@@ -11,6 +12,7 @@ export const dynamic = "force-static";
 const SEO_CONTENT_LAST_MODIFIED = new Date("2026-09-20T00:00:00.000Z");
 const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
 const NEW_TEST_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
+const updatedPaths = new Set(["/", "/about/", "/contact/", "/privacy/", "/blog/", "/data-entry-typing-test/", "/typing-test-for-employment/", "/1-minute-typing-test/", "/3-minute-typing-test/", "/5-minute-typing-test/", "/10-minute-typing-test/", "/numeric-keypad-test/", "/10-key-typing-test/", "/kph-typing-test/", "/average-typing-speed/", "/wpm-calculator/"]);
 const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
@@ -52,10 +54,10 @@ const supportingIndexableRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes];
+  const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes, ...guides.map(guide => `/blog/${guide.slug}/`)];
   return [...new Set(paths.map(canonicalPath))].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
+    lastModified: updatedPaths.has(path) || guides.some(guide => path === `/blog/${guide.slug}/`) ? new Date("2026-10-03T00:00:00Z") : localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
       : path === "/" || /^\/[123]-page-typing-test\/$/.test(path) ? NEW_TEST_CONTENT_LAST_MODIFIED
       : SEO_CONTENT_LAST_MODIFIED,
     ...(localizedTypingPaths.has(path) ? { alternates: { languages: typingTestLanguageAlternates } } : {})

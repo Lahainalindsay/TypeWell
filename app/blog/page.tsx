@@ -1,3 +1,4 @@
+import { guides } from "../../src/features/editorial/guides";
 import type { Metadata } from "next";
 import { absoluteUrl, SITE_NAME } from "../../src/lib/seo/site";
 
@@ -38,7 +39,7 @@ export default function BlogPage() {
         <h1>Typing Blog & Articles</h1>
         <p>Explore typing test comparisons, practice advice, and articles about keyboard skills.</p>
 
-        <div className="seo-card-grid">
+        <div className="seo-card-grid">{guides.map(guide => <article key={guide.slug}><p className="eyebrow">Practical guide</p><h2><a href={`/blog/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p><p><a href={`/blog/${guide.slug}/`}>Read and practice →</a></p></article>)}
           <article>
             <p className="eyebrow">Comparison</p>
             <h2><a href="/blog/best-typing-test-websites/">The 9 Best Free Typing Test Websites (2026), Compared</a></h2>

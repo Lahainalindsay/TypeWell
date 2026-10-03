@@ -165,3 +165,9 @@ body:has(.focus-active) > .site-header, body:has(.focus-active) > .site-footer {
 .professional-other a { color: var(--accent); }
 .result { z-index: 220; }
 @media print { body > .site-header, body > .site-footer { display: none !important; } }
+
+.editorial-guide { max-width: 860px; }
+.editorial-guide section { scroll-margin-top: 90px; }
+.practice-check fieldset { min-width: 0; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; }
+.practice-check code { overflow-wrap: anywhere; }
+.practice-check button[aria-pressed="true"] { outline: 2px solid var(--accent, #4b9fff); }

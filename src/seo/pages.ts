@@ -27,11 +27,6 @@ export const seoPages: SeoPage[] = [
       { href: "/wpm-calculator/", label: "WPM Calculator" },
       { href: "/typing-practice/", label: "Typing Practice" },
       { href: "/5-minute-typing-test/", label: "5 Minute Typing Test" }
-    ],
-    faqs: [
-      { question: "Is this typing test really free?", answer: "Yes — every test length, the WPM calculator, and basic certificates are free with no signup." },
-      { question: "What's a good WPM?", answer: "See our Average Typing Speed guide for ranges by skill level and profession." },
-      { question: "How is WPM calculated?", answer: "One word equals five characters including spaces — see the WPM Calculator for the full formula." }
     ]
   },
   {
@@ -84,8 +79,9 @@ export const seoPages: SeoPage[] = [
     h1: "1 Minute Typing Test",
     intro: "A one-minute test is the fastest way to check in on your typing speed — short enough to run between tasks, long enough to catch your real average once you're past the first few words.",
     content: [
+      "Worked example: 250 correct characters over 1 minutes gives 50 WPM: correct characters ÷ 5 ÷ elapsed minutes. Corrections remain visible in keystroke accuracy even when final text is correct. Compare the same duration and input method.",
       "Because the sample is small, a single missed word or a slow start can move your score by several WPM, so treat a one-minute result as a quick snapshot rather than your definitive number.",
-      "Use it for frequent progress checks — for example, running it once a day for a week gives you a much clearer trend line than one long test. For a number you'd put on a résumé or use to compare against a job requirement, run the 5 minute test or 10 minute test instead, since longer samples are harder to game with a lucky burst and are what most employers expect."
+      "Use it for frequent progress checks — for example, running it once a day for a week gives you a much clearer trend line than one long test. For a number you'd put on a résumé or use to compare against a job requirement, run the 5 minute test or 10 minute test instead, to sample sustained pace. Follow the employer’s actual duration and provider instructions."
     ],
     related: [
       { href: "/5-minute-typing-test/", label: "5 Minute Typing Test" },
@@ -94,7 +90,7 @@ export const seoPages: SeoPage[] = [
     ],
     faqs: [
       { question: "Why did my score jump around between attempts?", answer: "Short tests amplify the effect of a slow start or one missed word — run 3–5 attempts and look at the median, not any single score." },
-      { question: "Can I use a 1-minute score for a job application?", answer: "Most employers prefer a 3- or 5-minute result — see Average Typing Speed." }
+      { question: "Can I use a 1-minute score for a job application?", answer: "Follow the actual employer’s duration, provider and certificate rules; a one-minute practice score may not meet them." }
     ]
   },
   {
@@ -104,7 +100,8 @@ export const seoPages: SeoPage[] = [
     h1: "3 Minute Typing Test",
     intro: "Three minutes is the sweet spot between a quick check and a full benchmark — long enough that a rough opening line barely moves your final number, short enough to run a few times in a row without fatigue skewing your accuracy.",
     content: [
-      "It's the length most typing certification programs and typing classes default to, which makes it a good choice if you want a score that's directly comparable to a course requirement.",
+      "Worked example: 750 correct characters over 3 minutes gives 50 WPM: correct characters ÷ 5 ÷ elapsed minutes. Corrections remain visible in keystroke accuracy even when final text is correct. Compare the same duration and input method.",
+      "A three-minute sample gives you time to settle into a passage. Match the stated duration when a class or employer sets a requirement.",
       "If you're tracking improvement over weeks, run the 3-minute test at the same time of day under similar conditions — same keyboard, same posture, minimal distractions — so the number you're comparing against is actually measuring your typing, not your environment. Pair it with the weak-key heatmap on your results page to turn a plateaued score into a specific practice target."
     ],
     related: [
@@ -124,7 +121,8 @@ export const seoPages: SeoPage[] = [
     h1: "5 Minute Typing Test",
     intro: "Five minutes is the standard length used for many professional typing certifications, data-entry screenings, and administrative job requirements.",
     content: [
-      "If a posting says “minimum 45 WPM,” it commonly means a sustained result rather than a short burst. This length is long enough that fatigue and accuracy start to matter as much as raw speed, which is what most employers are trying to measure.",
+      "Worked example: 1250 correct characters over 5 minutes gives 50 WPM: correct characters ÷ 5 ÷ elapsed minutes. Corrections remain visible in keystroke accuracy even when final text is correct. Compare the same duration and input method.",
+      "A five-minute sample shows pace over a longer passage. For employment, follow the actual duration and scoring instructions.",
       "Because the sample is larger, your gross WPM and error-adjusted WPM will typically be closer together than on a 1-minute test — a large gap between the two on a 5-minute run is a sign accuracy, not speed, is your real limiting factor. Use the WPM Calculator to see exactly how errors are affecting your adjusted score, and generate a certificate once you have a result you're happy submitting."
     ],
     related: [
@@ -135,7 +133,7 @@ export const seoPages: SeoPage[] = [
     ],
     faqs: [
       { question: "Is the 5-minute test what employers usually want?", answer: "It is a commonly requested length for data-entry and administrative roles. Always follow the exact duration and scoring rules in the posting, and see Data Entry Typing Test for a role-specific version." },
-      { question: "What's a competitive 5-minute WPM for an office job?", answer: "Many administrative postings look for 40–60+ WPM at 95%+ accuracy — see Average Typing Speed for the full ranges." }
+      { question: "What's a competitive 5-minute WPM for an office job?", answer: "Use the actual posting’s minimum speed and accuracy. Practice targets are not universal hiring requirements." }
     ]
   },
   {
@@ -145,6 +143,7 @@ export const seoPages: SeoPage[] = [
     h1: "10 Minute Typing Test",
     intro: "Ten minutes is the longest standard test on WPMTest and the closest simulation of real sustained typing work — the kind of stretch you'd actually spend transcribing notes, entering data, or drafting a long document.",
     content: [
+      "Worked example: 2500 correct characters over 10 minutes gives 50 WPM: correct characters ÷ 5 ÷ elapsed minutes. Corrections remain visible in keystroke accuracy even when final text is correct. Compare the same duration and input method.",
       "It's the test to use if you want a result that reflects your real-world stamina rather than a short-burst peak, since fatigue and attention drift both become measurable factors over ten minutes in a way they simply aren't over one or three.",
       "If your WPM drops noticeably in the second half of a 10-minute test, that's a useful signal in itself — it usually points to hand fatigue or concentration lapses rather than a skill ceiling, and is worth training separately from raw speed. Compare your 10-minute result against your 5-minute score to see how much your accuracy and pace hold up under sustained effort."
     ],
@@ -239,7 +238,7 @@ export const seoPages: SeoPage[] = [
     intro: "Data-entry work has different demands than general typing: it's often numeric-heavy, repetitive, and accuracy-critical in a way prose typing isn't.",
     content: [
       "A single transposed digit in a data-entry job can matter far more than a typo in an email. This test is structured around that reality, mixing numeric sequences with structured text rather than pure prose paragraphs, so your result better reflects real data-entry performance than a standard prose-based typing test would.",
-      "Most data-entry job postings specify a minimum WPM, commonly 40–60, and a separate accuracy threshold, often 95–98%, sometimes alongside a 10-key numeric-keypad speed requirement measured in KPH rather than WPM. See the KPH Test if a posting asks for that specifically. If you're applying to roles with both requirements, run both tests and report whichever the posting actually asks for."
+      "A posting may specify WPM, accuracy or numeric keypad speed. No single threshold applies to every role. See the KPH Test if a posting asks for that specifically. If you're applying to roles with both requirements, run both tests and report whichever the posting actually asks for."
     ],
     related: [
       { href: "/10-key-typing-test/", label: "10-Key Test" },
@@ -248,7 +247,7 @@ export const seoPages: SeoPage[] = [
       { href: "/5-minute-typing-test/", label: "5 Minute Typing Test" }
     ],
     faqs: [
-      { question: "What WPM do data entry jobs usually require?", answer: "Many postings ask for 40–60+ WPM at 95%+ accuracy — see exact ranges in Average Typing Speed." },
+      { question: "What WPM do data entry jobs usually require?", answer: "Requirements differ by employer. Check the actual posting’s provider and scoring rules." },
       { question: "What's the difference between this and the regular typing test?", answer: "This test emphasizes numeric sequences and structured data-entry patterns rather than natural-language prose." },
       { question: "What is KPH and do I need it?", answer: "Keystrokes Per Hour measures 10-key numeric entry speed specifically and is common in accounting and bookkeeping postings. See the KPH Test." }
     ]
@@ -260,11 +259,11 @@ export const seoPages: SeoPage[] = [
     h1: "10 Key Typing Test",
     intro: "A 10-key typing test focuses on numeric keypad speed and accuracy for number-heavy work.",
     content: [
-      "10-key practice uses grouped numbers, decimals, and repeated numeric patterns rather than ordinary prose.",
-      "KPH is calculated from keystrokes per minute multiplied by 60.",
-      "The 10-key layout lets experienced users enter numbers without moving their eyes between the main keyboard and the screen. Correct finger placement and a consistent return to the home position help reduce searching.",
-      "Compare KPM and KPH with accuracy. A higher keystroke rate is only useful when the numbers, decimal points, and separators are correct."
-    ],
+      "This one-minute test combines longer identifiers and decimal values. Unlike basic keypad practice, preserve digit order and decimal placement. Treat 63.42 and 634.2 as different values.",
+      "Use a physical keypad for a hardware-keyboard assessment. A phone number pad measures another input skill. Practice Currency & Dates for formatting errors before retaking.",
+      "Example: 120 remaining entered characters in one minute equals 120 KPM and 7,200 KPH. If 114 match their target positions, accuracy is 95%. Separators, including automatically inserted spaces, count. Backspace removes entries before scoring.",
+      "This short sample does not prove hour-long performance. Try the three-minute KPH test to check sustained pace. For whole-record accuracy, take the Data Entry test."
+],
     related: [
       { href: "/numeric-keypad-test/", label: "Numeric Keypad Test" },
       { href: "/kph-typing-test/", label: "KPH Test" },
@@ -279,9 +278,11 @@ export const seoPages: SeoPage[] = [
     h1: "Numeric Keypad Test",
     intro: "Numeric keypad tests are useful for people who enter totals, dates, IDs, prices, and measurements.",
     content: [
-      "A dedicated keypad test is different from a WPM paragraph because every keystroke matters.",
-      "Watch both accuracy and KPH. Fast numeric entry with many corrections is not useful in real data work."
-    ],
+      "Start here to learn physical keypad reaches. The one-minute exercise uses short whole-number groups without decimal demands. Rest around the 4, 5 and 6 row; use the tactile marker on 5 to find your position without repeatedly looking down.",
+      "Begin slowly with 456, then 123 and 789. Copy each group exactly before raising pace. A touchscreen result measures touchscreen entry, not physical-keypad proficiency.",
+      "When whole numbers feel comfortable, use the 10-Key test for longer identifiers and decimals, then the three-minute KPH test for sustained pace. Compare repeated attempts on the same device.",
+      "KPM divides remaining entered characters by elapsed minutes. KPH extrapolates that rate to an hour. Automatically inserted group separators count, and backspace removes entries before scoring. Compare tools with the same rules."
+],
     related: [
       { href: "/10-key-typing-test/", label: "10-Key Test" },
       { href: "/kph-typing-test/", label: "KPH Test" },
@@ -296,20 +297,18 @@ export const seoPages: SeoPage[] = [
     h1: "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed",
     intro: "KPH, or Keystrokes Per Hour, is the standard metric for numeric keypad speed used in accounting, bookkeeping, banking, and high-volume numeric data-entry roles.",
     content: [
-      "It measures something meaningfully different from WPM, since 10-key entry uses a completely different motor pattern — one hand on the numeric pad — than full-keyboard typing.",
-      "If a job posting specifically asks for a “10-key speed” or “KPH” figure rather than WPM, this is the test to run — a strong WPM score doesn't reliably predict a strong KPH score, since the two use different muscle memory. A common benchmark is 8,000–10,000+ KPH for entry-level roles, climbing higher for experienced numeric-entry specialists, though requirements vary significantly by industry and volume expectations."
-    ],
+      "This three-minute test mixes longer numbers, decimals and leading zeroes. The passage advances as you type, supplying new groups throughout the sample. Use it to check pace beyond a brief burst.",
+      "KPH means keystrokes per hour extrapolated from a shorter sample. Entering 300 characters over three minutes gives 100 KPM and 6,000 KPH. That does not prove you can hold the same rate for an hour.",
+      "Automatically inserted group separators count as characters. Backspace removes entries before scoring. Accuracy is correct remaining characters divided by all remaining characters. Employer software may count separators and corrections differently.",
+      "Check decimal placement and leading zeroes before increasing pace. No universal passing score applies to every job. Follow the actual posting’s speed, accuracy, duration and provider rules."
+],
     related: [
       { href: "/data-entry-typing-test/", label: "Data Entry Typing Test" },
       { href: "/10-key-typing-test/", label: "10-Key Typing Test" },
       { href: "/numeric-keypad-test/", label: "Numeric Keypad Test" },
       { href: "/average-typing-speed/", label: "Average Typing Speed" }
     ],
-    faqs: [
-      { question: "What's a good KPH score?", answer: "Roughly 8,000–10,000 KPH is a common entry-level benchmark; experienced 10-key specialists often exceed 12,000+." },
-      { question: "Is KPH the same as WPM?", answer: "No — they measure different skills, numeric keypad versus full keyboard, and don't reliably predict each other." },
-      { question: "Do I need both a WPM and KPH score?", answer: "Check the specific job posting — many data-entry roles ask for both. See Data Entry Typing Test." }
-    ]
+    faqs: [{"question": "What KPH should I aim for?", "answer": "Use the employer’s actual requirement and scoring rules. For practice, build repeatable accuracy before raising pace."}, {"question": "Can I convert KPH to WPM?", "answer": "A character-rate conversion does not make numeric entry and prose interchangeable. They measure different tasks."}]
   },
   {
     path: "/wpm-calculator/",
@@ -318,7 +317,7 @@ export const seoPages: SeoPage[] = [
     h1: "WPM Calculator — Convert Characters and Time to Words Per Minute",
     intro: "Use this calculator when you already have raw typing data — characters typed, time elapsed, and error count — from a source outside WPMTest, like a school assignment, workplace typing log, or transcription timesheet, and need to convert it into a standard WPM figure.",
     content: [
-      "The calculation uses the industry-standard convention that five characters, including spaces, equal one “word,” regardless of the actual words in the text — this keeps scores comparable across different pieces of text, since counting real words would unfairly reward short, simple-word passages. Gross WPM counts every character typed; error-adjusted, or net, WPM subtracts a penalty for mistakes, which is the number most employers and typing certifications actually care about.",
+      "The calculation uses the industry-standard convention that five characters, including spaces, equal one “word,” regardless of the actual words in the text — this keeps scores comparable across different pieces of text, since counting real words would unfairly reward short, simple-word passages. Gross WPM counts character inputs. WPMTest’s net WPM subtracts current incorrect characters before dividing by five and elapsed minutes. Other providers may use different penalties.",
       "Worked example: 1,500 correct characters typed in 5 minutes = (1,500 ÷ 5) ÷ 5 = 60 gross WPM. If 30 of those characters were errors, net WPM drops to roughly 54, depending on the exact penalty formula used.",
       "For a live, timed measurement instead of a manual calculation, use the typing test directly — it calculates gross and net WPM automatically along with accuracy and a weak-key breakdown."
     ],
@@ -339,20 +338,18 @@ export const seoPages: SeoPage[] = [
     h1: "Average Typing Speed by Age and Experience — What's a Good WPM?",
     intro: "There's no single “average” typing speed, because the number depends heavily on who's typing and what they're typing.",
     content: [
-      "A useful way to think about it is in bands: beginners with zero to two years of regular typing typically land in the 20–30 WPM range while still locating keys visually; intermediate typists — most adults who type daily for work or school — settle into 40–60 WPM with solid accuracy; advanced typists in customer support, transcription, and data entry often reach 70–90+ WPM; and elite or competitive typists can exceed 120 WPM, though sustained accuracy at that speed is rare even among professionals.",
-      "Accuracy matters more than raw speed in most real-world contexts — a 70 WPM typist making frequent errors that require correction is often slower in practice than a careful 55 WPM typist. If you're benchmarking against a job requirement, check whether the posting specifies gross or net WPM and at what accuracy threshold, since a “50 WPM minimum” usually implicitly assumes 95%+ accuracy.",
-      "Typing speed by context, as rough benchmarks: general office and administrative work, 40–60 WPM; data entry roles, 50–70+ WPM, often with heavy numeric-keypad emphasis; transcription, 60–80+ WPM with very high accuracy requirements; customer support and live chat, 40–55 WPM, prioritizing accuracy over raw speed; and programmers, often lower prose WPM of 30–50 because code isn't typed like natural language."
-    ],
+      "An average needs a defined population and test format. WPMTest does not publish a representative population study, so this site cannot rank your score against all adults or establish universal job benchmarks.",
+      "Passage difficulty, duration, language, keyboard layout and correction rules affect results. A short word-list score is not directly comparable with sustained punctuation, numeric entry or touchscreen typing.",
+      "Use comparable personal sessions as a baseline. Moving from 40 to 45 WPM with the same passage type and stable accuracy is a useful personal change, not a profession-wide percentile.",
+      "For employment, check the actual posting’s speed, accuracy and provider requirements. Review weak-key errors before raising pace. Keep device and duration consistent between attempts."
+],
     related: [
       { href: "/", label: "Typing Test" },
       { href: "/wpm-calculator/", label: "WPM Calculator" },
       { href: "/typing-practice/", label: "Typing Practice" },
       { href: "/data-entry-typing-test/", label: "Data Entry Typing Test" }
     ],
-    faqs: [
-      { question: "Is 40 WPM good?", answer: "It's solidly average for adult typists and meets many general office job requirements." },
-      { question: "How can I improve from 40 to 60 WPM?", answer: "Consistent short daily practice sessions targeting your specific weak keys beat occasional long sessions — see Typing Practice." }
-    ]
+    faqs: [{"question": "Is 40 WPM good?", "answer": "It depends on the task and required accuracy. Compare repeatable attempts under the same conditions and follow the employer’s stated requirements."}, {"question": "How can I improve my baseline?", "answer": "Practice the patterns you miss, then repeat the same format. Judge accuracy and speed together."}]
   },
   {
     path: "/typing-certificate/",

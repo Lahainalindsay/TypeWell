@@ -36,7 +36,7 @@ export function HomePage({ test }: { test: React.ReactNode }) {
     <section className="home-guide seo-section" aria-labelledby="guide-heading"><h2 id="guide-heading">Understanding your typing speed</h2>
       <p>WPM means words per minute. WPMTest counts five characters, including spaces, as one word. Accuracy measures correct input; consistency shows whether your pace holds through the test. A short test gives a quick baseline, while longer tests show how well you maintain your speed.</p>
       <p>If you are preparing for a job, compare the test format with the work. Numeric keypad assessments often measure keystrokes per hour (KPH), while structured record entry also demands exact field accuracy. <a href="/data-entry-typing-test/">Try the data entry test</a> or <a href="/10-key-typing-test/">measure 10-key speed</a>.</p>
-      <p>For steady improvement, practice a few minutes at a time. Start with <a href="/learn/">touch typing lessons</a>, work on <a href="/practice/weak-keys/">weak keys</a>, then repeat a <a href="/5-minute-typing-test/">five minute test</a>. Explore <a href="/average-typing-speed/">average typing speeds</a> or use the <a href="/wpm-calculator/">WPM calculator</a> to interpret your result.</p>
+      <p>For example, 250 correct characters in one minute equals 50 WPM. Corrections can lower keystroke accuracy even when the final text is correct. <a href="/blog/wpm-vs-kph/">See worked scoring examples</a>.</p><p>For steady improvement, practice a few minutes at a time. Start with <a href="/learn/">touch typing lessons</a>, work on <a href="/practice/weak-keys/">weak keys</a>, then repeat a <a href="/5-minute-typing-test/">five minute test</a>. Explore <a href="/average-typing-speed/">average typing speeds</a> or use the <a href="/wpm-calculator/">WPM calculator</a> to interpret your result.</p>
       <details className="home-additional-links"><summary>Explore more typing formats and lessons</summary><nav aria-label="More tests and practice"><a href="/10-minute-typing-test/">10 Minute Test</a><a href="/1-page-typing-test/">1 Page Test</a><a href="/2-page-typing-test/">2 Page Test</a><a href="/3-page-typing-test/">3 Page Test</a><a href="/typing-test-with-punctuation/">Punctuation Test</a><a href="/touch-typing-practice/">Touch Typing</a><a href="/rhythm/">Rhythm Trainer</a><a href="/typing-games/">Typing Games</a></nav></details>
     </section>
     <section className="home-faq seo-section" aria-labelledby="home-faq-heading"><h2 id="home-faq-heading">Frequently asked questions</h2>
@@ -74,9 +74,9 @@ function BrowserLanguageSuggestion() {
 
 function faqAnswer(question: string) {
   const answers: Record<string, string> = {
-    "What is a good typing speed?": "Around 40 WPM is a useful everyday baseline. Faster professional typing depends on accuracy, consistency, and the kind of work you do.",
+    "What is a good typing speed?": "A useful score is one you can repeat accurately on the task you need. For employment, use the speed and accuracy requirements in the actual posting.",
     "How is WPM calculated?": "WPM is calculated as correct characters divided by five, then divided by elapsed minutes. This makes results comparable across tests.",
-    "What is considered fast typing?": "Typing above 60 WPM is often considered fast for general work, but reliable accuracy is more useful than chasing a single number.",
+    "What is considered fast typing?": "Speed depends on the passage, duration, device and correction rules. Compare equivalent sessions and review accuracy alongside WPM.",
     "How can I improve my typing speed?": "Practice regularly, keep your eyes on the screen, use the correct fingers, fix weak keys, and increase speed only after accuracy is stable.",
     "Is this typing test free?": "Yes. WPMTest's typing test and practice tools are free with no subscription, paywall, or account requirement.",
     "Do I need an account?": "No. You can start an online typing test immediately. Preferences and progress are saved locally in your browser.",
