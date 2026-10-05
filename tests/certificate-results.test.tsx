@@ -6,6 +6,7 @@ import App from "../src/App";
 import { loadProgress } from "../src/storage/progress";
 import { certificateForSession } from "../src/features/certificate/result";
 import { readCertificateFromParams } from "../src/features/certificate/verify";
+import { resultChallenge } from "../src/features/certificate/share";
 
 let root: Root, host: HTMLDivElement;
 beforeEach(() => {
@@ -114,8 +115,20 @@ describe("certificates use completed test results", () => {
     act(() => vi.advanceTimersByTime(300500));
     const session = loadProgress().sessions.at(-1)!;
     expect(session.certificate?.type).toBe("5 Minute Typing Test");
+    const share = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "share", { configurable: true, value: share });
+    click("Share Result");
+    expect(share).toHaveBeenCalledWith(resultChallenge(session.certificate!));
     enhanceCertificates(); generateCertificate();
     expect(document.querySelector("#tw-certificate")?.textContent).toContain("5 Minute Typing Test");
+  });
+  it.each([["300", "300s"], ["-1", "60s"], ["999999", "60s"], ["broken", "60s"]])("opens a specialty challenge with validated duration %s", (seconds, selected) => {
+    window.history.replaceState({}, "", `/typing-test-with-numbers/?seconds=${seconds}`);
+    try {
+      act(() => root.render(<App initialPath="/typing-test-with-numbers/" />));
+      const button = [...host.querySelectorAll<HTMLButtonElement>("button")].find(b => b.textContent === selected)!;
+      expect(button.className).toContain("active");
+    } finally { window.history.replaceState({}, "", "/"); }
   });
   it("uses numeric metrics instead of synthetic WPM", () => {
     vi.useFakeTimers({ toFake: ["setInterval", "clearInterval", "performance", "requestAnimationFrame"] });
