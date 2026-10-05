@@ -1,8 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
-import { certSignature, readCertificateFromParams, type CertificatePayload } from "../src/features/certificate/verify";
+import { certSignature, readCertificateFromParams, type CertificatePayload, type ResultCertificatePayload } from "../src/features/certificate/verify";
 
-const payload: CertificatePayload = { id: "test-1", name: "Zoë & 李", wpm: "62.5", accuracy: "98.4", type: "5 Minute Typing Test", completed: "10/4/2026" };
+const payload = { id: "test-1", name: "Zoë & 李", wpm: "62.5", accuracy: "98.4", type: "5 Minute Typing Test", completed: "10/4/2026" };
 function paramsFor(value = payload) {
   return new URLSearchParams({ ...value, date: value.completed, sig: certSignature(value) });
 }
@@ -28,6 +28,8 @@ describe("certificate link consistency", () => {
   });
   it("accepts the link produced by the standalone certificate UI", async () => {
     document.body.innerHTML = '<div class="result-card"><h2>62.5 WPM · 98.4%</h2><div class="metric"><span>Duration</span><strong>5:00</strong></div><div class="metric"><span>Completed</span><strong>10/4/2026</strong></div><div class="actions"></div></div>';
+    const record = { kind: "typing", type: "5 Minute Typing Test", completed: "10/4/2026", duration: "5m 0s", metrics: [{ label: "Words per minute (WPM)", value: "62.5" }, { label: "Accuracy", value: "98.4%" }], groups: [] };
+    document.querySelector<HTMLElement>(".result-card")!.dataset.certificateResult = JSON.stringify(record);
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
     vi.spyOn(window, "alert").mockImplementation(() => {});
@@ -44,7 +46,7 @@ describe("certificate link consistency", () => {
     expect(writeText).toHaveBeenCalledOnce();
     const result = readCertificateFromParams(new URL(writeText.mock.calls[0][0]).searchParams);
     expect(result?.valid).toBe(true);
-    expect(result?.payload).toMatchObject({ name: payload.name, wpm: "62.5", accuracy: "98.4", type: "5 Minute Typing Test", completed: "10/4/2026" });
+    expect(result?.payload).toMatchObject({ version: 2, name: payload.name, ...record });
     expect(document.querySelector(".tw-cert-verify")?.textContent).toContain(result!.payload.id);
   });
 });

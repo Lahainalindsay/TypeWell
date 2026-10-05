@@ -1,3 +1,4 @@
+import type { CertificateResult } from "../features/certificate/result";
 import type { Keystroke, Metrics } from "../engine/types";
 import type { WeakCombination, WeakKey } from "../engine/weakKeys";
 import { safeGet, safeSet } from "./safeStorage";
@@ -11,6 +12,7 @@ export interface SessionRecord {
   weakKeys: WeakKey[];
   weakCombinations: WeakCombination[];
   strokes?: Keystroke[];
+  certificate?: CertificateResult;
 }
 
 export interface ProgressData {

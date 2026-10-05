@@ -238,9 +238,9 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
               </>
             ) : (
               <>
-                <Certificate content={content} name={certificateName.trim()} metrics={result} date={completedDate} />
+                <Certificate content={content} name={certificateName.trim()} metrics={result} date={completedDate} duration={duration} />
                 <div className={styles.resultActions}>
-                  <button type="button" onClick={() => downloadCertificate(content, certificateName.trim(), result, completedDate)}>{content.certificate.download}</button>
+                  <button type="button" onClick={() => downloadCertificate(content, certificateName.trim(), result, completedDate, duration)}>{content.certificate.download}</button>
                   <button type="button" onClick={() => window.print()}>{content.certificate.print}</button>
                 </div>
               </>
@@ -276,7 +276,7 @@ function Metric({ label, value }: { label: string; value: string | number }) {
   return <div className={styles.metric}><span>{label}</span><strong>{value}</strong></div>;
 }
 
-function Certificate({ content, name, metrics, date }: { content: LocalizedTypingContent; name: string; metrics: Metrics; date: string }) {
+function Certificate({ content, name, metrics, date, duration }: { content: LocalizedTypingContent; name: string; metrics: Metrics; date: string; duration: number }) {
   return (
     <article className={styles.certificate} id={`${content.lang}-typing-certificate`} lang={content.lang}>
       <header><strong>WPM<span>Test</span></strong><small>{content.certificate.motto}</small></header>
@@ -288,7 +288,7 @@ function Certificate({ content, name, metrics, date }: { content: LocalizedTypin
       <div className={styles.certificateStats}>
         <Metric label={content.certificate.speedLabel} value={metrics.wpm} />
         <Metric label={content.certificate.accuracyLabel} value={`${metrics.accuracy}%`} />
-        <Metric label={content.certificate.testLabel} value={content.certificate.testName} />
+        <Metric label={content.certificate.testLabel} value={`${content.certificate.testName} · ${content.ui.durations[duration as 60 | 180 | 300]}`} />
         <Metric label={content.certificate.dateLabel} value={date} />
       </div>
       <small>{content.certificate.disclaimer}</small>
@@ -300,7 +300,7 @@ function escapeXml(value: string): string {
   return value.replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&apos;" })[character] ?? character);
 }
 
-function downloadCertificate(content: LocalizedTypingContent, name: string, metrics: Metrics, date: string) {
+function downloadCertificate(content: LocalizedTypingContent, name: string, metrics: Metrics, date: string, duration: number) {
   const certificate = content.certificate;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
     <rect width="1600" height="1000" fill="#fffdf7"/><rect x="24" y="24" width="1552" height="952" rx="18" fill="none" stroke="#0c2948" stroke-width="18"/><rect x="45" y="45" width="1510" height="910" rx="12" fill="none" stroke="#b58a35" stroke-width="4"/>
@@ -308,7 +308,7 @@ function downloadCertificate(content: LocalizedTypingContent, name: string, metr
       <text x="800" y="120" font-size="50" font-weight="700">WPMTest</text><text x="800" y="215" font-size="34" letter-spacing="4">${escapeXml(certificate.titleTop)}</text><text x="800" y="305" font-size="72" font-weight="700">${escapeXml(certificate.titleMain)}</text>
       <text x="800" y="375" font-size="24">${escapeXml(certificate.certifies)}</text><text x="800" y="485" font-size="66" fill="#a87822">${escapeXml(name)}</text><line x1="330" x2="1270" y1="515" y2="515" stroke="#b58a35"/>
       <text x="800" y="575" font-size="22">${escapeXml(certificate.statement)}</text>
-      <text x="250" y="700" font-size="54" font-weight="700">${metrics.wpm}</text><text x="600" y="700" font-size="54" font-weight="700">${metrics.accuracy}%</text><text x="1030" y="690" font-size="28" font-weight="700">${escapeXml(certificate.testName)}</text><text x="1370" y="690" font-size="25" font-weight="700">${escapeXml(date)}</text>
+      <text x="250" y="700" font-size="54" font-weight="700">${metrics.wpm}</text><text x="600" y="700" font-size="54" font-weight="700">${metrics.accuracy}%</text><text x="1030" y="690" font-size="28" font-weight="700">${escapeXml(certificate.testName)}</text><text x="1030" y="720" font-size="19">${escapeXml(content.ui.durations[duration as 60 | 180 | 300])}</text><text x="1370" y="690" font-size="25" font-weight="700">${escapeXml(date)}</text>
       <text x="250" y="745" font-size="17">${escapeXml(certificate.speedLabel)}</text><text x="600" y="745" font-size="17">${escapeXml(certificate.accuracyLabel)}</text><text x="1030" y="745" font-size="17">${escapeXml(certificate.testLabel)}</text><text x="1370" y="745" font-size="17">${escapeXml(certificate.dateLabel)}</text>
       <text x="800" y="835" font-size="19" letter-spacing="3">${escapeXml(certificate.motto)}</text><text x="800" y="930" font-size="15" fill="#596577">${escapeXml(certificate.disclaimer)}</text>
     </g></svg>`;

@@ -24,15 +24,17 @@ export function CertificateVerifyResult() {
       </div>
     </div>
   );
+  const metrics = "version" in payload ? payload.metrics : [{ label: "WPM", value: payload.wpm }, { label: "Accuracy", value: `${payload.accuracy}%` }];
   return (
     <div className="cert-verify-card cert-verify-valid">
       <CheckCircle2 size={22} aria-hidden="true" />
-      <div><p className="cert-verify-title">Checksum matches — self-reported practice result</p>
+      <div><p className="cert-verify-title">Checksum matches — self-administered test result</p>
         <p>These values are consistent with the link&rsquo;s public checksum:</p>
         <dl className="cert-verify-details">
           <div><dt>Name</dt><dd>{payload.name}</dd></div>
-          <div><dt>WPM</dt><dd>{payload.wpm}</dd></div>
-          <div><dt>Accuracy</dt><dd>{payload.accuracy}%</dd></div>
+          {metrics.map((metric) => <div key={metric.label}><dt>{metric.label}</dt><dd>{metric.value}</dd></div>)}
+          {"version" in payload && <div><dt>Time taken</dt><dd>{payload.duration}</dd></div>}
+          {"version" in payload && payload.groups.map((group) => <div key={group.label}><dt>{group.label}</dt><dd>{group.value}</dd></div>)}
           <div><dt>Test</dt><dd>{payload.type}</dd></div>
           <div><dt>Date completed</dt><dd>{payload.completed}</dd></div>
           <div><dt>Verification ID</dt><dd>{payload.id}</dd></div>

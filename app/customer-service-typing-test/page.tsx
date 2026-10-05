@@ -63,7 +63,7 @@ export default function CustomerServiceTypingTestPage() {
         <p>Practice the sustained typing speed and accuracy that live-chat, help-desk and customer-support roles depend on. Get an instant WPM and accuracy benchmark before a job application or employer assessment.</p>
         <p><strong>Designed for:</strong> {customerServiceAssessment.audience.join(" · ")}</p>
       </section>
-      <WPMTestApp initialPath="/5-minute-typing-test/" embedded />
+      <WPMTestApp initialPath="/customer-service-typing-test/" embedded />
       <section className="seo-prerender" aria-label="Customer service typing test guide">
         <h2>Why customer service typing is different</h2>
         <p>A customer-support reply is rarely typed in one uninterrupted burst. You read a message, decide on tone, sometimes check a policy or order, then type a clear, professional response — often while another conversation is waiting. Practicing over several minutes helps you observe whether your accuracy holds as you continue typing.</p>
