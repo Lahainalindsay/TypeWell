@@ -1,7 +1,48 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Moon, Sun, Monitor } from "lucide-react";
+import { loadProgress, saveProgress } from "../storage/progress";
+import { resolveTheme, THEME_EVENT, type ThemePreference } from "../lib/theme";
 import { typingTestLanguagePaths } from "../lib/seo/localized";
+
+const themeOrder: ThemePreference[] = ["system", "light", "dark"];
+const themeIcon = { system: Monitor, light: Sun, dark: Moon } as const;
+const themeLabel = { system: "System theme", light: "Light theme", dark: "Dark theme" } as const;
+
+function ThemeToggle() {
+  const [pref, setPref] = useState<ThemePreference>("system");
+  useEffect(() => {
+    const sync = () => {
+      const value = loadProgress().settings.theme;
+      const next = themeOrder.includes(value) ? value : "system";
+      setPref(next);
+      document.documentElement.dataset.theme = resolveTheme(next);
+    };
+    sync();
+    window.addEventListener(THEME_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => { window.removeEventListener(THEME_EVENT, sync); window.removeEventListener("storage", sync); };
+  }, []);
+  useEffect(() => {
+    if (pref !== "system") return;
+    const media = window.matchMedia("(prefers-color-scheme: light)");
+    const apply = () => { document.documentElement.dataset.theme = resolveTheme("system"); };
+    media.addEventListener("change", apply);
+    return () => media.removeEventListener("change", apply);
+  }, [pref]);
+  const Icon = themeIcon[pref];
+  return <button type="button" className="site-theme-toggle"
+    aria-label={`Theme: ${themeLabel[pref]}. Click to change.`} title={themeLabel[pref]}
+    onClick={() => {
+      const next = themeOrder[(themeOrder.indexOf(pref) + 1) % themeOrder.length];
+      document.documentElement.dataset.theme = resolveTheme(next);
+      const progress = loadProgress();
+      saveProgress({ ...progress, settings: { ...progress.settings, theme: next } });
+      setPref(next);
+      window.dispatchEvent(new CustomEvent(THEME_EVENT, { detail: next }));
+    }}><Icon size={18} aria-hidden="true" /></button>;
+}
 
 const groups = [
   { label: "Tests", sections: [
@@ -9,7 +50,7 @@ const groups = [
     { title: "Specialized tests", links: [["/1-page-typing-test/", "Page Typing Tests"], ["/typing-test-with-numbers/", "Numbers Test"], ["/typing-test-with-punctuation/", "Punctuation Test"], ["/mobile-typing-test/", "Mobile Typing Test"]] }
   ] },
   { label: "Professional", sections: [
-    { title: "Professional tests", links: [["/typing-test-for-employment/", "Employment Typing Test"], ["/data-entry-typing-test/", "Data Entry Typing Test"], ["/10-key-typing-test/", "10-Key Typing Test"], ["/kph-typing-test/", "KPH Typing Test"]] },
+    { title: "Professional tests", links: [["/typing-test-for-employment/", "Employment Typing Test"], ["/data-entry-typing-test/", "Data Entry Typing Test"], ["/customer-service-typing-test/", "Customer Service Typing Test"], ["/10-key-typing-test/", "10-Key Typing Test"], ["/kph-typing-test/", "KPH Typing Test"]] },
     { title: "Data entry practice", links: [["/data-entry-practice/alphanumeric/", "Alphanumeric"], ["/data-entry-practice/names-addresses/", "Names & Addresses"], ["/data-entry-practice/currency-dates/", "Currency & Dates"], ["/data-entry-practice/invoices-orders/", "Invoices & Orders"]] }
   ], hub: ["/professionals/", "Explore all professional skills"] },
   { label: "Practice", sections: [
@@ -37,7 +78,8 @@ export function SiteHeader() {
   return <header className="site-header" ref={header}>
     <div className="site-header-inner">
       <a className="site-brand" href="/" aria-label="WPMTest home">WPMTEST<span>.</span></a>
-      <button type="button" className="site-mobile-toggle" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button>
+      <div className="site-header-actions"><ThemeToggle />
+      <button type="button" className="site-mobile-toggle" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button></div>
         <nav id="site-navigation" className="site-navigation" data-open={mobileOpen} aria-label="Primary navigation">
           {groups.map((group) => <details className="site-menu" key={group.label} onToggle={(event) => {
             if (!event.currentTarget.open) return;
@@ -71,8 +113,8 @@ export function SiteFooter() {
   const columns = [
     ["Tests", ["/typing-test/", "Standard Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/1-page-typing-test/", "Page Tests"], ["/mobile-typing-test/", "Mobile Test"]],
     ["Practice", ["/typing-practice/", "Typing Practice"], ["/learn/", "Lessons"], ["/practice/weak-keys/", "Weak Keys"], ["/rhythm/", "Rhythm"], ["/progress/", "Progress"]],
-    ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
-    ["Resources", ["/blog/", "Articles"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
+    ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/customer-service-typing-test/", "Customer Service Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
+    ["Resources", ["/blog/", "Articles"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
     ["Languages", [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português"], [typingTestLanguagePaths.ru, "Русский"]],
     ["Company", ["/about/", "About"], ["/contact/", "Contact"], ["/privacy/", "Privacy"], ["/terms/", "Terms"], ["/settings/", "Settings"]]
   ] as const;

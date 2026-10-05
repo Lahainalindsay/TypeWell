@@ -50,7 +50,7 @@ export const defaultProgress: ProgressData = {
   strokes: [],
   rhythmBest: 0,
   settings: {
-    theme: "dark",
+    theme: "system",
     showLiveMetrics: true,
     showKeyboard: true,
     showFingerGuide: true,

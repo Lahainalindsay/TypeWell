@@ -13,6 +13,9 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 .site-brand { color: var(--text); font-size: 1.24rem; font-weight: 850; letter-spacing: -.035em; text-decoration: none; white-space: nowrap; }
 .site-brand span { color: var(--accent); }
 .site-mobile-toggle { display: none; }
+.site-header-actions { display: flex; align-items: center; gap: .5rem; }
+.site-theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1px solid var(--tw-line); border-radius: 9px; background: transparent; color: var(--text); cursor: pointer; }
+.site-theme-toggle:hover { background: var(--panel); }
 
 .site-navigation { display: flex; align-items: center; gap: .3rem; flex-wrap: nowrap; }
 .site-navigation > a, .site-menu > summary { display: inline-flex; align-items: center; min-height: 44px; padding: .55rem .8rem; border-radius: 9px; background: transparent; border: 0; color: var(--text); font-weight: 650; font-size: .92rem; text-decoration: none; cursor: pointer; list-style: none; }

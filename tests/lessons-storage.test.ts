@@ -16,7 +16,7 @@ describe("lesson progression and storage", () => {
   it("validates exported progress JSON", () => {
     const restored = validateProgress(JSON.parse(exportProgress(defaultProgress)));
     expect(restored.version).toBe(1);
-    expect(restored.settings.theme).toBe("dark");
+    expect(restored.settings.theme).toBe("system");
   });
 
   it("keeps only valid imported keystrokes", () => {

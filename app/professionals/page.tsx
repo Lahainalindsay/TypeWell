@@ -25,6 +25,10 @@ const categories = [
     ["/5-minute-typing-test/", "5 Minute Typing Test", "Check sustained WPM, accuracy and consistency."],
     ["/typing-certificate/", "Typing Certificate", "Create a certificate after finishing a test."]
   ] },
+  { heading: "Customer service", description: "Build the sustained speed and accuracy live-chat and support roles depend on.", links: [
+    ["/customer-service-typing-test/", "Customer Service Typing Test", "A 5-minute sustained prose practice test for support and live-chat roles."],
+    ["/typing-test-with-punctuation/", "Punctuation Typing Test", "Practice the capitalization and punctuation of professional replies."]
+  ] },
   { heading: "Data entry", description: "Train exact field entry across realistic fictional records.", links: [
     ["/data-entry-typing-test/", "Data Entry Typing Test", "Combine names, IDs, dates, amounts and ZIP codes."],
     ["/data-entry-practice/alphanumeric/", "Alphanumeric", "Work across letters, digits and codes."],

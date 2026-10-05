@@ -12,6 +12,19 @@ import { SITE_NAME, SITE_ORIGIN } from "../src/lib/seo/site";
 const adsenseClient = "ca-pub-2169009102905035";
 const socialImage = "/og-default.svg";
 
+// Apply the saved theme before first paint, including non-interactive pages.
+const themeBootstrapScript = `
+(function () {
+  try {
+    var raw = localStorage.getItem("wpmtest.progress.v1") || localStorage.getItem("typewell.progress.v1");
+    var pref = raw ? (JSON.parse(raw).settings || {}).theme : null;
+    if (pref !== "light" && pref !== "dark" && pref !== "system") pref = "system";
+    document.documentElement.dataset.theme = pref === "system"
+      ? (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark") : pref;
+  } catch (e) { document.documentElement.dataset.theme = "dark"; }
+})();
+`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   applicationName: SITE_NAME,
@@ -48,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
         <script

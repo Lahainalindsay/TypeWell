@@ -20,6 +20,8 @@ import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
 import type { Metrics } from "./engine/types";
 
+import { resolveTheme, THEME_EVENT, type ThemePreference } from "./lib/theme";
+
 type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
 
 export default function WPMTestApp({ initialPath = "/", embedded = false }: { initialPath?: string; embedded?: boolean }) {
@@ -37,10 +39,22 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
   useEffect(() => {
     if (!storageReady) return;
     saveProgress(progress);
-    document.documentElement.dataset.theme = progress.settings.theme === "system" && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : progress.settings.theme;
+    document.documentElement.dataset.theme = resolveTheme(progress.settings.theme);
+    window.dispatchEvent(new CustomEvent(THEME_EVENT));
     document.documentElement.dataset.contrast = String(progress.settings.highContrast);
     document.documentElement.dataset.motion = progress.settings.reducedMotion ? "reduced" : "ok";
   }, [progress, storageReady]);
+
+  useEffect(() => {
+    const syncTheme = (event: Event) => {
+      const theme = (event as CustomEvent<ThemePreference>).detail;
+      if (theme === "light" || theme === "dark" || theme === "system") {
+        setProgress(current => ({ ...current, settings: { ...current.settings, theme } }));
+      }
+    };
+    window.addEventListener(THEME_EVENT, syncTheme);
+    return () => window.removeEventListener(THEME_EVENT, syncTheme);
+  }, []);
 
   useEffect(() => {
     const onPop = () => {

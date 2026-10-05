@@ -94,6 +94,7 @@ describe("SEO route registry", () => {
       "app/typing-test-for-kids/page.tsx",
       "app/typing-test-for-students/page.tsx",
       "app/typing-test-for-employment/page.tsx",
+      "app/customer-service-typing-test/page.tsx",
       "app/typing-test-with-numbers/page.tsx",
       "app/typing-test-with-punctuation/page.tsx",
       "app/typing-test/code/page.tsx",

@@ -1,5 +1,25 @@
 (() => {
-  const state = { record: null, name: "" };
+  const state = { record: null, name: "", id: "" };
+
+  // Public checksum for accidental changes only, not a secure signature.
+  // Keep this algorithm in sync with src/features/certificate/verify.ts.
+  const CERT_SALT = "wpmtest-cert-v1";
+  function fnv1a(str) {
+    let h = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+    return (h >>> 0).toString(16).padStart(8, "0");
+  }
+  function certId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function certSignature(payload) {
+    return fnv1a([payload.id, payload.name, payload.wpm, payload.accuracy, payload.type, payload.completed, CERT_SALT].join("|"));
+  }
+  function certVerifyUrl(payload) {
+    const params = new URLSearchParams({
+      id: payload.id, name: payload.name, wpm: String(payload.wpm), accuracy: String(payload.accuracy),
+      type: payload.type, date: payload.completed, sig: certSignature(payload)
+    });
+    return `${location.origin}/certificate/verify/?${params.toString()}`;
+  }
 
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const metric = (card, label) => {
@@ -18,6 +38,7 @@
   };
   const inferType = (duration) => {
     const path = location.pathname.toLowerCase();
+    if (path.includes('customer-service')) return 'Customer Service Typing Practice';
     if (path.includes('data-entry')) return 'Data Entry Typing Test';
     if (path.includes('10-key')) return '10-Key Typing Test';
     if (path.includes('numeric-keypad')) return 'Numeric Keypad Test';
@@ -58,7 +79,7 @@
     el.querySelector('.tw-cert-x').onclick = closeModal;
     const input = el.querySelector('#tw-cert-name');
     input.focus();
-    const go = () => { const name = input.value.trim(); if (!name) { input.focus(); input.classList.add('tw-input-error'); return; } state.name = name; showCertificate(); };
+    const go = () => { const name = input.value.trim(); if (!name) { input.focus(); input.classList.add('tw-input-error'); return; } state.name = name; state.id = certId(); showCertificate(); };
     el.querySelector('#tw-generate-cert').onclick = go;
     input.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
   }
@@ -75,18 +96,30 @@
         <div class="tw-cert-stats"><div><b>${esc(r.wpm)}</b><span>WORDS PER MINUTE<br/>(WPM)</span></div><div><b>${esc(r.accuracy)}%</b><span>ACCURACY</span></div><div><b>${esc(r.type)}</b><span>TEST TAKEN</span></div><div><b>${esc(r.completed)}</b><span>DATE COMPLETED</span></div></div>
         <div class="tw-cert-motto"><i></i><span>PRACTICE BUILDS PROGRESS</span><i></i></div>
         <footer class="tw-cert-footer"><div class="tw-signature">WPMTest Team<small>THE WPMTEST TEAM</small></div><div class="tw-gold-seal"><b>★</b><span>SKILLS<br/>CREATE<br/>OPPORTUNITY</span></div><div class="tw-signature right">Keep Typing<small>BRIGHTER TOMORROWS</small></div></footer>
+        <small class="tw-cert-verify">Verification ID: ${esc(state.id)} · Full verification link required; ID alone cannot be checked.</small>
         <small class="tw-cert-disclaimer">This certificate records a WPMTest online typing-test result and is not an accredited professional certification.</small>
       </div>
     </article>`;
   }
 
   function showCertificate() {
-    const el = overlay(`<button class="tw-cert-x" aria-label="Close">×</button>${certificateMarkup()}<div class="tw-cert-actions"><button id="tw-download">Download</button><button id="tw-print">Print / Save PDF</button><button id="tw-share">Share</button><button id="tw-close">Close</button></div>`, 'tw-preview-step');
+    const el = overlay(`<button class="tw-cert-x" aria-label="Close">×</button>${certificateMarkup()}<div class="tw-cert-actions"><button id="tw-download">Download</button><button id="tw-print">Print / Save PDF</button><button id="tw-verify-link">Copy Verification Link</button><button id="tw-share">Share</button><button id="tw-close">Close</button></div>`, 'tw-preview-step');
     el.querySelector('.tw-cert-x').onclick = closeModal;
     el.querySelector('#tw-close').onclick = closeModal;
     el.querySelector('#tw-print').onclick = () => window.print();
     el.querySelector('#tw-download').onclick = downloadCertificate;
     el.querySelector('#tw-share').onclick = shareCertificate;
+    el.querySelector('#tw-verify-link').onclick = copyVerificationLink;
+  }
+
+  function certPayload() {
+    const r = state.record;
+    return { id: state.id, name: state.name, wpm: r.wpm, accuracy: r.accuracy, type: r.type, completed: r.completed };
+  }
+  async function copyVerificationLink() {
+    const url = certVerifyUrl(certPayload());
+    try { await navigator.clipboard.writeText(url); alert('Verification link copied. It includes your name and practice result. The public checksum checks link consistency, not authenticity.'); }
+    catch (e) { prompt('Copy your verification link:', url); }
   }
 
   function downloadCertificate() {
@@ -99,7 +132,8 @@
   }
   function certificateSvg(name,r) {
     const safe = s => esc(s);
-    return `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#fffdf7"/><stop offset="1" stop-color="#f5f1e7"/></linearGradient></defs><rect width="1600" height="1000" fill="url(#g)"/><rect x="24" y="24" width="1552" height="952" rx="18" fill="none" stroke="#0c2948" stroke-width="18"/><rect x="45" y="45" width="1510" height="910" rx="12" fill="none" stroke="#b58a35" stroke-width="4"/><text x="110" y="120" font-family="Arial" font-weight="700" font-size="54" fill="#071a30">WPM<tspan fill="#2389d7">Test</tspan></text><circle cx="800" cy="115" r="70" fill="#0c3159" stroke="#c59a43" stroke-width="10"/><text x="800" y="138" text-anchor="middle" font-size="55">⌨</text><text x="800" y="245" text-anchor="middle" font-family="Georgia" font-size="42" letter-spacing="10" fill="#0a2038">CERTIFICATE OF</text><text x="800" y="330" text-anchor="middle" font-family="Georgia" font-size="78" font-weight="700" fill="#071a30">TYPING PROFICIENCY</text><text x="800" y="390" text-anchor="middle" font-family="Georgia" font-size="22" letter-spacing="9" fill="#22364d">THIS CERTIFIES THAT</text><text x="800" y="490" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="76" fill="#a87822">${safe(name)}</text><line x1="370" x2="1230" y1="515" y2="515" stroke="#b58a35"/><text x="800" y="565" text-anchor="middle" font-family="Georgia" font-size="24" fill="#15263a">has demonstrated typing proficiency by completing a typing test on WPMTest</text><text x="800" y="605" text-anchor="middle" font-family="Georgia" font-size="24" fill="#15263a">and has achieved the following results:</text><g font-family="Georgia" fill="#071a30" text-anchor="middle"><text x="330" y="700" font-size="62" font-weight="700">${safe(r.wpm)}</text><text x="650" y="700" font-size="62" font-weight="700">${safe(r.accuracy)}%</text><text x="1000" y="690" font-size="32" font-weight="700">${safe(r.type)}</text><text x="1320" y="690" font-size="32" font-weight="700">${safe(r.completed)}</text></g><g font-family="Arial" font-size="17" letter-spacing="3" fill="#26384c" text-anchor="middle"><text x="330" y="740">WORDS PER MINUTE (WPM)</text><text x="650" y="740">ACCURACY</text><text x="1000" y="740">TEST TAKEN</text><text x="1320" y="740">DATE COMPLETED</text></g><text x="800" y="815" text-anchor="middle" font-family="Arial" font-size="18" letter-spacing="8" fill="#1d3046">PRACTICE BUILDS PROGRESS</text><circle cx="800" cy="895" r="66" fill="#c79a43" stroke="#9c7127" stroke-width="4"/><text x="800" y="886" text-anchor="middle" font-size="25">★</text><text x="800" y="915" text-anchor="middle" font-family="Arial" font-size="14" letter-spacing="2">WPMTEST</text><text x="220" y="900" font-family="Georgia" font-style="italic" font-size="34" fill="#10263e">WPMTest Team</text><text x="1250" y="900" font-family="Georgia" font-style="italic" font-size="34" fill="#10263e">Keep Typing</text></svg>`;
+    const verifyLine = `Verification ID: ${safe(state.id)} · Full verification link required; ID alone cannot be checked.`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#fffdf7"/><stop offset="1" stop-color="#f5f1e7"/></linearGradient></defs><rect width="1600" height="1000" fill="url(#g)"/><rect x="24" y="24" width="1552" height="952" rx="18" fill="none" stroke="#0c2948" stroke-width="18"/><rect x="45" y="45" width="1510" height="910" rx="12" fill="none" stroke="#b58a35" stroke-width="4"/><text x="110" y="120" font-family="Arial" font-weight="700" font-size="54" fill="#071a30">WPM<tspan fill="#2389d7">Test</tspan></text><circle cx="800" cy="115" r="70" fill="#0c3159" stroke="#c59a43" stroke-width="10"/><text x="800" y="138" text-anchor="middle" font-size="55">⌨</text><text x="800" y="245" text-anchor="middle" font-family="Georgia" font-size="42" letter-spacing="10" fill="#0a2038">CERTIFICATE OF</text><text x="800" y="330" text-anchor="middle" font-family="Georgia" font-size="78" font-weight="700" fill="#071a30">TYPING PROFICIENCY</text><text x="800" y="390" text-anchor="middle" font-family="Georgia" font-size="22" letter-spacing="9" fill="#22364d">THIS CERTIFIES THAT</text><text x="800" y="490" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="76" fill="#a87822">${safe(name)}</text><line x1="370" x2="1230" y1="515" y2="515" stroke="#b58a35"/><text x="800" y="565" text-anchor="middle" font-family="Georgia" font-size="24" fill="#15263a">has demonstrated typing proficiency by completing a typing test on WPMTest</text><text x="800" y="605" text-anchor="middle" font-family="Georgia" font-size="24" fill="#15263a">and has achieved the following results:</text><g font-family="Georgia" fill="#071a30" text-anchor="middle"><text x="330" y="700" font-size="62" font-weight="700">${safe(r.wpm)}</text><text x="650" y="700" font-size="62" font-weight="700">${safe(r.accuracy)}%</text><text x="1000" y="690" font-size="32" font-weight="700">${safe(r.type)}</text><text x="1320" y="690" font-size="32" font-weight="700">${safe(r.completed)}</text></g><g font-family="Arial" font-size="17" letter-spacing="3" fill="#26384c" text-anchor="middle"><text x="330" y="740">WORDS PER MINUTE (WPM)</text><text x="650" y="740">ACCURACY</text><text x="1000" y="740">TEST TAKEN</text><text x="1320" y="740">DATE COMPLETED</text></g><text x="800" y="815" text-anchor="middle" font-family="Arial" font-size="18" letter-spacing="8" fill="#1d3046">PRACTICE BUILDS PROGRESS</text><circle cx="800" cy="895" r="66" fill="#c79a43" stroke="#9c7127" stroke-width="4"/><text x="800" y="886" text-anchor="middle" font-size="25">★</text><text x="800" y="915" text-anchor="middle" font-family="Arial" font-size="14" letter-spacing="2">WPMTEST</text><text x="220" y="900" font-family="Georgia" font-style="italic" font-size="34" fill="#10263e">WPMTest Team</text><text x="1250" y="900" font-family="Georgia" font-style="italic" font-size="34" fill="#10263e">Keep Typing</text><text x="800" y="955" text-anchor="middle" font-family="Arial" font-size="15" fill="#4a5a6b">${verifyLine}</text></svg>`;
   }
   async function shareCertificate(){
     const text = `${state.name} achieved ${state.record.wpm} WPM with ${state.record.accuracy}% accuracy on the WPMTest ${state.record.type}.`;
