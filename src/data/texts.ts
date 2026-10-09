@@ -89,6 +89,20 @@ function variedText(items: readonly string[], length: number): string {
   return parts.join(" ");
 }
 
+// Standard WPM passages use prose only. Numbers, code, and advanced punctuation
+// belong to their dedicated assessments rather than the general typing test.
+const standardSentencePool = [
+  ...library["Everyday English"],
+  ...library["Short Sentences"],
+  ...library.Literature,
+  ...library.Business,
+  ...library.Technology,
+  ...library.Science,
+  ...library.History,
+  ...library.Nature,
+  ...library["Creative Writing"]
+].filter((sentence) => /^[A-Za-z ,.'!?-]+$/.test(sentence));
+
 export function buildPracticeText(mode: PracticeMode, count = 50, customText = ""): string {
   if (mode === "Custom Text") return customText || "Paste custom text in the field above, then begin typing here.";
   if (mode === "Numbers") return variedText(library.Numbers, count * 6);
@@ -99,9 +113,9 @@ export function buildPracticeText(mode: PracticeMode, count = 50, customText = "
   if (mode === "Code") return variedText(library.Programming, count * 7);
   if (mode === "Accuracy") return variedText(["accurate", "steady", "clear", "exact", "clean", "calm", "deliberate", "return", "home", "row"], count * 6);
   if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6);
-  if (mode === "Endurance") return variedText(Object.values(library).flat(), count * 10);
+  if (mode === "Endurance") return variedText(standardSentencePool, count * 10);
   if (mode === "Words") return variedText(["time", "form", "hand", "type", "clean", "steady", "rhythm", "focus", "reach", "return", "index", "finger", "screen", "practice", "improve"], count * 6);
-  return variedText(Object.values(library).flat().filter((item) => !item.includes("const ") && !item.includes("function ")), count * 6);
+  return variedText(standardSentencePool, count * 6);
 }
 
 // A page test has a fixed amount of text and no countdown. Keep sentence
