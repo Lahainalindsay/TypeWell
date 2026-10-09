@@ -111,7 +111,7 @@ function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedP
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   useEffect(() => setDuration(challengeDurationFromPath(path)), [path]);
   const durationLabels: Record<number, string> = { 60: "1 Minute", 180: "3 Minutes", 300: "5 Minutes", 600: "10 Minutes" };
-  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
+  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} regenerate={() => buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
 }
 
 function InternalLink({ href, go, children }: { href: string; go: (page: Page, route?: string) => void; children: React.ReactNode }) {
@@ -166,6 +166,7 @@ function Practice({ progress, setProgress, record, setFocus, path, embedded }: S
       heading={embedded ? "h2" : undefined}
       subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
       target={target}
+      regenerate={mode === "Custom Text" ? undefined : () => mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom)}
       mode="practice"
       duration={duration}
       progress={progress}
@@ -221,6 +222,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
       heading={embedded ? "h2" : undefined}
       subtitle={pageCount ? "Finish the whole passage at your own pace. No countdown or account required." : "Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."}
       target={pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count)}
+      regenerate={() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count)}
       mode="test"
       duration={pageCount ? undefined : duration}
       progress={progress}
@@ -366,6 +368,7 @@ function Trainer(props: {
   title: string;
   subtitle: string;
   target: string;
+  regenerate?: () => string;
   mode: "lesson" | "practice" | "test";
   heading?: "h1" | "h2";
   keys?: string[];
@@ -381,17 +384,23 @@ function Trainer(props: {
   setFocus: (focus: boolean) => void;
   side?: React.ReactNode;
 }) {
+  const [activeTarget, setActiveTarget] = useState(props.target);
   const [session, setSession] = useState(() => createSession(props.target));
   const [finished, setFinished] = useState<SessionRecord | null>(null);
   const [now, setNow] = useState(performance.now());
   const [pausedAt, setPausedAt] = useState<number | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const metrics = calculateMetrics(session, pausedAt ?? now);
-  const targetCharacters = splitGraphemes(props.target);
+  const targetCharacters = splitGraphemes(activeTarget);
   const current = targetCharacters[session.typed.length] ?? "";
   const next = targetCharacters[session.typed.length + 1] ?? "";
 
-  useEffect(() => reset(), [props.target, props.duration]);
+  useEffect(() => {
+    setActiveTarget(props.target);
+    setSession(createSession(props.target));
+    setFinished(null);
+    setPausedAt(null);
+  }, [props.target, props.duration]);
   useEffect(() => {
     const id = window.setInterval(() => setNow(performance.now()), 250);
     return () => clearInterval(id);
@@ -429,7 +438,9 @@ function Trainer(props: {
   }, [session.startedAt, finished]);
 
   function reset() {
-    setSession(createSession(props.target));
+    const nextTarget = props.regenerate ? props.regenerate() : props.target;
+    setActiveTarget(nextTarget);
+    setSession(createSession(nextTarget));
     setFinished(null);
     setPausedAt(null);
     trackEvent("typing_test_restarted", { testType: props.mode, duration: props.duration ?? null });
@@ -439,7 +450,7 @@ function Trainer(props: {
   function complete() {
     const finalMetrics = calculateMetrics(session, performance.now());
     const weakKeys = analyzeWeakKeys(session.keystrokes);
-    const weakCombinations = analyzeWeakCombinations(props.target, session.keystrokes);
+    const weakCombinations = analyzeWeakCombinations(activeTarget, session.keystrokes);
     const record: SessionRecord = {
       id: crypto.randomUUID(),
       date: new Date().toISOString(),
@@ -512,7 +523,7 @@ function Trainer(props: {
         {props.seoCopy}
         {props.keys && <div className="key-strip">{props.keys.map((key) => <span key={key}>{key}</span>)}<small>Target {props.targetWpm} WPM · {props.targetAccuracy}% accuracy</small></div>}
         {props.progress.settings.showLiveMetrics && <div className="metrics"><Metric label="WPM" value={metrics.wpm} /><Metric label="Accuracy" value={`${metrics.accuracy}%`} /><Metric label="Consistency" value={`${metrics.consistency}%`} /><Metric label="Time" value={formatTime(metrics.elapsedMs)} />{props.duration && <Metric label="Remaining" value={formatTime(Math.max(0, props.duration * 1000 - metrics.elapsedMs))} />}</div>}
-        <TypingText target={props.target} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
+        <TypingText target={activeTarget} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
         {!session.startedAt && <p className="start-hint">Tap or click the text, then start typing. The timer begins on your first keystroke.</p>}
         <textarea
           ref={inputRef}
@@ -903,7 +914,7 @@ function TypingGames({ progress, setProgress, record, setFocus, path, go }: Shar
   return (
     <section className="dashboard">
       <div className="trainer-head"><div><h1>Typing Games</h1><p>Lightweight drills that reinforce real typing accuracy without accounts or leaderboards.</p></div><Gamepad2 aria-hidden="true" /></div>
-      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
+      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} regenerate={() => buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
     </section>
   );
 }
