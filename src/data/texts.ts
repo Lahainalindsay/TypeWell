@@ -63,21 +63,45 @@ export const library: Record<string, string[]> = {
   ]
 };
 
+// Shuffle without replacement within each cycle, so a new session has fresh material.
+function shuffled<T>(items: readonly T[]): T[] {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function variedText(items: readonly string[], length: number): string {
+  if (!items.length) return "";
+  const parts: string[] = [];
+  let size = 0;
+  while (size < length) {
+    const cycle = shuffled(items);
+    for (const item of cycle) {
+      if (parts.length && item === parts[parts.length - 1]) continue;
+      parts.push(item);
+      size += item.length + 1;
+      if (size >= length) break;
+    }
+  }
+  return parts.join(" ");
+}
+
 export function buildPracticeText(mode: PracticeMode, count = 50, customText = ""): string {
   if (mode === "Custom Text") return customText || "Paste custom text in the field above, then begin typing here.";
-  if (mode === "Numbers") return repeatToLength(library.Numbers.join(" "), count * 6);
-  if (mode === "Data Entry") return repeatToLength(fictionalDataEntryRecords.map((record) => dataEntryFields(record).join(" ")).join(" "), count * 8);
-  if (mode === "Numeric Keypad") return repeatToLength(numericGroups.join(" "), count * 5);
-  if (mode === "Punctuation") return repeatToLength(library.Punctuation.join(" "), count * 6);
-  if (mode === "Symbols") return "email@domain.dev #issue-42 $19.95 + 8% = total_value / [draft] {ready} && checked";
-  if (mode === "Code") return repeatToLength(library.Programming.join(" "), count * 7);
-  if (mode === "Accuracy") return repeatToLength("accurate steady clear exact clean calm deliberate return home row ", count * 6);
-  if (mode === "Speed Burst") return repeatToLength("the and you that with have type fast calm flow ", count * 6);
-  if (mode === "Endurance") return repeatToLength(Object.values(library).flat().join(" "), count * 10);
-  const pool = mode === "Words"
-    ? "time form hand type clean steady rhythm focus reach return index finger screen practice improve "
-    : Object.values(library).flat().join(" ");
-  return repeatToLength(pool, count * 6);
+  if (mode === "Numbers") return variedText(library.Numbers, count * 6);
+  if (mode === "Data Entry") return variedText(fictionalDataEntryRecords.map((record) => dataEntryFields(record).join(" ")), count * 8);
+  if (mode === "Numeric Keypad") return variedText(numericGroups, count * 5);
+  if (mode === "Punctuation") return variedText(library.Punctuation, count * 6);
+  if (mode === "Symbols") return variedText(["email@domain.dev", "#issue-42", "$19.95", "+ 8%", "total_value", "/ [draft]", "{ready}", "&& checked"], count * 6);
+  if (mode === "Code") return variedText(library.Programming, count * 7);
+  if (mode === "Accuracy") return variedText(["accurate", "steady", "clear", "exact", "clean", "calm", "deliberate", "return", "home", "row"], count * 6);
+  if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6);
+  if (mode === "Endurance") return variedText(Object.values(library).flat(), count * 10);
+  if (mode === "Words") return variedText(["time", "form", "hand", "type", "clean", "steady", "rhythm", "focus", "reach", "return", "index", "finger", "screen", "practice", "improve"], count * 6);
+  return variedText(Object.values(library).flat().filter((item) => !item.includes("const ") && !item.includes("function ")), count * 6);
 }
 
 // A page test has a fixed amount of text and no countdown. Keep sentence
@@ -114,8 +138,10 @@ export function buildPageTestText(pages: 1 | 2 | 3): string {
   const targetWords = pages * 250;
   const sentences: string[] = [];
   let words = 0;
+  let cycle = shuffled(pageTestSentences);
   for (let index = 0; words < targetWords; index += 1) {
-    const sentence = pageTestSentences[index % pageTestSentences.length];
+    if (index > 0 && index % cycle.length === 0) cycle = shuffled(pageTestSentences);
+    const sentence = cycle[index % cycle.length];
     sentences.push(sentence);
     words += sentence.split(/\s+/).length;
   }
