@@ -396,11 +396,12 @@ function Trainer(props: {
   const next = targetCharacters[session.typed.length + 1] ?? "";
 
   useEffect(() => {
-    setActiveTarget(props.target);
-    setSession(createSession(props.target));
+    const nextTarget = props.regenerate ? props.regenerate() : props.target;
+    setActiveTarget(nextTarget);
+    setSession(createSession(nextTarget));
     setFinished(null);
     setPausedAt(null);
-  }, [props.target, props.duration]);
+  }, [props.duration, props.title]);
   useEffect(() => {
     const id = window.setInterval(() => setNow(performance.now()), 250);
     return () => clearInterval(id);
