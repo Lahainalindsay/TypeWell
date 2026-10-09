@@ -1,7 +1,7 @@
 "use client";
 import { numericExercise, numericProfileForTitle } from "./features/numericProfiles";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Award, BarChart3, Calculator, Gamepad2, Gauge, Keyboard, LineChart, Moon, RotateCcw, Timer, X, Zap } from "lucide-react";
 import { applyInput, calculateMetrics, createSession, round } from "./engine/metrics";
 import { calculateRhythmMetrics, nearestBeat } from "./engine/rhythm";
@@ -110,8 +110,9 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
 function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   useEffect(() => setDuration(challengeDurationFromPath(path)), [path]);
+  const passage = useMemo(() => buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8))), [duration]);
   const durationLabels: Record<number, string> = { 60: "1 Minute", 180: "3 Minutes", 300: "5 Minutes", 600: "10 Minutes" };
-  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} regenerate={() => buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
+  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} regenerate={() => buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
 }
 
 function InternalLink({ href, go, children }: { href: string; go: (page: Page, route?: string) => void; children: React.ReactNode }) {
@@ -159,7 +160,7 @@ function Practice({ progress, setProgress, record, setFocus, path, embedded }: S
   const [custom, setCustom] = useState("");
   useEffect(() => setMode(practiceModeFromPath(path)), [path]);
   const weak = analyzeWeakKeys(progress.strokes);
-  const target = mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom);
+  const target = useMemo(() => mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom), [mode, count, custom, path]);
   return (
     <Trainer
       title={mode === "Weak Keys" ? "Weak-Key Typing Practice" : "Typing Practice — Targeted Drills to Fix Your Weak Keys"}
@@ -192,6 +193,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
     : testMode === "Punctuation" ? "Typing Test with Punctuation"
     : path.replace(/\/$/, "") === "/mobile-typing-test" ? "Mobile Typing Test — Test Your Speed on a Phone or Tablet"
     : path.replace(/\/$/, "") === "/customer-service-typing-test" ? "Customer Service Typing Test" : timedTestTitle(path);
+  const passage = useMemo(() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count), [pageCount, testMode, count, path]);
   const testDescription = pageCount
     ? `Complete approximately ${pageCount * 250} words at your own pace. The test ends when you finish the passage, and your WPM is calculated from your actual time.`
     : testMode === "Data Entry"
@@ -221,7 +223,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
       title={testTitle}
       heading={embedded ? "h2" : undefined}
       subtitle={pageCount ? "Finish the whole passage at your own pace. No countdown or account required." : "Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."}
-      target={pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count)}
+      target={passage}
       regenerate={() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count)}
       mode="test"
       duration={pageCount ? undefined : duration}
@@ -401,7 +403,7 @@ function Trainer(props: {
     setSession(createSession(nextTarget));
     setFinished(null);
     setPausedAt(null);
-  }, [props.duration, props.title]);
+  }, [props.duration, props.title, props.target]);
   useEffect(() => {
     const id = window.setInterval(() => setNow(performance.now()), 250);
     return () => clearInterval(id);
@@ -474,7 +476,7 @@ function Trainer(props: {
   }
 
   function applyKeys(keys: string[]) {
-    if (!keys.length) return;
+    if (!keys.length || finished || session.endedAt || (props.duration && session.startedAt && performance.now() - session.startedAt >= props.duration * 1000)) return;
     setSession((old) => {
       let nextState = old;
       keys.forEach((key, index) => {
