@@ -14,8 +14,8 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://wpmtest.app
 export const seoPages: SeoPage[] = [
   {
     path: "/",
-    title: "Free Typing Test - Check Your WPM & Accuracy | WPMTest",
-    description: "Take a free typing test and check your WPM, accuracy, consistency, and weak keys instantly. Choose a 1, 3, 5, or 10 minute test. No signup required.",
+    title: "Free Typing Test & Typing Speed Test | WPMTest",
+    description: "Take a free online typing test to check your typing speed in WPM and accuracy. Choose a 1, 3, 5 or 10 minute test and get instant results. No signup.",
     h1: "Free Typing Test — Measure Your Speed and Accuracy Instantly",
     intro: "WPMTest times your typing the moment you press the first key and scores three things most typing tools blur together: raw speed, accuracy, and consistency.",
     content: [
@@ -31,8 +31,8 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/typing-test/",
-    title: "Free Typing Speed Test - Check Your WPM | WPMTest",
-    description: "Take a free typing speed test with WPM, raw WPM, accuracy, consistency, errors, and local progress. No signup required.",
+    title: "Typing Speed Test - Free Online WPM Test | WPMTest",
+    description: "Check your typing speed with a free online WPM test. Measure words per minute, accuracy and consistency, then compare repeat attempts. No signup required.",
     h1: "Free Typing Speed Test",
     intro: "Use this general typing test to measure your current speed and accuracy with standard scoring.",
     content: [

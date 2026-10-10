@@ -6,22 +6,24 @@ import { absoluteUrl } from "../../src/lib/seo/site";
 const socialImage = absoluteUrl("/og-default.svg");
 
 const canonical = absoluteUrl(dataEntryAssessment.publicPath);
+const title = "Free Data Entry Typing Test - Accuracy & Practice | WPMTest";
+const description = "Practice job-style data entry with fictional names, dates, amounts and codes. Get exact field accuracy, mistake review and targeted drills. Free, no signup.";
 
 export const metadata: Metadata = {
-  title: "Data Entry Typing Test & Practice for Employment | WPMTest",
-  description: "Practice job-style data entry with fictional names, dates, amounts and codes. Get exact field accuracy, mistake review and targeted drills. Free, no signup.",
+  title,
+  description,
   alternates: { canonical },
   openGraph: {
-    title: "Data Entry Typing Test & Practice | WPMTest",
-    description: "Take a free structured-record practice test with field accuracy, mistake review and targeted data-entry drills.",
+    title,
+    description,
     url: canonical,
     type: "website",
     images: [{ url: socialImage, width: 1200, height: 630, alt: "WPMTest Data Entry Typing Test" }]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Data Entry Typing Test & Practice | WPMTest",
-    description: "Take a free structured-record practice test with field accuracy, mistake review and targeted data-entry drills.",
+    title,
+    description,
     images: [socialImage]
   },
   robots: { index: true, follow: true }
