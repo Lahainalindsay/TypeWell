@@ -24,6 +24,19 @@ export function HomePage({ test }: { test: React.ReactNode }) {
         <a href="/typing-practice/"><span>03 / IMPROVE</span><h3>Improve Your Typing</h3><p>Build accuracy, rhythm, technique and weak-key control.</p><strong>Start Practicing →</strong></a>
       </div>
     </section>
+    <section className="home-guide seo-section" aria-labelledby="language-tests-heading">
+      <h2 id="language-tests-heading">Free typing tests in seven languages</h2>
+      <p>Practice typing with natural text, accents and keyboard layouts for your language. Choose a free online typing speed test below; each test measures speed and accuracy without signup.</p>
+      <nav aria-label="Typing tests by language">
+        <a href={typingTestLanguagePaths.fr} lang="fr">Test de dactylographie en français</a>{" · "}
+        <a href={typingTestLanguagePaths.es} lang="es">Test de mecanografía en español</a>{" · "}
+        <a href={typingTestLanguagePaths.de} lang="de">Schreibgeschwindigkeit testen</a>{" · "}
+        <a href={typingTestLanguagePaths.it} lang="it">Test di dattilografia in italiano</a>{" · "}
+        <a href={typingTestLanguagePaths.pt} lang="pt-BR">Teste de digitação em português</a>{" · "}
+        <a href={typingTestLanguagePaths.ru} lang="ru">Тест скорости печати на русском</a>{" · "}
+        <a href={typingTestLanguagePaths.hi} lang="hi">हिंदी टाइपिंग टेस्ट</a>
+      </nav>
+    </section>
     <AdSlot placement="afterHomeTest" />
     <section className="home-popular" aria-labelledby="popular-heading"><div className="home-section-heading"><h2 id="popular-heading">Popular tests</h2><a href="/typing-test/">All tests →</a></div><div className="home-popular-grid">{popular.map(([href, label]) => <a href={href} key={href}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>
     <section className="home-professional" aria-labelledby="professional-heading"><div>
