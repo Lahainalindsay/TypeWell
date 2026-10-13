@@ -10,7 +10,7 @@ export const dynamic = "force-static";
 // internal-link updates in the September 20 release. Keep this date honest:
 // Google may use lastmod when it matches a significant page update.
 const SEO_CONTENT_LAST_MODIFIED = new Date("2026-09-20T00:00:00.000Z");
-const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
+const LOCALIZED_CONTENT_LAST_MODIFIED = new Date("2026-10-12T00:00:00.000Z");
 const NEW_TEST_CONTENT_LAST_MODIFIED = new Date("2026-09-23T00:00:00.000Z");
 const addedPaths = new Set(["/customer-service-typing-test/", "/certificate/verify/"]);
 const keywordUpdatedPaths = new Set(["/", "/typing-test/", "/data-entry-typing-test/"]);
