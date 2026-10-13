@@ -2,8 +2,8 @@ import type { LocalizedTypingContent } from "./content";
 
 export const spanishTypingContent: LocalizedTypingContent = {
   lang: "es", locale: "es-ES", path: "/es/prueba-de-velocidad-de-escritura/",
-  title: "Prueba de velocidad de escritura gratis en español | WPMTest",
-  description: "Mide tu velocidad de escritura, precisión y constancia con frases naturales en español. Incluye guía del teclado español y certificado gratuito.",
+  title: "Test de mecanografía gratis online | WPMTest",
+  description: "Haz un test de mecanografía gratis en español. Mide tu velocidad de escritura en palabras por minuto y tu precisión. Prueba online sin registro y con certificado.",
   h1: "Prueba de velocidad de escritura en español",
   eyebrow: "GRATIS · SIN REGISTRO · RESULTADOS PRIVADOS",
   intro: "Escribe frases en español con tildes, eñes y signos de puntuación. Mide tu velocidad y precisión con el teclado de tu dispositivo y crea un certificado en español.",
@@ -78,8 +78,8 @@ export const spanishTypingContent: LocalizedTypingContent = {
 
 export const germanTypingContent: LocalizedTypingContent = {
   lang: "de", locale: "de-DE", path: "/de/schreibtest/",
-  title: "Kostenloser Schreibtest auf Deutsch: Tempo und Genauigkeit | WPMTest",
-  description: "Teste deine Schreibgeschwindigkeit mit deutschen Sätzen, Umlauten und ß. Erhalte WPM, Genauigkeit, eine QWERTZ-Tastaturhilfe und ein deutsches Zertifikat.",
+  title: "Schreibtest kostenlos – Tippgeschwindigkeit | WPMTest",
+  description: "Kostenloser Schreibtest auf Deutsch: Miss deine Tippgeschwindigkeit und Genauigkeit mit deutschen Texten, Umlauten und ß. Online ohne Anmeldung.",
   h1: "Schreibtest auf Deutsch",
   eyebrow: "KOSTENLOS · OHNE ANMELDUNG · PRIVATE ERGEBNISSE",
   intro: "Tippe natürliche deutsche Sätze mit Umlauten und ß. Prüfe dein Tempo, deine Genauigkeit und deinen gleichmäßigen Rhythmus und erstelle anschließend ein Zertifikat.",
@@ -154,8 +154,8 @@ export const germanTypingContent: LocalizedTypingContent = {
 
 export const portugueseTypingContent: LocalizedTypingContent = {
   lang: "pt", locale: "pt-BR", path: "/pt/teste-de-digitacao/",
-  title: "Teste de digitação grátis em português brasileiro | WPMTest",
-  description: "Teste sua velocidade de digitação em português brasileiro com acentos e ç. Confira PPM, precisão, teclado ABNT2 e certificado gratuito.",
+  title: "Teste de digitação grátis online | WPMTest",
+  description: "Faça um teste de digitação grátis em português. Meça sua velocidade em palavras por minuto (PPM) e precisão com textos brasileiros. Sem cadastro.",
   h1: "Teste de digitação em português brasileiro",
   eyebrow: "GRÁTIS · SEM CADASTRO · RESULTADOS PRIVADOS",
   intro: "Digite frases naturais em português brasileiro com acentos e cedilha. Acompanhe sua velocidade, precisão e constância e crie um certificado em português.",
@@ -230,8 +230,8 @@ export const portugueseTypingContent: LocalizedTypingContent = {
 
 export const russianTypingContent: LocalizedTypingContent = {
   lang: "ru", locale: "ru-RU", path: "/ru/test-skorosti-pechati/",
-  title: "Бесплатный тест скорости печати на русском | WPMTest",
-  description: "Проверьте скорость и точность печати на русском языке. Тексты с кириллицей, схема раскладки ЙЦУКЕН и сертификат с результатом.",
+  title: "Тест скорости печати онлайн бесплатно | WPMTest",
+  description: "Пройдите бесплатный тест скорости печати на русском языке. Узнайте скорость набора текста и точность, тренируйтесь с кириллицей без регистрации.",
   h1: "Тест скорости печати на русском языке",
   eyebrow: "БЕСПЛАТНО · БЕЗ РЕГИСТРАЦИИ · ЛИЧНЫЙ РЕЗУЛЬТАТ",
   intro: "Печатайте естественные русские предложения с кириллицей и знаками препинания. Узнайте свою скорость и точность, а затем создайте сертификат на русском языке.",
