@@ -57,7 +57,7 @@ const groups = [
     { title: "Build your skills", links: [["/typing-practice/", "Typing Practice"], ["/learn/", "Touch Typing Lessons"], ["/practice/weak-keys/", "Weak-Key Practice"], ["/rhythm/", "Rhythm Trainer"], ["/progress/", "Progress"]] }
   ] },
   { label: "Languages", sections: [
-    { title: "Typing test language", links: [[typingTestLanguagePaths.en, "English"], [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português (Brasil)"], [typingTestLanguagePaths.ru, "Русский"]] }
+    { title: "Typing test language", links: [[typingTestLanguagePaths.en, "English"], [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português (Brasil)"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]] }
   ] }
 ] as const;
 
@@ -115,7 +115,7 @@ export function SiteFooter() {
     ["Practice", ["/typing-practice/", "Typing Practice"], ["/learn/", "Lessons"], ["/practice/weak-keys/", "Weak Keys"], ["/rhythm/", "Rhythm"], ["/progress/", "Progress"]],
     ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/customer-service-typing-test/", "Customer Service Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
     ["Resources", ["/blog/", "Articles"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
-    ["Languages", [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português"], [typingTestLanguagePaths.ru, "Русский"]],
+    ["Languages", [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]],
     ["Company", ["/about/", "About"], ["/contact/", "Contact"], ["/privacy/", "Privacy"], ["/terms/", "Terms"], ["/settings/", "Settings"]]
   ] as const;
   return <footer className="site-footer site-footer-grid">

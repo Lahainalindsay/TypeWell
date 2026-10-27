@@ -15,7 +15,7 @@ export const spanishTypingContent: LocalizedTypingContent = {
     "Al terminar el trabajo, Elena guardó sus documentos y respondió un mensaje. Una pausa breve le permitió volver a casa con ánimo para disfrutar de la tarde."
   ],
   nav: { home: "Inicio de WPMTest", languageLabel: "Cambiar idioma", privacy: "Privacidad", terms: "Condiciones de uso",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" } },
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский", fil: "Filipino", haw: "ʻŌlelo Hawaiʻi" } },
   ui: {
     testHeading: "Empieza la prueba de escritura", testIntro: "Elige una duración, selecciona tu teclado en español y copia el texto tal como aparece.",
     durationLabel: "Duración de la prueba", durations: { 60: "1 minuto", 180: "3 minutos", 300: "5 minutos" },
@@ -91,7 +91,7 @@ export const germanTypingContent: LocalizedTypingContent = {
     "Eine kurze Übung jeden Tag kann mehr bringen als ein einzelner langer Test. Mit ruhigen Händen und regelmäßigen Pausen bleibt die Konzentration erhalten."
   ],
   nav: { home: "WPMTest-Startseite", languageLabel: "Sprache wechseln", privacy: "Datenschutz", terms: "Nutzungsbedingungen",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" } },
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский", fil: "Filipino", haw: "ʻŌlelo Hawaiʻi" } },
   ui: {
     testHeading: "Schreibtest starten", testIntro: "Wähle eine Dauer, aktiviere deine deutsche Tastatur und tippe den Text genau ab.",
     durationLabel: "Testdauer", durations: { 60: "1 Minute", 180: "3 Minuten", 300: "5 Minuten" },
@@ -167,7 +167,7 @@ export const portugueseTypingContent: LocalizedTypingContent = {
     "Depois do almoço, Ana escreveu um e-mail para a equipe. Uma revisão rápida ajudou a corrigir uma palavra e deixou a mensagem clara para todos."
   ],
   nav: { home: "Página inicial do WPMTest", languageLabel: "Mudar idioma", privacy: "Privacidade", terms: "Termos de uso",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" } },
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский", fil: "Filipino", haw: "ʻŌlelo Hawaiʻi" } },
   ui: {
     testHeading: "Comece o teste de digitação", testIntro: "Escolha a duração, ative o teclado em português e copie o texto exatamente.",
     durationLabel: "Duração do teste", durations: { 60: "1 minuto", 180: "3 minutos", 300: "5 minutos" },
@@ -243,7 +243,7 @@ export const russianTypingContent: LocalizedTypingContent = {
     "После прогулки Мария открыла ноутбук и ответила на письмо. Она внимательно перечитала сообщение, исправила ошибку и нажала кнопку отправки."
   ],
   nav: { home: "Главная страница WPMTest", languageLabel: "Выбрать язык", privacy: "Конфиденциальность", terms: "Условия использования",
-    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский" } },
+    languages: { en: "English", fr: "Français", it: "Italiano", hi: "हिन्दी", es: "Español", de: "Deutsch", pt: "Português", ru: "Русский", fil: "Filipino", haw: "ʻŌlelo Hawaiʻi" } },
   ui: {
     testHeading: "Начать тест печати", testIntro: "Выберите длительность, включите русскую раскладку и перепечатайте текст точно.",
     durationLabel: "Длительность теста", durations: { 60: "1 минута", 180: "3 минуты", 300: "5 минут" },

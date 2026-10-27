@@ -157,6 +157,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
 
       <div
         className={styles.typingText}
+        lang={content.lang}
         role="textbox"
         tabIndex={0}
         onClick={() => inputRef.current?.focus()}

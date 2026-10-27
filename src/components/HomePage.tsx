@@ -47,7 +47,7 @@ export function HomePage({ test }: { test: React.ReactNode }) {
 
 type SupportedLocalizedLanguage = Exclude<keyof typeof typingTestLanguagePaths, "en">;
 const languageNames: Record<SupportedLocalizedLanguage, string> = {
-  fr: "French", it: "Italian", hi: "Hindi", es: "Spanish", de: "German", pt: "Brazilian Portuguese", ru: "Russian"
+  fr: "French", it: "Italian", hi: "Hindi", es: "Spanish", de: "German", pt: "Brazilian Portuguese", ru: "Russian", fil: "Filipino", haw: "Hawaiian"
 };
 
 function BrowserLanguageSuggestion() {

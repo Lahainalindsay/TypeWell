@@ -252,6 +252,8 @@ main, .app-content { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
 }
 .weak-key-summary {
   display: grid;
+  min-width: 0;
+  max-width: 100%;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 1.25fr);
   gap: 1rem;
   align-items: center;
@@ -261,6 +263,7 @@ main, .app-content { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
   border-radius: 18px;
   background: color-mix(in srgb, var(--panel) 92%, var(--accent) 8%);
 }
+.weak-key-summary > * { min-width: 0; }
 .weak-key-summary h3 { margin: 0.2rem 0 0.45rem; }
 .weak-key-summary p { margin: 0; }
 .weak-key-chips {
@@ -290,18 +293,23 @@ main, .app-content { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
 .weak-key-heatmap {
   grid-column: 1 / -1;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.35rem;
   padding-top: 0.2rem;
 }
 .weak-key-row {
   display: flex;
+  min-width: 0;
   justify-content: center;
   gap: 0.35rem;
 }
 .weak-key-cell {
   display: grid;
   place-items: center;
-  width: clamp(24px, 4vw, 42px);
+  /* Shrink against the card's available width, including on desktop. */
+  flex: 0 1 42px;
+  width: 42px;
+  min-width: 0;
   min-height: 31px;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -336,6 +344,6 @@ main, .app-content { padding: clamp(0.7rem, 1.8vw, 1.25rem); }
 }
 .result-actions { margin-top: 1.25rem; }
 @media (max-width: 720px) {
-  .weak-key-summary { grid-template-columns: 1fr; }
+  .weak-key-summary { grid-template-columns: minmax(0, 1fr); }
   .weak-key-chips { justify-content: flex-start; }
 }

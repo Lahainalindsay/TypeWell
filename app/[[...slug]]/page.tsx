@@ -12,6 +12,7 @@ const dedicatedRoutes = new Set([
   "/data-entry-practice/", "/data-entry-practice/alphanumeric/", "/data-entry-practice/currency-dates/",
   "/data-entry-practice/invoices-orders/", "/data-entry-practice/names-addresses/", "/data-entry-typing-test/",
   "/educators/", "/fr/test-de-vitesse-de-frappe/", "/hi/hindi-typing-test/", "/it/test-di-velocita-di-scrittura/",
+  "/fil/filipino-typing-test/", "/haw/hawaiian-typing-test/",
   "/es/prueba-de-velocidad-de-escritura/", "/de/schreibtest/", "/pt/teste-de-digitacao/", "/ru/test-skorosti-pechati/",
   "/privacy/", "/professionals/", "/terms/", "/typing-test/code/", "/typing-test-for-kids/",
   "/typing-test-for-students/", "/typing-test-for-employment/", "/typing-test-with-numbers/", "/typing-test-with-punctuation/"

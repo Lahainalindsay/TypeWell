@@ -3,6 +3,8 @@ import type { LocalizedTypingContent } from "./content";
 import styles from "./LocalizedTypingPage.module.css";
 
 const mobileQuestions = {
+  fil: "Puwede bang magsanay sa telepono?",
+  haw: "Can I practice Hawaiian typing on my phone?",
   fr: "Puis-je m'entraîner sur mon téléphone ?",
   it: "Posso esercitarmi sul telefono?",
   hi: "क्या मैं फ़ोन पर टाइपिंग का अभ्यास कर सकता हूँ?",
@@ -14,7 +16,7 @@ const mobileQuestions = {
 
 export default function LocalizedTypingPage({ content }: { content: LocalizedTypingContent }) {
   return (
-    <main className={styles.page} lang={content.lang}>
+    <main className={styles.page} lang={content.interfaceLang ?? content.lang}>
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{content.eyebrow}</p>
         <h1>{content.h1}</h1>

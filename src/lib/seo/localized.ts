@@ -8,6 +8,8 @@ export const typingTestLanguagePaths = {
   es: "/es/prueba-de-velocidad-de-escritura/",
   de: "/de/schreibtest/",
   pt: "/pt/teste-de-digitacao/",
+  fil: "/fil/filipino-typing-test/",
+  haw: "/haw/hawaiian-typing-test/",
   ru: "/ru/test-skorosti-pechati/"
 } as const;
 
@@ -19,6 +21,8 @@ export const typingTestLanguageAlternates = {
   es: absoluteUrl(typingTestLanguagePaths.es),
   de: absoluteUrl(typingTestLanguagePaths.de),
   "pt-BR": absoluteUrl(typingTestLanguagePaths.pt),
+  fil: absoluteUrl(typingTestLanguagePaths.fil),
+  haw: absoluteUrl(typingTestLanguagePaths.haw),
   ru: absoluteUrl(typingTestLanguagePaths.ru),
   "x-default": absoluteUrl(typingTestLanguagePaths.en)
 };
