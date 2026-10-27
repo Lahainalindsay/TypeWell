@@ -6,6 +6,7 @@ import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 import { typingTestLanguageAlternates } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
+  "/blog/hawaiian-language-revival/",
   "/customer-service-typing-test/", "/certificate/verify/",
   "/blog/wpm-vs-kph/", "/blog/data-entry-accuracy/", "/blog/avoid-data-entry-errors/", "/blog/prepare-employment-typing-test/",
   "/about/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
