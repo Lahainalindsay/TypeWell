@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import styles from "./article.module.css";
 import { absoluteUrl } from "../../../src/lib/seo/site";
 
 const path = "/blog/hawaiian-language-revival/";
-const title = "Hawaiian Language Revival: Speakers, Schools & Typing Practice";
-const description = "Discover how ʻŌlelo Hawaiʻi survived suppression, how Hawaiian-medium schools support its growth, and where to practice typing Hawaiian today.";
+const title = "ʻŌlelo Hawaiʻi Is Growing Again, and Everyday Use Matters";
+const description = "Hawaiian language use is growing again through families, educators, immersion schools, and everyday practice. Learn why accurate Hawaiian typing with ʻokina and kahakō matters online.";
 const canonical = absoluteUrl(path);
 export const metadata: Metadata = {
  title: `${title} | WPMTest`, description,
  alternates: { canonical }, robots: { index: true, follow: true },
- openGraph: { title, description, type: "article", url: canonical, publishedTime: "2026-10-27", modifiedTime: "2026-10-27", images: [absoluteUrl("/og-default.svg")] },
- twitter: { card: "summary_large_image", title, description, images: [absoluteUrl("/og-default.svg")] }
+ openGraph: { title, description, type: "article", url: canonical, publishedTime: "2026-10-27", modifiedTime: "2026-10-27", images: [absoluteUrl("/images/hawaiian-language-desk.webp")] },
+ twitter: { card: "summary_large_image", title, description, images: [absoluteUrl("/images/hawaiian-language-desk.webp")] }
 };
 const sections = [
   {
@@ -100,40 +101,58 @@ const sections = [
 
 export default function HawaiianLanguageArticle() {
  const schema = { "@context": "https://schema.org", "@graph": [
-  { "@type": "Article", headline: title, description, mainEntityOfPage: canonical, inLanguage: "en-US", datePublished: "2026-10-27", dateModified: "2026-10-27", author: { "@type": "Person", name: "Lindsay Johnson", url: absoluteUrl("/about/") }, publisher: { "@type": "Organization", name: "WPMTest", url: absoluteUrl("/") }, image: absoluteUrl("/og-default.svg") },
+  { "@type": "Article", headline: title, description, mainEntityOfPage: canonical, inLanguage: "en-US", datePublished: "2026-10-27", dateModified: "2026-10-27", author: { "@type": "Organization", name: "WPMTest", url: absoluteUrl("/about/") }, publisher: { "@type": "Organization", name: "WPMTest", url: absoluteUrl("/") }, image: absoluteUrl("/images/hawaiian-language-desk.webp") },
   { "@type": "BreadcrumbList", itemListElement: [
    { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
    { "@type": "ListItem", position: 2, name: "Articles", item: absoluteUrl("/blog/") },
    { "@type": "ListItem", position: 3, name: title, item: canonical }
   ] }
  ] };
- return <main className="seo-prerender editorial-guide" lang="en">
+ return <main className={styles.page} lang="en">
   <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Hawaiian language revival</span></nav>
   <article>
-   <p className="eyebrow">Language and keyboard skills</p>
-   <h1>ʻŌlelo Hawaiʻi Is Growing Again—and Everyday Use Matters</h1>
-   <p className="hint">By <a href="/about/">Lindsay Johnson</a> · <time dateTime="2026-10-27">October 27, 2026</time></p>
-   <p>A language grows stronger when people have places to use it: at home, in school, with friends, and online.</p>
-   <p>For ʻŌlelo Hawaiʻi, the Hawaiian language, those opportunities were deliberately narrowed for generations. Its renewed presence today reflects decades of work by Native Hawaiian families, kūpuna, educators, and community leaders who refused to let that connection disappear.</p>
-   <p>At WPMTest, we recently added a <a href="/haw/hawaiian-typing-test/">Hawaiian typing test</a>. It is a small contribution: another space where learners and speakers can practice writing Hawaiian. The credit for the language’s revitalization belongs to the communities carrying it forward.</p>
-   {sections.map(section => <section key={section.heading}><h2>{section.heading}</h2>{section.paragraphs.map(p => <p key={p}>{p}</p>)}<p className="hint">Sources: {section.sources.map(([label, href], i) => <span key={href}>{i > 0 ? " · " : ""}<a href={href}>{label}</a></span>)}</p></section>)}
-   <section><h2>Where to practice Hawaiian typing</h2>
-    <p>Dedicated Hawaiian typing tests appeared uncommon in our search on October 27, 2026. We found one other dedicated test; this is not a claim that no others exist. These recommendations describe each resource’s purpose, not independent performance ratings.</p>
-    <h3><a href="/haw/hawaiian-typing-test/">WPMTest Hawaiian typing test</a> — for straightforward timed practice</h3>
-    <p>Our own test offers one-, three-, and five-minute sessions using Hawaiian passages with ʻokina and kahakō.</p>
-    <h3><a href="https://www.indiatypingtest.com/typing-test/hawaiian-typing">India Typing Test: Hawaiian</a> — for exploring additional test settings</h3>
-    <p>Its page offers duration, paragraph, word-limit, and certificate settings. We reviewed the page’s listed features; we have not independently benchmarked its scoring.</p>
-    <h3><a href="https://www.hawaii.edu/askus/1767">University of Hawaiʻi keyboard guidance</a> — for preparing your keyboard</h3>
-    <p>A university resource explaining Hawaiian character input. This is setup guidance, not a timed typing test.</p>
+   <header className={styles.header}>
+    <p className={styles.eyebrow}>ʻŌlelo Hawaiʻi · Language &amp; everyday life</p>
+    <h1>ʻŌlelo Hawaiʻi Is Growing Again, and Everyday Use Matters</h1>
+    <p className={styles.subtitle}>A look at Hawaiian language revitalization, why everyday use matters, and how typing practice can support accurate digital writing.</p>
+    <p className={styles.date}><time dateTime="2026-10-27">October 27, 2026</time> · Language &amp; learning</p>
+   </header>
+   <figure className={styles.hero}>
+    <img src="/images/hawaiian-language-desk.webp" width="1536" height="1024" alt="A keyboard, open notebook, and pencil on a warm wooden desk beside a garden" fetchPriority="high" />
+    <figcaption>A space for everyday learning. AI-generated editorial illustration.</figcaption>
+   </figure>
+   <div className={styles.body}>
+    <p className={styles.lead}>A language grows stronger when people have places to use it.</p>
+    <p>That can mean a classroom. A kitchen table. A conversation with a grandparent. A text message to a friend. A song, a lesson, a school assignment, or a few minutes of typing practice online.</p>
+    <p>For ʻŌlelo Hawaiʻi, the Hawaiian language, those everyday spaces were deliberately narrowed for generations. Its renewed presence today reflects decades of work by Native Hawaiian families, kūpuna, educators, and community leaders who refused to let that connection disappear.</p>
+    <p>At WPMTest, we recently added a <a href="/haw/hawaiian-typing-test/">Hawaiian typing test</a> to create one more place where learners and speakers can practice writing Hawaiian accurately online. It is a small contribution. The real credit for the language’s revitalization belongs to the communities carrying it forward.</p>
+    <aside className={styles.cta}><p className={styles.eyebrow}>A little practice, every day</p><h2>Practice typing in ʻŌlelo Hawaiʻi</h2><p>Try short Hawaiian passages with ʻokina, kahakō, WPM tracking, and accuracy feedback.</p><a className={styles.button} href="/haw/hawaiian-typing-test/">Start the Hawaiian Typing Test →</a></aside>
+   {sections.map((section, index) => <section className={styles.section} key={section.heading}>
+    <span className={styles.sectionNumber} aria-hidden="true">0{index + 1}</span><h2>{section.heading}</h2>
+    {index === 2 && <div className={styles.statGrid}>
+     {[['18,400', 'Hawaiʻi residents age 5+ speaking Hawaiian at home in 2016'], ['27,338', 'Hawaiʻi residents age 5+ speaking Hawaiian at home in 2024'], ['48%', 'Approximate growth in home use, 2016–2024']].map(([value, label]) => <div className={styles.stat} key={value}><strong>{value}</strong><span>{label}</span></div>)}
+    </div>}
+    {index === 4 && <div className={styles.diacritics} lang="haw"><span>ʻ</span><span>ā</span><span>ē</span><span>ī</span><span>ō</span><span>ū</span></div>}
+    {section.paragraphs.map(p => <p key={p}>{p}</p>)}
+    <div className={styles.sources}><strong>Sources &amp; further reading</strong><ul>{section.sources.map(([label, href]) => <li key={href}><a href={href}>{label} ↗</a></li>)}</ul></div>
+   </section>)}
+   <section className={styles.section}><h2>Where to practice Hawaiian typing</h2>
+    <p>Dedicated Hawaiian typing tests appeared uncommon in our search on October 27, 2026. We found one other dedicated test. This is not a claim that no others exist. These recommendations describe each resource’s purpose, not independent performance ratings.</p>
+    <div className={styles.resources}>
+     <div className={styles.resource}><p className={styles.eyebrow}>Timed practice</p><h3>WPMTest Hawaiian Typing Test</h3><p>For straightforward timed practice with Hawaiian passages, ʻokina, kahakō, WPM tracking, and accuracy feedback.</p><a href="/haw/hawaiian-typing-test/">Practice on WPMTest →</a></div>
+     <div className={styles.resource}><p className={styles.eyebrow}>More settings</p><h3>India Typing Test: Hawaiian</h3><p>Offers duration, paragraph options, word limits, and certificates. We reviewed its listed features but have not independently benchmarked its scoring.</p><a href="https://www.indiatypingtest.com/typing-test/hawaiian-typing">Visit India Typing Test ↗</a></div>
+     <div className={styles.resource}><p className={styles.eyebrow}>Keyboard setup</p><h3>University of Hawaiʻi Keyboard Guidance</h3><p>Helpful for setting up Hawaiian character input before practicing. This is setup guidance, not a timed typing test.</p><a href="https://www.hawaii.edu/askus/1767">Read UH keyboard guidance ↗</a></div>
+    </div>
     <p><strong>Disclosure:</strong> WPMTest publishes this article and operates the first tool listed.</p>
    </section>
-   <section><h2>A small contribution to a much larger movement</h2>
+   <section className={styles.section}><h2>A small contribution to a much larger movement</h2>
     <p>A typing website cannot replace a kumu, a conversation with ʻohana, or education rooted in Hawaiian community and culture.</p>
     <p>What we can offer is another practical opportunity to use the language online. We hope our Hawaiian typing test supports learners as they become more comfortable writing—and encourages them to keep learning from Hawaiian-led resources such as <a href="https://www.ahapunanaleo.org/">ʻAha Pūnana Leo</a>.</p>
     <p>ʻŌlelo Hawaiʻi’s renewed growth is the result of sustained commitment. Every additional space for its respectful, accurate use can support that work.</p>
-    <p><a className="button primary" href="/haw/hawaiian-typing-test/">Practice typing in ʻŌlelo Hawaiʻi →</a></p>
+    <aside className={styles.finalCta}><h2>Practice typing in ʻŌlelo Hawaiʻi</h2><p>Build comfort with Hawaiian words, ʻokina, kahakō, and accurate digital writing.</p><a className={styles.button} href="/haw/hawaiian-typing-test/">Start Practicing →</a></aside>
     <p><a href="/contact/">Suggest a correction or share a Hawaiian learning resource</a>.</p>
    </section>
+   </div>
   </article>
   <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
  </main>;
