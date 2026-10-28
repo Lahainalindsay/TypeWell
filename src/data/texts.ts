@@ -1,14 +1,28 @@
 import { dataEntryFields, fictionalDataEntryRecords } from "../engine/dataEntry";
 
-export type PracticeMode = "Words" | "Sentences" | "Quotes" | "Custom Text" | "Weak Keys" | "Numbers" | "Data Entry" | "Numeric Keypad" | "Punctuation" | "Symbols" | "Endurance" | "Speed Burst" | "Accuracy" | "Code";
+export type PracticeMode = "Words" | "Sentences" | "Quotes" | "Custom Text" | "Weak Keys" | "Numbers" | "Data Entry" | "Numeric Keypad" | "Punctuation" | "Symbols" | "Endurance" | "Speed Burst" | "Accuracy" | "Code" | "Fun Facts" | "Tiny Dramas";
 
-export const practiceModes: PracticeMode[] = ["Words", "Sentences", "Quotes", "Custom Text", "Weak Keys", "Numbers", "Data Entry", "Numeric Keypad", "Punctuation", "Symbols", "Endurance", "Speed Burst", "Accuracy", "Code"];
+export const practiceModes: PracticeMode[] = ["Words", "Sentences", "Quotes", "Custom Text", "Weak Keys", "Numbers", "Data Entry", "Numeric Keypad", "Punctuation", "Symbols", "Endurance", "Speed Burst", "Accuracy", "Code", "Fun Facts", "Tiny Dramas"];
 
 export const durations = [15, 30, 60, 120, 300, 600];
 export const testDurations = [15, 30, 60, 120, 300, 600];
 export const wordCounts = [10, 25, 50, 100];
 
 export const library: Record<string, string[]> = {
+  "Fun Facts": [
+    "Octopuses have three hearts, which seems excessive until you meet their dating schedule.",
+    "A group of flamingos is called a flamboyance, and frankly they have earned the title.",
+    "Bananas are berries in botanical terms, while strawberries are not. Nature enjoys confusing everyone.",
+    "Wombats produce cube shaped droppings. Somewhere, geometry is taking a victory lap.",
+    "Some turtles can breathe through specialized tissues near their tails. Evolution is wonderfully strange."
+  ],
+  "Tiny Dramas": [
+    "The printer sensed an urgent deadline and immediately developed a mysterious paper jam.",
+    "She opened one browser tab to check the weather and emerged with seventeen unrelated questions.",
+    "His phone changed a perfectly polite message into something that required three apologies.",
+    "The meeting could have been an email, but apparently everyone needed to see the slides.",
+    "Maya practiced typing so quickly that her coffee grew cold waiting for a turn."
+  ],
   "Everyday English": [
     "The window is open, the desk is clear, and the next sentence is ready.",
     "A short walk after lunch can reset your attention for the afternoon."
@@ -111,6 +125,7 @@ export function buildPracticeText(mode: PracticeMode, count = 50, customText = "
   if (mode === "Punctuation") return variedText(library.Punctuation, count * 6);
   if (mode === "Symbols") return variedText(["email@domain.dev", "#issue-42", "$19.95", "+ 8%", "total_value", "/ [draft]", "{ready}", "&& checked"], count * 6);
   if (mode === "Code") return variedText(library.Programming, count * 7);
+  if (mode === "Fun Facts" || mode === "Tiny Dramas") return variedText(library[mode], count * 6);
   if (mode === "Accuracy") return variedText(["accurate", "steady", "clear", "exact", "clean", "calm", "deliberate", "return", "home", "row"], count * 6);
   if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6);
   if (mode === "Endurance") return variedText(standardSentencePool, count * 10);
