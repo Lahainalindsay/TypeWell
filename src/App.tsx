@@ -643,6 +643,32 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
           <Metric label="Consistency" value={`${record.metrics.consistency}%`} />
           <Metric label="Errors" value={record.metrics.uncorrectedErrors} />
         </div>
+        {record.type === "test" && (() => {
+          const { wpm, accuracy, consistency } = record.metrics;
+          const personality = accuracy < 90
+            ? { name: "The Chaos Goblin", description: "Your fingers have places to be. Unfortunately, some of those places are the wrong keys. A little more accuracy will make that speed count." }
+            : accuracy >= 98 && consistency >= 85
+              ? { name: "The Precision Machine", description: "Steady, accurate, and suspiciously well organized. Your keyboard probably respects you." }
+              : wpm >= 75 && accuracy >= 95
+                ? { name: "The Speed Demon", description: "Fast and mostly fearless. Your keyboard has requested a lunch break." }
+                : accuracy >= 97
+                  ? { name: "The Perfectionist", description: "You would rather get it right than launch a typo into the universe. Respectable." }
+                  : consistency >= 80
+                    ? { name: "The Steady Hand", description: "No drama, just dependable rhythm. Your secret weapon is consistency." }
+                    : { name: "The Comeback Kid", description: "A few stumbles, plenty of determination. Every great typist started somewhere." };
+          return <section className="panel" aria-label="Your typing personality" style={{marginTop: "1rem"}}>
+            <p className="eyebrow">Your typing personality · Just for fun</p>
+            <h3>{personality.name}</h3>
+            <p>{personality.description}</p>
+            <p className="hint">Based on this test's speed, accuracy and consistency—not a scientific personality assessment.</p>
+            <button type="button" onClick={() => {
+              const message = `I'm ${personality.name}! ${wpm} WPM · ${accuracy}% accuracy. What's your typing personality? https://wpmtest.app/`;
+              if (navigator.share) void navigator.share({title: "My WPMTest typing personality", text: message}).catch(() => {});
+              else if (navigator.clipboard) void navigator.clipboard.writeText(message).then(() => alert("Typing personality copied!"));
+              else window.prompt("Copy your typing personality", message);
+            }}>Share My Typing Personality</button>
+          </section>;
+        })()}
         <div className="actions result-actions">
           <button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button>
           {onPractice && <button onClick={onPractice}>Practice Weak Keys</button>}
