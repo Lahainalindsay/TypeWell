@@ -10,18 +10,32 @@ export const wordCounts = [10, 25, 50, 100];
 
 export const library: Record<string, string[]> = {
   "Fun Facts": [
-    "Octopuses have three hearts, which seems excessive until you meet their dating schedule.",
-    "A group of flamingos is called a flamboyance, and frankly they have earned the title.",
-    "Bananas are berries in botanical terms, while strawberries are not. Nature enjoys confusing everyone.",
-    "Wombats produce cube shaped droppings. Somewhere, geometry is taking a victory lap.",
-    "Some turtles can breathe through specialized tissues near their tails. Evolution is wonderfully strange."
+    "Octopuses have three hearts. Somehow, they still manage to avoid sending three separate breakup texts.",
+    "A group of flamingos is called a flamboyance. Honestly, any other name would be insulting.",
+    "Bananas are berries, but strawberries are not. Botany clearly hired the person who names printer errors.",
+    "Wombats produce cube shaped droppings. Nature invented the building block before the toy industry.",
+    "Some turtles absorb oxygen through specialized tissues near their tails. Biology does not care about your dignity.",
+    "Sharks existed before trees. They have had plenty of time to develop a strong opinion about beaches.",
+    "A day on Venus lasts longer than its year. Imagine waiting for Friday on that planet.",
+    "Honey can remain edible for an incredibly long time when properly sealed. Your leftovers could never.",
+    "Sea otters sometimes hold hands while resting so they do not drift apart. Finally, a relationship with clear boundaries.",
+    "The Eiffel Tower expands slightly in hot weather. Even famous landmarks need room to breathe.",
+    "Crows can recognize individual human faces. That awkward moment with a crow may not be forgotten.",
+    "Butterflies taste with their feet. A buffet must be an absolute logistical nightmare."
   ],
   "Tiny Dramas": [
-    "The printer sensed an urgent deadline and immediately developed a mysterious paper jam.",
-    "She opened one browser tab to check the weather and emerged with seventeen unrelated questions.",
-    "His phone changed a perfectly polite message into something that required three apologies.",
-    "The meeting could have been an email, but apparently everyone needed to see the slides.",
-    "Maya practiced typing so quickly that her coffee grew cold waiting for a turn."
+    "The printer waited until the final minute before the deadline to announce it was out of paper. It had one job and chose violence.",
+    "She opened one tab to check the weather. Forty minutes later, she knew how to raise alpacas but not whether it would rain.",
+    "His phone corrected a polite thank you into a declaration of love. The office holiday party was never the same.",
+    "The meeting could have been an email. Instead, twelve adults watched a loading icon for an hour.",
+    "Maya made a fresh coffee and sat down to work. The coffee went cold while she searched for the perfect productivity playlist.",
+    "He confidently clicked Reply All. Somewhere in the office, an entire department stopped breathing.",
+    "The WiFi went out for six minutes. The family was forced to make eye contact and discuss the weather.",
+    "She finally reached inbox zero. Then her manager discovered the Send button.",
+    "He bought an expensive planner to organize his life. The planner is now missing, along with his keys.",
+    "The recipe said preparation would take ten minutes. Apparently that estimate assumed the vegetables had already chopped themselves.",
+    "She promised to go to bed early. At midnight, she was researching whether penguins have knees.",
+    "The laptop requested an update moments before the presentation. It had been waiting for this opportunity all week."
   ],
   "Everyday English": [
     "The window is open, the desk is clear, and the next sentence is ready.",
