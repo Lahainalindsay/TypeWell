@@ -2,8 +2,7 @@
 .card h3{font-family:Georgia,serif;font-size:2rem;margin:10px 0 18px;line-height:1.1;color:#fff6df;}
 .series{font-size:.65rem;font-weight:800;letter-spacing:.16em;color:#b8e2cb;}
 .portrait{position:relative;overflow:hidden;border-radius:6px;border:2px solid #b8e2cb;}
-.portrait img{display:block;width:100%;height:auto;aspect-ratio:1.4;object-fit:cover;}
-.portrait span{position:absolute;right:8px;bottom:8px;font-size:2.5rem;filter:drop-shadow(0 2px 4px #0008);}
+.portrait img{display:block;width:100%;height:auto;aspect-ratio:1.5;object-fit:cover;}
 .stats{display:flex;justify-content:space-around;gap:8px;margin:18px 0;border-block:1px solid #b8e2cb66;padding:12px 0;}
 .stats strong{font-size:1.2rem;color:#b8e2cb;}.stats small{display:block;font-size:.55rem;letter-spacing:.06em;margin-top:6px;}
 .card>p{line-height:1.55;}.note{font-size:.72rem;color:#c5d2c9;}.card button{background:#b8e2cb;color:#122c29;width:100%;white-space:normal;}

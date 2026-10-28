@@ -21,7 +21,7 @@ export function PersonalityCard({metrics}: {metrics: Metrics}) {
   return <section ref={ref} tabIndex={-1} className={styles.card} aria-label="Your typing personality card">
     <p className={styles.series}>WPMTEST · KEYBOARD ALL-STARS</p>
     <h3>{personality.name}</h3>
-    <div className={styles.portrait}><img src="/images/typing-personality.webp" alt="Your keyboard alter ego examining the evidence" width="1672" height="941" /><span aria-hidden="true">{personality.name === "The Chaos Goblin" ? "⚡" : personality.name === "The Perfectionist" ? "💎" : personality.name === "The Speed Demon" ? "🔥" : personality.name === "The Precision Machine" ? "🏆" : personality.name === "The Steady Hand" ? "🎯" : "🌟"}</span></div>
+    <div className={styles.portrait}><img src={personality.image} alt={personality.imageAlt} width="960" height="640" /></div>
     <div className={styles.stats}><strong>{metrics.wpm}<small>WPM</small></strong><strong>{metrics.accuracy}%<small>ACCURACY</small></strong><strong>{metrics.consistency}%<small>CONSISTENCY</small></strong></div>
     <p>{personality.description}</p>
     <p className={styles.note}>This attempt’s alter ego. Just for fun.</p>

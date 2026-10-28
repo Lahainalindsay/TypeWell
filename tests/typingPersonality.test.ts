@@ -11,7 +11,15 @@ describe("typing personalities",()=>{
  [40,94,80,"The Steady Hand"],
  [25,94,70,"The Comeback Kid"],
  ])("classifies %s WPM, %s accuracy, %s consistency",(wpm,accuracy,consistency,name)=>{
- expect(typingPersonality({wpm,accuracy,consistency}).name).toBe(name);
+ const result = typingPersonality({wpm,accuracy,consistency});
+ expect(result.name).toBe(name);
+ expect(result.imageAlt.length).toBeGreaterThan(20);
+ expect(readFileSync(`public${result.image}`).byteLength).toBeGreaterThan(1000);
+ });
+ it("gives every personality a distinct image",()=>{
+ const samples = [[100,89,90],[100,98,85],[75,95,70],[40,97,70],[40,94,80],[25,94,70]];
+ const images = samples.map(([wpm,accuracy,consistency])=>typingPersonality({wpm,accuracy,consistency}).image);
+ expect(new Set(images).size).toBe(6);
  });
  it("restricts the personality card to the dedicated test",()=>{
  const app=readFileSync("src/App.tsx","utf8");
