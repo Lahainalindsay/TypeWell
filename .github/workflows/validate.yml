@@ -6,7 +6,7 @@ on:
       - main
   push:
     branches:
-      - architecture-cleanup-2026-09
+      - main
 
 permissions:
   contents: read
@@ -40,3 +40,6 @@ jobs:
 
       - name: Build static site
         run: npm run build
+
+      - name: Audit generated SEO and image discovery
+        run: npm run audit:seo
