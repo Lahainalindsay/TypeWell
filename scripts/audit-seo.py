@@ -58,3 +58,15 @@ for path,p in pages.items():
   if image.startswith('https://wpmtest.app/') and not (Path('public')/image.removeprefix('https://wpmtest.app/')).is_file(): errors.append((path,'missing social image '+image))
 print('SEO export audit:',len(errors),'errors')
 raise SystemExit(1 if errors else 0)
+
+# Validate every published image sitemap reference against the page and export.
+image_ns = {'s':ns['s'], 'image':'http://www.google.com/schemas/sitemap-image/1.1'}
+for entry in sitemap.findall('s:url', image_ns):
+ path = entry.find('s:loc', image_ns).text.removeprefix('https://wpmtest.app')
+ for image in entry.findall('image:image/image:loc', image_ns):
+  source = image.text.removeprefix('https://wpmtest.app')
+  if source not in {img.get('src') for img in pages[path].img}:
+   raise SystemExit(f'Image sitemap references image not on page: {path} {source}')
+  if not (root/source.lstrip('/')).is_file():
+   raise SystemExit(f'Image sitemap references missing exported asset: {source}')
+print('Image sitemap audit passed')
