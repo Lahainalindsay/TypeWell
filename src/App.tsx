@@ -110,9 +110,10 @@ function Home({ progress, setProgress, record, setFocus, path, go, embedded }: S
 function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   useEffect(() => setDuration(challengeDurationFromPath(path)), [path]);
-  const passage = useMemo(() => buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8))), [duration]);
+  const [passageType, setPassageType] = useState<"Sentences" | "Fun Facts" | "Tiny Dramas">("Sentences");
+  const passage = useMemo(() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8))), [duration, passageType]);
   const durationLabels: Record<number, string> = { 60: "1 Minute", 180: "3 Minutes", 300: "5 Minutes", 600: "10 Minutes" };
-  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} regenerate={() => buildPracticeText("Sentences", Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
+  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><div className="panel" style={{marginBottom:"12px"}}><label htmlFor="home-passage-type"><strong>Choose your typing passage</strong></label><select id="home-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} regenerate={() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
 }
 
 function InternalLink({ href, go, children }: { href: string; go: (page: Page, route?: string) => void; children: React.ReactNode }) {
@@ -185,6 +186,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
   const [count, setCount] = useState(() => Math.max(50, Math.round(testDurationFromPath(path) * 1.8)));
   const pageCount = pageCountFromPath(path);
   const testMode = testModeFromPath(path);
+  const [passageType, setPassageType] = useState<"Sentences" | "Fun Facts" | "Tiny Dramas">("Sentences");
   const testTitle = pageCount ? `${pageCount} Page Typing Test`
     : testMode === "Data Entry" ? "Data Entry Typing Test"
     : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
@@ -193,7 +195,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
     : testMode === "Punctuation" ? "Typing Test with Punctuation"
     : path.replace(/\/$/, "") === "/mobile-typing-test" ? "Mobile Typing Test — Test Your Speed on a Phone or Tablet"
     : path.replace(/\/$/, "") === "/customer-service-typing-test" ? "Customer Service Typing Test" : timedTestTitle(path);
-  const passage = useMemo(() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count), [pageCount, testMode, count, path]);
+  const passage = useMemo(() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode === "Sentences" ? passageType : testMode, count), [pageCount, testMode, passageType, count, path]);
   const testDescription = pageCount
     ? `Complete approximately ${pageCount * 250} words at your own pace. The test ends when you finish the passage, and your WPM is calculated from your actual time.`
     : testMode === "Data Entry"
@@ -224,7 +226,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
       heading={embedded ? "h2" : undefined}
       subtitle={pageCount ? "Finish the whole passage at your own pace. No countdown or account required." : "Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."}
       target={passage}
-      regenerate={() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode, count)}
+      regenerate={() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode === "Sentences" ? passageType : testMode, count)}
       mode="test"
       duration={pageCount ? undefined : duration}
       progress={progress}
@@ -235,7 +237,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
       seoCopy={<p className="tool-copy">{testDescription} No signup is required, and your result stays in this browser.</p>}
       side={pageCount
         ? <div className="panel"><h2>Page Tests</h2><p>One page is approximately 250 words. Complete the passage to see your result.</p><div className="inline-links">{([1, 2, 3] as const).map((pages) => <a key={pages} href={`/${pages}-page-typing-test/`}>{pages} Page{pages > 1 ? "s" : ""}</a>)}</div></div>
-        : <div className="panel"><h2>Test Setup</h2><Segment values={testDurations} value={duration} setValue={setDuration} suffix="s" /><Segment values={wordCounts} value={count} setValue={setCount} suffix=" words" /><p className="hint">Restart shortcut: press Tab, then Enter on Restart.</p></div>}
+        : <div className="panel"><h2>Test Setup</h2>{testMode === "Sentences" && <><label htmlFor="test-passage-type">Choose your typing passage</label><select id="test-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></>}<Segment values={testDurations} value={duration} setValue={setDuration} suffix="s" /><Segment values={wordCounts} value={count} setValue={setCount} suffix=" words" /><p className="hint">Restart shortcut: press Tab, then Enter on Restart.</p></div>}
     />
   );
 }
