@@ -77,8 +77,6 @@
         ${r.groups.length ? `<div class="tw-cert-breakdown" aria-label="Results by field type">${r.groups.map(g => `<div><strong>${esc(g.label)}</strong><span>${esc(g.value)}</span></div>`).join("")}</div>` : ""}
         <div class="tw-cert-motto"><i></i><span>PRACTICE BUILDS PROGRESS</span><i></i></div>
         <footer class="tw-cert-footer"><div class="tw-signature">WPMTest Team<small>THE WPMTEST TEAM</small></div><div class="tw-gold-seal"><b>★</b><span>SKILLS<br/>CREATE<br/>OPPORTUNITY</span></div><div class="tw-signature right">Keep Typing<small>BRIGHTER TOMORROWS</small></div></footer>
-        <small class="tw-cert-verify">Verification ID: ${esc(state.id)} · Full verification link required; ID alone cannot be checked.</small>
-        <small class="tw-cert-disclaimer">This certificate records a self-administered WPMTest test result and is not an accredited professional certification.</small>
       </div></article>`;
   }
   function showCertificate() {
@@ -123,8 +121,6 @@
         <text x="220" y="900" font-style="italic" font-size="34">WPMTest Team</text><text x="1350" y="900" font-style="italic" font-size="34">Keep Typing</text>
       </g><circle cx="800" cy="885" r="44" fill="#c79a43" stroke="#9c7127" stroke-width="4"/>
       <g text-anchor="middle" font-family="Arial" fill="#10263e"><text x="800" y="868" font-size="18">★</text><text x="800" y="885" font-size="9">SKILLS</text><text x="800" y="898" font-size="9">CREATE</text><text x="800" y="911" font-size="9">OPPORTUNITY</text>
-        <text x="800" y="946" font-size="13">Verification ID: ${esc(state.id)} · Full verification link required; ID alone cannot be checked.</text>
-        <text x="800" y="962" font-size="11">Self-administered test result. Not an accredited professional certification.</text>
       </g></svg>`;
   }
   // Keep routing and message formatting in sync with public/certificate-flow.js,
