@@ -1,3 +1,5 @@
+import { ArticleVisual, PracticeCard } from "../../../src/features/editorial/ArticleVisual";
+import styles from "../../../src/features/editorial/editorial.module.css";
 import type { Metadata } from "next";
 import { absoluteUrl, SITE_NAME } from "../../../src/lib/seo/site";
 
@@ -15,13 +17,13 @@ export const metadata: Metadata = {
     url: canonical,
     siteName: SITE_NAME,
     type: "article",
-    images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "Typing test website comparison" }]
+    images: [{ url: absoluteUrl("/images/typing-editorial-desk.webp"), width: 1200, height: 630, alt: "Typing test website comparison" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "9 Best Typing Test Websites Compared (2026)",
     description,
-    images: [absoluteUrl("/og-default.svg")]
+    images: [absoluteUrl("/images/typing-editorial-desk.webp")]
   },
   robots: { index: true, follow: true }
 };
@@ -59,8 +61,8 @@ export default function BestTypingTestWebsitesPage() {
     author: { "@type": "Organization", name: SITE_NAME },
     publisher: { "@type": "Organization", name: SITE_NAME },
     datePublished: "2026-09-21",
-    dateModified: "2026-09-21",
-    image: absoluteUrl("/og-default.svg"),
+    dateModified: "2026-10-27",
+    image: absoluteUrl("/images/typing-editorial-desk.webp"),
     inLanguage: "en-US"
   };
   const breadcrumbSchema = {
@@ -84,7 +86,7 @@ export default function BestTypingTestWebsitesPage() {
 
   return (
     <>
-      <main className="seo-prerender">
+      <main className={`${styles.page} ${styles.standalone}`}>
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/blog/">Guides</a> <span aria-hidden="true">›</span>{" "}
@@ -101,8 +103,10 @@ export default function BestTypingTestWebsitesPage() {
             fits so you can choose the tool that matches what you actually need.
           </p>
 
+          <ArticleVisual topic="best-typing-test-websites" />
           <h2>Quick comparison</h2>
-          <div style={{ overflowX: "auto" }}>
+          <p className={styles.tableHint}>On smaller screens, swipe the table to compare every column.</p>
+          <div className={styles.tableWrap} role="region" aria-label="Typing website comparison table" tabIndex={0}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
               <thead>
                 <tr>
@@ -169,6 +173,7 @@ export default function BestTypingTestWebsitesPage() {
               <p>{item.answer}</p>
             </section>
           ))}
+          <PracticeCard href={"/typing-test/"} label={"Take a typing test"} />
         </article>
       </main>
       {[articleSchema, breadcrumbSchema, faqSchema].map((schema, index) => (

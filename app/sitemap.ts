@@ -64,7 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes, ...guides.map(guide => `/blog/${guide.slug}/`)];
   return [...new Set(paths.map(canonicalPath))].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: [typingTestLanguagePaths.fil, typingTestLanguagePaths.haw, "/blog/hawaiian-language-revival/", "/blog/"].some(route => route === path) ? new Date("2026-10-27T00:00:00Z") : keywordUpdatedPaths.has(path) ? new Date("2026-10-09T00:00:00Z") : addedPaths.has(path) ? new Date("2026-10-05T00:00:00Z") : updatedPaths.has(path) || guides.some(guide => path === `/blog/${guide.slug}/`) ? new Date("2026-10-03T00:00:00Z") : localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
+    lastModified: [typingTestLanguagePaths.fil, typingTestLanguagePaths.haw, "/blog/hawaiian-language-revival/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", ...guides.map(guide => `/blog/${guide.slug}/`)].some(route => route === path) ? new Date("2026-10-27T00:00:00Z") : keywordUpdatedPaths.has(path) ? new Date("2026-10-09T00:00:00Z") : addedPaths.has(path) ? new Date("2026-10-05T00:00:00Z") : updatedPaths.has(path) || guides.some(guide => path === `/blog/${guide.slug}/`) ? new Date("2026-10-03T00:00:00Z") : localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
       : path === "/" || /^\/[123]-page-typing-test\/$/.test(path) ? NEW_TEST_CONTENT_LAST_MODIFIED
       : SEO_CONTENT_LAST_MODIFIED,
     ...(localizedTypingPaths.has(path) ? { alternates: { languages: typingTestLanguageAlternates } } : {})

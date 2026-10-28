@@ -1,3 +1,5 @@
+import { ArticleVisual, PracticeCard } from "../../../src/features/editorial/ArticleVisual";
+import styles from "../../../src/features/editorial/editorial.module.css";
 import type { Metadata } from "next";
 import { absoluteUrl, SITE_NAME } from "../../../src/lib/seo/site";
 
@@ -10,10 +12,10 @@ export const metadata: Metadata = {
   openGraph: { title: "Data Entry Typing Test for Employment: What to Expect",
     description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.",
     url: canonical,
-    type: "article", images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest Data Entry employment guide" }] },
+    type: "article", images: [{ url: absoluteUrl("/images/typing-editorial-desk.webp"), width: 1200, height: 630, alt: "WPMTest Data Entry employment guide" }] },
   twitter: { card: "summary_large_image",
     title: "Data Entry Typing Test for Employment: What to Expect",
-    description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.", images: [absoluteUrl("/og-default.svg")] },
+    description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.", images: [absoluteUrl("/images/typing-editorial-desk.webp")] },
   robots: { index: true, follow: true }
 };
 
@@ -39,7 +41,7 @@ export default function DataEntryEmploymentGuidePage() {
 
   return (
     <>
-      <main className="seo-prerender">
+      <main className={`${styles.page} ${styles.standalone}`}>
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/typing-test-for-employment/">Employment Tests</a> <span aria-hidden="true">›</span>{" "}
@@ -55,6 +57,7 @@ export default function DataEntryEmploymentGuidePage() {
             dates, account numbers, prices, codes and other structured information where every character matters.
           </p>
 
+          <ArticleVisual topic="data-entry-typing-test-for-employment" />
           <h2>What is a data entry typing test?</h2>
           <p>
             Data entry tests simulate the kind of information entry used in office, records, order-entry, billing and
@@ -128,6 +131,7 @@ export default function DataEntryEmploymentGuidePage() {
             <a href="/typing-test-with-numbers/">Typing Test With Numbers</a>
             <a href="/typing-test-for-employment/">Typing Test for Employment</a>
           </nav>
+          <PracticeCard href={"/data-entry-typing-test/"} label={"Try the data entry test"} />
         </article>
       </main>
       {[articleSchema, breadcrumbSchema].map((schema, index) => (
