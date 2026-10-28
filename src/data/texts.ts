@@ -108,7 +108,7 @@ function variedText(items: readonly string[], length: number): string {
   while (size < length) {
     const cycle = shuffled(items);
     for (const item of cycle) {
-      if (parts.length && item === parts[parts.length - 1]) continue;
+      if (items.length > 1 && parts.length && item === parts[parts.length - 1]) continue;
       parts.push(item);
       size += item.length + 1;
       if (size >= length) break;
@@ -116,20 +116,6 @@ function variedText(items: readonly string[], length: number): string {
   }
   return parts.join(" ");
 }
-
-// Standard WPM passages use prose only. Numbers, code, and advanced punctuation
-// belong to their dedicated assessments rather than the general typing test.
-const standardSentencePool = [
-  ...library["Everyday English"],
-  ...library["Short Sentences"],
-  ...library.Literature,
-  ...library.Business,
-  ...library.Technology,
-  ...library.Science,
-  ...library.History,
-  ...library.Nature,
-  ...library["Creative Writing"]
-].filter((sentence) => /^[A-Za-z ,.'!?-]+$/.test(sentence));
 
 // Keep each standard passage on one subject instead of shuffling unrelated
 // sentences from business, fiction, science, and nature together.
@@ -140,9 +126,25 @@ const coherentPassages = [
   "The small bookshop opened just after sunrise. Its owner arranged fresh titles in the front window and made coffee behind the counter. A customer arrived looking for a mystery novel to read over the weekend. They talked about favorite stories and the pleasure of discovering a new author. Before leaving the customer picked up a second book for a friend. By the time the street grew busy the shop was full of quiet conversations."
 ];
 
-function coherentText(length: number): string {
-  const passage = coherentPassages[Math.floor(Math.random() * coherentPassages.length)];
-  return variedText([passage], length);
+// Select at passage level. Sentence order is authored, never randomized.
+// Longer sessions repeat the complete selected passage rather than splicing
+// in unrelated material or getting stuck in the no-adjacent-duplicates loop.
+export const categoryPassages: Record<"Sentences" | "Fun Facts" | "Tiny Dramas", readonly string[]> = {
+  Sentences: coherentPassages,
+  "Fun Facts": [
+    "An octopus has three hearts, which sounds excessive until you consider the plumbing. Two hearts move blood through the gills, while the third sends it around the rest of the body. Each heart has a particular job. This arrangement helps the animal move oxygen through its unusual circulatory system. Having three hearts does not mean an octopus spends its afternoon writing emotional poetry. It means the animal has a different solution to the practical problem of staying alive underwater. The surprises do not stop with its hearts. An octopus also has eight flexible arms lined with suckers. Those suckers help it explore objects and find food. Much of its nervous system extends through its arms, allowing them to process information as they move. Picture trying to check eight cupboards at once while keeping track of what each hand discovered. An octopus makes that sort of coordination look ordinary. Its soft body also allows it to squeeze through narrow openings, provided its hard beak can fit. That makes an aquarium lid more of a serious engineering decision than a decorative accessory. Octopuses can change their appearance using specialized cells in their skin. Color and texture help them blend into their surroundings or communicate. A rocky patch of seabed can therefore contain a very convincing animal pretending to be part of the scenery. Three hearts, eight arms, and a talent for disappearing make a remarkable combination. The ocean apparently decided that an ordinary body plan would have been far too boring.",
+    "Crows can recognize individual human faces. For a bird that spends time near people, remembering who caused trouble can be useful. Researchers have studied this ability by observing how crows respond to people wearing particular masks. The birds can learn that one face signals a threat and react differently when they see it again. A crow does not need your name or a profile picture to remember an uncomfortable encounter. Its own observations can be enough. Crows are social birds, so information about danger can also spread through a group. Calls and behavior alert other birds to something worth watching. That does not mean every crow in town is maintaining a formal file on your afternoon walk. It means a social animal benefits from paying attention to the experiences of its neighbors. Their ability to learn also appears in the ways they search for food and solve problems. Some members of the crow family use tools, and many adapt well to changing surroundings. Streets, parks, and gardens provide opportunities for animals willing to investigate. What looks like a bird idly watching from a fence may actually be careful observation. Intelligence does not require a desk, a calendar, or an expensive notebook. Sometimes it comes with feathers and a habit of inspecting whatever you dropped near the picnic table. The next time a crow tilts its head toward you, there is no need to invent a secret conspiracy. It may simply be deciding whether you are interesting, troublesome, or likely to leave a snack. That is already a fairly demanding social assessment for a weekday morning."
+  ],
+  "Tiny Dramas": [
+    "Maya made a fresh coffee and sat down to work. Before opening her report, she decided she needed the perfect productivity playlist. The first playlist contained rain sounds. Unfortunately, the rain reminded her that she had left a towel outside. She rescued the towel, noticed the empty laundry basket, and decided that folding a few shirts would only take a minute. The shirts led her to the bedroom, where she found the headphones she had been looking for all week. This was excellent news for the playlist project. Back at her desk, she tried a collection of quiet piano music. The second track sounded familiar, so she searched for the name of the film that had used it. The search produced an interview with the composer. The interview mentioned a small village with beautiful walking trails. Maya opened a map. She had no intention of planning a holiday, but she felt it was important to understand the geography. A notification interrupted her research. Her colleague wanted to know whether the report was ready. Maya looked at the blank document, then at the growing row of browser tabs. Somewhere between the laundry and the walking trails, the morning had disappeared. She reached for her coffee and discovered that it had become a cold monument to her ambition. For a moment, she considered reheating it. Then she recognized the opening scene of another unnecessary adventure. She closed the map, stopped the music, and wrote the first sentence of the report. It was not a brilliant sentence, but it existed. The next sentence came more easily. By lunchtime, the report was finished. Her colleague thanked her for the clear explanation. Maya smiled, saved the file, and finally made another coffee. This time, she drank it before organizing anything.",
+    "The printer waited until the final minute before the deadline to announce that it was out of paper. Nora opened the tray and found a perfectly respectable stack already inside. She adjusted the stack. The printer considered this gesture and repeated its complaint. Across the room, Ben suggested turning it off and on again. Nora had already done that, but she appreciated the traditional office blessing. She tried a different tray. The machine woke with a promising hum, pulled in one sheet, and stopped halfway through. Now it claimed there was a paper jam. Nora removed the sheet with the care of someone handling an ancient manuscript. The paper was unharmed. Her patience was less fortunate. Ben checked the print queue and discovered several copies of the same document waiting behind one another. Every time the printer had appeared to ignore Nora, it had quietly accepted another assignment. They cancelled the extra copies and tried again. This time, the printer produced a page containing only the title. Nora stared at it. Ben stared at it. The machine made a cheerful noise that neither of them felt it had earned. Their manager arrived to ask whether the handouts were ready. Nora explained the situation and held up the lonely title page as evidence. The manager looked at the document on her laptop and asked whether everyone could read it on screen instead. A brief silence settled over the room. Nora sent the file to the meeting group. Ben carried the unused paper back to the cupboard. The meeting began on time, and everyone could read the report clearly. Halfway through the discussion, a distant mechanical hum rose from the empty office. The printer had finally decided to print every page."
+  ]
+};
+
+function coherentText(mode: keyof typeof categoryPassages, length: number): string {
+  const passages = categoryPassages[mode];
+  const passage = passages[Math.floor(Math.random() * passages.length)];
+  return Array(Math.max(1, Math.ceil(length / (passage.length + 1)))).fill(passage).join(" ");
 }
 
 export function buildPracticeText(mode: PracticeMode, count = 50, customText = ""): string {
@@ -153,12 +155,13 @@ export function buildPracticeText(mode: PracticeMode, count = 50, customText = "
   if (mode === "Punctuation") return variedText(library.Punctuation, count * 6);
   if (mode === "Symbols") return variedText(["email@domain.dev", "#issue-42", "$19.95", "+ 8%", "total_value", "/ [draft]", "{ready}", "&& checked"], count * 6);
   if (mode === "Code") return variedText(library.Programming, count * 7);
-  if (mode === "Fun Facts" || mode === "Tiny Dramas") return variedText(library[mode], count * 6);
+  if (mode === "Fun Facts" || mode === "Tiny Dramas") return coherentText(mode, count * 6);
   if (mode === "Accuracy") return variedText(["accurate", "steady", "clear", "exact", "clean", "calm", "deliberate", "return", "home", "row"], count * 6);
   if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6);
-  if (mode === "Endurance") return variedText(standardSentencePool, count * 10);
+  if (mode === "Endurance") return coherentText("Sentences", count * 10);
   if (mode === "Words") return variedText(["time", "form", "hand", "type", "clean", "steady", "rhythm", "focus", "reach", "return", "index", "finger", "screen", "practice", "improve"], count * 6);
-  return mode === "Sentences" ? coherentText(count * 6) : variedText(standardSentencePool, count * 6);
+  if (mode === "Quotes") return variedText(library.Quotes, count * 6);
+  return coherentText("Sentences", count * 6);
 }
 
 // A page test has a fixed amount of text and no countdown. Keep sentence
@@ -195,9 +198,8 @@ export function buildPageTestText(pages: 1 | 2 | 3): string {
   const targetWords = pages * 250;
   const sentences: string[] = [];
   let words = 0;
-  let cycle = shuffled(pageTestSentences);
+  const cycle = pageTestSentences;
   for (let index = 0; words < targetWords; index += 1) {
-    if (index > 0 && index % cycle.length === 0) cycle = shuffled(pageTestSentences);
     const sentence = cycle[index % cycle.length];
     sentences.push(sentence);
     words += sentence.split(/\s+/).length;
