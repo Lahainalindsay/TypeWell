@@ -20,13 +20,13 @@ export function localizedTypingMetadata(content: LocalizedTypingContent): Metada
       siteName: SITE_NAME,
       type: "website",
       locale: content.locale.replace("-", "_"),
-      images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: content.h1 }]
+      images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630, alt: content.h1 }]
     },
     twitter: {
       card: "summary_large_image",
       title: content.title,
       description: content.description,
-      images: [absoluteUrl("/og-default.svg")]
+      images: [absoluteUrl("/og-default.png")]
     }
   };
 }

@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && next build",
     "start": "npx serve@latest out",
     "test": "vitest run",
-    "preview": "npx serve@latest out"
+    "preview": "npx serve@latest out",
+    "audit:seo": "python3 scripts/audit-seo.py"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

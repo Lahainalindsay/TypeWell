@@ -47,6 +47,10 @@ describe("certificate link consistency", () => {
     const result = readCertificateFromParams(new URL(writeText.mock.calls[0][0]).searchParams);
     expect(result?.valid).toBe(true);
     expect(result?.payload).toMatchObject({ version: 2, name: payload.name, ...record });
-    expect(document.querySelector(".tw-cert-verify")?.textContent).toContain(result!.payload.id);
+    // The certificate footer intentionally omits verification copy. The copied
+    // link must still contain the result ID and open the public verify route.
+    const copiedUrl = new URL(writeText.mock.calls[0][0]);
+    expect(copiedUrl.pathname).toBe("/certificate/verify/");
+    expect(copiedUrl.searchParams.get("id")).toBe(result!.payload.id);
   });
 });

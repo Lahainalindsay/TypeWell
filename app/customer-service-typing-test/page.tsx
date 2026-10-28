@@ -3,7 +3,7 @@ import WPMTestApp from "../../src/App";
 import { customerServiceAssessment } from "../../src/features/careers/assessments/customer-service";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
-const socialImage = absoluteUrl("/og-default.svg");
+const socialImage = absoluteUrl("/og-default.png");
 const canonical = absoluteUrl(customerServiceAssessment.publicPath);
 
 export const metadata: Metadata = {

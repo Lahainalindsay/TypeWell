@@ -3,7 +3,7 @@ import WPMTestApp from "../../src/App";
 import { dataEntryAssessment } from "../../src/features/careers/assessments/data-entry";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
-const socialImage = absoluteUrl("/og-default.svg");
+const socialImage = absoluteUrl("/og-default.png");
 
 const canonical = absoluteUrl(dataEntryAssessment.publicPath);
 const title = "Free Data Entry Typing Test - Accuracy & Practice | WPMTest";

@@ -10,7 +10,7 @@ import { SiteHeader, SiteFooter } from "../src/components/SiteShell";
 import { SITE_NAME, SITE_ORIGIN } from "../src/lib/seo/site";
 
 const adsenseClient = "ca-pub-2169009102905035";
-const socialImage = "/og-default.svg";
+const socialImage = "/og-default.png";
 
 // Apply the saved theme before first paint, including non-interactive pages.
 const themeBootstrapScript = `
@@ -28,6 +28,10 @@ const themeBootstrapScript = `
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   applicationName: SITE_NAME,
+  robots: {
+    index: true, follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 }
+  },
   other: {
     "google-adsense-account": adsenseClient
   },

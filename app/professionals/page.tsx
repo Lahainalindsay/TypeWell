@@ -9,13 +9,13 @@ export const metadata: Metadata = {
     title: "Professional Typing Tests | WPMTest",
     description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
     url: "/professionals/",
-    images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest professional typing tests" }]
+    images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630, alt: "WPMTest professional typing tests" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "Professional Typing Tests & Job Skills | WPMTest",
     description: "Free job-specific typing tests and practice for data entry, 10-key, numeric work and professional keyboard skills.",
-    images: [absoluteUrl("/og-default.svg")]
+    images: [absoluteUrl("/og-default.png")]
   }
 };
 

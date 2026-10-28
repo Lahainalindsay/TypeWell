@@ -79,7 +79,7 @@ export const seoPages: SeoPage[] = [
     h1: "1 Minute Typing Test",
     intro: "A one-minute test is the fastest way to check in on your typing speed — short enough to run between tasks, long enough to catch your real average once you're past the first few words.",
     content: [
-      "Worked example: 250 correct characters over 1 minutes gives 50 WPM: correct characters ÷ 5 ÷ elapsed minutes. Corrections remain visible in keystroke accuracy even when final text is correct. Compare the same duration and input method.",
+      "Worked example: 250 correct characters over 1 minute gives 50 WPM: correct characters ÷ 5 ÷ elapsed minutes. Corrections remain visible in keystroke accuracy even when final text is correct. Compare the same duration and input method.",
       "Because the sample is small, a single missed word or a slow start can move your score by several WPM, so treat a one-minute result as a quick snapshot rather than your definitive number.",
       "Use it for frequent progress checks — for example, running it once a day for a week gives you a much clearer trend line than one long test. For a number you'd put on a résumé or use to compare against a job requirement, run the 5 minute test or 10 minute test instead, to sample sustained pace. Follow the employer’s actual duration and provider instructions."
     ],
@@ -382,7 +382,7 @@ export const seoPages: SeoPage[] = [
       { href: "/typing-practice/", label: "Typing Practice" },
       { href: "/1-minute-typing-test/", label: "1 Minute Test" },
       { href: "/rhythm/", label: "Rhythm Trainer" },
-      { href: "/progress", label: "Progress" }
+      { href: "/progress/", label: "Progress" }
     ]
   }
 ];

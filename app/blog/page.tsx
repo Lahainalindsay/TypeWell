@@ -11,10 +11,10 @@ export const metadata: Metadata = {
   openGraph: { title: "Typing Blog & Articles | WPMTest",
     description: "Articles about typing tests, practice methods, keyboard skills, and employment assessments.",
     url: canonical,
-    type: "website", images: [{ url: absoluteUrl("/og-default.svg"), width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+    type: "website", images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630, alt: "WPMTest typing tools" }] },
   twitter: { card: "summary_large_image",
     title: "Typing Blog & Articles | WPMTest",
-    description: "Articles about typing tests, practice methods, keyboard skills, and employment assessments.", images: [absoluteUrl("/og-default.svg")] },
+    description: "Articles about typing tests, practice methods, keyboard skills, and employment assessments.", images: [absoluteUrl("/og-default.png")] },
   robots: { index: true, follow: true }
 };
 
@@ -39,7 +39,7 @@ export default function BlogPage() {
         <h1>Typing Blog & Articles</h1>
         <p>Explore typing test comparisons, practice advice, and articles about keyboard skills.</p>
 
-        <div className="seo-card-grid"><article><p className="eyebrow">Typing experiments · A little ridiculous</p><h2><a href="/blog/typing-test-on-phone-vs-keyboard/">A Typing Test on Your Phone? Yes, We See the Irony.</a></h2><p>Ten fingers versus two thumbs. An absurdly entertaining reason to test your speed on both a keyboard and a phone.</p><p><a href="/blog/typing-test-on-phone-vs-keyboard/">Read the showdown →</a></p></article><article><p className="eyebrow">ʻŌlelo Hawaiʻi</p><h2><a href="/blog/hawaiian-language-revival/">Hawaiian Language Revival: Speakers, Schools &amp; Typing Practice</a></h2><p>How Hawaiian survived suppression, the growth of Hawaiian-medium schools, and ways to practice the language online.</p><p><a href="/blog/hawaiian-language-revival/">Read the article →</a></p></article>{guides.map(guide => <article key={guide.slug}><p className="eyebrow">Practical guide</p><h2><a href={`/blog/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p><p><a href={`/blog/${guide.slug}/`}>Read and practice →</a></p></article>)}
+        <div className="seo-card-grid"><article><p className="eyebrow">Typing experiments · A little ridiculous</p><h2><a href="/blog/typing-test-on-phone-vs-keyboard/">Phone vs Keyboard Typing Speed: How to Compare Your WPM</a></h2><p>Compare WPM, accuracy and input settings across a phone and a physical keyboard, with a repeatable one-minute test.</p><p><a href="/blog/typing-test-on-phone-vs-keyboard/">Read the showdown →</a></p></article><article><p className="eyebrow">ʻŌlelo Hawaiʻi</p><h2><a href="/blog/hawaiian-language-revival/">Hawaiian Language Revival: Speakers, Schools &amp; Typing Practice</a></h2><p>How Hawaiian survived suppression, the growth of Hawaiian-medium schools, and ways to practice the language online.</p><p><a href="/blog/hawaiian-language-revival/">Read the article →</a></p></article>{guides.map(guide => <article key={guide.slug}><p className="eyebrow">Practical guide</p><h2><a href={`/blog/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p><p><a href={`/blog/${guide.slug}/`}>Read and practice →</a></p></article>)}
           <article>
             <p className="eyebrow">Comparison</p>
             <h2><a href="/blog/best-typing-test-websites/">The 9 Best Free Typing Test Websites (2026), Compared</a></h2>

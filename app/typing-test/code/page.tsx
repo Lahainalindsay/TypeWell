@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   openGraph: { title: "Code Typing Test for Developers | WPMTest",
     description: "Practice programming syntax and measure code typing speed, accuracy, and errors.",
     url: canonical,
-    type: "website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
-  twitter: { card: "summary_large_image", title: "Code Typing Test for Developers | WPMTest", description: "Practice programming syntax and measure code typing speed and accuracy.", images: [`${SITE_URL}/og-default.svg`] },
+    type: "website", images: [{ url: `${SITE_URL}/og-default.png`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title: "Code Typing Test for Developers | WPMTest", description: "Practice programming syntax and measure code typing speed and accuracy.", images: [`${SITE_URL}/og-default.png`] },
   robots: { index: true, follow: true }
 };
 

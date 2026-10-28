@@ -4,7 +4,7 @@ import { CertificateVerifyResult } from "../../../src/components/CertificateVeri
 import { absoluteUrl } from "../../../src/lib/seo/site";
 
 const canonical = absoluteUrl("/certificate/verify/");
-const socialImage = absoluteUrl("/og-default.svg");
+const socialImage = absoluteUrl("/og-default.png");
 const description = "Check a WPMTest typing certificate link's public checksum. This checks link consistency, not authenticity or identity. Free, no signup required.";
 
 export const metadata: Metadata = {

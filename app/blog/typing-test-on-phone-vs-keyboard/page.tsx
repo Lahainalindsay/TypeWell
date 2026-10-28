@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import styles from "../hawaiian-language-revival/article.module.css";
 import { absoluteUrl } from "../../../src/lib/seo/site";
 
-const title = "A Typing Test on Your Phone? Yes, We See the Irony.";
-const description = "Why does a keyboard typing website have a mobile typing test? Because thumbs deserve to be humbled too. Try the keyboard-versus-phone typing challenge.";
+const title = "Phone vs Keyboard Typing Speed: How to Compare Your WPM";
+const description = "Compare phone and keyboard typing speed with a one-minute WPM test. Learn how autocorrect, accuracy, input method and test length affect the result.";
 const path = "/blog/typing-test-on-phone-vs-keyboard/";
 const url = absoluteUrl(path);
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function PhoneVersusKeyboardArticle() {
   const schema = { "@context": "https://schema.org", "@type": "Article", headline: title, description, mainEntityOfPage: url,
-    datePublished: "2026-10-28", dateModified: "2026-10-28",
+    datePublished: "2026-10-28", dateModified: "2026-10-28", image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
     author: { "@type": "Organization", name: "WPMTest" }, publisher: { "@type": "Organization", name: "WPMTest" } };
   return <main className={styles.page}>
     <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Phone vs. keyboard</span></nav>
@@ -27,10 +27,13 @@ export default function PhoneVersusKeyboardArticle() {
       <p className={styles.date}>October 28, 2026 · Typing experiments</p>
       </header>
       <figure className={styles.hero}>
-        <img src="/images/typing-editorial-desk.webp" width="1536" height="1024" alt="A warm editorial photograph of a keyboard and writing desk" fetchPriority="high" />
-        <figcaption>Ten fingers versus two thumbs. Two very different ways to type.</figcaption>
+        <img src="/images/typing-editorial-desk.webp" width="1536" height="1024" alt="A keyboard and notebook on a wooden desk" fetchPriority="high" />
+        <figcaption>Ten fingers versus two thumbs. AI-generated editorial illustration.</figcaption>
       </figure>
       <div className={styles.body}>
+      <section aria-labelledby="quick-answer"><h2 id="quick-answer">Can you compare phone WPM with keyboard WPM?</h2><p>You can measure both, but the scores describe different input skills. For a useful comparison, keep test duration and passage difficulty similar, record accuracy, and note whether predictions or autocorrect are enabled. Compare progress within each input method rather than treating the two scores as interchangeable.</p></section>
+      <h2>Record these details for each test</h2><ul><li>Device and input method: touchscreen, physical keyboard, or connected keyboard.</li><li>Duration and passage category: use the same settings for each attempt.</li><li>WPM and accuracy: keep both numbers, including slower attempts.</li><li>Assistance: note autocorrect, predictions, or swipe input where available.</li></ul>
+      <p>WPMTest calculates WPM as correct characters divided by five, divided by elapsed minutes. For example, 250 correct characters in one minute equals 50 WPM. See the <a href="/blog/wpm-vs-kph/">scoring guide with worked examples</a> before comparing results from different tools.</p>
       <p className={styles.lead}>A keyboard typing website that works on a phone. We know. We also own mirrors.</p>
       <h2 style={{marginTop:"2rem"}}>Wait. Isn't this a little ridiculous?</h2>
       <p>Absolutely. Imagine opening a swimming lesson website and discovering a course on how to walk around the pool. Technically relevant? Sure. A little absurd? Also sure.</p>

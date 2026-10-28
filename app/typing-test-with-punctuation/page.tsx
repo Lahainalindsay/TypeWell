@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Punctuation Typing Test - Speed & Accuracy | WPMTest",
   description: "Free punctuation typing test with commas, quotes, capitals and questions. Measure WPM, accuracy and errors with instant results.",
   alternates: { canonical },
-  openGraph: { title: "Punctuation Typing Test | WPMTest", description: "Test typing speed and accuracy with punctuation, capitalization, quotes and sentence patterns.", url: canonical, type: "website", images: [{ url: `${SITE_URL}/og-default.svg`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
-  twitter: { card: "summary_large_image", title: "Punctuation Typing Test | WPMTest", description: "Test typing speed and accuracy with punctuation, capitalization, quotes and sentence patterns.", images: [`${SITE_URL}/og-default.svg`] },
+  openGraph: { title: "Punctuation Typing Test | WPMTest", description: "Test typing speed and accuracy with punctuation, capitalization, quotes and sentence patterns.", url: canonical, type: "website", images: [{ url: `${SITE_URL}/og-default.png`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },
+  twitter: { card: "summary_large_image", title: "Punctuation Typing Test | WPMTest", description: "Test typing speed and accuracy with punctuation, capitalization, quotes and sentence patterns.", images: [`${SITE_URL}/og-default.png`] },
   robots: { index: true, follow: true }
 };
 

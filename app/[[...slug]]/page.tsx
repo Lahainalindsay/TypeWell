@@ -7,6 +7,7 @@ import { typingTestLanguageAlternates } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
   "/blog/hawaiian-language-revival/",
+  "/blog/typing-test-on-phone-vs-keyboard/",
   "/customer-service-typing-test/", "/certificate/verify/",
   "/blog/wpm-vs-kph/", "/blog/data-entry-accuracy/", "/blog/avoid-data-entry-errors/", "/blog/prepare-employment-typing-test/",
   "/about/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", "/certificate/sample/", "/contact/",
@@ -66,7 +67,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   const title = seo?.title ?? extra?.[0] ?? SITE_NAME;
   const description = seo?.description ?? extra?.[1] ?? "Free typing tests and typing practice.";
   const url = absoluteUrl(path);
-  const image = absoluteUrl("/og-default.svg");
+  const image = absoluteUrl("/og-default.png");
   return {
     title,
     description,
