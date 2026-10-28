@@ -131,6 +131,20 @@ const standardSentencePool = [
   ...library["Creative Writing"]
 ].filter((sentence) => /^[A-Za-z ,.'!?-]+$/.test(sentence));
 
+// Keep each standard passage on one subject instead of shuffling unrelated
+// sentences from business, fiction, science, and nature together.
+const coherentPassages = [
+  "The morning started with a clean desk and a simple plan. Maya opened her notebook and wrote down the work she wanted to finish. She answered the most important message first. Then she spent a quiet hour working without switching between tasks. By lunchtime she had made steady progress. A short walk helped her return with fresh attention. She finished the afternoon by reviewing her work and preparing for tomorrow.",
+  "Rain moved slowly across the coastline as the afternoon breeze cooled the air. Small waves reached the sand and slipped back toward the ocean. A few people walked along the shore while others watched from the shade. Farther down the beach a bird searched for food near the water. As the clouds began to clear the sunlight returned to the hills. The evening felt peaceful and unhurried.",
+  "Learning to type well begins with comfortable posture and a steady rhythm. Place your hands gently on the keyboard and focus on the next word rather than the clock. Accuracy matters because correcting mistakes takes time. With regular practice your fingers become more familiar with the keys. Your speed may change from day to day but progress becomes easier to notice over time. A few focused minutes can be more useful than a long distracted session.",
+  "The small bookshop opened just after sunrise. Its owner arranged fresh titles in the front window and made coffee behind the counter. A customer arrived looking for a mystery novel to read over the weekend. They talked about favorite stories and the pleasure of discovering a new author. Before leaving the customer picked up a second book for a friend. By the time the street grew busy the shop was full of quiet conversations."
+];
+
+function coherentText(length: number): string {
+  const passage = coherentPassages[Math.floor(Math.random() * coherentPassages.length)];
+  return variedText([passage], length);
+}
+
 export function buildPracticeText(mode: PracticeMode, count = 50, customText = ""): string {
   if (mode === "Custom Text") return customText || "Paste custom text in the field above, then begin typing here.";
   if (mode === "Numbers") return variedText(library.Numbers, count * 6);
@@ -144,7 +158,7 @@ export function buildPracticeText(mode: PracticeMode, count = 50, customText = "
   if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6);
   if (mode === "Endurance") return variedText(standardSentencePool, count * 10);
   if (mode === "Words") return variedText(["time", "form", "hand", "type", "clean", "steady", "rhythm", "focus", "reach", "return", "index", "finger", "screen", "practice", "improve"], count * 6);
-  return variedText(standardSentencePool, count * 6);
+  return mode === "Sentences" ? coherentText(count * 6) : variedText(standardSentencePool, count * 6);
 }
 
 // A page test has a fixed amount of text and no countdown. Keep sentence
