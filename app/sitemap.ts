@@ -18,6 +18,7 @@ const updatedPaths = new Set(["/", "/about/", "/contact/", "/privacy/", "/blog/"
 const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
+  "/typing-personality-test/", "/blog/typing-personality-test/",
   "/blog/hawaiian-language-revival/",
   "/blog/typing-test-on-phone-vs-keyboard/",
   "/customer-service-typing-test/",

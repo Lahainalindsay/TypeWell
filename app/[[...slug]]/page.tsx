@@ -6,6 +6,7 @@ import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 import { typingTestLanguageAlternates } from "../../src/lib/seo/localized";
 
 const dedicatedRoutes = new Set([
+  "/typing-personality-test/", "/blog/typing-personality-test/",
   "/blog/hawaiian-language-revival/",
   "/blog/typing-test-on-phone-vs-keyboard/",
   "/customer-service-typing-test/", "/certificate/verify/",

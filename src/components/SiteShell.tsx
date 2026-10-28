@@ -47,7 +47,7 @@ function ThemeToggle() {
 const groups = [
   { label: "Tests", sections: [
     { title: "Standard tests", links: [["/typing-test/", "Standard Typing Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/10-minute-typing-test/", "10 Minute Test"]] },
-    { title: "Specialized tests", links: [["/1-page-typing-test/", "Page Typing Tests"], ["/typing-test-with-numbers/", "Numbers Test"], ["/typing-test-with-punctuation/", "Punctuation Test"], ["/mobile-typing-test/", "Mobile Typing Test"]] }
+    { title: "Specialized tests", links: [["/typing-personality-test/", "Typing Personality Test"], ["/1-page-typing-test/", "Page Typing Tests"], ["/typing-test-with-numbers/", "Numbers Test"], ["/typing-test-with-punctuation/", "Punctuation Test"], ["/mobile-typing-test/", "Mobile Typing Test"]] }
   ] },
   { label: "Professional", sections: [
     { title: "Professional tests", links: [["/typing-test-for-employment/", "Employment Typing Test"], ["/data-entry-typing-test/", "Data Entry Typing Test"], ["/customer-service-typing-test/", "Customer Service Typing Test"], ["/10-key-typing-test/", "10-Key Typing Test"], ["/kph-typing-test/", "KPH Typing Test"]] },

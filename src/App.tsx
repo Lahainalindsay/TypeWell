@@ -18,6 +18,7 @@ import { metricRange, trackEvent } from "./analytics";
 import { calculateDataEntryMetrics, dataEntryFields, fictionalDataEntryRecords, type DataEntryMetrics } from "./engine/dataEntry";
 import { splitGraphemes } from "./engine/graphemes";
 import { keysFromTextInput } from "./engine/textInput";
+import { PersonalityCard } from "./features/PersonalityCard";
 import type { Metrics } from "./engine/types";
 
 import { speedCertificateResult, dataEntryCertificateResult, certificateForSession } from "./features/certificate/result";
@@ -187,7 +188,8 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
   const pageCount = pageCountFromPath(path);
   const testMode = testModeFromPath(path);
   const [passageType, setPassageType] = useState<"Sentences" | "Fun Facts" | "Tiny Dramas">("Sentences");
-  const testTitle = pageCount ? `${pageCount} Page Typing Test`
+  const personalityTest = path.replace(/\/$/, "") === "/typing-personality-test";
+  const testTitle = personalityTest ? "Typing Personality Test" : pageCount ? `${pageCount} Page Typing Test`
     : testMode === "Data Entry" ? "Data Entry Typing Test"
     : testMode === "Numeric Keypad" ? path.includes("kph") ? "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed" : path.includes("10-key") ? "10 Key Typing Test" : "Numeric Keypad Test"
     : testMode === "Numbers"
@@ -223,6 +225,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
   return (
     <Trainer
       title={testTitle}
+      personalityTest={personalityTest}
       heading={embedded ? "h2" : undefined}
       subtitle={pageCount ? "Finish the whole passage at your own pace. No countdown or account required." : "Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."}
       target={passage}
@@ -370,6 +373,7 @@ interface SharedProps {
 
 function Trainer(props: {
   title: string;
+  personalityTest?: boolean;
   subtitle: string;
   target: string;
   regenerate?: () => string;
@@ -549,7 +553,7 @@ function Trainer(props: {
         {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
         {props.progress.settings.showKeyboard && <KeyboardView current={current} next={next} last={session.typed.at(-1)} incorrect={session.statuses[session.typed.length - 1] === "incorrect" ? session.typed.at(-1) : undefined} />}
         {props.footer}
-        {finished && <ResultScreen record={finished} history={props.progress.sessions} reset={reset} onPractice={props.onPractice} />}
+        {finished && <ResultScreen personalityTest={props.personalityTest} record={finished} history={props.progress.sessions} reset={reset} onPractice={props.onPractice} />}
       </section>
     </section>
   );
@@ -617,7 +621,7 @@ function WeakKeyHeatmap({ weakKeys }: { weakKeys: SessionRecord["weakKeys"] }) {
   );
 }
 
-function ResultScreen({ record, history, reset, onPractice }: { record: SessionRecord; history: SessionRecord[]; reset: () => void; onPractice?: () => void }) {
+function ResultScreen({ record, history, reset, onPractice, personalityTest = false }: { personalityTest?: boolean; record: SessionRecord; history: SessionRecord[]; reset: () => void; onPractice?: () => void }) {
   const comparable = history.filter((item) => item.id !== record.id && item.type === record.type && item.label === record.label);
   const previous = comparable.at(-1);
   const previousBest = Math.max(0, ...comparable.map((item) => item.metrics.wpm));
@@ -645,32 +649,7 @@ function ResultScreen({ record, history, reset, onPractice }: { record: SessionR
           <Metric label="Consistency" value={`${record.metrics.consistency}%`} />
           <Metric label="Errors" value={record.metrics.uncorrectedErrors} />
         </div>
-        {record.type === "test" && (() => {
-          const { wpm, accuracy, consistency } = record.metrics;
-          const personality = accuracy < 90
-            ? { name: "The Chaos Goblin", description: "Your fingers have places to be. Unfortunately, some of those places are the wrong keys. A little more accuracy will make that speed count." }
-            : accuracy >= 98 && consistency >= 85
-              ? { name: "The Precision Machine", description: "Steady, accurate, and suspiciously well organized. Your keyboard probably respects you." }
-              : wpm >= 75 && accuracy >= 95
-                ? { name: "The Speed Demon", description: "Fast and mostly fearless. Your keyboard has requested a lunch break." }
-                : accuracy >= 97
-                  ? { name: "The Perfectionist", description: "You would rather get it right than launch a typo into the universe. Respectable." }
-                  : consistency >= 80
-                    ? { name: "The Steady Hand", description: "No drama, just dependable rhythm. Your secret weapon is consistency." }
-                    : { name: "The Comeback Kid", description: "A few stumbles, plenty of determination. Every great typist started somewhere." };
-          return <section className="panel" aria-label="Your typing personality" style={{marginTop: "1rem"}}>
-            <p className="eyebrow">Your typing personality · Just for fun</p>
-            <h3>{personality.name}</h3>
-            <p>{personality.description}</p>
-            <p className="hint">Based on this test's speed, accuracy and consistency—not a scientific personality assessment.</p>
-            <button type="button" onClick={() => {
-              const message = `I'm ${personality.name}! ${wpm} WPM · ${accuracy}% accuracy. What's your typing personality? https://wpmtest.app/`;
-              if (navigator.share) void navigator.share({title: "My WPMTest typing personality", text: message}).catch(() => {});
-              else if (navigator.clipboard) void navigator.clipboard.writeText(message).then(() => alert("Typing personality copied!"));
-              else window.prompt("Copy your typing personality", message);
-            }}>Share My Typing Personality</button>
-          </section>;
-        })()}
+        {personalityTest && <PersonalityCard metrics={record.metrics} />}
         <div className="actions result-actions">
           <button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button>
           {onPractice && <button onClick={onPractice}>Practice Weak Keys</button>}
@@ -981,7 +960,7 @@ function TimingHeatmap({ deviation }: { deviation: number }) {
 function routeToPage(path: string): Page {
   const normalizedPath = path.replace(/\/$/, "") || "/";
   const value = normalizedPath.split("/")[1] as Page;
-  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || pageCountFromPath(normalizedPath) || ["/mobile-typing-test", "/customer-service-typing-test", "/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
+  if (normalizedPath.startsWith("/typing-test") || normalizedPath.startsWith("/data-entry-practice") || /\/(1|3|5|10)-minute-typing-test$/.test(normalizedPath) || pageCountFromPath(normalizedPath) || ["/typing-personality-test", "/mobile-typing-test", "/customer-service-typing-test", "/data-entry-typing-test", "/10-key-typing-test", "/numeric-keypad-test", "/kph-typing-test"].includes(normalizedPath)) return "test";
   if (normalizedPath.startsWith("/practice") || normalizedPath === "/typing-practice" || normalizedPath === "/touch-typing-practice") return "practice";
   if (normalizedPath.startsWith("/learn")) return "learn";
   if (["/average-typing-speed", "/wpm-calculator", "/typing-certificate"].includes(normalizedPath)) return "tools";
