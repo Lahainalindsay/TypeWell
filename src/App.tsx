@@ -649,7 +649,7 @@ function ResultScreen({ record, history, reset, onPractice, personalityTest = fa
           <Metric label="Consistency" value={`${record.metrics.consistency}%`} />
           <Metric label="Errors" value={record.metrics.uncorrectedErrors} />
         </div>
-        {personalityTest && <PersonalityCard metrics={record.metrics} />}
+        {personalityTest && <PersonalityCard metrics={record.metrics} weakKeys={record.weakKeys} />}
         <div className="actions result-actions">
           <button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button>
           {onPractice && <button onClick={onPractice}>Practice Weak Keys</button>}
