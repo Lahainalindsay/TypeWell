@@ -1,3 +1,7 @@
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { PersonalityCard } from "../src/features/PersonalityCard";
+import type { Metrics } from "../src/engine/types";
 import { describe,it,expect } from "vitest";
 import { personalityDrill, personalities, typingPersonality } from "../src/features/typingPersonality";
 import { readFileSync } from "node:fs";
@@ -16,6 +20,14 @@ describe("typing personalities",()=>{
  ])("classifies %s WPM, %s accuracy, %s consistency",(wpm,accuracy,consistency,name)=>{
  const result = typingPersonality({wpm,accuracy,consistency});
  expect(result.name).toBe(name);
+ const paragraphs = result.story.split("\n\n");
+ expect(paragraphs).toHaveLength(3);
+ expect(result.story.split(/\s+/).length).toBeGreaterThanOrEqual(120);
+ const container = document.createElement("div");
+ container.innerHTML = renderToStaticMarkup(createElement(PersonalityCard,{metrics:{wpm,accuracy,consistency} as Metrics}));
+ expect(container.textContent).toContain(`Your keyboard identity: ${name}`);
+ for (const paragraph of paragraphs) expect(container.textContent).toContain(paragraph);
+ expect(container.textContent!.indexOf(paragraphs[2])).toBeLessThan(container.textContent!.indexOf("The evidence:"));
  expect(result.imageAlt.length).toBeGreaterThan(20);
  expect(readFileSync(`public${result.image}`).byteLength).toBeGreaterThan(1000);
  });

@@ -32,8 +32,9 @@ export function PersonalityCard({metrics, weakKeys = []}: {metrics: Metrics; wea
     <button type="button" onClick={share}>Share my typing personality</button><p role="status">{status}</p>
   </section>
   <section className={styles.explanation} aria-label="Your typing personality explained">
+    <h3>Your keyboard identity: {personality.name}</h3>
+    {personality.story.split("\n\n").map((paragraph,index)=><p key={index}>{paragraph}</p>)}
     <h3>Why your keyboard cast you in this role</h3>
-    <p>{personality.story}</p>
     <p><strong>The evidence:</strong> {metrics.wpm} WPM · {metrics.accuracy}% accuracy · {metrics.consistency}% consistency.</p>
     <p><strong>The matching rule:</strong> {personality.rule}. Rules are checked in the published order; the first match wins. Labels use the displayed rounded scores.</p>
     <p><strong>Your useful takeaway:</strong> {personality.strength}</p>
