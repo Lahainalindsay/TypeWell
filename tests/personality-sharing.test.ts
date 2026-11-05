@@ -14,7 +14,7 @@ describe("personality sharing routes", () => {
   it("shares a profile URL instead of the generic test URL or private score", () => {
     const source = readFileSync("src/features/PersonalityCard.tsx", "utf8");
     expect(source).toContain("typing-personality-test/profile/${personality.slug}/");
-    expect(source).toContain("What's YOUR typing personality?");
+    expect(source).toContain("What’s YOUR typing personality?");
     expect(source).not.toContain("metrics.wpm} WPM · ${metrics.accuracy}% accuracy. What's your typing personality?");
   });
   it("keeps regular test shares competitive", () => {
