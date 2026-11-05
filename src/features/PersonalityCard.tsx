@@ -11,11 +11,11 @@ export function PersonalityCard({metrics, weakKeys = []}: {metrics: Metrics; wea
   const [status,setStatus] = useState("");
   useEffect(()=>{ ref.current?.focus(); },[]);
   async function share() {
-    const text = `I'm ${personality.name}! ${metrics.wpm} WPM · ${metrics.accuracy}% accuracy. What's your typing personality?`;
-    const url = "https://wpmtest.app/typing-personality-test/";
+    const text = `I got ${personality.name}! ${personality.description}\nWhat’s YOUR typing personality? Take the test and find out!`;
+    const url = `https://wpmtest.app/typing-personality-test/profile/${personality.slug}/`;
     try {
-      if(navigator.share) await navigator.share({title:personality.name,text,url});
-      else if(navigator.clipboard) {await navigator.clipboard.writeText(`${text} ${url}`);setStatus("Card results copied. Your friends have been warned.");}
+      if(navigator.share) await navigator.share({title:`I’m ${personality.name}! | WPMTest`,text,url});
+      else if(navigator.clipboard) {await navigator.clipboard.writeText(`${text} ${url}`);setStatus("Personality profile link copied. Your friends have been warned.");}
       else setStatus(`${text} ${url}`);
     } catch(error) {if(!(error instanceof Error && error.name === "AbortError")) setStatus("Sharing didn’t work. Try again or copy this page’s link.");}
   }
@@ -52,7 +52,7 @@ export function PersonalityCard({metrics, weakKeys = []}: {metrics: Metrics; wea
     <p>WPM is correct characters remaining in the passage divided by five, divided by elapsed minutes. Spaces and punctuation count. Example: 250 correct characters in one minute = 50 WPM.</p>
     <p>Accuracy is correct character inputs divided by all character inputs. Correcting a mistake repairs the text but does not erase that wrong input from accuracy. Consistency describes variation in keystroke timing; it is not a percentage of correct words or a psychological measure.</p>
     <p>Our nine character labels and cutoffs are editorial game rules, not population percentiles or a validated personality test. They cannot measure intelligence, diagnose a condition, determine employability or establish an enduring trait. Keyboard, device, passage difficulty, assistance, fatigue and sample length can change a result. Very short attempts are particularly unstable.</p>
-    <p>Typing and warm-up matching run in your browser. Practice progress is stored locally; clearing browser data can remove it. The share button sends your title, WPM, accuracy and test link only when you choose to share. Site ads or analytics may have separate data practices: <a href="/privacy/">read our privacy policy</a>.</p>
+    <p>Typing and warm-up matching run in your browser. Practice progress is stored locally; clearing browser data can remove it. The share button sends your character identity, short description and public profile link only when you choose to share. It does not send your WPM, accuracy or private practice history. Site ads or analytics may have separate data practices: <a href="/privacy/">read our privacy policy</a>.</p>
     <p>Original character illustrations are AI-generated and curated for this game. No employer endorsement, certified assessment, or scientific validation is implied. <a href="/typing-personality-test/#how-personalities-work">See every scoring rule</a> · <a href="/blog/wpm-vs-kph/">Read the scoring guide</a>.</p>
     </details>
   </section></div>;
