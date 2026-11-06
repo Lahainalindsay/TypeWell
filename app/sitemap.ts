@@ -1,3 +1,4 @@
+import { revivalLanguages } from "../src/features/editorial/revivalLanguages";
 import { guides } from "../src/features/editorial/guides";
 import type { MetadataRoute } from "next";
 import { seoPages } from "../src/seo/pages";
@@ -18,6 +19,8 @@ const updatedPaths = new Set(["/", "/about/", "/contact/", "/privacy/", "/blog/"
 const localizedTypingPaths = new Set(Object.values(typingTestLanguagePaths).map(canonicalPath));
 
 const supportingIndexableRoutes = [
+  "/language-revival/",
+  ...revivalLanguages.map(language => `/language-revival/${language.slug}/`),
   "/typing-personality-test/", "/blog/typing-personality-test/",
   "/blog/hawaiian-language-revival/",
   "/blog/typing-test-on-phone-vs-keyboard/",
