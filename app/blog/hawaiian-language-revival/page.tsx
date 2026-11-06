@@ -122,11 +122,27 @@ export default function HawaiianLanguageArticle() {
     <figcaption>A space for everyday learning. AI-generated editorial illustration.</figcaption>
    </figure>
    <div className={styles.body}>
-    <p className={styles.lead}>A language grows stronger when people have places to use it.</p>
-    <p>That can mean a classroom. A kitchen table. A conversation with a grandparent. A text message to a friend. A song, a lesson, a school assignment, or a few minutes of typing practice online.</p>
+    <p className={styles.lead}>A language survives because people keep finding ways to use it—even when institutions make that difficult.</p>
+    <p>For generations, Hawaiian speakers faced pressure to use English in schools and public life. Yet Hawaiian continued through families, kūpuna, literature and communities who refused to surrender it. The modern revival is not a miracle that appeared overnight; it is the result of organized, sustained work.</p>
     <p>For ʻŌlelo Hawaiʻi, the Hawaiian language, those everyday spaces were deliberately narrowed for generations. Its renewed presence today reflects decades of work by Native Hawaiian families, kūpuna, educators, and community leaders who refused to let that connection disappear.</p>
     <p>At WPMTest, we recently added a <a href="/haw/hawaiian-typing-test/">Hawaiian typing test</a> to create one more place where learners and speakers can practice writing Hawaiian accurately online. It is a small contribution. The real credit for the language’s revitalization belongs to the communities carrying it forward.</p>
     <aside className={styles.cta}><p className={styles.eyebrow}>A little practice, every day</p><h2>Practice typing in ʻŌlelo Hawaiʻi</h2><p>Try short Hawaiian passages with ʻokina, kahakō, WPM tracking, and accuracy feedback.</p><a className={styles.button} href="/haw/hawaiian-typing-test/">Start the Hawaiian Typing Test →</a></aside>
+   <section className={styles.section}><span className={styles.sectionNumber}>HISTORY · A LANGUAGE RECLAIMED</span><h2>From suppression to revitalization: a Hawaiian-language timeline</h2>
+    <p>Hawaiian did not disappear because families simply stopped caring. Changes in political power, school policy and social pressure restricted where children could learn and use the language. Its revival has been led by Hawaiian speakers and communities, not by a typing website.</p>
+    <div className={styles.resources}>
+    {([
+      ["1820s","Missionaries and Hawaiian scholars developed and expanded a written alphabet, enabling a remarkable period of Hawaiian-language literacy and publishing."],
+      ["1834","Ka Lama Hawaiʻi began publication, part of a flourishing Hawaiian-language newspaper tradition."],
+      ["1893","The Hawaiian Kingdom was overthrown, changing the political institutions that shaped language and education."],
+      ["1896","The Republic of Hawaiʻi made English the medium and basis of instruction in public and private schools. The law was not a ban on speaking Hawaiian everywhere, but school discipline and stigma contributed to language loss."],
+      ["1978","Hawaiian was recognized as an official language of the State of Hawaiʻi under the state constitution."],
+      ["1983–1984","Hawaiian-language educators organized ʻAha Pūnana Leo; the first Pūnana Leo preschool opened in Kekaha, Kauaʻi, in 1984."],
+      ["1987","The first Kaiapuni Hawaiian-medium elementary programs opened, extending immersion education beyond preschool."],
+      ["Today","Families, kūpuna, kumu, schools, broadcasters and community organizations continue strengthening Hawaiian in everyday life."]
+    ] as const).map(([year,detail])=><div className={styles.resource} key={year}><p className={styles.eyebrow}>{year}</p><p>{detail}</p></div>)}</div>
+    <p>History is not a straight line from suppression to victory. The continued use of Hawaiian in communities including Niʻihau, and the work of educators and families, made revitalization possible. Sustaining that work still requires teachers, resources and places to use Hawaiian beyond the classroom.</p>
+    <div className={styles.sources}><strong>Sources &amp; further reading</strong><ul><li><a href="https://www.ahapunanaleo.org/history-hl-1">ʻAha Pūnana Leo: Our History ↗</a></li><li><a href="https://coe.hawaii.edu/territorial-history-of-schools/document/act-57-section-30-1896-english-made-the-medium-and-basis-of-instruction-for-all-schools/">University of Hawaiʻi: 1896 school law ↗</a></li><li><a href="https://www.hawaii.edu/askus/1767">University of Hawaiʻi: Hawaiian keyboard guidance ↗</a></li></ul></div>
+   </section>
    {sections.map((section, index) => <section className={styles.section} key={section.heading}>
     <span className={styles.sectionNumber} aria-hidden="true">0{index + 1}</span><h2>{section.heading}</h2>
     {index === 2 && <div className={styles.statGrid}>
