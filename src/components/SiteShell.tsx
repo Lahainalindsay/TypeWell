@@ -57,6 +57,7 @@ const groups = [
     { title: "Build your skills", links: [["/typing-practice/", "Typing Practice"], ["/learn/", "Touch Typing Lessons"], ["/practice/weak-keys/", "Weak-Key Practice"], ["/rhythm/", "Rhythm Trainer"], ["/progress/", "Progress"]] }
   ] },
   { label: "Languages", sections: [
+    { title: "Language revival", links: [["/language-revival/", "Language Revival Collection"], ["/language-revival/welsh/", "Welsh Language Story"], ["/language-revival/manx/", "Manx Language Story"]] },
     { title: "Typing test language", links: [[typingTestLanguagePaths.en, "English"], [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português (Brasil)"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]] }
   ] }
 ] as const;
