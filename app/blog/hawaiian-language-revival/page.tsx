@@ -150,7 +150,7 @@ export default function HawaiianLanguageArticle() {
     <p>What we can offer is another practical opportunity to use the language online. We hope our Hawaiian typing test supports learners as they become more comfortable writing—and encourages them to keep learning from Hawaiian-led resources such as <a href="https://www.ahapunanaleo.org/">ʻAha Pūnana Leo</a>.</p>
     <p>ʻŌlelo Hawaiʻi’s renewed growth is the result of sustained commitment. Every additional space for its respectful, accurate use can support that work.</p>
     <aside className={styles.finalCta}><h2>Practice typing in ʻŌlelo Hawaiʻi</h2><p>Build comfort with Hawaiian words, ʻokina, kahakō, and accurate digital writing.</p><a className={styles.button} href="/haw/hawaiian-typing-test/">Start Practicing →</a></aside>
-    <p><a href="/contact/">Suggest a correction or share a Hawaiian learning resource</a>.</p>
+    <p><a href="/language-revival/">Explore the Language Revival collection</a> · <a href="/contact/">Suggest a correction or share a Hawaiian learning resource</a>.</p>
    </section>
    </div>
   </article>
