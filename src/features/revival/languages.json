@@ -1,0 +1,420 @@
+[
+  {
+    "id": "hawaiian",
+    "name": "Hawaiian",
+    "native": "ʻŌlelo Hawaiʻi",
+    "region": "Hawaiʻi",
+    "group": "Pacific",
+    "desc": "Punishment, disrupted transmission, and near loss—followed by decades of community-led work to reclaim the language.",
+    "history": "ʻŌlelo Hawaiʻi was a language of government, newspapers, schooling, relationships, and intellectual life in the Hawaiian Kingdom. Its decline cannot honestly be presented as a natural change of preference. After the Kingdom’s overthrow in 1893, the Republic of Hawaiʻi’s 1896 education law required English as the medium and basis of instruction in public and private schools. Hawaiian could no longer occupy its former place as the language through which children received their education. The law did not ban every private conversation in Hawaiian; that distinction does not make its consequences small.",
+    "timeline": [
+      [
+        "1893",
+        "The Hawaiian Kingdom is overthrown; Hawaiian political authority is displaced."
+      ],
+      [
+        "1896",
+        "Act 57 requires English-medium instruction in public and private schools."
+      ],
+      [
+        "1978",
+        "Hawaiian becomes an official state language alongside English."
+      ],
+      [
+        "1983",
+        "ʻAha Pūnana Leo is established in response to the transmission crisis."
+      ],
+      [
+        "1984",
+        "The first Pūnana Leo preschool opens in Kekaha, Kauaʻi."
+      ],
+      [
+        "1986",
+        "Advocacy secures removal of the restriction on Hawaiian-medium schooling."
+      ],
+      [
+        "1987",
+        "Public Kaiapuni classes begin at Keaukaha and Waiau elementary schools."
+      ],
+      [
+        "2025",
+        "OHA publishes community-based research on intergenerational language preservation and maintenance."
+      ]
+    ],
+    "efforts": "Pūnana Leo language nests and Kaiapuni schools connect education with family use. Community leadership is at the heart of this renewal: a language needs places to live beyond the classroom.",
+    "guidance": "Keep the ʻokina (ʻ) and kahakō: ā ē ī ō ū. They carry meaning. Use a Hawaiian keyboard and trusted spelling; a straight apostrophe is not an ʻokina.",
+    "chars": "ʻ ā ē ī ō ū",
+    "source": "https://hawaiipublicschools.org/academics/hawaiian-education/mo%CA%BBaukala-o-ka-papahana-kaiapuni/",
+    "sourceName": "Hawaiʻi Department of Education — History of Ka Papahana Kaiapuni",
+    "glossika": false,
+    "test": "https://wpmtest.app/haw/hawaiian-typing-test/"
+  },
+  {
+    "id": "welsh",
+    "name": "Welsh",
+    "native": "Cymraeg",
+    "region": "Wales",
+    "group": "Europe",
+    "desc": "From educational stigma to public language rights: a living language making space for its future.",
+    "history": "Welsh did not become less secure because its speakers suddenly stopped caring. English gained authority in education and public advancement, while institutions often treated Welsh as an obstacle. The 1847 education inquiry intensified that stigma: three commissioners who did not speak Welsh made disparaging judgments about the language, religion, and morality of the people they assessed.",
+    "timeline": [
+      [
+        "1847",
+        "The education inquiry’s Blue Books stigmatise Welsh language and society."
+      ],
+      [
+        "19th century",
+        "The Welsh Not is used in some schools; surviving objects and accounts document punishment."
+      ],
+      [
+        "1967",
+        "Welsh Language Act expands Welsh use in legal proceedings."
+      ],
+      [
+        "1993",
+        "Welsh Language Act establishes a stronger public-language framework."
+      ],
+      [
+        "2011",
+        "Welsh Language (Wales) Measure gives Welsh official status in Wales."
+      ],
+      [
+        "2021",
+        "Census records 17.8 percent of residents aged three and over as able to speak Welsh."
+      ]
+    ],
+    "efforts": "Welsh-medium education, broadcasting, community organizations, and public services create opportunities to use Cymraeg. Recognition matters, but so do ordinary conversation and spaces where young people can use Welsh together. Revival is continuing work, not a finished victory.",
+    "guidance": "Preserve accents, including ŵ and ŷ. Welsh digraphs such as ll and dd are meaningful spelling units. WPM measures keyboard performance, not fluency or cultural connection.",
+    "chars": "â ê î ô û ŵ ŷ",
+    "source": "https://www.library.wales/discover-learn/digital-exhibitions/printed-material/the-blue-books-of-1847",
+    "sourceName": "National Library of Wales — The Blue Books of 1847",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/welsh/typing-test/"
+  },
+  {
+    "id": "manx",
+    "name": "Manx",
+    "native": "Gaelg",
+    "region": "Isle of Man",
+    "group": "Europe",
+    "desc": "Why the “last speaker” is never the whole story.",
+    "history": "Manx, or Gaelg, is the Gaelic language of the Isle of Man. Its decline was not a simple story of one prohibition followed by one rescue. Culture Vannin describes rapid social, economic, and population change in the eighteenth and nineteenth centuries. Growing towns, trade, tourism, and English influence altered the settings in which people worked and raised their children.",
+    "timeline": [
+      [
+        "Before 1974",
+        "Learners and advocates record, teach, and sustain Manx alongside traditional speakers."
+      ],
+      [
+        "1974",
+        "Ned Maddrell, the last traditional native speaker, dies; learners continue using Manx."
+      ],
+      [
+        "1992",
+        "Manx is introduced in schools."
+      ],
+      [
+        "2001",
+        "Bunscoill Ghaelgagh opens after a parents’ campaign."
+      ],
+      [
+        "2021",
+        "Part III European Charter protection is extended to Manx."
+      ],
+      [
+        "2022",
+        "The joint 2022–2032 Manx Language Strategy is launched."
+      ]
+    ],
+    "efforts": "Culture Vannin, teachers, families, and adult learners support Manx through lessons and community use. The Bunscoill gives children reasons to use it together throughout the school day.",
+    "guidance": "Use Manx spelling, rather than substituting Irish or Scottish Gaelic forms. Practice short, attributed learner material and learn its sounds alongside the written words.",
+    "chars": "Gaelg · Ellan Vannin",
+    "source": "https://www.learnmanx.com/resources/community/speak-up-for-manx/discover-the-story-of-manx/",
+    "sourceName": "Culture Vannin / Learn Manx — Discover the story of Manx",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/manx/typing-test/"
+  },
+  {
+    "id": "scottish-gaelic",
+    "name": "Scottish Gaelic",
+    "native": "Gàidhlig",
+    "region": "Scotland",
+    "group": "Europe",
+    "desc": "A future built through education, media, and community action.",
+    "history": "Gaelic decline cannot be understood through a single event. Political marginalisation, economic pressure, displacement, migration, and English-dominant institutions all affected its transmission. Education is a particularly clear part of that history. The Education (Scotland) Act 1872 established compulsory state schooling without providing for Gaelic, reinforcing an education system that was already becoming increasingly anglicised.",
+    "timeline": [
+      [
+        "1872",
+        "Compulsory state education is established without provision for Gaelic."
+      ],
+      [
+        "2005",
+        "Gaelic Language (Scotland) Act creates the statutory planning framework."
+      ],
+      [
+        "2006",
+        "The 2005 Act commences; Bòrd na Gàidhlig becomes a public body."
+      ],
+      [
+        "2025",
+        "Scottish Languages Act receives Royal Assent on 31 July."
+      ],
+      [
+        "30 November 2025",
+        "Official-status provisions for Gaelic and Scots take effect."
+      ]
+    ],
+    "efforts": "Gaelic-medium education, language planning, media, and community initiatives build opportunities for speakers and learners. Lasting renewal also depends on Gaelic being used beyond formal lessons.",
+    "guidance": "Retain grave accents: à è ì ò ù. Gaelic and Irish are related, distinct languages. Follow the passage’s conventions rather than changing them to a related language.",
+    "chars": "à è ì ò ù",
+    "source": "https://www.highlifehighland.com/archives/highland-archive-service/online-exhibitions/the-education-scotland-act-1872-150-years-of-learning/impact-on-gaelic",
+    "sourceName": "High Life Highland Archives — Impact on Gaelic",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/scottish-gaelic/typing-test/"
+  },
+  {
+    "id": "irish",
+    "name": "Irish",
+    "native": "Gaeilge",
+    "region": "Ireland",
+    "group": "Europe",
+    "desc": "From revival societies to the everyday life of the Gaeltacht.",
+    "history": "Irish, or Gaeilge, was weakened by centuries of political and social change under English rule. The decline of institutions supporting Irish, the advantages attached to English, and changes in schooling affected how families could use and transmit the language. This was not one moment when an entire population freely chose to abandon its words.",
+    "timeline": [
+      [
+        "16th–19th centuries",
+        "English rule and English-dominant institutions progressively weaken the social position of Irish."
+      ],
+      [
+        "1845–1852",
+        "The Great Famine devastates communities through death, suffering, and migration."
+      ],
+      [
+        "1893",
+        "Conradh na Gaeilge is founded to promote Irish."
+      ],
+      [
+        "1937",
+        "The Constitution recognises Irish as the first official language."
+      ],
+      [
+        "2003–2021",
+        "Official Languages legislation develops public-service obligations."
+      ]
+    ],
+    "efforts": "Gaeltacht communities, Irish-medium schools, broadcasting, and language organizations create opportunities to use Gaeilge. Supporting community life matters alongside symbolic celebration.",
+    "guidance": "Keep the síneadh fada: á é í ó ú. Preserve initial mutations and spacing. A missing accent can change a word; a useful accuracy test must respect that.",
+    "chars": "á é í ó ú",
+    "source": "https://www.askaboutireland.ie/reading-room/life-society/irish-language-legends/A-stair-na-gaeilge/translation-irish-languag/decline-and-revival/",
+    "sourceName": "Ask About Ireland — Decline and Revival",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/irish/typing-test/"
+  },
+  {
+    "id": "catalan",
+    "name": "Catalan",
+    "native": "Català",
+    "region": "Catalan-speaking territories",
+    "group": "Europe",
+    "desc": "A rich literary and community life that endured public repression.",
+    "history": "Catalan is a living language with a substantial literary, educational, and community presence. Its inclusion here concerns a history of repression and the work of maintaining public use, not a claim that it is nearly extinct. Catalan-speaking territories also have different political and legal histories; Catalonia’s experience cannot stand for every speaker.",
+    "timeline": [
+      [
+        "1932",
+        "Catalonia’s first autonomy statute establishes Catalan’s official role."
+      ],
+      [
+        "1939–1975",
+        "Franco’s dictatorship represses Catalan public use; intensity and permitted spaces change over time."
+      ],
+      [
+        "1978",
+        "Spain’s Constitution recognises linguistic plurality."
+      ],
+      [
+        "1979",
+        "Catalonia’s Statute restores co-official recognition."
+      ],
+      [
+        "1985",
+        "TERMCAT begins its terminology work."
+      ],
+      [
+        "Today",
+        "Education, adult learning, conversation partnerships, publishing, and community use support Catalan."
+      ]
+    ],
+    "efforts": "Education, terminology work, publishing, and language-learning networks extend Catalan use. Conditions differ across territories; one regional policy cannot represent them all.",
+    "guidance": "Keep ç, accents, and the middle dot in l·l. Follow the passage’s regional standard and respect Valencian naming and forms.",
+    "chars": "à è é í ï ò ó ú ü ç l·l",
+    "source": "https://llengua.gencat.cat/en/el-catala/origens-i-historia/index.html",
+    "sourceName": "Generalitat de Catalunya — Origins and history of Catalan",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/catalan/typing-test/"
+  },
+  {
+    "id": "taiwanese-taigi",
+    "name": "Taiwanese Taigi",
+    "native": "Tâi-gí",
+    "region": "Taiwan",
+    "group": "Asia",
+    "desc": "Making room for Taiwanese in writing, learning, and family life.",
+    "history": "Taiwanese Taigi is not Mandarin with a different accent. It has its own spoken forms and writing traditions. Calling everything on this page simply Chinese would hide the very distinction that makes language transmission difficult: a child can become highly literate in Mandarin while losing opportunities to speak, read, or write Taigi.",
+    "timeline": [
+      [
+        "1945 onward",
+        "The Nationalist government promotes Mandarin as the sole national language."
+      ],
+      [
+        "2001",
+        "Local-language learning enters the reformed school curriculum."
+      ],
+      [
+        "2019",
+        "The Development of National Languages Act is promulgated."
+      ],
+      [
+        "2022–2026",
+        "The national languages development plan supports transmission, education, media, and digital resources."
+      ]
+    ],
+    "efforts": "Teaching, broadcasting, dictionaries, and community use offer pathways into Taiwanese. Written material may use characters, romanization, or mixed writing, so an editor must declare the system used.",
+    "guidance": "Label Tâi-lô or Pe̍h-ōe-jī explicitly. Preserve tone marks and normalize Unicode. Do not silently turn Taiwanese material into Mandarin.",
+    "chars": "Tâi-gí · Pe̍h-ōe-jī",
+    "source": "https://english.moe.gov.tw/cp-117-21022-B8B67-1.html",
+    "sourceName": "Taiwan Ministry of Education · Educational reform and authoritarian education",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/taiwanese-taigi/typing-test/"
+  },
+  {
+    "id": "hakka-sixian",
+    "name": "Hakka (Sixian)",
+    "native": "四縣客語",
+    "region": "Taiwan",
+    "group": "Asia",
+    "desc": "Sixian Hakka: language-rights activism, family transmission, and a distinct pronunciation and writing pathway in Taiwan.",
+    "history": "Hakka’s reduced public space in Taiwan was not simply a matter of changing tastes. Mandarin-dominant institutions and broadcast restrictions made other languages less available and less authoritative. The Hakka Restoration Movement challenged that hierarchy. On December 28, 1988, demonstrators called for language equality and the right to hear and use Hakka publicly.",
+    "timeline": [
+      [
+        "1988",
+        "The Hakka Restoration Rally calls for language equality and public use."
+      ],
+      [
+        "2010",
+        "The Hakka Basic Act is promulgated."
+      ],
+      [
+        "2018",
+        "The revised Act strengthens national-language status and public-use provisions."
+      ],
+      [
+        "2021",
+        "The Hakka Affairs Council describes the online corpus preserving separately identified Hakka varieties."
+      ]
+    ],
+    "efforts": "Hakka broadcasting, education, and community initiatives support transmission. Tracking Sixian separately ensures that passages and reviewer expertise match the intended variety.",
+    "guidance": "Declare the variety and romanization system. Tone notation must match that system. Do not reuse Sixian text as Hailu, or the reverse, without a competent speaker’s review.",
+    "chars": "四縣 · Sixian",
+    "source": "https://english.hakka.gov.tw/Content/Content?LanguageType=ENG&NodeID=676&PageID=43637",
+    "sourceName": "Hakka Affairs Council · The Hakka Restoration Movement",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/hakka-sixian/typing-test/"
+  },
+  {
+    "id": "hakka-hailu",
+    "name": "Hakka (Hailu)",
+    "native": "海陸客語",
+    "region": "Taiwan",
+    "group": "Asia",
+    "desc": "Hailu Hakka: a distinct variety sustained through community teaching, broadcasting, and the struggle for public recognition in Taiwan.",
+    "history": "Hakka’s reduced public space in Taiwan was not simply a matter of changing tastes. Mandarin-dominant institutions and broadcast restrictions made other languages less available and less authoritative. The Hakka Restoration Movement challenged that hierarchy. On December 28, 1988, demonstrators called for language equality and the right to hear and use Hakka publicly.",
+    "timeline": [
+      [
+        "1988",
+        "The Hakka Restoration Rally calls for language equality and public use."
+      ],
+      [
+        "2010",
+        "The Hakka Basic Act is promulgated."
+      ],
+      [
+        "2018",
+        "The revised Act strengthens national-language status and public-use provisions."
+      ],
+      [
+        "2021",
+        "The Hakka Affairs Council describes the online corpus preserving separately identified Hakka varieties."
+      ]
+    ],
+    "efforts": "Hakka broadcasting, education, and community initiatives support transmission. Tracking Hailu separately ensures that passages and reviewer expertise match the intended variety.",
+    "guidance": "Declare the variety and romanization system. Tone notation must match that system. Do not reuse Sixian text as Hailu, or the reverse, without a competent speaker’s review.",
+    "chars": "海陸 · Hailu",
+    "source": "https://english.hakka.gov.tw/Content/Content?LanguageType=ENG&NodeID=676&PageID=43637",
+    "sourceName": "Hakka Affairs Council · The Hakka Restoration Movement",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/hakka-hailu/typing-test/"
+  },
+  {
+    "id": "wenzhounese",
+    "name": "Wenzhounese",
+    "native": "溫州話",
+    "region": "Wenzhou & diaspora",
+    "group": "Asia",
+    "desc": "Heritage transmission across generations and borders.",
+    "history": "Wenzhounese connects people in Wenzhou and communities abroad. A responsible history must distinguish reduced transmission, institutional language hierarchies, migration, and direct legal prohibition. These processes can overlap, but they are not interchangeable. This article does not invent a single date when Wenzhounese was banned, or claim a verified worldwide speaker total.",
+    "timeline": [
+      [
+        "Across generations",
+        "Families in Wenzhou and diaspora communities negotiate transmission in multilingual settings."
+      ],
+      [
+        "2020",
+        "A comparative study reports generational effects in selected grammatical constructions in China and the Netherlands."
+      ],
+      [
+        "Publication standard",
+        "Local variety, writing convention, permissions, and competent review must be established before WPMTest releases scored passages."
+      ]
+    ],
+    "efforts": "Family use and documentation support access. Research cautions against assuming every change is caused by migration alone. Local expertise is needed before releasing a scored typing corpus.",
+    "guidance": "State the local variety and writing convention. Chinese characters alone do not specify Wenzhounese pronunciation. Never label Mandarin sentences as Wenzhounese practice.",
+    "chars": "溫州話 · Wu",
+    "source": "https://dare.uva.nl/id/1a8e9c92-c142-42c5-af9c-b4d2cd640530",
+    "sourceName": "University of Amsterdam · Definiteness in Wenzhounese Chinese in the Netherlands and in China (2020)",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/wenzhounese/typing-test/"
+  },
+  {
+    "id": "sorani-kurdish",
+    "name": "Sorani Kurdish",
+    "native": "کوردیی ناوەندی",
+    "region": "Iraq, Iran & diaspora",
+    "group": "West Asia",
+    "desc": "A literary language whose public rights differ across borders.",
+    "history": "Sorani, commonly called Central Kurdish, has a substantial written and literary life. It belongs within a wider Kurdish linguistic landscape whose varieties and communities must be distinguished. A restriction documented for Kurmanji in Turkey cannot automatically be retold as the experience of Sorani speakers in Iraq or Iran. Shared identity does not make every legal history identical.",
+    "timeline": [
+      [
+        "20th century",
+        "Central Kurdish develops a substantial modern literary and public written tradition."
+      ],
+      [
+        "2005",
+        "Article 4 of Iraq’s Constitution recognizes Kurdish and Arabic as official languages."
+      ],
+      [
+        "2014",
+        "The Kurdistan Region’s Official Languages Law provides a regional public-use framework."
+      ],
+      [
+        "2023",
+        "The KRG announces Kurdish learning and public-signage measures."
+      ]
+    ],
+    "efforts": "Education, publishing, media, and digital communication sustain Kurdish use. Legal recognition in Iraq does not describe conditions in Iran or all diaspora communities.",
+    "guidance": "Use a Kurdish keyboard and right-to-left text. Preserve ڕ ڵ ۆ ێ. Similar Arabic and Persian characters can have different code points; test composition and Unicode normalization.",
+    "chars": "ڕ ڵ ۆ ێ ە",
+    "source": "https://www.cambridge.org/9781108473354",
+    "sourceName": "The Cambridge History of the Kurds (2021) · language and literary histories",
+    "glossika": true,
+    "test": "https://wpmtest.app/language-revival/sorani-kurdish/typing-test/"
+  }
+]

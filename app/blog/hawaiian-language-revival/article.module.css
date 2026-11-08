@@ -40,3 +40,4 @@
 .finalCta { margin-bottom: 28px; text-align: center; }
 :global(:root[data-theme="light"]) .page { --leaf: #286144; }
 @media(max-width: 560px) { .page { padding: 18px; } .header { margin-top: 32px; } .hero { margin-bottom: 32px; } .body { font-size: 1rem; line-height: 1.8; } .statGrid { grid-template-columns: 1fr; } .stat { display: grid; grid-template-columns: 110px minmax(0,1fr); align-items: center; gap: 14px; padding: 20px; } .stat strong { margin: 0; } .diacritics { gap: 6px; } .section { padding: 32px 0; } .resource { padding: 20px; } }
+.languageBanner{padding:clamp(24px,6vw,64px);margin:24px 0 48px;border-radius:18px;background:linear-gradient(130deg,#123f36,#294e53);color:#f6ead1;text-align:center;border:1px solid #87c8a5;}.languageBanner span{font-family:Georgia,serif;font-size:clamp(2.3rem,7vw,5rem);overflow-wrap:anywhere;}.languageBanner p{font-size:.85rem;letter-spacing:.1em;}.characters{font-size:1.6rem;line-height:1.8;overflow-wrap:anywhere;}

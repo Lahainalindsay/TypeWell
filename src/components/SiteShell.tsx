@@ -94,7 +94,7 @@ export function SiteHeader() {
               {"hub" in group && <a className="site-menu-hub" href={group.hub[0]}>{group.hub[1]} →</a>}
             </div>
           </details>)}
-          <a className="site-articles" href="/blog/">Articles</a>
+          <a className="site-articles" href="/blog/">Articles</a><a className="site-articles" href="/language-revival/">Language Revival</a>
         </nav>
     </div>
   </header>;

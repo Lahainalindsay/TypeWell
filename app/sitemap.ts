@@ -1,3 +1,5 @@
+import {personalities} from "../src/features/typingPersonality";
+import {languages,articlePath,practicePath} from "../src/features/revival/content";
 import { guides } from "../src/features/editorial/guides";
 import type { MetadataRoute } from "next";
 import { seoPages } from "../src/seo/pages";
@@ -63,10 +65,10 @@ const supportingIndexableRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [...seoPages.map((page) => page.path), ...supportingIndexableRoutes, ...guides.map(guide => `/blog/${guide.slug}/`)];
+  const paths = [...personalities.map(p=>`/typing-personality-test/profile/${p.slug}/`),"/language-revival/", ...languages.flatMap(l=>[articlePath(l.id),practicePath(l.id)]), ...seoPages.map((page) => page.path), ...supportingIndexableRoutes, ...guides.map(guide => `/blog/${guide.slug}/`)];
   return [...new Set(paths.map(canonicalPath))].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: (["/typing-personality-test/", "/blog/typing-personality-test/"].includes(path) || path === "/blog/typing-test-on-phone-vs-keyboard/" || path === "/blog/" || guides.some(guide => path === `/blog/${guide.slug}/`)) ? new Date("2026-10-28T00:00:00Z") : [typingTestLanguagePaths.fil, typingTestLanguagePaths.haw, "/blog/hawaiian-language-revival/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", ...guides.map(guide => `/blog/${guide.slug}/`)].some(route => route === path) ? new Date("2026-10-27T00:00:00Z") : keywordUpdatedPaths.has(path) ? new Date("2026-10-09T00:00:00Z") : addedPaths.has(path) ? new Date("2026-10-05T00:00:00Z") : updatedPaths.has(path) || guides.some(guide => path === `/blog/${guide.slug}/`) ? new Date("2026-10-03T00:00:00Z") : localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
+    lastModified: (path === "/language-revival/" || languages.some(l=>path===articlePath(l.id)||path===practicePath(l.id))) ? new Date("2026-11-08T00:00:00Z") : (["/typing-personality-test/", "/blog/typing-personality-test/"].includes(path) || path === "/blog/typing-test-on-phone-vs-keyboard/" || path === "/blog/" || guides.some(guide => path === `/blog/${guide.slug}/`)) ? new Date("2026-10-28T00:00:00Z") : [typingTestLanguagePaths.fil, typingTestLanguagePaths.haw, "/blog/hawaiian-language-revival/", "/blog/", "/blog/best-typing-test-websites/", "/blog/data-entry-typing-test-for-employment/", ...guides.map(guide => `/blog/${guide.slug}/`)].some(route => route === path) ? new Date("2026-10-27T00:00:00Z") : keywordUpdatedPaths.has(path) ? new Date("2026-10-09T00:00:00Z") : addedPaths.has(path) ? new Date("2026-10-05T00:00:00Z") : updatedPaths.has(path) || guides.some(guide => path === `/blog/${guide.slug}/`) ? new Date("2026-10-03T00:00:00Z") : localizedTypingPaths.has(path) ? LOCALIZED_CONTENT_LAST_MODIFIED
       : path === "/" || /^\/[123]-page-typing-test\/$/.test(path) ? NEW_TEST_CONTENT_LAST_MODIFIED
       : SEO_CONTENT_LAST_MODIFIED,
     ...(localizedTypingPaths.has(path) ? { alternates: { languages: typingTestLanguageAlternates } } : {})
