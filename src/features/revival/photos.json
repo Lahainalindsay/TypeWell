@@ -1,0 +1,123 @@
+{
+  "welsh": {
+    "src": "/images/revival/welsh.webp",
+    "credit": "Sunsetsareawesome",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Snowdonia_-_Wales.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1600,
+    "height": 900,
+    "alt": "Green mountain valley beneath cloud and sunlight in Eryri, Wales",
+    "caption": "Mountain scenery in Eryri (Snowdonia), Wales. Resized and converted to WebP; original framing retained."
+  },
+  "manx": {
+    "src": "/images/revival/manx.webp",
+    "credit": "Frank Schuengel",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Isle_of_Man_Landscape.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1600,
+    "height": 900,
+    "alt": "Late-afternoon sunlight over the Calf of Man, viewed from near Cregneash",
+    "caption": "Looking toward the Calf of Man from near Cregneash on the Isle of Man. Cropped to landscape, resized and converted to WebP."
+  },
+  "scottish-gaelic": {
+    "src": "/images/revival/scottish-gaelic.webp",
+    "credit": "Nono vlf",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Le_Quiraing.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Golden light over the Quiraing ridges and winding road on the Isle of Skye",
+    "caption": "The Quiraing on the Isle of Skye, Scotland. Resized and converted to WebP; original framing retained."
+  },
+  "irish": {
+    "src": "/images/revival/irish.webp",
+    "credit": "Vratsa18",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Wide_angle_view_towards_the_Twelve_Bens_seen_while_coming_down_from_Mt_Diamond,_Connemara_National_Park.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "width": 1600,
+    "height": 900,
+    "alt": "Green slopes and the Twelve Bens seen from Diamond Hill in Connemara National Park",
+    "caption": "View toward the Twelve Bens from Diamond Hill in Connemara National Park, Ireland. Resized and converted to WebP; original framing retained."
+  },
+  "catalan": {
+    "src": "/images/revival/catalan.webp",
+    "credit": "Bernard Gagnon",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Montserrat_mountain.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "width": 1600,
+    "height": 1048,
+    "alt": "Rounded rock peaks and woodland at Montserrat in Catalonia",
+    "caption": "Montserrat’s rock formations in Catalonia, with the hermitage of Sant Benet. Resized and converted to WebP; original framing retained."
+  },
+  "taiwanese-taigi": {
+    "src": "/images/revival/taiwanese-taigi.webp",
+    "alt": "Green mountain slopes and a small settlement on the route to Alishan, Taiwan",
+    "caption": "On the route to Alishan National Scenic Area, Taiwan.",
+    "credit": "Felix Filnkoessl, “2017-08-10 En route to Alishan National Scenic Area.jpg”. Resized and converted to WebP; no crop.",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:2017-08-10_En_route_to_Alishan_National_Scenic_Area.jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "width": 1600,
+    "height": 900
+  },
+  "hakka-sixian": {
+    "src": "/images/revival/hakka-sixian.webp",
+    "alt": "Forested mountain ridges at Nanzhuang in Miaoli County, Taiwan",
+    "caption": "Mountain landscape at Nanzhuang, Miaoli County, Taiwan.",
+    "credit": "Kai3952, “Beautiful mountain landscape of Nanzhuang in the afternoon on 9th October 2020.jpg”. Resized and converted to WebP; no crop.",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Beautiful_mountain_landscape_of_Nanzhuang_in_the_afternoon_on_9th_October_2020.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 1600,
+    "height": 1200
+  },
+  "hakka-hailu": {
+    "src": "/images/revival/hakka-hailu.webp",
+    "alt": "Emei Lake bordered by green hills and a small waterside pavilion in Hsinchu County, Taiwan",
+    "caption": "Emei Lake in Hsinchu County, Taiwan.",
+    "credit": "lienyuan lee, “峨眉湖 Emei Lake - panoramio (1).jpg”. Resized and converted to WebP; no crop.",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:%E5%B3%A8%E7%9C%89%E6%B9%96_Emei_Lake_-_panoramio_(1).jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "width": 1600,
+    "height": 1200
+  },
+  "sorani-kurdish": {
+    "src": "/images/revival/sorani-kurdish.webp",
+    "alt": "Green spring fields and distant hills near Erbil in the Kurdistan Region of Iraq",
+    "caption": "Spring landscape near Erbil, Kurdistan Region of Iraq.",
+    "credit": "Khoshhat, “Erbil landscape.jpg”. Resized and converted to WebP; no crop.",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Erbil_landscape.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 1600,
+    "height": 1067
+  },
+  "wenzhounese": {
+    "src": "/images/revival/wenzhounese.webp",
+    "alt": "A broad bend of the Nanxi River between green mountains in Yongjia, Wenzhou, China",
+    "caption": "The Nanxi River in Yongjia, Wenzhou, Zhejiang, China.",
+    "credit": "rheins, “The Most Beautiful Section of Nanxi River” (April 2010). Converted to WebP; no crop or enlargement.",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:%E6%A5%A0%E6%BA%AA%E6%B1%9F%E6%9C%80%E7%BE%8E%E4%B8%BD%E7%9A%84%E4%B8%80%E6%AE%B5_-_The_Most_Beautiful_Section_of_Nanxi_River_-_2010.04_-_panoramio.jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "width": 1296,
+    "height": 972
+  },
+  "hawaiian": {
+    "src": "/images/revival/hawaiian.webp",
+    "alt": "Green ridged cliffs and a narrow beach rise above blue ocean along the Nā Pali Coast on Kauaʻi.",
+    "caption": "Nā Pali Coast, Kauaʻi, photographed from a boat on June 1, 2017.",
+    "credit": "MEBurkhart / Wikimedia Commons — “Na Pali Coast” (2017). Resized from 3264 × 2448 to 1600 × 1200 and converted from JPEG to WebP; no crop. This adapted image is shared under CC BY-SA 4.0.",
+    "creditUrl": "https://commons.wikimedia.org/wiki/File:Na_Pali_Coast.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "width": 1600,
+    "height": 1200
+  }
+}

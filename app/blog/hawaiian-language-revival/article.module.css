@@ -41,3 +41,24 @@
 :global(:root[data-theme="light"]) .page { --leaf: #286144; }
 @media(max-width: 560px) { .page { padding: 18px; } .header { margin-top: 32px; } .hero { margin-bottom: 32px; } .body { font-size: 1rem; line-height: 1.8; } .statGrid { grid-template-columns: 1fr; } .stat { display: grid; grid-template-columns: 110px minmax(0,1fr); align-items: center; gap: 14px; padding: 20px; } .stat strong { margin: 0; } .diacritics { gap: 6px; } .section { padding: 32px 0; } .resource { padding: 20px; } }
 .languageBanner{padding:clamp(24px,6vw,64px);margin:24px 0 48px;border-radius:18px;background:linear-gradient(130deg,#123f36,#294e53);color:#f6ead1;text-align:center;border:1px solid #87c8a5;}.languageBanner span{font-family:Georgia,serif;font-size:clamp(2.3rem,7vw,5rem);overflow-wrap:anywhere;}.languageBanner p{font-size:.85rem;letter-spacing:.1em;}.characters{font-size:1.6rem;line-height:1.8;overflow-wrap:anywhere;}
+
+/* Article navigation must wrap independently of compact site-header links. */
+.page nav a { white-space: normal; max-width: 100%; overflow-wrap: anywhere; }
+.contents { display:block; width:100%; padding:clamp(18px,4vw,30px); margin:32px 0 44px; border:1px solid var(--line); border-radius:18px; background:var(--panel); }
+.contents .eyebrow { margin:0 0 12px; }
+.contents ol { list-style:none; padding:0; margin:0; }
+.contents li { margin:0; border-bottom:1px solid var(--line); }
+.contents li a { display:grid; grid-template-columns:2ch minmax(0,1fr); gap:14px; padding:15px 0; text-decoration:none; line-height:1.55; font-size:1rem; white-space:normal; }
+.contents li a:hover { text-decoration:underline; }
+.contentsNumber { color:var(--muted); font-size:.78rem; padding-top:.2rem; font-variant-numeric:tabular-nums; }
+.contentsShortcuts { display:flex; flex-wrap:wrap; gap:10px 24px; padding-top:18px; }
+.contentsShortcuts a { font-size:.9rem; }
+.placeHero { margin:0 0 44px; }
+.photoFrame { position:relative; overflow:hidden; border-radius:20px; background:#173c34; }
+.photoFrame img { display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; }
+.photoLabel { position:absolute; inset:auto 0 0; display:grid; gap:6px; padding:clamp(22px,4vw,42px); color:#fff; background:linear-gradient(transparent,rgba(0,0,0,.78)); padding-top:80px; }
+.photoLabel span { font-family:Georgia,serif; font-size:clamp(1.8rem,4.5vw,3.7rem); line-height:1.2; text-shadow:0 2px 12px #0006; overflow-wrap:anywhere; }
+.photoLabel small { font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; }
+.placeHero figcaption { padding:12px 4px 0; color:var(--muted); font-size:.75rem; line-height:1.7; overflow-wrap:anywhere; }
+.placeHero figcaption span { display:block; }
+@media(max-width:560px) { .contents { padding:18px; border-radius:14px; } .contents li a { font-size:.95rem; gap:10px; padding:13px 0; } .photoFrame { border-radius:14px; } .photoFrame img { aspect-ratio:4/3; } .photoLabel { padding:22px; padding-top:65px; } .placeHero { margin-bottom:30px; } }
