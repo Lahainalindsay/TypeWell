@@ -326,6 +326,12 @@
   "catalan": {
     "sections": [
       {
+        "heading": "Where is Catalan spoken?",
+        "paragraphs": [
+          "Catalan is a language, not the name of a country. Catalonia (Catalunya), whose capital is Barcelona, is an autonomous community in northeastern Spain. Catalan is also spoken in the Valencian Community, where it is called Valencian, and the Balearic Islands; in Andorra, an independent country; in Northern Catalonia in southern France; and in Alghero on the Italian island of Sardinia. Smaller traditional Catalan-speaking areas include eastern Aragon and El Carche in Murcia, Spain. These communities span four countries: Spain, Andorra, France, and Italy."
+        ]
+      },
+      {
         "heading": "Public repression did not begin with a lack of speakers",
         "paragraphs": [
           "Catalan is a living language with a substantial literary, educational, and community presence. Its inclusion here concerns a history of repression and the work of maintaining public use, not a claim that it is nearly extinct. Catalan-speaking territories also have different political and legal histories; Catalonia’s experience cannot stand for every speaker.",
@@ -381,6 +387,10 @@
       ]
     ],
     "sources": [
+      {
+        "title": "Generalitat de Catalunya — Catalan: language and territories",
+        "url": "https://llengua.gencat.cat/en/el-catala/"
+      },
       {
         "title": "Generalitat de Catalunya — Origins and history of Catalan",
         "url": "https://llengua.gencat.cat/en/el-catala/origens-i-historia/index.html"
