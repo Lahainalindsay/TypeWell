@@ -1,3 +1,5 @@
+import GlossikaCard from '../partners/GlossikaCard';
+import {localizedGlossikaCourses} from '../partners/glossika';
 import LocalizedTypingTest from "./LocalizedTypingTest";
 import type { LocalizedTypingContent } from "./content";
 import styles from "./LocalizedTypingPage.module.css";
@@ -58,7 +60,7 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
         </details>
       </section>
 
-
+      {localizedGlossikaCourses[content.lang]&&<GlossikaCard name={localizedGlossikaCourses[content.lang]}/>}
     </main>
   );
 }
