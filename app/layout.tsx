@@ -73,7 +73,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
         />
         <script defer src="/certificate-flow.js" />
-        <script defer src="/site-upgrade.js" />
       </head>
       <body><SiteHeader />{children}<SiteFooter /></body>
       <Script

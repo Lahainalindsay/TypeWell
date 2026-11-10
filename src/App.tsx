@@ -560,25 +560,32 @@ function Trainer(props: {
 }
 
 function TypingText({ target, statuses, index, fontSize, lineHeight, onFocusInput, onClickInput }: { target: string; statuses: string[]; index: number; fontSize: number; lineHeight: number; onFocusInput?: () => void; onClickInput?: () => void }) {
-  const [windowSize, setWindowSize] = useState(260);
-  useEffect(() => {
-    const updateWindowSize = () => setWindowSize(window.innerWidth < 520 ? 145 : window.innerWidth < 900 ? 210 : 320);
-    updateWindowSize();
-    window.addEventListener("resize", updateWindowSize);
-    return () => window.removeEventListener("resize", updateWindowSize);
-  }, []);
-  const start = Math.max(0, index - Math.floor(windowSize * 0.42));
+  const viewportRef = useRef<HTMLDivElement>(null);
   const targetCharacters = splitGraphemes(target);
-  const end = Math.min(targetCharacters.length, start + windowSize);
-  const visible = targetCharacters.slice(start, end);
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    function keepCurrentLineVisible() {
+      if (!viewport) return;
+      const current = viewport.querySelector<HTMLElement>(".current");
+      if (!current || index === 0) { viewport.scrollTop = 0; return; }
+      const style = getComputedStyle(viewport);
+      const lineHeight = parseFloat(style.lineHeight) || 40;
+      const top = current.offsetTop;
+      const bottom = viewport.scrollTop + viewport.clientHeight - parseFloat(style.paddingBottom || "0");
+      if (top + lineHeight > bottom || top < viewport.scrollTop) {
+        viewport.scrollTop = Math.max(0, top - lineHeight);
+      }
+    }
+    keepCurrentLineVisible();
+    window.addEventListener("resize", keepCurrentLineVisible);
+    return () => window.removeEventListener("resize", keepCurrentLineVisible);
+  }, [target, index, fontSize, lineHeight]);
   return (
-    <div className="typing-text" style={{ fontSize, lineHeight }} tabIndex={0} role="textbox" aria-label="Typing prompt. Start typing to begin." onFocus={onFocusInput} onClick={onClickInput ?? onFocusInput}>
-      {start > 0 && <span className="edge-fade" aria-hidden="true">...</span>}
-      {visible.map((char, i) => {
-        const targetIndex = start + i;
-        return <span key={`${targetIndex}-${char}`} className={`${statuses[targetIndex] ?? "pending"} ${targetIndex === index ? "current" : ""}`}>{char === " " ? "\u00a0" : char}</span>;
-      })}
-      {end < targetCharacters.length && <span className="edge-fade" aria-hidden="true">...</span>}
+    <div ref={viewportRef} className="typing-text typing-viewport" style={{ fontSize, lineHeight }} tabIndex={0} role="textbox" aria-label="Typing prompt. Start typing to begin." onMouseDown={(event) => { event.preventDefault(); onFocusInput?.(); }} onFocus={onFocusInput} onClick={onClickInput ?? onFocusInput}>
+      {targetCharacters.map((char, targetIndex) => (
+        <span key={targetIndex} className={`${statuses[targetIndex] ?? "pending"} ${targetIndex === index ? "current" : ""}`}>{char}</span>
+      ))}
     </div>
   );
 }
