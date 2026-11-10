@@ -1,3 +1,5 @@
+Current audit: [November 10, 2026](REPOSITORY-AUDIT-2026-11-10.md). The document below is the historical September audit.
+
 # WPMTest repository audit — 2026-09
 
 Status: cleanup foundation substantially complete on `architecture-cleanup-2026-09`. The branch remains isolated from `main` until explicit merge approval.
