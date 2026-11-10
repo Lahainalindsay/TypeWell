@@ -1,95 +1,229 @@
 {
-  "title": "More Than Speed. A Space for Every Voice.",
-  "subtitle": "Keeping languages alive, one word, one keystroke, and one generation at a time.",
-  "opening": {
-    "heading": "Every Language Carries a World Worth Keeping",
-    "paragraphs": [
-      "Imagine a language that holds generations of stories, family memories, traditional knowledge, humor, poetry, and ways of understanding the world.",
-      "Now imagine fewer children growing up speaking it. Fewer opportunities to learn it in school. Fewer books, websites, and digital spaces where people can read and write it.",
-      "A language does not disappear overnight. Its everyday use can gradually diminish when social pressures, political policies, discrimination, displacement, or changing circumstances make it harder for one generation to pass it to the next.",
-      "But that is not where every story ends.",
-      "Across the world, communities are teaching ancestral languages to new generations, creating educational resources, publishing literature, building digital tools, and bringing their languages into everyday life.",
-      "At WPMTest, we believe the digital world should make room for these languages, too.",
-      "That’s why we’re expanding beyond conventional typing tests to highlight eleven language pathways, their histories, and the people working to sustain their futures.",
-      "Because typing is about more than speed.",
-      "It’s also about whose words have a place on our screens."
-    ]
-  },
-  "beforeDirectory": [
+  "eyebrow": "MORE THAN SPEED. SPACE FOR EVERY VOICE.",
+  "title": "Living Languages. Lasting Connections.",
+  "subtitle": "Exploring the histories, resilience, and renewal of eleven languages—and why their place in the modern world matters.",
+  "sections": [
     {
-      "heading": "Why Language Preservation Matters",
+      "heading": "",
       "paragraphs": [
-        "A language is more than a collection of words and grammatical rules. It is a living connection between people, places, knowledge, and generations.",
-        "Languages can carry unique expressions, oral histories, place names, cultural practices, and ways of describing relationships with the natural world.",
-        "When a language loses everyday speakers or opportunities for transmission, communities may lose access to knowledge and cultural connections that cannot always be fully expressed through translation.",
-        "Yet languages are not museum pieces to be preserved unchanged. They are living forms of communication that grow, adapt, borrow, innovate, and find new uses.",
-        "Successful language revitalization is therefore not simply about recording old words. It is about helping people use their languages in the present and carry them into the future.",
-        "That can mean grandparents speaking with grandchildren, teachers developing classroom materials, writers publishing new stories, or young people exchanging messages in their heritage language.",
-        "And increasingly, it also means being able to write those languages comfortably on a computer or phone."
+        "Every language tells a story that no other language can tell in quite the same way.",
+        "Within its words live generations of knowledge: the names of landscapes, the rhythms of oral traditions, expressions of belonging, systems of understanding the natural world, and ways of describing human experience. Languages carry the everyday conversations of families alongside the histories, literature, and cultural knowledge of entire communities.",
+        "Yet throughout history, many languages have been pushed out of the places where they were once spoken freely.",
+        "Colonization, forced assimilation, discriminatory education policies, population displacement, and social pressure have disrupted the transmission of languages between generations. In some communities, children were punished for speaking their ancestral language at school. In others, economic opportunities and public institutions increasingly favored dominant languages, gradually reducing opportunities to use local languages in education, employment, and everyday life.",
+        "The consequences extend far beyond vocabulary. When a language loses speakers, communities may also lose access to forms of cultural knowledge, oral history, and expression that cannot always be fully preserved through translation.",
+        "But language loss is not inevitable.",
+        "Across the world, communities are teaching ancestral languages to new generations, creating immersion schools, recording the knowledge of elders, developing dictionaries and digital resources, and bringing languages into literature, music, broadcasting, and public life.",
+        "These efforts are not simply about preserving the past. They are about ensuring that languages have a future."
       ]
     },
     {
-      "heading": "The Digital World Has a Role to Play",
+      "heading": "Eleven Languages. Eleven Distinct Stories.",
       "paragraphs": [
-        "For many people, typing is now one of the most common ways they use language.",
-        "We write messages, search for information, study, work, share stories, and communicate with family through keyboards and screens.",
-        "But digital technology has not always treated every language equally.",
-        "Some languages have extensive keyboard support, spellcheckers, learning platforms, fonts, and online content. Others have fewer resources, less visibility, or writing systems that require additional technical support.",
-        "Even where a language can be typed, opportunities to practice its spelling conventions, characters, and diacritics may be limited.",
-        "These differences matter.",
-        "A language’s future depends primarily on its speakers and communities, but accessible digital tools can support the work they are already doing.",
-        "A keyboard cannot save a language. But it can help make that language easier to use.",
-        "At WPMTest, our contribution is intentionally practical: provide accessible typing activities, introduce readers to reliable historical and educational resources, and encourage greater awareness of linguistic diversity.",
-        "We do not claim to teach fluency or replace community-led language programs. We want to help create another welcoming place where these languages can be seen, written, explored, and respected."
+        "The **WPMTest Language Revival Series** explores eleven languages shaped by different histories of political pressure, cultural change, resilience, and community-led renewal.",
+        "Their circumstances are not interchangeable.",
+        "Some languages experienced deliberate suppression through government policies, institutional restrictions, or punishment in schools. Others have faced a gradual decline in intergenerational transmission as larger languages became dominant in education, employment, and public communication.",
+        "Some continue to be spoken by millions of people while facing challenges in particular regions or areas of public life. Others have far fewer fluent speakers and depend on intensive efforts to restore opportunities for learning and everyday use.",
+        "The term *language revival* therefore describes a broad range of experiences: revitalizing endangered languages, strengthening threatened patterns of transmission, reclaiming ancestral languages, and expanding opportunities for languages to thrive in contemporary society.",
+        "Each language deserves to be understood on its own terms—not only through the pressures it has faced, but through the people, knowledge, creativity, and cultural life that continue to sustain it."
+      ]
+    },
+    {
+      "heading": "Why Language Matters Beyond Words",
+      "paragraphs": [
+        "Language is more than a tool for exchanging information. It is also a means of passing knowledge, expressing identity, maintaining relationships, and participating in community life.",
+        "A language may contain highly specialized vocabulary for local ecosystems, traditional navigation, agriculture, kinship, or cultural practices. Its stories and expressions may preserve generations of observation and experience. Its grammar, metaphors, and literary traditions offer distinctive possibilities for communicating meaning.",
+        "Translation can open doors between languages, but it cannot always reproduce every cultural association, historical reference, or subtle distinction carried by the original words.",
+        "When a language stops being passed from one generation to the next, these connections can become harder to maintain.",
+        "That is why language revitalization matters.",
+        "The goal is not merely to document words before they disappear. It is to support the ability of communities to speak, teach, write, create, and live through their languages—on their own terms."
+      ]
+    },
+    {
+      "heading": "From Cultural Preservation to Everyday Use",
+      "paragraphs": [
+        "A language's future depends on more than the number of words recorded in a dictionary.",
+        "For a language to remain part of everyday life, people need opportunities to learn and use it. Families, schools, community organizations, media, government services, publishing, and technology can all influence whether those opportunities exist.",
+        "Digital spaces are increasingly part of that picture.",
+        "Keyboards that support a language's writing system, accessible fonts, online learning materials, searchable dictionaries, and opportunities to communicate in writing can make a meaningful difference in how easily people use their language in contemporary settings.",
+        "These tools cannot replace fluent speakers, community relationships, or sustained educational programs. But when developed with appropriate linguistic knowledge and community participation, they can help remove practical barriers to written communication.",
+        "**A language belongs not only in historical records, but wherever its community wants to use it—including the digital world.**"
+      ]
+    },
+    {
+      "heading": "Why a Typing Website Is Part of This Conversation",
+      "paragraphs": [
+        "At WPMTest, typing has traditionally been about speed, accuracy, and practice. But the keyboard is also one of the everyday tools through which language is written, shared, and encountered.",
+        "That creates an opportunity to do something more.",
+        "The Language Revival Series brings linguistic history and digital writing practice together, inviting visitors to discover languages they may know little about, understand the forces that have shaped their histories, and explore how communities are working to sustain them.",
+        "Our contribution is deliberately modest.",
+        "A typing exercise cannot revive a language. Encountering unfamiliar letters or copying a word does not create fluency, and meaningful revitalization depends on the leadership, knowledge, and long-term work of language communities.",
+        "What a typing platform can do is provide an accessible starting point: introduce readers to reliable historical context, encourage respectful curiosity, support practice with written characters and words where appropriate, and direct attention toward the people and organizations carrying out the essential work.",
+        "The intention is not to turn living languages into typing challenges. It is to use an everyday digital activity as a doorway to greater understanding."
+      ]
+    },
+    {
+      "heading": "Explore the History. Discover the People. Engage With the Language.",
+      "paragraphs": [
+        "Each article in this series offers a closer examination of one language and its continuing story.",
+        "You'll explore its historical development, the events and policies that affected its use, important turning points, and the community-led initiatives shaping its future. Timelines, writing guidance, and supporting sources provide opportunities to investigate further.",
+        "Where suitable practice material is available, visitors can also engage with the language through typing activities.",
+        "The Hawaiian language pathway includes dedicated practice passages. The other ten pathways currently begin with clearly identified character and name-copying exercises, alongside the option to practice with text users have independently verified. These exercises are introductory writing activities, not language lessons or collections of speaker-reviewed sentences.",
+        "As the series develops, the aim is to maintain a clear distinction between educational exploration, authentic language learning, and the much deeper work of community-led revitalization."
+      ]
+    },
+    {
+      "heading": "Every Language Has a Past. Every Living Language Has a Future Worth Supporting.",
+      "paragraphs": [
+        "The history of a language is never only a history of decline or survival.",
+        "It is also a history of people: families who continued speaking, teachers who created new opportunities to learn, elders who shared knowledge, writers who expanded literary traditions, and communities who insisted that their languages deserved a place in the future.",
+        "Across eleven distinct stories, this series explores what happens when languages are marginalized, why their continued use matters, and how communities are creating new possibilities for the generations that follow.",
+        "**Start with the history. Stay for the language. And discover why making space for every voice matters.**"
       ]
     }
   ],
-  "directory": {
-    "heading": "Eleven Language Pathways. Eleven Stories of Resilience.",
-    "paragraphs": [
-      "Every language featured here has its own history.",
-      "Some experienced government restrictions, educational punishment, or policies that discouraged their use. Others face pressures related to migration, changing family language practices, or the growing dominance of more widely used languages.",
-      "Some are spoken by millions of people. Others are rebuilding intergenerational transmission after profound disruption.",
-      "Their circumstances are different, and those differences deserve to be understood.",
-      "What connects them is the continuing work of people who value their languages and want them to remain part of everyday life."
-    ]
-  },
   "languages": {
-    "hawaiian": {"heading":"ʻŌlelo Hawaiʻi — Hawaiian","subtitle":"Hawaiʻi | A language finding new strength across generations","paragraphs":["The Hawaiian language carries the history, identity, literature, and cultural knowledge of Hawaiʻi.","Following the overthrow of the Hawaiian Kingdom, the 1896 law establishing English as the language of instruction in public and private schools contributed to the marginalization of Hawaiian in formal education. Broader political and social pressures also disrupted transmission between generations.","But Hawaiian never ceased to be spoken.","Community-led revitalization, including Hawaiian-language immersion education, university programs, and cultural initiatives, has helped create new generations of speakers and learners.","Today, ʻŌlelo Hawaiʻi is used in homes, classrooms, media, music, and digital communication, although sustaining its use remains an ongoing challenge.","Explore the history of ʻŌlelo Hawaiʻi and practice typing Hawaiian words and passages."],"practice":"Try the Hawaiian typing test →"},
-    "welsh": {"heading":"Cymraeg — Welsh","subtitle":"Wales | A living language with a future to build","paragraphs":["Welsh has endured centuries of pressure from the expanding dominance of English, including historical educational practices that stigmatized Welsh-speaking children.","Yet it has maintained a strong literary tradition, community presence, and generations of speakers.","Welsh-language education, broadcasting, legislation, and public initiatives have strengthened opportunities to use the language.","Its story is not simply one of recovery, but of an established living language working to sustain and expand its place in modern society.","Discover how Welsh communities are shaping the future of Cymraeg."],"practice":"Practice Welsh characters →"},
-    "manx": {"heading":"Gaelg — Manx","subtitle":"Isle of Man | A language whose story did not end with its last traditional native speaker","paragraphs":["When Ned Maddrell, widely recognized as the last traditional native speaker of Manx, died in 1974, many accounts portrayed the language as extinct.","But learners, teachers, recordings, and community advocates had already helped keep knowledge of Manx alive.","Today, Manx is taught through educational initiatives, used in community activities, and supported by people committed to its future.","Its revival demonstrates why the disappearance of a generation of traditional native speakers does not necessarily mean the end of a language.","Explore the remarkable continuation of Manx."],"practice":"Practice Manx characters →"},
-    "scottish-gaelic": {"heading":"Gàidhlig — Scottish Gaelic","subtitle":"Scotland | Reconnecting language, culture, and community","paragraphs":["Scottish Gaelic has experienced centuries of political, economic, and educational pressures, alongside migration and changing patterns of language use.","Today, Gaelic-medium education, broadcasting, cultural organizations, and community initiatives help support its continued use.","For Gaelic, revitalization is about more than increasing learner numbers. It also involves sustaining communities where the language is used naturally in everyday life.","Discover the people and initiatives supporting Scottish Gaelic."],"practice":"Practice Scottish Gaelic characters →"},
-    "irish": {"heading":"Gaeilge — Irish","subtitle":"Ireland | Bringing an ancient literary language into everyday life","paragraphs":["Irish has one of Europe’s oldest continuous vernacular literary traditions.","Despite centuries of political pressure and a major historical shift toward English, Irish remains a living language, particularly within Gaeltacht communities.","Irish-language education, broadcasting, cultural organizations, and digital resources support its use and learning.","The continuing challenge is to connect institutional support and widespread interest with opportunities to speak Irish naturally across generations.","Explore the history, resilience, and living communities of Gaeilge."],"practice":"Practice Irish characters →"},
-    "catalan": {"heading":"Català — Catalan","subtitle":"Spain, Andorra, France, and Italy | A language of literature, identity, and public life","paragraphs":["Catalan has a rich literary history and is used by millions of people across several European territories.","Its public use faced severe restrictions under Franco’s dictatorship in Spain, although the experiences of Catalan-speaking communities have varied across regions and historical periods.","Today, Catalan is widely used in education, publishing, broadcasting, government, and digital communication in parts of its linguistic territory.","Its future involves sustaining intergenerational use and ensuring that speakers can continue using it across social and technological settings.","Discover the history and contemporary life of Catalan."],"practice":"Practice Catalan characters →"},
-    "taiwanese-taigi": {"heading":"Tâi-gí — Taiwanese Taigi","subtitle":"Taiwan | Reclaiming space for language in public and family life","paragraphs":["Taiwanese Taigi has long been an important language of everyday communication, cultural expression, and community life in Taiwan.","Policies promoting Mandarin during the authoritarian period discouraged the public and educational use of other Taiwanese languages, contributing to shifts in language transmission.","Today, language advocates, educators, artists, and community organizations are working to expand opportunities to learn, speak, read, and write Taigi.","Its revitalization also highlights the importance of accessible writing conventions and digital resources.","Learn about the history and ongoing revitalization of Taiwanese Taigi."],"practice":"Explore Taigi character practice →"},
-    "hakka-sixian": {"heading":"四縣客語 — Sixian Hakka","subtitle":"Taiwan | Strengthening Hakka language transmission","paragraphs":["Sixian is one of the major Hakka varieties spoken in Taiwan, with its own pronunciation patterns and established educational resources.","Hakka communities have worked to secure greater recognition and support for their languages following decades in which Mandarin dominated many public institutions.","Language education, broadcasting, cultural initiatives, and family transmission remain important to sustaining Sixian Hakka.","Explore the history of Sixian Hakka and its place in Taiwan’s linguistic diversity."],"practice":"Explore Sixian Hakka practice →"},
-    "hakka-hailu": {"heading":"海陸客語 — Hailu Hakka","subtitle":"Taiwan | Preserving a distinct Hakka voice","paragraphs":["Hailu Hakka is another important variety within Taiwan’s Hakka-speaking communities.","Although closely related to Sixian, it has distinct pronunciation patterns and should not be treated as interchangeable with other Hakka varieties.","Community teaching, media, public recognition, and language resources support efforts to maintain its use.","Featuring Hailu separately reflects a simple principle: meaningful language support should recognize differences within language communities, not erase them.","Discover the distinctive history and features of Hailu Hakka."],"practice":"Explore Hailu Hakka practice →"},
-    "wenzhounese": {"heading":"溫州話 — Wenzhounese","subtitle":"Wenzhou and diaspora communities | Keeping a distinctive linguistic heritage connected across generations","paragraphs":["Wenzhounese, a variety of Wu Chinese, is known for its substantial linguistic differences from Mandarin and many other Chinese varieties.","It remains an important marker of local and family identity for speakers in Wenzhou and communities abroad.","As Mandarin dominates many educational and public settings, and families move across regions and countries, opportunities for younger generations to acquire Wenzhounese can change.","Family use, community connections, and cultural documentation all play roles in maintaining this heritage.","Explore the linguistic heritage of Wenzhounese."],"practice":"Explore Wenzhounese character practice →"},
-    "sorani-kurdish": {"heading":"کوردیی ناوەندی — Sorani Kurdish","subtitle":"Iraq, Iran, and diaspora communities | A literary language across borders","paragraphs":["Sorani Kurdish, also known as Central Kurdish, has a substantial literary tradition and an important place in Kurdish cultural life.","Its public and institutional status differs significantly across national borders.","In Iraq’s Kurdistan Region, Sorani is widely used in education, government, and media. In Iran, Kurdish-language education and public use operate within a different legal and political environment.","Writers, educators, publishers, and cultural organizations continue to contribute to its literary and digital presence.","Discover the history, writing system, and contemporary use of Sorani Kurdish."],"practice":"Explore Sorani Kurdish character practice →"}
-  },
-  "participation": {
-    "heading":"From Reading to Writing: How You Can Participate",
-    "paragraphs":["Learning about a language’s history is a valuable beginning. Engaging with the language itself can make that interest more meaningful.","At WPMTest, each language pathway offers an introduction to its history, a timeline of important developments, and links to resources for further exploration.","Our typing activities are designed to complement that learning.","For Hawaiian: Our existing Hawaiian typing test includes practice passages.","For the other ten pathways: We currently offer introductory character and name-copying exercises, along with the option to practice using your own verified text.","These introductory exercises are not comprehensive language courses, and we do not present them as speaker-reviewed sentence collections.","That distinction matters. Accurate spelling, meaningful context, and respect for language-specific conventions are more important than filling a typing test with unverified content.","As we develop these resources, we aim to improve them with appropriate language expertise and permissions."]
-  },
-  "support": {
-    "heading":"Five Meaningful Ways to Support Living Languages",
-    "paragraphs":["You do not need to become fluent in every language to support linguistic diversity.","Small, informed actions can contribute to a broader culture of respect."],
-    "items":["Learn the history. Understand the policies, social changes, and community efforts that have shaped a language’s present circumstances. Avoid assuming that every language has experienced the same challenges.","Listen to speakers and community organizations. Language revitalization should be guided by the people whose language and cultural heritage are involved.","Support learning opportunities. Explore community-led classes, cultural programs, books, recordings, and educational projects. Where possible, support the organizations and educators producing them.","Make room for languages online. Use accurate names, characters, and diacritics. Respect established writing conventions, and encourage digital tools that support more than the world’s dominant languages.","Keep learning beyond the typing test. Typing practice can build familiarity with written forms, but language learning also involves listening, speaking, understanding, and connecting with people."],
-    "closing":"The goal is not simply to remember that a language exists. It is to respect the people who continue to use it."
+    "hawaiian": {
+      "heading": "ʻŌlelo Hawaiʻi — Hawaiian",
+      "subtitle": "Hawaiʻi | A language finding new strength across generations",
+      "paragraphs": [
+        "The Hawaiian language carries the history, identity, literature, and cultural knowledge of Hawaiʻi.",
+        "Following the overthrow of the Hawaiian Kingdom, the 1896 law establishing English as the language of instruction in public and private schools contributed to the marginalization of Hawaiian in formal education. Broader political and social pressures also disrupted transmission between generations.",
+        "But Hawaiian never ceased to be spoken.",
+        "Community-led revitalization, including Hawaiian-language immersion education, university programs, and cultural initiatives, has helped create new generations of speakers and learners.",
+        "Today, ʻŌlelo Hawaiʻi is used in homes, classrooms, media, music, and digital communication, although sustaining its use remains an ongoing challenge.",
+        "Explore the history of ʻŌlelo Hawaiʻi and practice typing Hawaiian words and passages."
+      ],
+      "practice": "Try the Hawaiian typing test →"
+    },
+    "welsh": {
+      "heading": "Cymraeg — Welsh",
+      "subtitle": "Wales | A living language with a future to build",
+      "paragraphs": [
+        "Welsh has endured centuries of pressure from the expanding dominance of English, including historical educational practices that stigmatized Welsh-speaking children.",
+        "Yet it has maintained a strong literary tradition, community presence, and generations of speakers.",
+        "Welsh-language education, broadcasting, legislation, and public initiatives have strengthened opportunities to use the language.",
+        "Its story is not simply one of recovery, but of an established living language working to sustain and expand its place in modern society.",
+        "Discover how Welsh communities are shaping the future of Cymraeg."
+      ],
+      "practice": "Practice Welsh characters →"
+    },
+    "manx": {
+      "heading": "Gaelg — Manx",
+      "subtitle": "Isle of Man | A language whose story did not end with its last traditional native speaker",
+      "paragraphs": [
+        "When Ned Maddrell, widely recognized as the last traditional native speaker of Manx, died in 1974, many accounts portrayed the language as extinct.",
+        "But learners, teachers, recordings, and community advocates had already helped keep knowledge of Manx alive.",
+        "Today, Manx is taught through educational initiatives, used in community activities, and supported by people committed to its future.",
+        "Its revival demonstrates why the disappearance of a generation of traditional native speakers does not necessarily mean the end of a language.",
+        "Explore the remarkable continuation of Manx."
+      ],
+      "practice": "Practice Manx characters →"
+    },
+    "scottish-gaelic": {
+      "heading": "Gàidhlig — Scottish Gaelic",
+      "subtitle": "Scotland | Reconnecting language, culture, and community",
+      "paragraphs": [
+        "Scottish Gaelic has experienced centuries of political, economic, and educational pressures, alongside migration and changing patterns of language use.",
+        "Today, Gaelic-medium education, broadcasting, cultural organizations, and community initiatives help support its continued use.",
+        "For Gaelic, revitalization is about more than increasing learner numbers. It also involves sustaining communities where the language is used naturally in everyday life.",
+        "Discover the people and initiatives supporting Scottish Gaelic."
+      ],
+      "practice": "Practice Scottish Gaelic characters →"
+    },
+    "irish": {
+      "heading": "Gaeilge — Irish",
+      "subtitle": "Ireland | Bringing an ancient literary language into everyday life",
+      "paragraphs": [
+        "Irish has one of Europe’s oldest continuous vernacular literary traditions.",
+        "Despite centuries of political pressure and a major historical shift toward English, Irish remains a living language, particularly within Gaeltacht communities.",
+        "Irish-language education, broadcasting, cultural organizations, and digital resources support its use and learning.",
+        "The continuing challenge is to connect institutional support and widespread interest with opportunities to speak Irish naturally across generations.",
+        "Explore the history, resilience, and living communities of Gaeilge."
+      ],
+      "practice": "Practice Irish characters →"
+    },
+    "catalan": {
+      "heading": "Català — Catalan",
+      "subtitle": "Spain, Andorra, France, and Italy | A language of literature, identity, and public life",
+      "paragraphs": [
+        "Catalan has a rich literary history and is used by millions of people across several European territories.",
+        "Its public use faced severe restrictions under Franco’s dictatorship in Spain, although the experiences of Catalan-speaking communities have varied across regions and historical periods.",
+        "Today, Catalan is widely used in education, publishing, broadcasting, government, and digital communication in parts of its linguistic territory.",
+        "Its future involves sustaining intergenerational use and ensuring that speakers can continue using it across social and technological settings.",
+        "Discover the history and contemporary life of Catalan."
+      ],
+      "practice": "Practice Catalan characters →"
+    },
+    "taiwanese-taigi": {
+      "heading": "Tâi-gí — Taiwanese Taigi",
+      "subtitle": "Taiwan | Reclaiming space for language in public and family life",
+      "paragraphs": [
+        "Taiwanese Taigi has long been an important language of everyday communication, cultural expression, and community life in Taiwan.",
+        "Policies promoting Mandarin during the authoritarian period discouraged the public and educational use of other Taiwanese languages, contributing to shifts in language transmission.",
+        "Today, language advocates, educators, artists, and community organizations are working to expand opportunities to learn, speak, read, and write Taigi.",
+        "Its revitalization also highlights the importance of accessible writing conventions and digital resources.",
+        "Learn about the history and ongoing revitalization of Taiwanese Taigi."
+      ],
+      "practice": "Explore Taigi character practice →"
+    },
+    "hakka-sixian": {
+      "heading": "四縣客語 — Sixian Hakka",
+      "subtitle": "Taiwan | Strengthening Hakka language transmission",
+      "paragraphs": [
+        "Sixian is one of the major Hakka varieties spoken in Taiwan, with its own pronunciation patterns and established educational resources.",
+        "Hakka communities have worked to secure greater recognition and support for their languages following decades in which Mandarin dominated many public institutions.",
+        "Language education, broadcasting, cultural initiatives, and family transmission remain important to sustaining Sixian Hakka.",
+        "Explore the history of Sixian Hakka and its place in Taiwan’s linguistic diversity."
+      ],
+      "practice": "Explore Sixian Hakka practice →"
+    },
+    "hakka-hailu": {
+      "heading": "海陸客語 — Hailu Hakka",
+      "subtitle": "Taiwan | Preserving a distinct Hakka voice",
+      "paragraphs": [
+        "Hailu Hakka is another important variety within Taiwan’s Hakka-speaking communities.",
+        "Although closely related to Sixian, it has distinct pronunciation patterns and should not be treated as interchangeable with other Hakka varieties.",
+        "Community teaching, media, public recognition, and language resources support efforts to maintain its use.",
+        "Featuring Hailu separately reflects a simple principle: meaningful language support should recognize differences within language communities, not erase them.",
+        "Discover the distinctive history and features of Hailu Hakka."
+      ],
+      "practice": "Explore Hailu Hakka practice →"
+    },
+    "wenzhounese": {
+      "heading": "溫州話 — Wenzhounese",
+      "subtitle": "Wenzhou and diaspora communities | Keeping a distinctive linguistic heritage connected across generations",
+      "paragraphs": [
+        "Wenzhounese, a variety of Wu Chinese, is known for its substantial linguistic differences from Mandarin and many other Chinese varieties.",
+        "It remains an important marker of local and family identity for speakers in Wenzhou and communities abroad.",
+        "As Mandarin dominates many educational and public settings, and families move across regions and countries, opportunities for younger generations to acquire Wenzhounese can change.",
+        "Family use, community connections, and cultural documentation all play roles in maintaining this heritage.",
+        "Explore the linguistic heritage of Wenzhounese."
+      ],
+      "practice": "Explore Wenzhounese character practice →"
+    },
+    "sorani-kurdish": {
+      "heading": "کوردیی ناوەندی — Sorani Kurdish",
+      "subtitle": "Iraq, Iran, and diaspora communities | A literary language across borders",
+      "paragraphs": [
+        "Sorani Kurdish, also known as Central Kurdish, has a substantial literary tradition and an important place in Kurdish cultural life.",
+        "Its public and institutional status differs significantly across national borders.",
+        "In Iraq’s Kurdistan Region, Sorani is widely used in education, government, and media. In Iran, Kurdish-language education and public use operate within a different legal and political environment.",
+        "Writers, educators, publishers, and cultural organizations continue to contribute to its literary and digital presence.",
+        "Discover the history, writing system, and contemporary use of Sorani Kurdish."
+      ],
+      "practice": "Explore Sorani Kurdish character practice →"
+    }
   },
   "resources": {
-    "heading":"Explore Additional Language Learning Resources",
-    "paragraphs":["Typing is only one part of language learning.","Listening, conversation, community teaching, reading, and meaningful everyday use are essential for developing language skills.","For readers interested in structured learning, Glossika provides courses for several languages relevant to this collection.","The provider’s web/Legacy catalog currently lists nine relevant courses as free, with some premium features requiring payment. Irish is offered separately. Hawaiian is not listed in the catalog we checked. The newer mobile app has separate access terms.","Availability and access terms may change, so please review the provider’s current course information.","Where applicable, our individual language articles link to the relevant learning resources.","WPMTest is a Glossika affiliate. We may earn a commission if you purchase through our referral links. You do not need to purchase to use WPMTest."]
-  },
-  "commitment": {
-    "heading":"Our Commitment to Accuracy, Respect, and Community Voices",
-    "paragraphs":["Language revitalization is meaningful work, and it deserves careful representation.","Our articles draw on historical records, legislation, academic research, archives, official resources, and community organizations.","We aim to distinguish documented historical events from broader interpretations, avoid unsupported claims about speaker populations, and acknowledge differences between related languages and regional varieties.","We also recognize that published research cannot replace lived experience.","The people who speak, teach, write, and transmit these languages hold knowledge that deserves to be heard and respected.","As WPMTest expands its language resources, our commitments are to:"],
-    "items":["Prioritize reliable and traceable sources.","Credit community organizations and revitalization initiatives.","Avoid invented translations, unsupported statistics, and oversimplified histories.","Respect language-specific spelling conventions, characters, and writing systems.","Seek appropriate language and rights review before publishing new sentence collections.","Welcome corrections and contributions from knowledgeable speakers, educators, and researchers."],
-    "closing":["We do not claim ownership of these languages or authority over how their communities should preserve them.","Our role is to support visibility, accessibility, and opportunities for written practice while directing attention toward the communities doing the essential work."]
-  },
-  "future": {
-    "heading":"A Future Where More Languages Can Be Heard—and Written",
-    "paragraphs":["A language’s future is not determined by the number of people who type it on a website.","It is shaped by families, speakers, educators, communities, institutions, and the opportunities people have to use that language in their daily lives.","But digital spaces are part of that future.","Every language deserves thoughtful representation. Every writing system deserves technical consideration. And every community working to sustain its linguistic heritage deserves recognition.","WPMTest began with a simple purpose: helping people practice typing.","That purpose is growing.","We want to make space for languages that are too often overlooked by mainstream digital tools, share the histories behind them, and help interested readers take their first steps toward further learning.","Not because a typing test can revive a language.","But because a more inclusive internet is one where people can read, write, learn, and communicate in the languages that matter to them."]
-  },
-  "closing":"Explore a language. Discover its story. Practice its written forms. Support the people keeping it alive."
+    "heading": "Explore Additional Language Learning Resources",
+    "paragraphs": [
+      "Typing is only one part of language learning.",
+      "Listening, conversation, community teaching, reading, and meaningful everyday use are essential for developing language skills.",
+      "For readers interested in structured learning, Glossika provides courses for several languages relevant to this collection.",
+      "The provider’s web/Legacy catalog currently lists nine relevant courses as free, with some premium features requiring payment. Irish is offered separately. Hawaiian is not listed in the catalog we checked. The newer mobile app has separate access terms.",
+      "Availability and access terms may change, so please review the provider’s current course information.",
+      "Where applicable, our individual language articles link to the relevant learning resources.",
+      "WPMTest is a Glossika affiliate. We may earn a commission if you purchase through our referral links. You do not need to purchase to use WPMTest."
+    ]
+  }
 }
