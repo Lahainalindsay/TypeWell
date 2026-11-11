@@ -1,0 +1,90 @@
+{
+  "hawaiian": {
+    "headline": "ʻŌlelo Hawaiʻi: Bringing a Language Home",
+    "kicker": "Hawaiʻi · Memory, education, and renewal",
+    "lead": "A language can be pushed out of a classroom without ever leaving the hearts of the people who carry it. The story of ʻŌlelo Hawaiʻi is one of profound disruption—and of families, kūpuna, teachers, and advocates who refused to let the next generation inherit only silence.",
+    "quote": "A language needs more than recognition. It needs places where children can grow up using it.",
+    "bridge": "From institutional harm to community-led renewal",
+    "perspective": "The history of Hawaiian is not a story of effortless recovery. Its future is being built through the sustained work of people who teach, speak, write, and make room for it in ordinary life."
+  },
+  "welsh": {
+    "headline": "Cymraeg: A Language That Kept Its Place",
+    "kicker": "Wales · From the schoolyard to the public square",
+    "lead": "The language a child brings to school should be a source of belonging. In Wales, it could once become a reason for shame. Welsh endured that pressure through communities who continued speaking—and through generations who worked to change the institutions around them.",
+    "quote": "A language right becomes meaningful when someone can use it in an ordinary conversation.",
+    "bridge": "From stigma to a place in public life",
+    "perspective": "Welsh is a living language, not a relic waiting to be rediscovered. The question is how to sustain the homes, schools, workplaces, and communities where it can remain an everyday choice."
+  },
+  "manx": {
+    "headline": "Gaelg: The Story Did Not End",
+    "kicker": "Isle of Man · Memory, learning, and new generations",
+    "lead": "Calling someone the last speaker sounds like the final line of a story. For Manx, it became part of a much longer account: recordings, determined learners, teachers, and families building new opportunities for a language to be heard again.",
+    "quote": "The end of one generation of speakers does not have to be the end of a language’s story.",
+    "bridge": "From recorded voices to living conversations",
+    "perspective": "Manx invites us to look beyond a dramatic label. A language’s future is made through patient learning, relationships, and the places where a new generation can use what it has learned."
+  },
+  "scottish-gaelic": {
+    "headline": "Gàidhlig: More Than a Voice From the Past",
+    "kicker": "Scotland · Education, community, and everyday use",
+    "lead": "A language can be celebrated in song while finding less and less room in a classroom or workplace. Scottish Gaelic’s story asks us to look beyond cultural visibility to the communities and daily relationships that make a language possible to live through.",
+    "quote": "Learning a language and sustaining a community that uses it are connected—but different—kinds of work.",
+    "bridge": "From exclusion to rebuilding opportunity",
+    "perspective": "Education and recognition matter. So do the ordinary chances to hear Gaelic, answer in Gaelic, and raise children in communities where speaking it feels natural."
+  },
+  "irish": {
+    "headline": "Gaeilge: A Future in the Everyday",
+    "kicker": "Ireland · Beyond recognition, toward living use",
+    "lead": "Irish carries a deep literary history and an unmistakable place in public identity. Yet a language’s visibility on a sign is different from its presence around a kitchen table. Its continuing story lives in the space between recognition, learning, and daily use.",
+    "quote": "A language does not live through its official status alone. It lives through people using it with one another.",
+    "bridge": "From unequal power to renewed public space",
+    "perspective": "The future of Irish involves both supporting established Irish-speaking communities and creating meaningful ways for learners to become participants in the language’s everyday life."
+  },
+  "catalan": {
+    "headline": "Català: The Right to Be an Everyday Language",
+    "kicker": "Four countries · Many communities, distinct experiences",
+    "lead": "Catalan is a language of books, streets, classrooms, conversation, and public debate. Its history cannot be reduced to a single border or a single period of repression. Understanding its future begins with seeing the different communities that share it.",
+    "quote": "A language can have millions of speakers and still face pressure over where, when, and with whom it may be used.",
+    "bridge": "From public restrictions to renewed cultural space",
+    "perspective": "Catalan’s vitality and its challenges coexist. Regional differences, public policy, family transmission, and digital life all shape the opportunities people have to use it."
+  },
+  "taiwanese-taigi": {
+    "headline": "Tâi-gí: Making Room for a Familiar Voice",
+    "kicker": "Taiwan · Family language, public life, and renewal",
+    "lead": "A language may be familiar in a home and still be treated as out of place at school. Taiwanese Taigi’s story follows the distance between those worlds—and the people working to bring its voices, writing, and cultural life into fuller public view.",
+    "quote": "What people are allowed to speak in public can shape what a family feels able to pass on at home.",
+    "bridge": "From linguistic hierarchy to renewed possibility",
+    "perspective": "Recognition creates an opening. Teaching, media, family use, and accessible writing tools help turn that opening into a language people can choose in everyday life."
+  },
+  "hakka-sixian": {
+    "headline": "Sixian Hakka: A Voice With Its Own Story",
+    "kicker": "Taiwan · Variety, identity, and transmission",
+    "lead": "The word Hakka connects many people, but it does not make every community’s speech interchangeable. The Sixian pathway begins with that distinction: respect for a particular variety, its speakers, and the work of passing it on.",
+    "quote": "Making room for Hakka also means making room for the differences within it.",
+    "bridge": "From the language of home to a fuller public life",
+    "perspective": "Meaningful support follows the language people actually use. Teaching materials, pronunciation, writing conventions, and practice should make the chosen variety clear."
+  },
+  "hakka-hailu": {
+    "headline": "Hailu Hakka: Keeping a Distinct Voice in Reach",
+    "kicker": "Taiwan · Community, recognition, and written use",
+    "lead": "A language collection should not blur the voices it hopes to support. Hailu Hakka deserves attention as a distinct community pathway, with its own pronunciation and learning needs within the wider story of Hakka in Taiwan.",
+    "quote": "A shared name is a connection—not a reason to erase the particular voice of a community.",
+    "bridge": "From family knowledge to new opportunities to learn",
+    "perspective": "Recognition needs practical foundations: teachers, materials, media, and conversations in which people can hear and use Hailu, rather than treating it as a label on a list."
+  },
+  "sorani-kurdish": {
+    "headline": "Sorani Kurdish: A Language in Public Life",
+    "kicker": "Iraq and Iran · Borders, institutions, and belonging",
+    "lead": "A border can change the institutions surrounding a language without changing its importance to the people who speak it. Sorani Kurdish calls for a regional history: one that looks carefully at schooling, recognition, publishing, and the possibilities of daily use.",
+    "quote": "The same language can live under very different conditions on either side of a border.",
+    "bridge": "From regional histories to everyday usefulness",
+    "perspective": "Sorani’s story should be understood through its own communities and institutions. Borrowing another Kurdish variety’s history or a single country’s policies would obscure the experience it is meant to explain."
+  },
+  "wenzhounese": {
+    "headline": "Wenzhounese: The Language Between Generations",
+    "kicker": "Wenzhou · Home, identity, and changing transmission",
+    "lead": "Not every language shift begins with one prohibition that can be circled on a timeline. Sometimes the change becomes visible in which language a child answers in, or which words feel easiest to use between generations. Wenzhounese asks for that kind of close attention.",
+    "quote": "A language’s future is shaped in the small decisions that make up family life.",
+    "bridge": "From generational change to opportunities for use",
+    "perspective": "Careful evidence is more useful than an alarming label. Listening to families and distinguishing speech, script, and writing conventions are essential to representing Wenzhounese responsibly."
+  }
+}
