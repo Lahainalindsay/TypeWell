@@ -1,0 +1,50 @@
+{
+  "waialee-historical": {
+    "src": "/images/revival/hawaiian-story/waialee-historical.webp",
+    "width": 1200,
+    "height": 675,
+    "alt": "Boys standing in rows outside institutional buildings and palm trees in a historical photograph.",
+    "caption": "Waialeʻe Industrial School for Boys, Oʻahu. Historical photograph supplied for this article.",
+    "credit": "Image supplied by WPMTest’s editor"
+  },
+  "waialee-building": {
+    "src": "/images/revival/hawaiian-story/waialee-building.webp",
+    "width": 400,
+    "height": 246,
+    "alt": "Roofless two-storey building with empty windows beside a tree-covered hillside.",
+    "caption": "The shell of a building at the former Waialeʻe boys’ institution on Oʻahu.",
+    "credit": "Image supplied by WPMTest’s editor"
+  },
+  "learning-together": {
+    "src": "/images/revival/hawaiian-story/learning-together.webp",
+    "width": 1600,
+    "height": 1067,
+    "alt": "Children and an adult gathered around a table covered with books at an outdoor event.",
+    "caption": "Books, conversation, and time together: a glimpse of learning as a shared activity.",
+    "credit": "Image supplied by WPMTest’s editor"
+  },
+  "learning-on-the-land": {
+    "src": "/images/revival/hawaiian-story/learning-on-the-land.webp",
+    "width": 598,
+    "height": 450,
+    "alt": "Children in yellow shirts holding harvested plants in a garden.",
+    "caption": "Learning on the land connects practical activity with relationships, place, and care.",
+    "credit": "Image supplied by WPMTest’s editor"
+  },
+  "culture-and-community": {
+    "src": "/images/revival/hawaiian-story/culture-and-community.webp",
+    "width": 638,
+    "height": 480,
+    "alt": "Children wearing leafy lei and blue garments gathered outdoors.",
+    "caption": "Cultural learning takes place through participation, shared attention, and time together.",
+    "credit": "Image supplied by WPMTest’s editor"
+  },
+  "next-generation": {
+    "src": "/images/revival/hawaiian-story/next-generation.webp",
+    "width": 731,
+    "height": 419,
+    "alt": "Four children wearing yellow lei and holding bright red and yellow feathered implements.",
+    "caption": "The next generation belongs at the heart of the story—not at its margins.",
+    "credit": "Image supplied by WPMTest’s editor"
+  }
+}
