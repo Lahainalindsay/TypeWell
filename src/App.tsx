@@ -1,4 +1,6 @@
 "use client";
+
+import { TypingBenchmarks } from "./components/TypingBenchmarks";
 import { numericExercise, numericProfileForTitle } from "./features/numericProfiles";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -9,7 +11,7 @@ import { calculateKph, calculateKpm, calculateNumericMetrics } from "./engine/nu
 import { isLessonPassed, nextLessonId } from "./engine/lessons";
 import { analyzeWeakCombinations, analyzeWeakKeys, generateWeakKeyExercise } from "./engine/weakKeys";
 import { lessons } from "./data/lessons";
-import { buildPageTestText, buildPracticeText, durations, practiceModes, testDurations, wordCounts, type PracticeMode } from "./data/texts";
+import { buildInitialPracticeText, buildPageTestText, buildPracticeText, durations, practiceModes, testDurations, wordCounts, type PracticeMode } from "./data/texts";
 import { keyInfo, rows, fingerClass } from "./data/keyboard";
 import { defaultProgress, exportProgress, loadProgress, saveProgress, summarizeProgress, validateProgress, type ProgressData, type SessionRecord } from "./storage/progress";
 import { AdSlot } from "./components/AdSlot";
@@ -112,7 +114,7 @@ function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedP
   const [duration, setDuration] = useState(() => testDurationFromPath(path));
   useEffect(() => setDuration(challengeDurationFromPath(path)), [path]);
   const [passageType, setPassageType] = useState<"Sentences" | "Fun Facts" | "Tiny Dramas">("Sentences");
-  const passage = useMemo(() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8))), [duration, passageType]);
+  const passage = useMemo(() => buildInitialPracticeText(passageType, Math.max(120, Math.round(duration * 1.8))), [duration, passageType]);
   const durationLabels: Record<number, string> = { 60: "1 Minute", 180: "3 Minutes", 300: "5 Minutes", 600: "10 Minutes" };
   return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><div className="panel" style={{marginBottom:"12px"}}><label htmlFor="home-passage-type"><strong>Choose your typing passage</strong></label><select id="home-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} regenerate={() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
 }
@@ -127,9 +129,13 @@ function Learn({ progress, setProgress, record, setFocus, path, go }: SharedProp
   const lessonIndex = lessons.findIndex((item) => item.id === lesson.id);
   const previousLesson = lessons[lessonIndex - 1];
   const nextLesson = lessons[lessonIndex + 1];
+  const isHub = path.replace(/\/$/, "") === "/learn";
   return (
+    <>
+    {isHub && <header className="trainer-head"><div><h1>Learn Touch Typing</h1><p>Start with the home row and use the curriculum to build up to capitals, punctuation and numbers. Each lesson tracks your accuracy and speed as you type.</p></div></header>}
     <Trainer
       title={lesson.title}
+      heading={isHub ? "h2" : undefined}
       subtitle={`Level ${lesson.level} · ${lesson.summary}`}
       target={lesson.exercise}
       mode="lesson"
@@ -152,6 +158,7 @@ function Learn({ progress, setProgress, record, setFocus, path, go }: SharedProp
         </div>
       }
     />
+    </>
   );
 }
 
@@ -162,10 +169,10 @@ function Practice({ progress, setProgress, record, setFocus, path, embedded }: S
   const [custom, setCustom] = useState("");
   useEffect(() => setMode(practiceModeFromPath(path)), [path]);
   const weak = analyzeWeakKeys(progress.strokes);
-  const target = useMemo(() => mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom), [mode, count, custom, path]);
+  const target = useMemo(() => mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildInitialPracticeText(mode, count, custom), [mode, count, custom, path]);
   return (
     <Trainer
-      title={mode === "Weak Keys" ? "Weak-Key Typing Practice" : "Typing Practice — Targeted Drills to Fix Your Weak Keys"}
+      title={path.replace(/\/$/, "") === "/touch-typing-practice" ? "Touch Typing Practice" : path.replace(/\/$/, "") === "/practice/weak-keys" ? "Weak-Key Typing Practice" : "Typing Practice — Targeted Drills to Fix Your Weak Keys"}
       heading={embedded ? "h2" : undefined}
       subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
       target={target}
@@ -197,7 +204,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
     : testMode === "Punctuation" ? "Typing Test with Punctuation"
     : path.replace(/\/$/, "") === "/mobile-typing-test" ? "Mobile Typing Test — Test Your Speed on a Phone or Tablet"
     : path.replace(/\/$/, "") === "/customer-service-typing-test" ? "Customer Service Typing Test" : timedTestTitle(path);
-  const passage = useMemo(() => pageCount ? buildPageTestText(pageCount) : buildPracticeText(testMode === "Sentences" ? passageType : testMode, count), [pageCount, testMode, passageType, count, path]);
+  const passage = useMemo(() => pageCount ? buildPageTestText(pageCount) : buildInitialPracticeText(testMode === "Sentences" ? passageType : testMode, count), [pageCount, testMode, passageType, count, path]);
   const testDescription = pageCount
     ? `Complete approximately ${pageCount * 250} words at your own pace. The test ends when you finish the passage, and your WPM is calculated from your actual time.`
     : testMode === "Data Entry"
@@ -734,7 +741,7 @@ function Rhythm({ progress, setProgress }: SharedProps) {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const audioRef = useRef<AudioContext | null>(null);
   const metrics = calculateRhythmMetrics(hits, 75);
-  const text = mode === "Single Keys" ? "f j f j d k s l a ;" : mode === "Letter Sequences" ? "asdf jkl; fj dk sl gh ru ei" : buildPracticeText(mode as PracticeMode, 25);
+  const text = mode === "Single Keys" ? "f j f j d k s l a ;" : mode === "Letter Sequences" ? "asdf jkl; fj dk sl gh ru ei" : buildInitialPracticeText(mode as PracticeMode, 25);
 
   useEffect(() => {
     if (!running) return;
@@ -868,10 +875,11 @@ function AverageTypingSpeed({ go }: { go: (page: Page, route?: string) => void }
   const label = wpm < 25 ? "Beginner" : wpm < 45 ? "Everyday baseline" : wpm < 65 ? "Productive" : wpm < 85 ? "Fast" : "Advanced";
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Average Typing Speed by Experience — What&apos;s a Good WPM?</h1><p>Interpret WPM carefully. A useful typing result combines speed, accuracy, consistency, and the difficulty of the text.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
+      <div className="trainer-head"><div><h1>Average Typing Speed: What’s a Good WPM?</h1><p>Two large volunteer studies reported about 52 WPM on physical keyboards and 36.2 WPM on mobile touchscreens. Compare your score against similar tasks and record your accuracy alongside speed.</p></div><InternalLink href="/1-minute-typing-test/" go={go}>Take Typing Test</InternalLink></div>
+      <TypingBenchmarks />
       <div className="grid-two">
-        <div className="panel"><h2><Gauge size={18} />WPM Interpreter</h2><label>Typing speed <input type="range" min="5" max="120" value={wpm} onChange={(event) => setWpm(Number(event.target.value))} /></label><div className="metrics"><Metric label="Entered WPM" value={wpm} /><Metric label="Range" value={label} /></div><p>A short test can overstate speed. Use 3, 5, or 10 minute tests when you need a more stable result.</p></div>
-        <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For real work, accuracy above 95% is usually more valuable than brief bursts of high raw WPM.</p></div>
+        <div className="panel"><h2><Gauge size={18} />WPM Interpreter</h2><label>Typing speed <input type="range" min="5" max="120" value={wpm} onChange={(event) => setWpm(Number(event.target.value))} /></label><div className="metrics"><Metric label="Entered WPM" value={wpm} /><Metric label="Practice band" value={label} /></div><p>The practice bands are WPMTest reference labels. Use the study table for measured averages and repeat a longer test to assess your sustained speed.</p></div>
+        <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For work assessments, check the required accuracy and scoring rules in the job posting.</p></div>
       </div>
       <AdSlot placement="guide-mid-article" />
       <section className="seo-section two-column-copy"><div><h2>How to Improve</h2><p>Practice clean finger movement, return to home row, slow down around weak keys, and retest after targeted practice. Consistent daily sessions usually beat occasional long sessions.</p></div><div><h2>Related Tools</h2><div className="inline-links"><InternalLink href="/wpm-calculator/" go={go}>WPM Calculator</InternalLink><InternalLink href="/typing-practice/" go={go}>Typing Practice</InternalLink><InternalLink href="/rhythm/" go={go}>Rhythm Trainer</InternalLink></div></div></section>
@@ -931,7 +939,7 @@ function TypingGames({ progress, setProgress, record, setFocus, path, go }: Shar
   return (
     <section className="dashboard">
       <div className="trainer-head"><div><h1>Typing Games</h1><p>Lightweight drills that reinforce real typing accuracy without accounts or leaderboards.</p></div><Gamepad2 aria-hidden="true" /></div>
-      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildPracticeText("Speed Burst", 35)} regenerate={() => buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
+      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildInitialPracticeText("Speed Burst", 35)} regenerate={() => buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
     </section>
   );
 }
@@ -942,7 +950,11 @@ function Controls({ mode, setMode, duration, setDuration, count, setCount, custo
 
 function LessonList({ progress, go, activeLessonId }: { progress: ProgressData; go: (page: Page, route?: string) => void; activeLessonId?: string }) {
   const selectedLesson = activeLessonId ?? progress.currentLesson;
-  return <div className="panel"><h2>Curriculum</h2>{lessons.map((lesson) => <button className={lesson.id === selectedLesson ? "lesson active" : "lesson"} key={lesson.id} onClick={() => go("learn", lessonPath(lesson.id))}><span>Level {lesson.level}</span><strong>{lesson.title}</strong><small>{progress.completedLessons.includes(lesson.id) ? "Completed" : `${lesson.targetWpm} WPM · ${lesson.targetAccuracy}%`}</small></button>)}</div>;
+  return <div className="panel"><h2>Curriculum</h2>{lessons.map((lesson) => <a className={lesson.id === selectedLesson ? "lesson active" : "lesson"} key={lesson.id} href={lessonPath(lesson.id)} aria-current={lesson.id === selectedLesson ? "step" : undefined} onClick={(event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    go("learn", lessonPath(lesson.id));
+  }}><span>Level {lesson.level}</span><strong>{lesson.title}</strong><small>{progress.completedLessons.includes(lesson.id) ? "Completed" : `${lesson.targetWpm} WPM · ${lesson.targetAccuracy}%`}</small></a>)}</div>;
 }
 
 function Segment<T extends number>({ values, value, setValue, suffix }: { values: T[]; value: T; setValue: (value: T) => void; suffix: string }) {
@@ -993,7 +1005,7 @@ function lessonFromPath(path: string) {
 }
 
 function lessonPath(id: string) {
-  return lessonPaths[id] ?? "/learn";
+  return lessonPaths[id] ? `${lessonPaths[id]}/` : "/learn/";
 }
 
 function practiceModeFromPath(path: string): PracticeMode {

@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 
@@ -33,7 +34,7 @@ export default function KidsTypingTestPage() {
         <h2>What to try next</h2><nav aria-label="Related typing activities"><a href="/typing-practice/">Free Typing Practice</a><a href="/learn/">Typing Lessons</a><a href="/1-minute-typing-test/">1 Minute Typing Test</a><a href="/typing-certificate/">Typing Certificate</a></nav>
         <h2>For parents and teachers</h2><p>Use repeated results to look for progress rather than treating one WPM number as a grade. A student who types more accurately and comfortably is building a stronger foundation even when speed increases gradually.</p>
       </section>
-    </main>
+    <TypingPreviews /></main>
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />)}
   </>;
 }

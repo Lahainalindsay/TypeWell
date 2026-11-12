@@ -1,3 +1,5 @@
+import { AuthorByline, RelatedGuides } from "../../../src/features/editorial/ArticleVisual";
+import { author, publisher } from "../../../src/lib/seo/structured";
 import type { Metadata } from "next";
 import styles from "../hawaiian-language-revival/article.module.css";
 import { absoluteUrl } from "../../../src/lib/seo/site";
@@ -15,23 +17,23 @@ export const metadata: Metadata = {
 
 export default function PhoneVersusKeyboardArticle() {
   const schema = { "@context": "https://schema.org", "@type": "Article", headline: title, description, mainEntityOfPage: url,
-    datePublished: "2026-10-28", dateModified: "2026-10-28", image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
-    author: { "@type": "Organization", name: "WPMTest" }, publisher: { "@type": "Organization", name: "WPMTest" } };
+    datePublished: "2026-10-28", dateModified: "2026-11-12", image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
+    author, publisher };
   return <main className={styles.page}>
     <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Phone vs. keyboard</span></nav>
     <article>
       <header className={styles.header}>
       <p className={styles.eyebrow}>Typing experiments · Questionable life choices</p>
       <h1>{title}</h1>
-      <p className={styles.subtitle}>We built a website to help people type better on keyboards. Then we made it work on phones. Yes, the irony has been brought to our attention. By us. Repeatedly.</p>
-      <p className={styles.date}>October 28, 2026 · Typing experiments</p>
+      <p className={styles.subtitle}>You can compare phone and keyboard WPM by using similar passages and the same test duration. Record accuracy and any autocorrect or predictions alongside each score.</p>
+      <AuthorByline date="2026-11-12" />
       </header>
       <figure className={styles.hero}>
-        <img src="/images/typing-editorial-desk.webp" width="1536" height="1024" alt="A keyboard and notebook on a wooden desk" fetchPriority="high" />
+        <img src="/images/typing-editorial-desk.webp" srcSet="/images/typing-editorial-desk-600.webp 600w, /images/typing-editorial-desk-1000.webp 1000w, /images/typing-editorial-desk.webp 1536w" sizes="(max-width: 700px) 100vw, 1050px" width="1536" height="1024" alt="A keyboard and notebook on a wooden desk" fetchPriority="high" />
         <figcaption>Ten fingers versus two thumbs. AI-generated editorial illustration.</figcaption>
       </figure>
       <div className={styles.body}>
-      <section aria-labelledby="quick-answer"><h2 id="quick-answer">Can you compare phone WPM with keyboard WPM?</h2><p>You can measure both, but the scores describe different input skills. For a useful comparison, keep test duration and passage difficulty similar, record accuracy, and note whether predictions or autocorrect are enabled. Compare progress within each input method rather than treating the two scores as interchangeable.</p></section>
+      <section className={styles.perspective} aria-labelledby="quick-answer"><h2 id="quick-answer">Key takeaway</h2><p>You can measure both, but the scores describe different input skills. For a useful comparison, keep test duration and passage difficulty similar, record accuracy, and note whether predictions or autocorrect are enabled. Compare progress within each input method rather than treating the two scores as interchangeable.</p></section>
       <h2>Record these details for each test</h2><ul><li>Device and input method: touchscreen, physical keyboard, or connected keyboard.</li><li>Duration and passage category: use the same settings for each attempt.</li><li>WPM and accuracy: keep both numbers, including slower attempts.</li><li>Assistance: note autocorrect, predictions, or swipe input where available.</li></ul>
       <p>WPMTest calculates WPM as correct characters divided by five, divided by elapsed minutes. For example, 250 correct characters in one minute equals 50 WPM. See the <a href="/blog/wpm-vs-kph/">scoring guide with worked examples</a> before comparing results from different tools.</p>
       <p className={styles.lead}>A keyboard typing website that works on a phone. We know. We also own mirrors.</p>
@@ -53,6 +55,7 @@ export default function PhoneVersusKeyboardArticle() {
       <p>Ask a friend to do both tests. The winner gets bragging rights. The loser gets a very exciting opportunity for personal growth.</p>
       <p><a href="/mobile-typing-test/">Try the mobile typing test</a> or <a href="/1-minute-typing-test/">defend your keyboard's honor</a>. Either way, we promise not to judge your thumbs. Much.</p>
       <aside className={styles.finalCta}><p className={styles.eyebrow}>Ready to embarrass your thumbs?</p><h2>Two tests. One winner. Zero excuses.</h2><p>Try both, compare accuracy and speed, and tell a friend which device won.</p><a className={styles.button} href="/mobile-typing-test/">Start the mobile showdown →</a></aside>
+      <RelatedGuides topics={["wpm-vs-kph", "best-typing-test-websites"]} />
       </div>
     </article>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />

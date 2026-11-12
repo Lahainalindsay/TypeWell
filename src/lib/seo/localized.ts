@@ -1,7 +1,7 @@
 import { absoluteUrl } from "./site";
 
 export const typingTestLanguagePaths = {
-  en: "/typing-test/",
+  en: "/",
   fr: "/fr/test-de-vitesse-de-frappe/",
   it: "/it/test-di-velocita-di-scrittura/",
   hi: "/hi/hindi-typing-test/",

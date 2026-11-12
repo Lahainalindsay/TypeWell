@@ -10,14 +10,49 @@ const panels = {
 } as const;
 export type ArticleTopic = keyof typeof panels;
 
+const diagramDescriptions: Record<ArticleTopic, string> = {
+ "wpm-vs-kph": "250 correct characters in one minute is 50 WPM. 300 entered characters in three minutes is 6,000 KPH.",
+ "data-entry-accuracy": "One error in four six-field records yields 95.8% field accuracy and 75% complete-record accuracy.",
+ "avoid-data-entry-errors": "Examples of swapped digits, shifted decimal points and missing leading zeroes.",
+ "prepare-employment-typing-test": "Warm up for two minutes, drill one error for three minutes, then take a five-minute timed sample.",
+ "best-typing-test-websites": "Choose guided lessons to learn, comparable tests to measure, or job-shaped exercises to practice.",
+ "data-entry-typing-test-for-employment": "Check characters as you type, compare exact field values, and review the whole record."
+};
+
 export function ArticleVisual({ topic }: { topic: ArticleTopic }) {
+ return <figure className={styles.figure}>
+  <img src={`/images/guides/${topic}.svg`} width={760} height={280} alt={diagramDescriptions[topic]} decoding="async" />
+ </figure>;
+}
+
+export function GuideTakeaways({ topic }: { topic: ArticleTopic }) {
  const panel = panels[topic];
- return <div className={styles.visual}>
-  <figure className={styles.figure}><img src="/images/typing-editorial-desk.webp" width="1536" height="1024" alt="A keyboard and notebook on an oak desk in soft daylight" fetchPriority="high" /><figcaption>A space to focus on the details. AI-generated editorial illustration.</figcaption></figure>
-  <aside className={styles.takeaway} aria-label={panel.label}><p className={styles.kicker}>{panel.label}</p><div className={styles.cards}>{panel.cards.map(([value,label]) => <div className={styles.card} key={value}><strong>{value}</strong><span>{label}</span></div>)}</div></aside>
- </div>;
+ return <aside className={styles.takeaway} aria-label="Key takeaways">
+  <h2>Key takeaways</h2><p>{panel.label}</p>
+  <div className={styles.cards}>{panel.cards.map(([value, label]) => <div className={styles.card} key={value}><strong>{value}</strong><span>{label}</span></div>)}</div>
+ </aside>;
+}
+
+export function AuthorByline({ date }: { date: string }) {
+ const display = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(new Date(date));
+ return <p className={styles.note}>By <a href="/about/#lindsay-johnson">Lindsay Johnson</a>, WPMTest creator and Maui-based developer · Updated <time dateTime={date}>{display}</time></p>;
+}
+
+export function RelatedGuides({ topics }: { topics: ArticleTopic[] }) {
+ const labels: Record<ArticleTopic, string> = {
+  "wpm-vs-kph": "How to read WPM and KPH scores",
+  "data-entry-accuracy": "How data-entry accuracy is scored",
+  "avoid-data-entry-errors": "Common data-entry errors to avoid",
+  "prepare-employment-typing-test": "How to prepare for an employment typing test",
+  "best-typing-test-websites": "Compare typing test websites",
+  "data-entry-typing-test-for-employment": "Data-entry typing tests for employment"
+ };
+ return <nav className={styles.related} aria-label="Related articles">
+  <h2>Related articles</h2>
+  <ul>{topics.map(topic => <li key={topic}><a href={`/blog/${topic}/`}>{labels[topic]}</a></li>)}</ul>
+ </nav>;
 }
 
 export function PracticeCard({ href, label }: { href: string; label: string }) {
- return <aside className={styles.cta}><p className={styles.kicker}>Put this into practice</p><h2>Make your next session count.</h2><p>Apply what you’ve learned, review your accuracy, and choose the next skill to work on.</p><a className={styles.button} href={href}>{label} →</a><p className={styles.more}><a href="/blog/">Explore more guides</a> · <a href="/contact/">Suggest a correction</a></p></aside>;
+ return <aside className={styles.cta}><a className={styles.button} href={href}>{label} →</a><p className={styles.more}><a href="/blog/">Explore more guides</a> · <a href="/contact/">Suggest a correction</a></p></aside>;
 }

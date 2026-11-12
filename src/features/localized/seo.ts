@@ -1,3 +1,4 @@
+import { publisher, website } from "../../lib/seo/structured";
 import type { Metadata } from "next";
 import type { LocalizedTypingContent } from "./content";
 import { absoluteUrl, SITE_NAME } from "../../lib/seo/site";
@@ -43,7 +44,8 @@ export function localizedTypingSchema(content: LocalizedTypingContent) {
         url,
         inLanguage: content.locale,
         isAccessibleForFree: true,
-        publisher: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") }
+        publisher: { "@id": publisher["@id"] },
+        isPartOf: website
       },
       {
         "@type": "WebApplication",

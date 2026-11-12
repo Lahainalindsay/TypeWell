@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="310" viewBox="0 0 540 310">
+  <rect width="540" height="310" fill="#132137"/>
+  <rect x="35" y="27" width="470" height="256" rx="8" fill="#f9f3e3" stroke="#b99a56" stroke-width="3"/>
+  <rect x="48" y="40" width="444" height="230" fill="none" stroke="#b99a56"/>
+  <g text-anchor="middle" fill="#182940">
+    <text x="270" y="79" font-family="system-ui,sans-serif" font-size="17" font-weight="700">WPMTest · Sample certificate</text>
+    <text x="270" y="132" font-family="Georgia,serif" font-size="35">Typing Proficiency</text>
+    <text x="270" y="177" font-family="Georgia,serif" font-size="27">Sample Typist</text>
+    <path d="M145 198h250" stroke="#b99a56"/>
+    <text x="270" y="231" font-family="system-ui,sans-serif" font-size="19">62 WPM · 97% accuracy · 5 minutes</text>
+  </g>
+</svg>

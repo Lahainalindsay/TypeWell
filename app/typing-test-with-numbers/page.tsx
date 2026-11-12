@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 
@@ -37,7 +38,7 @@ export default function NumbersTypingTestPage() {
         <h2>Related typing tests</h2><nav aria-label="Related typing tests"><a href="/data-entry-typing-test/">Data Entry Typing Test</a><a href="/10-key-typing-test/">10-Key Typing Test</a><a href="/typing-test-with-punctuation/">Punctuation Typing Test</a><a href="/typing-test/code/">Code Typing Test</a></nav>
         <h2>About your number typing score</h2><p>Use your result as a benchmark for the same kind of mixed number-and-text task. A clean, repeatable score is more useful than a single fast attempt with many errors. Retaking the same mode after targeted practice gives you a clearer view of whether your number-row control is improving.</p>
       </section>
-    </main>
+    <TypingPreviews /></main>
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />)}
   </>;
 }

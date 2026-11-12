@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 
@@ -32,5 +33,5 @@ export default function StudentTypingTestPage() {
       <h2>Choose another student typing activity</h2><nav aria-label="Student typing activities"><a href="/typing-test-for-kids/">Typing Test for Kids</a><a href="/typing-practice/">Typing Practice</a><a href="/typing-test-with-punctuation/">Punctuation Typing Test</a><a href="/typing-certificate/">Typing Certificate</a></nav>
       <h2>Using results in class</h2><p>A typing score works best as a benchmark, not a judgment. Teachers and students can compare repeated attempts to identify improvement in speed, accuracy and consistency. Different devices, keyboards, passage difficulty and test lengths can affect results, so use comparable conditions when tracking progress.</p>
     </section>
-  </main>{schemas.map((schema,index)=><script key={index} type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />)}</>;
+  <TypingPreviews /></main>{schemas.map((schema,index)=><script key={index} type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />)}</>;
 }

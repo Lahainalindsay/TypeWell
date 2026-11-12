@@ -1,0 +1,4 @@
+.scroll { overflow-x: auto; }
+.scroll table { border-collapse: collapse; width: 100%; min-width: 440px; }
+.scroll :is(th, td) { text-align: left; vertical-align: top; padding: .65rem; border-bottom: 1px solid var(--line); }
+.scroll a { text-decoration: underline; }

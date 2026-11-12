@@ -26,6 +26,7 @@ const themeBootstrapScript = `
 `;
 
 export const metadata: Metadata = {
+  title: "Page Not Found | WPMTest",
   metadataBase: new URL(SITE_ORIGIN),
   applicationName: SITE_NAME,
   robots: {
@@ -49,18 +50,6 @@ export const metadata: Metadata = {
   }
 };
 
-const webApplicationSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: SITE_NAME,
-  url: SITE_ORIGIN,
-  applicationCategory: "EducationalApplication",
-  operatingSystem: "Any",
-  browserRequirements: "Requires a modern web browser",
-  isAccessibleForFree: true,
-  description: "Free online typing tests, typing practice, WPM and accuracy tools, data-entry practice, and job-specific typing assessments."
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -68,10 +57,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}
-        />
         <script defer src="/certificate-flow.js" />
       </head>
       <body><SiteHeader />{children}<SiteFooter /></body>

@@ -10,7 +10,7 @@
 .header { padding-top: 18px; }
 .header .note { text-align: center; color: var(--muted); font-size: .76rem; margin: 20px 0 28px; }
 .figure { margin: 0 0 26px; }
-.figure img { display: block; width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 18px; }
+.figure img { display: block; width: 100%; height: auto;  border-radius: 18px; }
 .figure figcaption { margin-top: 9px; color: var(--muted); font-size: .73rem; line-height: 1.6; }
 .takeaway { margin: 0 0 48px; padding: clamp(18px, 3vw, 28px); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
 .takeaway .kicker { margin: 0 0 16px; }
@@ -51,4 +51,7 @@
 .tableWrap tbody tr:nth-child(even) { background: var(--panel); }
 .tableHint { font-size: .78rem !important; }
 :global(:root[data-theme="light"]) .page { --editorial-accent: #286144; }
-@media(max-width:600px) { .page { padding: 18px; } .page > nav:first-child { margin-bottom: 28px; } .cards { grid-template-columns: 1fr; } .card { padding: 18px; } .card strong { font-size: 1.5rem; } .figure img { max-height: 280px; } .page h1 { font-size: 2.15rem; } .page :global(.practice-check) { padding: 18px; } .standalone article > nav { grid-template-columns: 1fr; } .page h1 + p { font-size: 1rem; } }
+@media(max-width:600px) { .page { padding: 18px; } .page > nav:first-child { margin-bottom: 28px; } .cards { grid-template-columns: 1fr; } .card { padding: 18px; } .card strong { font-size: 1.5rem; } .page h1 { font-size: 2.15rem; } .page :global(.practice-check) { padding: 18px; } .standalone article > nav { grid-template-columns: 1fr; } .page h1 + p { font-size: 1rem; } }
+.related { margin: 2rem 0; }
+.related li { margin: .35rem 0; }
+.tableWrap caption { padding: .75rem; text-align: left; color: var(--muted); }

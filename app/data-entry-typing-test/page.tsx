@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 import { dataEntryAssessment } from "../../src/features/careers/assessments/data-entry";
@@ -104,6 +105,7 @@ export default function DataEntryTypingTestPage() {
         </section>
 
         <WPMTestApp initialPath="/data-entry-typing-test/" />
+        <TypingPreviews />
 
         <section className="seo-prerender" aria-label="Data entry practice and assessment guide">
           <h2>Measure the skills data-entry roles actually use</h2>

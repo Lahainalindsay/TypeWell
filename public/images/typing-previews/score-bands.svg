@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="310" viewBox="0 0 540 310">
+  <rect width="540" height="310" fill="#132137"/>
+  <g font-family="system-ui,sans-serif" fill="#ecf5fa">
+    <text x="38" y="54" font-size="25" font-weight="700">Typing speed in two studies</text>
+    <text x="38" y="96" font-size="17">Physical keyboard · 2018</text>
+    <rect x="175" y="110" width="135" height="19" rx="5" fill="#a6dfc5"/>
+    <path d="M274 105v30" stroke="#fff" stroke-width="3"/>
+    <text x="38" y="154" font-size="15">Most volunteers around 30–60 WPM · mean ≈52 WPM</text>
+    <text x="38" y="198" font-size="17">Touchscreen · 2019</text>
+    <circle cx="203" cy="222" r="7" fill="#f5cf82"/>
+    <text x="217" y="228" font-size="15">36.2 WPM mean</text>
+    <path d="M40 251h450m-450-4v9m90-9v9m90-9v9m90-9v9m90-9v9m90-9v9" fill="none" stroke="#b5c6d5"/>
+    <g text-anchor="middle" font-size="13"><text x="40" y="275">0</text><text x="130" y="275">20</text><text x="220" y="275">40</text><text x="310" y="275">60</text><text x="400" y="275">80</text><text x="490" y="275">100</text></g>
+    <text x="38" y="296" font-size="13">Words per minute (WPM)</text>
+  </g>
+</svg>

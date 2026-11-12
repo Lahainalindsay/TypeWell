@@ -46,7 +46,7 @@ function ThemeToggle() {
 
 const groups = [
   { label: "Tests", sections: [
-    { title: "Standard tests", links: [["/typing-test/", "Standard Typing Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/10-minute-typing-test/", "10 Minute Test"]] },
+    { title: "Standard tests", links: [["/", "Standard Typing Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/10-minute-typing-test/", "10 Minute Test"]] },
     { title: "Specialized tests", links: [["/typing-personality-test/", "Typing Personality Test"], ["/1-page-typing-test/", "Page Typing Tests"], ["/typing-test-with-numbers/", "Numbers Test"], ["/typing-test-with-punctuation/", "Punctuation Test"], ["/mobile-typing-test/", "Mobile Typing Test"]] }
   ] },
   { label: "Professional", sections: [
@@ -111,7 +111,7 @@ function CookieSettings() {
 
 export function SiteFooter() {
   const columns = [
-    ["Tests", ["/typing-test/", "Standard Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/1-page-typing-test/", "Page Tests"], ["/mobile-typing-test/", "Mobile Test"]],
+    ["Tests", ["/", "Standard Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/1-page-typing-test/", "Page Tests"], ["/mobile-typing-test/", "Mobile Test"]],
     ["Practice", ["/typing-practice/", "Typing Practice"], ["/learn/", "Lessons"], ["/practice/weak-keys/", "Weak Keys"], ["/rhythm/", "Rhythm"], ["/progress/", "Progress"]],
     ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/customer-service-typing-test/", "Customer Service Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
     ["Resources", ["/blog/", "Articles"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],

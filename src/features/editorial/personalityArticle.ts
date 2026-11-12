@@ -1,3 +1,5 @@
+export const personalityArticleTitle = "Typing Personality Test: How Your Results Are Scored";
+
 export const articleBlocks = [
   "Your Typing Test Results Are Judging You. Find Out What They Think. 👀",
   "You think you’re a pretty good typist, don’t you?",

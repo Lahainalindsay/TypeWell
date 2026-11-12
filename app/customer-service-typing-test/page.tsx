@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 import { customerServiceAssessment } from "../../src/features/careers/assessments/customer-service";
@@ -90,7 +91,7 @@ export default function CustomerServiceTypingTestPage() {
         <h2>About WPMTest results and certificates</h2>
         <p>WPMTest results and site-generated certificates are self-administered practice records, not accredited professional certifications and not proof that a particular employer has administered or accepted a test. If an employer specifies a required test provider, duration or scoring method, follow that employer&rsquo;s instructions.</p>
       </section>
-    </main>
+    <TypingPreviews /></main>
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />)}
   </>;
 }

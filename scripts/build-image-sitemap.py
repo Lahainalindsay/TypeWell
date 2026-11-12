@@ -16,7 +16,7 @@ class Images(HTMLParser):
         self.sources = set()
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-        if tag == 'img' and attrs.get('src', '').startswith('/'):
+        if tag == 'img' and attrs.get('alt') and attrs.get('src', '').startswith('/'):
             self.sources.add(attrs['src'])
 
 tree = ET.parse(ROOT / 'sitemap.xml')

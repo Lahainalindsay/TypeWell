@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 
@@ -37,7 +38,7 @@ export default function PunctuationTypingTestPage() {
         <h2>Related typing tests</h2><nav aria-label="Related typing tests"><a href="/typing-test/code/">Code Typing Test</a><a href="/typing-test-with-numbers/">Typing Test With Numbers</a><a href="/data-entry-typing-test/">Data Entry Typing Test</a><a href="/5-minute-typing-test/">5 Minute Typing Test</a></nav>
         <h2>Use the result as a practical benchmark</h2><p>If your punctuation score is lower than your standard typing score, focus on the characters that create the largest slowdown rather than treating the difference as a failure. The purpose of the specialized test is to expose a practice target that ordinary prose can hide.</p>
       </section>
-    </main>
+    <TypingPreviews /></main>
     {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />)}
   </>;
 }

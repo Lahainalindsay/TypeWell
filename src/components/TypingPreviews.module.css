@@ -1,0 +1,17 @@
+.previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 1rem;
+  width: min(100% - 2rem, 1100px);
+  margin: 2rem auto;
+}
+.previews figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+}
+.previews img { display: block; width: 100%; height: auto; }
+.previews figcaption { display: grid; gap: .35rem; padding: 1rem; }
+.previews a { text-decoration: underline; text-underline-offset: .2em; }
