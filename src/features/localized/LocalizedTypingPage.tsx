@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../components/TypingPreviews";
 import GlossikaCard from '../partners/GlossikaCard';
 import {localizedGlossikaCourses} from '../partners/glossika';
 import LocalizedTypingTest from "./LocalizedTypingTest";
@@ -61,6 +62,6 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
       </section>
 
       {localizedGlossikaCourses[content.lang]&&<GlossikaCard name={localizedGlossikaCourses[content.lang]}/>}
-    </main>
+    <TypingPreviews /></main>
   );
 }

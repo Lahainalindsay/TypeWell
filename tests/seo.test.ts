@@ -138,7 +138,7 @@ describe("SEO route registry", () => {
 
     expect(seoPages.find((page) => page.path === "/")?.h1).toBe("Free Typing Test — Measure Your Speed and Accuracy Instantly");
     expect(seoPages.find((page) => page.path === "/wpm-calculator/")?.h1).toBe("WPM Calculator — Convert Characters and Time to Words Per Minute");
-    expect(seoPages.find((page) => page.path === "/average-typing-speed/")?.h1).toBe("Average Typing Speed by Age and Experience — What's a Good WPM?");
+    expect(seoPages.find((page) => page.path === "/average-typing-speed/")?.h1).toBe("Average Typing Speed: What’s a Good WPM?");
     expect(seoPages.find((page) => page.path === "/kph-typing-test/")?.h1).toBe("KPH Typing Test — Measure Your 10-Key Numeric Entry Speed");
     expect(seoPages.find((page) => page.path === "/mobile-typing-test/")?.h1).toBe("Mobile Typing Test — Test Your Speed on a Phone or Tablet");
     expect(JSON.stringify(seoPages)).not.toContain("claude.ai");

@@ -1,8 +1,10 @@
-import { ArticleVisual, PracticeCard } from "../../../src/features/editorial/ArticleVisual";
+import { author, publisher } from "../../../src/lib/seo/structured";
+import { ArticleVisual, AuthorByline, GuideTakeaways, PracticeCard, RelatedGuides } from "../../../src/features/editorial/ArticleVisual";
 import styles from "../../../src/features/editorial/editorial.module.css";
 import type { Metadata } from "next";
-import { absoluteUrl, SITE_NAME } from "../../../src/lib/seo/site";
+import { absoluteUrl } from "../../../src/lib/seo/site";
 
+const dateModified = "2026-11-12";
 const canonical = absoluteUrl("/blog/data-entry-typing-test-for-employment/");
 
 export const metadata: Metadata = {
@@ -12,10 +14,10 @@ export const metadata: Metadata = {
   openGraph: { title: "Data Entry Typing Test for Employment: What to Expect",
     description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.",
     url: canonical,
-    type: "article", images: [{ url: absoluteUrl("/images/typing-editorial-desk.webp"), width: 1200, height: 630, alt: "WPMTest Data Entry employment guide" }] },
+    type: "article", images: [{ url: absoluteUrl("/images/guides/data-entry-typing-test-for-employment.jpg"), width: 1200, height: 630, alt: "WPMTest Data Entry employment guide" }] },
   twitter: { card: "summary_large_image",
     title: "Data Entry Typing Test for Employment: What to Expect",
-    description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.", images: [absoluteUrl("/images/typing-editorial-desk.webp")] },
+    description: "A practical guide to data entry employment tests, KPH, accuracy, structured records and preparation.", images: [absoluteUrl("/images/guides/data-entry-typing-test-for-employment.jpg")] },
   robots: { index: true, follow: true }
 };
 
@@ -25,8 +27,11 @@ export default function DataEntryEmploymentGuidePage() {
     "@type": "Article",
     headline: "Data Entry Typing Test for Employment: What to Expect and How to Practice",
     mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
-    author: { "@type": "Organization", name: SITE_NAME },
-    publisher: { "@type": "Organization", name: SITE_NAME },
+    author,
+    publisher,
+    datePublished: "2026-09-14",
+    dateModified,
+    image: absoluteUrl("/images/guides/data-entry-typing-test-for-employment.jpg"),
     inLanguage: "en-US"
   };
   const breadcrumbSchema = {
@@ -57,6 +62,7 @@ export default function DataEntryEmploymentGuidePage() {
             dates, account numbers, prices, codes and other structured information where every character matters.
           </p>
 
+          <AuthorByline date={dateModified} />
           <ArticleVisual topic="data-entry-typing-test-for-employment" />
           <h2>What is a data entry typing test?</h2>
           <p>
@@ -131,6 +137,8 @@ export default function DataEntryEmploymentGuidePage() {
             <a href="/typing-test-with-numbers/">Typing Test With Numbers</a>
             <a href="/typing-test-for-employment/">Typing Test for Employment</a>
           </nav>
+          <GuideTakeaways topic="data-entry-typing-test-for-employment" />
+          <RelatedGuides topics={["data-entry-accuracy", "avoid-data-entry-errors"]} />
           <PracticeCard href={"/data-entry-typing-test/"} label={"Try the data entry test"} />
         </article>
       </main>

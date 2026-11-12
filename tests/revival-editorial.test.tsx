@@ -16,7 +16,13 @@ describe('revival editorial reading paths', () => {
       for (const link of page.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')) expect(page.querySelector(link.getAttribute('href')!)).not.toBeNull();
       expect(page.querySelector(`a[href="${practicePath(language.id)}"]`)).not.toBeNull();
       expect(revivalMetadata(language.id).alternates?.canonical).toBe(`https://wpmtest.app/blog/${language.id}-language-revival/`);
-      for (const image of page.querySelectorAll('img')) expect(image.getAttribute('alt')?.length).toBeGreaterThan(10);
+      for (const image of page.querySelectorAll('img')) {
+        if (image.getAttribute('src') === '/images/partners/glossika-owl.png') {
+          expect(image.getAttribute('alt')).toBe('');
+        } else {
+          expect(image.getAttribute('alt')?.length).toBeGreaterThan(10);
+        }
+      }
     }
   });
   it('places all six supplied photographs in the Hawaiian history with their captions', () => {

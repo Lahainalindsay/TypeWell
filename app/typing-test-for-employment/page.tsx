@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../src/App";
 
@@ -28,5 +29,5 @@ export default function EmploymentTypingTestPage(){
    <p><a href="/blog/prepare-employment-typing-test/">Use the employment-test preparation checklist</a> and <a href="/blog/wpm-vs-kph/">review worked scoring examples</a> before comparing results.</p><h2>Practice by job task</h2><nav aria-label="Employment typing practice"><a href="/data-entry-typing-test/">Data Entry Typing Test</a><a href="/10-key-typing-test/">10-Key Typing Test</a><a href="/typing-test-with-numbers/">Typing Test With Numbers</a><a href="/typing-test-with-punctuation/">Punctuation Typing Test</a></nav>
    <h2>About WPMTest results and certificates</h2><p>WPMTest results and site-generated certificates are practice records, not accredited professional certifications and not proof that a particular employer has administered or accepted a test. If an employer specifies a required test provider, duration or scoring method, follow that employer's instructions.</p>
   </section>
- </main>{schemas.map((schema,index)=><script key={index} type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />)}</>;
+ <TypingPreviews /></main>{schemas.map((schema,index)=><script key={index} type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}} />)}</>;
 }

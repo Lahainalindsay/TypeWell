@@ -92,21 +92,21 @@ export const library: Record<string, string[]> = {
 };
 
 // Shuffle without replacement within each cycle, so a new session has fresh material.
-function shuffled<T>(items: readonly T[]): T[] {
+function shuffled<T>(items: readonly T[], random: () => number): T[] {
   const copy = [...items];
   for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(random() * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
 }
 
-function variedText(items: readonly string[], length: number): string {
+function variedText(items: readonly string[], length: number, random: () => number): string {
   if (!items.length) return "";
   const parts: string[] = [];
   let size = 0;
   while (size < length) {
-    const cycle = shuffled(items);
+    const cycle = shuffled(items, random);
     for (const item of cycle) {
       if (items.length > 1 && parts.length && item === parts[parts.length - 1]) continue;
       parts.push(item);
@@ -141,27 +141,32 @@ export const categoryPassages: Record<"Sentences" | "Fun Facts" | "Tiny Dramas",
   ]
 };
 
-function coherentText(mode: keyof typeof categoryPassages, length: number): string {
+function coherentText(mode: keyof typeof categoryPassages, length: number, random: () => number): string {
   const passages = categoryPassages[mode];
-  const passage = passages[Math.floor(Math.random() * passages.length)];
+  const passage = passages[Math.floor(random() * passages.length)];
   return Array(Math.max(1, Math.ceil(length / (passage.length + 1)))).fill(passage).join(" ");
 }
 
-export function buildPracticeText(mode: PracticeMode, count = 50, customText = ""): string {
+export function buildPracticeText(mode: PracticeMode, count = 50, customText = "", random = Math.random): string {
   if (mode === "Custom Text") return customText || "Paste custom text in the field above, then begin typing here.";
-  if (mode === "Numbers") return variedText(library.Numbers, count * 6);
-  if (mode === "Data Entry") return variedText(fictionalDataEntryRecords.map((record) => dataEntryFields(record).join(" ")), count * 8);
-  if (mode === "Numeric Keypad") return variedText(numericGroups, count * 5);
-  if (mode === "Punctuation") return variedText(library.Punctuation, count * 6);
-  if (mode === "Symbols") return variedText(["email@domain.dev", "#issue-42", "$19.95", "+ 8%", "total_value", "/ [draft]", "{ready}", "&& checked"], count * 6);
-  if (mode === "Code") return variedText(library.Programming, count * 7);
-  if (mode === "Fun Facts" || mode === "Tiny Dramas") return coherentText(mode, count * 6);
-  if (mode === "Accuracy") return variedText(["accurate", "steady", "clear", "exact", "clean", "calm", "deliberate", "return", "home", "row"], count * 6);
-  if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6);
-  if (mode === "Endurance") return coherentText("Sentences", count * 10);
-  if (mode === "Words") return variedText(["time", "form", "hand", "type", "clean", "steady", "rhythm", "focus", "reach", "return", "index", "finger", "screen", "practice", "improve"], count * 6);
-  if (mode === "Quotes") return variedText(library.Quotes, count * 6);
-  return coherentText("Sentences", count * 6);
+  if (mode === "Numbers") return variedText(library.Numbers, count * 6, random);
+  if (mode === "Data Entry") return variedText(fictionalDataEntryRecords.map((record) => dataEntryFields(record).join(" ")), count * 8, random);
+  if (mode === "Numeric Keypad") return variedText(numericGroups, count * 5, random);
+  if (mode === "Punctuation") return variedText(library.Punctuation, count * 6, random);
+  if (mode === "Symbols") return variedText(["email@domain.dev", "#issue-42", "$19.95", "+ 8%", "total_value", "/ [draft]", "{ready}", "&& checked"], count * 6, random);
+  if (mode === "Code") return variedText(library.Programming, count * 7, random);
+  if (mode === "Fun Facts" || mode === "Tiny Dramas") return coherentText(mode, count * 6, random);
+  if (mode === "Accuracy") return variedText(["accurate", "steady", "clear", "exact", "clean", "calm", "deliberate", "return", "home", "row"], count * 6, random);
+  if (mode === "Speed Burst") return variedText(["the", "and", "you", "that", "with", "have", "type", "fast", "calm", "flow"], count * 6, random);
+  if (mode === "Endurance") return coherentText("Sentences", count * 10, random);
+  if (mode === "Words") return variedText(["time", "form", "hand", "type", "clean", "steady", "rhythm", "focus", "reach", "return", "index", "finger", "screen", "practice", "improve"], count * 6, random);
+  if (mode === "Quotes") return variedText(library.Quotes, count * 6, random);
+  return coherentText("Sentences", count * 6, random);
+}
+
+// Match the prerendered passage during hydration. The trainer selects fresh text after mounting.
+export function buildInitialPracticeText(mode: PracticeMode, count = 50, customText = "") {
+  return buildPracticeText(mode, count, customText, () => 0);
 }
 
 // A page test has a fixed amount of text and no countdown. Keep sentence

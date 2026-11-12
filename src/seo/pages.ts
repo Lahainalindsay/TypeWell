@@ -333,9 +333,9 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/average-typing-speed/",
-    title: "Average Typing Speed by Experience - What's a Good WPM? | WPMTest",
-    description: "Learn how to interpret typing speed by experience and work context, including WPM ranges, accuracy, consistency, and job-related typing.",
-    h1: "Average Typing Speed by Age and Experience — What's a Good WPM?",
+    title: "Average Typing Speed: WPM Benchmarks | WPMTest",
+    description: "Compare published physical-keyboard and touchscreen typing benchmarks, then learn how to interpret your WPM, accuracy and test conditions.",
+    h1: "Average Typing Speed: What’s a Good WPM?",
     intro: "There's no single “average” typing speed, because the number depends heavily on who's typing and what they're typing.",
     content: [
       "An average needs a defined population and test format. WPMTest does not publish a representative population study, so this site cannot rank your score against all adults or establish universal job benchmarks.",

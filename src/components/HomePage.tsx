@@ -12,20 +12,20 @@ export function HomePage({ test }: { test: React.ReactNode }) {
   return <div className="home tw-wpm-test-home">
     <section className="hero"><div className="hero-copy">
       <h1>Free Typing Test — Measure Your Speed and Accuracy Instantly</h1>
-      <p>Measure WPM, accuracy and consistency instantly. No signup required.</p>
+      <p>Take a free 1-, 3-, 5-, or 10-minute typing test to measure your words per minute, accuracy and consistency. Choose a time and start typing the passage to begin.</p>
     </div></section>
     <BrowserLanguageSuggestion />
     {test}
     <section className="home-pathways" aria-labelledby="pathways-heading">
       <h2 id="pathways-heading">Choose your path</h2>
       <div className="home-pathway-grid">
-        <a href="/typing-test/"><span>01 / TEST</span><h3>Test Your Speed</h3><p>Standard typing tests for measuring WPM and accuracy.</p><strong>View Typing Tests →</strong></a>
+        <a href="#popular-heading"><span>01 / TEST</span><h3>Test Your Speed</h3><p>Explore timed tests and specialized formats.</p><strong>View popular tests →</strong></a>
         <a href="/professionals/"><span>02 / WORK</span><h3>Professional Skills</h3><p>Practice workplace typing, data entry, numbers, 10-key and employment assessments.</p><strong>Explore Professional Tests →</strong></a>
         <a href="/typing-practice/"><span>03 / IMPROVE</span><h3>Improve Your Typing</h3><p>Build accuracy, rhythm, technique and weak-key control.</p><strong>Start Practicing →</strong></a>
       </div>
     </section>
     <AdSlot placement="afterHomeTest" />
-    <section className="home-popular" aria-labelledby="popular-heading"><div className="home-section-heading"><h2 id="popular-heading">Popular tests</h2><a href="/typing-test/">All tests →</a></div><div className="home-popular-grid">{popular.map(([href, label]) => <a href={href} key={href}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>
+    <section className="home-popular" aria-labelledby="popular-heading"><div className="home-section-heading"><h2 id="popular-heading">Popular tests</h2><a href="/10-minute-typing-test/">10-minute test →</a></div><div className="home-popular-grid">{popular.map(([href, label]) => <a href={href} key={href}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>
     <section className="home-professional" aria-labelledby="professional-heading"><div>
       <p className="eyebrow">For work and job preparation</p><h2 id="professional-heading">Typing skills that translate to the workplace.</h2>
       <p>Practice alphanumeric records, names and addresses, invoices and orders, currency and dates, and numeric keypad entry. Measure WPM for prose and KPM or KPH for numeric work.</p>

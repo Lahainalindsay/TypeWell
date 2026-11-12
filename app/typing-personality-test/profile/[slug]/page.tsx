@@ -30,7 +30,7 @@ export default async function SharedPersonality({ params }: Props) {
   return <main className="seo-prerender" style={{ maxWidth: 820, margin: "0 auto", padding: "2rem 1rem" }}>
     <p>WPMTEST · KEYBOARD ALL-STARS</p>
     <h1>I'm {profile.name}!</h1>
-    <img src={`/images/personalities/${profile.slug}.webp`} alt={`Illustrated ${profile.name} typing personality character at a keyboard`} width={960} height={640} style={{ width: "100%", height: "auto", borderRadius: 16 }} />
+    <img src={`/images/personalities/${profile.slug}.webp`} srcSet={`/images/personalities/${profile.slug}-480.webp 480w, /images/personalities/${profile.slug}.webp 960w`} sizes="(max-width: 700px) 100vw, 960px" alt={`Illustrated ${profile.name} typing personality character at a keyboard`} width={960} height={640} style={{ width: "100%", height: "auto", borderRadius: 16 }} />
     <p style={{ fontSize: "1.2rem" }}>{profile.description}</p>
     <h2>What's YOUR typing personality?</h2>
     <p>One typing test. Nine keyboard alter egos. Your speed, accuracy and consistency decide which character you get. No signup required.</p>

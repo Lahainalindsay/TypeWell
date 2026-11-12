@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="310" viewBox="0 0 540 310">
+  <rect width="540" height="310" fill="#101e2f"/>
+  <rect x="38" y="34" width="464" height="242" rx="20" fill="#192d42" stroke="#4c657a"/>
+  <g font-family="system-ui,sans-serif" fill="#eaf5fa">
+    <text x="65" y="80" font-size="17" fill="#a6dfc5">WPMTEST • EXAMPLE RESULT</text>
+    <text x="65" y="119" font-size="26" font-weight="700">Session complete</text>
+    <text x="65" y="195" font-size="53" font-weight="700">62</text>
+    <text x="284" y="195" font-size="53" font-weight="700">97%</text>
+    <text x="65" y="230" font-size="19">Words per minute</text>
+    <text x="284" y="230" font-size="19">Accuracy</text>
+  </g>
+</svg>

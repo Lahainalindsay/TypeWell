@@ -1,8 +1,10 @@
-import { ArticleVisual, PracticeCard } from "../../../src/features/editorial/ArticleVisual";
+import { author, publisher } from "../../../src/lib/seo/structured";
+import { ArticleVisual, AuthorByline, GuideTakeaways, PracticeCard, RelatedGuides } from "../../../src/features/editorial/ArticleVisual";
 import styles from "../../../src/features/editorial/editorial.module.css";
 import type { Metadata } from "next";
 import { absoluteUrl, SITE_NAME } from "../../../src/lib/seo/site";
 
+const dateModified = "2026-11-12";
 const canonical = absoluteUrl("/blog/best-typing-test-websites/");
 const title = "9 Best Typing Test Websites Compared (2026) | WPMTest";
 const description = "Compare nine free typing test websites and find the right tool for speed checks, lessons, data entry, employment practice, and certificates.";
@@ -17,27 +19,27 @@ export const metadata: Metadata = {
     url: canonical,
     siteName: SITE_NAME,
     type: "article",
-    images: [{ url: absoluteUrl("/images/typing-editorial-desk.webp"), width: 1200, height: 630, alt: "Typing test website comparison" }]
+    images: [{ url: absoluteUrl("/images/guides/best-typing-test-websites.jpg"), width: 1200, height: 630, alt: "Typing test website comparison" }]
   },
   twitter: {
     card: "summary_large_image",
     title: "9 Best Typing Test Websites Compared (2026)",
     description,
-    images: [absoluteUrl("/images/typing-editorial-desk.webp")]
+    images: [absoluteUrl("/images/guides/best-typing-test-websites.jpg")]
   },
   robots: { index: true, follow: true }
 };
 
 const comparisonRows = [
-  { name: "10FastFingers", href: "https://10fastfingers.com", bestFor: "Quick multilingual speed checks", lengths: "1 minute", dataEntry: "No", certificate: "No" },
-  { name: "Typing.com", href: "https://www.typing.com", bestFor: "Classroom curriculum", lengths: "Varies", dataEntry: "No", certificate: "Available" },
-  { name: "TypingClub", href: "https://www.typingclub.com", bestFor: "Structured beginner lessons", lengths: "Varies", dataEntry: "No", certificate: "Available" },
-  { name: "TypingTest.com", href: "https://www.typingtest.com", bestFor: "General typing tests and games", lengths: "1 / 3 / 5 minutes", dataEntry: "No", certificate: "Available" },
-  { name: "Keybr", href: "https://www.keybr.com", bestFor: "Adaptive weak-key practice", lengths: "Untimed", dataEntry: "No", certificate: "No" },
-  { name: "Monkeytype", href: "https://monkeytype.com", bestFor: "Customization and enthusiasts", lengths: "Custom", dataEntry: "No", certificate: "No" },
-  { name: "Ratatype", href: "https://www.ratatype.com", bestFor: "Lessons in multiple languages", lengths: "Varies", dataEntry: "No", certificate: "Available" },
-  { name: "TypeRacer", href: "https://play.typeracer.com", bestFor: "Competitive multiplayer racing", lengths: "Race-based", dataEntry: "No", certificate: "No" },
-  { name: SITE_NAME, href: "/", bestFor: "Data entry and employment practice", lengths: "1 / 3 / 5 / 10 minutes + KPH", dataEntry: "Yes", certificate: "Free download", highlight: true }
+  { name: "10FastFingers", source: "https://10fastfingers.com/", href: "https://10fastfingers.com", bestFor: "Quick multilingual speed checks", lengths: "1 minute", dataEntry: "—", certificate: "—" },
+  { name: "Typing.com", source: "https://support.typing.com/en/articles/9047745", href: "https://www.typing.com", bestFor: "Classroom curriculum", lengths: "1 / 3 / 5 minutes + page tests", dataEntry: "—", certificate: "Available" },
+  { name: "TypingClub", source: "https://typing.typingclub.com/docs/class-management/typing-tests/typing-certificates.html", href: "https://www.typingclub.com", bestFor: "Structured beginner lessons", lengths: "Varies", dataEntry: "—", certificate: "Available" },
+  { name: "TypingTest.com", source: "https://www.typingtest.com/certificate.php", href: "https://www.typingtest.com", bestFor: "General typing tests and games", lengths: "1 / 2 / 3 / 5 / 10 minutes", dataEntry: "—", certificate: "Separate 5-minute test" },
+  { name: "Keybr", source: "https://github.com/aradzie/keybr.com", href: "https://www.keybr.com", bestFor: "Adaptive weak-key practice", lengths: "Untimed", dataEntry: "—", certificate: "—" },
+  { name: "Monkeytype", source: "https://monkeytype.com/about", href: "https://monkeytype.com", bestFor: "Customization and enthusiasts", lengths: "Custom", dataEntry: "—", certificate: "—" },
+  { name: "Ratatype", source: "https://www.ratatype.com/faq/en/", href: "https://www.ratatype.com", bestFor: "Lessons in multiple languages", lengths: "Varies", dataEntry: "—", certificate: "Available" },
+  { name: "TypeRacer", source: "https://play.typeracer.com/", href: "https://play.typeracer.com", bestFor: "Competitive multiplayer racing", lengths: "Race-based", dataEntry: "—", certificate: "—" },
+  { name: SITE_NAME, source: "/certificate/sample/", href: "/", bestFor: "Data entry and employment practice", lengths: "1 / 3 / 5 / 10 minutes + KPH", dataEntry: "Yes", certificate: "Free download", highlight: true }
 ] as const;
 
 const faqItems = [
@@ -58,11 +60,11 @@ export default function BestTypingTestWebsitesPage() {
     headline: "The 9 Best Free Typing Test Websites (2026), Compared",
     description,
     mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
-    author: { "@type": "Organization", name: SITE_NAME },
-    publisher: { "@type": "Organization", name: SITE_NAME },
+    author,
+    publisher,
     datePublished: "2026-09-21",
-    dateModified: "2026-10-27",
-    image: absoluteUrl("/images/typing-editorial-desk.webp"),
+    dateModified,
+    image: absoluteUrl("/images/guides/best-typing-test-websites.jpg"),
     inLanguage: "en-US"
   };
   const breadcrumbSchema = {
@@ -97,17 +99,17 @@ export default function BestTypingTestWebsitesPage() {
           <p className="eyebrow">Typing test comparison</p>
           <h1>The 9 Best Free Typing Test Websites (2026), Compared</h1>
           <p>
-            Most typing test sites offer a timer, a passage, and a WPM result. That is enough for a casual speed
-            check, but different tools serve very different goals. Some teach beginners, some emphasize competitive
-            typing, and others focus on employment or data-entry practice. This comparison explains where each site
-            fits so you can choose the tool that matches what you actually need.
+            Use 10FastFingers for a quick multilingual speed check, Typing.com or TypingClub for guided lessons, and Monkeytype for configurable tests.
+            If you’re preparing for data-entry work, WPMTest offers structured records and a dedicated 10-key test.
           </p>
 
+          <AuthorByline date={dateModified} />
           <ArticleVisual topic="best-typing-test-websites" />
           <h2>Quick comparison</h2>
           <p className={styles.tableHint}>On smaller screens, swipe the table to compare every column.</p>
           <div className={styles.tableWrap} role="region" aria-label="Typing website comparison table" tabIndex={0}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
+              <caption>Provider documentation reviewed <time dateTime={dateModified}>November 12, 2026</time>. A dash means the linked sources do not document the feature. Account and test modes can affect availability.</caption>
               <thead>
                 <tr>
                   {["Site", "Best for", "Test lengths", "Data-entry mode", "Certificate"].map((heading) => (
@@ -121,7 +123,7 @@ export default function BestTypingTestWebsitesPage() {
                 {comparisonRows.map((row) => (
                   <tr key={row.name} style={"highlight" in row ? { background: "var(--panel)" } : undefined}>
                     <td style={{ padding: "0.6rem 0.75rem", borderBottom: "1px solid var(--line)" }}>
-                      {"highlight" in row ? <strong><a href={row.href}>{row.name}</a></strong> : <a href={row.href} rel="nofollow noopener" target="_blank">{row.name}</a>}
+                      {"highlight" in row ? <strong><a href={row.href}>{row.name}</a></strong> : <a href={row.href} rel="nofollow noopener" target="_blank">{row.name}</a>} <small><a href={row.source} aria-label={`Source for ${row.name}`}>Source</a></small>
                     </td>
                     <td style={{ padding: "0.6rem 0.75rem", borderBottom: "1px solid var(--line)" }}>{"highlight" in row ? <strong>{row.bestFor}</strong> : row.bestFor}</td>
                     <td style={{ padding: "0.6rem 0.75rem", borderBottom: "1px solid var(--line)" }}>{row.lengths}</td>
@@ -173,6 +175,8 @@ export default function BestTypingTestWebsitesPage() {
               <p>{item.answer}</p>
             </section>
           ))}
+          <GuideTakeaways topic="best-typing-test-websites" />
+          <RelatedGuides topics={["prepare-employment-typing-test", "wpm-vs-kph"]} />
           <PracticeCard href={"/typing-test/"} label={"Take a typing test"} />
         </article>
       </main>

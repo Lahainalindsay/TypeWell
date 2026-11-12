@@ -4,20 +4,22 @@ import GlossikaCard from '../partners/GlossikaCard';
 import { languages, articles, articlePath, practicePath } from './content';
 import photoData from './photos.json';
 import editorial from './editorial.json';
-import { Photo, PhotoCredit } from './Photo';
+import { Photo, PhotoCredit, responsivePhoto } from './Photo';
 import HawaiianPhotoEssay from './HawaiianPhotoEssay';
 import { absoluteUrl } from '../../lib/seo/site';
+import { author, breadcrumbList, publisher } from '../../lib/seo/structured';
 import styles from '../../../app/blog/hawaiian-language-revival/article.module.css';
 
 export function revivalMetadata(id: string): Metadata {
   const language = languages.find(item => item.id === id)!;
   const photo = photoData[id as keyof typeof photoData];
-  const story = editorial[id as keyof typeof editorial];
-  const title = `${story.headline} | WPMTest`;
+  const topic = language.name.replace(/Hakka \((.+)\)/, '$1 Hakka');
+  const title = `${topic} Language Revival | WPMTest`;
+  const image = absoluteUrl(`/images/revival/${id}-social.jpg`);
   const url = absoluteUrl(articlePath(id));
   return { title, description: language.desc, alternates: { canonical: url },
-    openGraph: { title, description: language.desc, url, type: 'article', images: [{ url: absoluteUrl(photo.src), width: photo.width, height: photo.height, alt: photo.alt }] },
-    twitter: { card: 'summary_large_image', title, description: language.desc, images: [absoluteUrl(photo.src)] }
+    openGraph: { title, description: language.desc, url, type: 'article', images: [{ url: image, width: 1200, height: 630, alt: photo.alt }] },
+    twitter: { card: 'summary_large_image', title, description: language.desc, images: [image] }
   };
 }
 
@@ -30,6 +32,24 @@ export default function RevivalArticle({ id }: { id: string }) {
   const wordCount = [story.lead, ...article.sections.flatMap(section => section.paragraphs)].join(' ').split(/\s+/).length;
   const readingMinutes = Math.max(3, Math.ceil(wordCount / 200));
   const related = languages.filter(item => item.id !== id).slice(0, 3);
+  const datePublished = id === 'hawaiian' ? '2026-10-27' : '2026-11-08';
+  const dateModified = '2026-11-12';
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article', headline: story.headline, description: language.desc,
+        image: [absoluteUrl(`/images/revival/${id}-social.jpg`), absoluteUrl(photo.src)],
+        mainEntityOfPage: url, datePublished, dateModified, author, publisher,
+        citation: article.sources.map(source => source.url)
+      },
+      breadcrumbList([
+        { name: 'Home', url: '/' },
+        { name: 'Language Revival', url: '/language-revival/' },
+        { name: language.name, url: articlePath(id) }
+      ])
+    ]
+  };
   const direction = id === 'sorani-kurdish' ? 'rtl' : 'ltr';
 
   return <main className={`${styles.page} ${styles.storyPage}`}>
@@ -39,7 +59,7 @@ export default function RevivalArticle({ id }: { id: string }) {
         <p className={styles.eyebrow}>{story.kicker}</p>
         <h1>{story.headline}</h1>
         <p className={styles.storyDeck}>{language.desc}</p>
-        <div className={styles.storyMeta}><span>WPMTest editorial</span><span>{readingMinutes} min read</span><span>Updated November 10, 2026</span></div>
+        <div className={styles.storyMeta}><a href="/about/#lindsay-johnson">Lindsay Johnson</a><span>{readingMinutes} min read</span><time dateTime={dateModified}>Updated November 12, 2026</time></div>
       </header>
       <Photo photo={photo} priority className={styles.storyHero} />
       <div className={styles.storyIntro}>
@@ -65,7 +85,7 @@ export default function RevivalArticle({ id }: { id: string }) {
         </div>
       </div>
     </article>
-    <section className={styles.relatedStories} aria-labelledby="related-stories"><header><p className={styles.eyebrow}>Keep exploring</p><h2 id="related-stories">Another place. Another living story.</h2><a href="/language-revival/">All eleven language pathways →</a></header><div className={styles.storyCards}>{related.map(item => { const image = photoData[item.id as keyof typeof photoData]; const next = editorial[item.id as keyof typeof editorial]; return <article key={item.id}><a className={styles.storyCardImage} href={articlePath(item.id)}><img src={image.width / image.height > 2.6 ? image.src : image.smallSrc} width={image.width} height={image.height} alt={image.alt} loading="lazy" decoding="async" /></a><p className={styles.eyebrow}>{item.region}</p><h3><a href={articlePath(item.id)}>{next.headline}</a></h3><PhotoCredit photo={image} /></article>; })}</div></section>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: story.headline, description: language.desc, image: absoluteUrl(photo.src), mainEntityOfPage: url, dateModified: '2026-11-10', author: { '@type': 'Organization', name: 'WPMTest', url: absoluteUrl('/about/') }, citation: article.sources.map(source => source.url) }).replace(/</g, '\\u003c') }} />
+    <section className={styles.relatedStories} aria-labelledby="related-stories"><header><p className={styles.eyebrow}>Keep exploring</p><h2 id="related-stories">Another place. Another living story.</h2><a href="/language-revival/">All eleven language pathways →</a></header><div className={styles.storyCards}>{related.map(item => { const image = photoData[item.id as keyof typeof photoData]; const next = editorial[item.id as keyof typeof editorial]; return <article key={item.id}><a className={styles.storyCardImage} href={articlePath(item.id)}><img src={image.src} {...responsivePhoto(image, '(max-width: 600px) 100vw, 360px')} width={image.width} height={image.height} alt={image.alt} loading="lazy" decoding="async" /></a><p className={styles.eyebrow}>{item.region}</p><h3><a href={articlePath(item.id)}>{next.headline}</a></h3><PhotoCredit photo={image} /></article>; })}</div></section>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />
   </main>;
 }

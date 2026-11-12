@@ -1,6 +1,8 @@
 {
   "waialee-historical": {
     "src": "/images/revival/hawaiian-story/waialee-historical.webp",
+    "smallSrc": "/images/revival/hawaiian-story/waialee-historical-600.webp",
+    "mediumSrc": "/images/revival/hawaiian-story/waialee-historical-1000.webp",
     "width": 1200,
     "height": 675,
     "alt": "Boys standing in rows outside institutional buildings and palm trees in a historical photograph.",
@@ -17,6 +19,8 @@
   },
   "learning-together": {
     "src": "/images/revival/hawaiian-story/learning-together.webp",
+    "smallSrc": "/images/revival/hawaiian-story/learning-together-600.webp",
+    "mediumSrc": "/images/revival/hawaiian-story/learning-together-1000.webp",
     "width": 1600,
     "height": 1067,
     "alt": "Children and an adult gathered around a table covered with books at an outdoor event.",

@@ -5,6 +5,9 @@ import { getSeoPage, seoPages } from "../../src/seo/pages";
 import { absoluteUrl, canonicalPath, SITE_NAME } from "../../src/lib/seo/site";
 import { typingTestLanguageAlternates } from "../../src/lib/seo/localized";
 
+import { publisher, siteEntities, website } from "../../src/lib/seo/structured";
+import { TypingPreviews } from "../../src/components/TypingPreviews";
+
 const dedicatedRoutes = new Set([
   "/blog/glossika-language-revival/",
   "/blog/[revivalArticle]/", "/language-revival/", "/language-revival/[language]/typing-test/", "/typing-personality-test/profile/[slug]/",
@@ -69,14 +72,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug?: st
   if (!seo && !extra) return {};
   const title = seo?.title ?? extra?.[0] ?? SITE_NAME;
   const description = seo?.description ?? extra?.[1] ?? "Free typing tests and typing practice.";
-  const url = absoluteUrl(path);
+  const url = absoluteUrl(normalized === "/typing-test" ? "/" : path);
   const image = absoluteUrl("/og-default.png");
   return {
     title,
     description,
     alternates: {
       canonical: url,
-      ...(normalized === "/typing-test" ? { languages: typingTestLanguageAlternates } : {})
+      ...(normalized === "/" ? { languages: typingTestLanguageAlternates } : {})
     },
     openGraph: { title, description, url, type: "website", siteName: SITE_NAME, images: [{ url: image, width: 1200, height: 630, alt: `${SITE_NAME} - ${seo?.h1 ?? extra?.[2] ?? "Typing Test"}` }] },
     twitter: { card: "summary_large_image", title, description, images: [image] },
@@ -96,9 +99,13 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
 
   if (!seo && !extra) notFound();
 
+  const isTypingTest = normalized === "/" || normalized.includes("typing-test") || normalized === "/numeric-keypad-test";
+
   return (
     <>
+      {path === "/" && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteEntities) }} />}
       <WPMTestApp initialPath={path} />
+      {isTypingTest && <TypingPreviews />}
       {path !== "/" ? (
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
@@ -163,7 +170,8 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
                 url: absoluteUrl(path),
                 isAccessibleForFree: true,
                 inLanguage: "en-US",
-                publisher: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") }
+                publisher: { "@id": publisher["@id"] },
+                isPartOf: website
               },
               ...(path !== "/" ? [{
                 "@type": "BreadcrumbList",
@@ -172,7 +180,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
                   { "@type": "ListItem", position: 2, name: seo?.h1 ?? extra?.[2] ?? SITE_NAME, item: absoluteUrl(path) }
                 ]
               }] : []),
-              ...(seo ? [{
+              ...(isTypingTest && seo && normalized !== "/typing-test" ? [{
                 "@type": "WebApplication",
                 name: seo.h1,
                 url: absoluteUrl(path),

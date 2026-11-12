@@ -1,3 +1,4 @@
+import { TypingPreviews } from "../../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import WPMTestApp from "../../../src/App";
 
@@ -74,7 +75,7 @@ export default function CodeTypingTestPage() {
           <h2>Code typing test FAQ</h2>
           {faqs.map(([question, answer]) => <article key={question}><h3>{question}</h3><p>{answer}</p></article>)}
         </section>
-      </main>
+      <TypingPreviews /></main>
       {schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />)}
     </>
   );
