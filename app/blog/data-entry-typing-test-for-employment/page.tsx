@@ -98,6 +98,10 @@ export default function DataEntryEmploymentGuidePage() {
             amount. Other sections may present invoice numbers, product codes or numeric groups.
           </p>
 
+          <h2>Work through one fictional order</h2>
+          <p>Copy order PO-00842, quantity 12, total $120.50 and ship date 2026-10-27. Suppose you enter PO-842, 12, $120.50 and 2026-10-27. Three of four fields match, giving 75% field accuracy for this example. The order still needs review because the identifier lost two leading zeroes.</p>
+          <p>Use the mistake list after an <a href="/data-entry-practice/invoices-orders/">Invoices &amp; Orders drill</a> to check whether your misses cluster in identifiers, amounts or dates. When you repeat the drill, watch whether that field improves alongside your entry rate.</p>
+
           <h2>How important is accuracy?</h2>
           <p>
             Accuracy is central to data entry because a single incorrect digit can change an account number, payment,
