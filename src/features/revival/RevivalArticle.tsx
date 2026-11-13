@@ -1,5 +1,6 @@
 import ReviewCopy, { reviewSectionClass, reviewSectionId } from './ReviewCopy';
 import hawaiianReview from './hawaiian-review.json';
+import catalanReview from './catalan-review.json';
 import welshReview from './welsh-review.json';
 import gaelicReview from './scottish-gaelic-review.json';
 import type { Metadata } from 'next';
@@ -32,7 +33,7 @@ export default function RevivalArticle({ id }: { id: string }) {
   const article = articles[id];
   const photo = photoData[id as keyof typeof photoData];
   const story = editorial[id as keyof typeof editorial];
-  const review = id === 'hawaiian' ? hawaiianReview : id === 'scottish-gaelic' ? gaelicReview : id === 'welsh' ? welshReview : undefined;
+  const review = id === 'hawaiian' ? hawaiianReview : id === 'scottish-gaelic' ? gaelicReview : id === 'welsh' ? welshReview : id === 'catalan' ? catalanReview : undefined;
   const url = absoluteUrl(articlePath(id));
   const wordCount = (review ? review.sections.map(section => section.body) : [story.lead, ...article.sections.flatMap(section => section.paragraphs)]).join(' ').split(/\s+/).length;
   const readingMinutes = Math.max(3, Math.ceil(wordCount / 200));
@@ -102,7 +103,7 @@ export default function RevivalArticle({ id }: { id: string }) {
         </div>
       </div>
     </article>
-    {id !== 'welsh' && <section className={styles.relatedStories} aria-labelledby="related-stories"><header><p className={styles.eyebrow}>Keep exploring</p><h2 id="related-stories">Another place. Another living story.</h2><a href="/language-revival/">All eleven language pathways →</a></header><div className={styles.storyCards}>{related.map(item => { const image = photoData[item.id as keyof typeof photoData]; const next = editorial[item.id as keyof typeof editorial]; return <article key={item.id}><a className={styles.storyCardImage} href={articlePath(item.id)}><img src={image.src} {...responsivePhoto(image, '(max-width: 600px) 100vw, 360px')} width={image.width} height={image.height} alt={image.alt} loading="lazy" decoding="async" /></a><p className={styles.eyebrow}>{item.region}</p><h3><a href={articlePath(item.id)}>{next.headline}</a></h3><PhotoCredit photo={image} /></article>; })}</div></section>}
+    {!review?.sections.some(section => section.heading.startsWith('Keep Exploring:')) && <section className={styles.relatedStories} aria-labelledby="related-stories"><header><p className={styles.eyebrow}>Keep exploring</p><h2 id="related-stories">Another place. Another living story.</h2><a href="/language-revival/">All eleven language pathways →</a></header><div className={styles.storyCards}>{related.map(item => { const image = photoData[item.id as keyof typeof photoData]; const next = editorial[item.id as keyof typeof editorial]; return <article key={item.id}><a className={styles.storyCardImage} href={articlePath(item.id)}><img src={image.src} {...responsivePhoto(image, '(max-width: 600px) 100vw, 360px')} width={image.width} height={image.height} alt={image.alt} loading="lazy" decoding="async" /></a><p className={styles.eyebrow}>{item.region}</p><h3><a href={articlePath(item.id)}>{next.headline}</a></h3><PhotoCredit photo={image} /></article>; })}</div></section>}
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />
   </main>;
 }
