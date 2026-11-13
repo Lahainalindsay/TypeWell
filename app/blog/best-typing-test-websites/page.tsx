@@ -150,6 +150,10 @@ export default function BestTypingTestWebsitesPage() {
             generate a free downloadable certificate recording their result.
           </p>
 
+          <h2>Try the same check on two sites</h2>
+          <p>Choose one-minute prose on both sites, use the same keyboard, and take three attempts on each. Alternate sites between attempts to distribute the warm-up time. Record duration, accuracy and the middle WPM for each site.</p>
+          <p>Imagine the medians are 57 and 52 WPM. Check whether one site uses isolated words and the other includes punctuation, and whether they count corrected mistakes the same way. Then compare what each result helps you do next. A report that shows recurring errors in commas and apostrophes gives you a specific practice session to run tomorrow.</p>
+
           <h2>Which typing test should you use?</h2>
           <ul>
             <li>For a quick speed check: 10FastFingers.</li>

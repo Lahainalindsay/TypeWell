@@ -25,7 +25,7 @@ export function PersonalityCard({metrics, weakKeys = []}: {metrics: Metrics; wea
   return <div><section ref={ref} tabIndex={-1} className={styles.card} aria-label="Your typing personality card">
     <p className={styles.series}>WPMTEST · KEYBOARD ALL-STARS</p>
     <h3>{personality.name}</h3>
-    <div className={styles.portrait}><img src={personality.image} alt={personality.imageAlt} width="960" height="640" /></div>
+    <div className={styles.portrait}><img src={personality.image} srcSet={`/images/personalities/${personality.slug}-480.webp 480w, ${personality.image} 960w`} sizes="(max-width: 390px) calc(100vw - 60px), 330px" alt={personality.imageAlt} width="960" height="640" /></div>
     <div className={styles.stats}><strong>{metrics.wpm}<small>WPM</small></strong><strong>{metrics.accuracy}%<small>ACCURACY</small></strong><strong>{metrics.consistency}%<small>CONSISTENCY</small></strong></div>
     <p>{personality.description}</p>
     <p className={styles.note}>This attempt’s alter ego. Just for fun.</p>

@@ -6,7 +6,14 @@ export const publisher = {
   sameAs: ["https://github.com/Lahainalindsay/TypeWell"]
 };
 export const website = { "@id": absoluteUrl("/#website") };
-export const author = { "@type": "Person", name: "Lindsay Johnson", url: absoluteUrl("/about/#lindsay-johnson") };
+const authorUrl = absoluteUrl("/about/#lindsay-johnson");
+export const author = { "@id": authorUrl, "@type": "Person", name: "Lindsay Johnson", url: authorUrl };
+export const authorProfile = {
+  ...author,
+  jobTitle: "Web Developer and WPMTest Creator",
+  image: "https://avatars.githubusercontent.com/u/220595273?v=4&s=320",
+  sameAs: ["https://github.com/Lahainalindsay"]
+};
 
 export const siteEntities = {
   "@context": "https://schema.org",

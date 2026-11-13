@@ -105,7 +105,7 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
     <>
       {path === "/" && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteEntities) }} />}
       <WPMTestApp initialPath={path} />
-      {isTypingTest && <TypingPreviews />}
+      {isTypingTest && path !== "/" && <TypingPreviews />}
       {path !== "/" ? (
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}

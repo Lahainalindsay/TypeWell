@@ -217,7 +217,9 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
       ? "Practice commas, quotes, questions, and capitalization while measuring typing speed and accuracy."
       : path.replace(/\/$/, "") === "/mobile-typing-test"
         ? "Measure touchscreen typing speed using your phone or tablet's on-screen keyboard."
-        : `${duration / 60}-minute typing speed test with standard WPM scoring, accuracy, consistency, and local results.`;
+        : !embedded && path.replace(/\/$/, "") === "/1-minute-typing-test" && duration === 60
+          ? "Use this 60-second check to track practice. Compare three attempts on the same device and write down your middle WPM score and its accuracy."
+          : `${duration / 60}-minute typing speed test with standard WPM scoring, accuracy, consistency, and local results.`;
   useEffect(() => {
     const nextDuration = challengeDurationFromPath(path);
     setDuration(nextDuration);
