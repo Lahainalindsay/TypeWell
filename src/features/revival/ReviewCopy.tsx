@@ -33,14 +33,14 @@ export default function ReviewCopy({ body }: { body: string }) {
 
 export function reviewSectionId(heading: string, index: number) {
   if (heading.startsWith('Turning Points')) return 'timeline';
-  if (heading.startsWith('Practise ')) return 'practice';
+  if (heading.startsWith('Practise ') || heading === 'Make Room for Welsh on Your Keyboard') return 'practice';
   if (heading.startsWith('Sources, ')) return 'sources';
   return `history-${index}`;
 }
 
 export function reviewSectionClass(heading: string) {
   if (heading.startsWith('Turning Points')) return styles.timelineSection;
-  if (heading.startsWith('Practise ')) return styles.writingPanel;
+  if (heading.startsWith('Practise ') || heading === 'Make Room for Welsh on Your Keyboard') return styles.writingPanel;
   if (heading.startsWith('Sources, ')) return styles.editorialSources;
   return styles.storyChapter;
 }
