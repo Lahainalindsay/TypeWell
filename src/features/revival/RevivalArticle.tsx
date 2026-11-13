@@ -1,3 +1,6 @@
+import ReviewCopy, { reviewSectionClass, reviewSectionId } from './ReviewCopy';
+import hawaiianReview from './hawaiian-review.json';
+import gaelicReview from './scottish-gaelic-review.json';
 import type { Metadata } from 'next';
 import { Fragment } from 'react';
 import GlossikaCard from '../partners/GlossikaCard';
@@ -28,8 +31,9 @@ export default function RevivalArticle({ id }: { id: string }) {
   const article = articles[id];
   const photo = photoData[id as keyof typeof photoData];
   const story = editorial[id as keyof typeof editorial];
+  const review = id === 'hawaiian' ? hawaiianReview : id === 'scottish-gaelic' ? gaelicReview : undefined;
   const url = absoluteUrl(articlePath(id));
-  const wordCount = [story.lead, ...article.sections.flatMap(section => section.paragraphs)].join(' ').split(/\s+/).length;
+  const wordCount = (review ? review.sections.map(section => section.body) : [story.lead, ...article.sections.flatMap(section => section.paragraphs)]).join(' ').split(/\s+/).length;
   const readingMinutes = Math.max(3, Math.ceil(wordCount / 200));
   const related = languages.filter(item => item.id !== id).slice(0, 3);
   const datePublished = id === 'hawaiian' ? '2026-10-27' : '2026-11-08';
@@ -38,7 +42,7 @@ export default function RevivalArticle({ id }: { id: string }) {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Article', headline: story.headline, description: language.desc,
+        '@type': 'Article', headline: review?.title ?? story.headline, description: language.desc,
         image: [absoluteUrl(`/images/revival/${id}-social.jpg`), absoluteUrl(photo.src)],
         mainEntityOfPage: url, datePublished, dateModified, author, publisher,
         citation: article.sources.map(source => source.url)
@@ -57,18 +61,29 @@ export default function RevivalArticle({ id }: { id: string }) {
     <article>
       <header className={styles.storyHeader}>
         <p className={styles.eyebrow}>{story.kicker}</p>
-        <h1>{story.headline}</h1>
-        <p className={styles.storyDeck}>{language.desc}</p>
+        <h1>{review?.title ?? story.headline}</h1>
+        <p className={styles.storyDeck}>{review?.deck ?? language.desc}</p>
         <div className={styles.storyMeta}><a href="/about/#lindsay-johnson">Lindsay Johnson</a><span>{readingMinutes} min read</span><time dateTime={dateModified}>Updated November 12, 2026</time></div>
       </header>
       <Photo photo={photo} priority className={styles.storyHero} />
       <div className={styles.storyIntro}>
-        <p className={styles.storyLead}>{story.lead}</p>
+        {!review && <p className={styles.storyLead}>{story.lead}</p>}
         <dl className={styles.storyFacts}><div><dt>The language</dt><dd dir={direction}>{language.native}</dd></div><div><dt>The place</dt><dd>{language.region}</dd></div><div><dt>Continue the story</dt><dd><a href="#timeline">Explore the timeline ↓</a></dd></div></dl>
       </div>
       <div className={styles.articleLayout}>
-        <aside className={styles.storyRail}><nav className={styles.chapterNav} aria-label="In this article"><p className={styles.eyebrow}>Inside this story</p><ol>{article.sections.map((section, index) => <li key={section.heading}><a href={`#history-${index}`}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{section.heading}</a></li>)}</ol><div className={styles.railLinks}><a href="#timeline">Turning points</a><a href="#practice">Written practice</a><a href="#sources">Sources & credits</a></div></nav></aside>
+        <aside className={styles.storyRail}><nav className={styles.chapterNav} aria-label="In this article"><p className={styles.eyebrow}>Inside this story</p><ol>{(review?.sections ?? article.sections).map((section, index) => <li key={section.heading}><a href={`#${review ? reviewSectionId(section.heading, index) : `history-${index}`}`}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>{section.heading}</a></li>)}</ol><div className={styles.railLinks}><a href="#timeline">Turning points</a><a href="#practice">Written practice</a><a href="#sources">Sources & credits</a></div></nav></aside>
         <div className={styles.storyBody}>
+          {review ? review.sections.map((section, index) => <Fragment key={section.heading}>
+            <section className={reviewSectionClass(section.heading)} id={reviewSectionId(section.heading, index)}>
+              <h2>{section.heading}</h2>
+              <ReviewCopy body={section.body} />
+              {id === 'hawaiian' && reviewSectionId(section.heading, index) === 'sources' && <>
+                <ul>{article.sources.map(source => <li key={source.url}><a href={source.url}>{source.title}</a></li>)}</ul>
+                <PhotoCredit photo={photo} />
+              </>}
+            </section>
+            {id === 'hawaiian' && <HawaiianPhotoEssay chapter={index - 1} />}
+          </Fragment>) : <>
           {article.sections.map((section, index) => <Fragment key={section.heading}>
             <section className={styles.storyChapter} id={`history-${index}`}>
               <p className={styles.chapterLabel}>Chapter {String(index + 1).padStart(2, '0')}</p><h2>{section.heading}</h2>
@@ -82,6 +97,7 @@ export default function RevivalArticle({ id }: { id: string }) {
           <section id="practice" className={styles.writingPanel}><p className={styles.eyebrow}>From reading to written practice</p><h2>Make room for the language on your keyboard.</h2><p>{language.guidance}</p><p className={styles.writingCharacters} dir={direction}>{language.chars}</p><p>{id === 'hawaiian' ? 'The Hawaiian test offers the existing practice passages.' : 'Start with a character and language-name drill, or bring a passage whose language and use rights you can verify. This introductory activity is not a speaker-reviewed sentence collection.'}</p><a className={styles.button} href={practicePath(id)}>{id === 'hawaiian' ? 'Practice Hawaiian typing' : `Explore ${language.name} character practice`} →</a><p className={styles.contextNote}>Typing speed measures keyboard performance. It does not measure fluency, belonging, or cultural knowledge.</p></section>
           {language.glossika && <GlossikaCard id={id} />}
           <section id="sources" className={styles.editorialSources}><p className={styles.eyebrow}>Follow the evidence</p><h2>Sources, photographs, and editorial care</h2><p>This history draws on the sources below. Community voices and specialist knowledge remain essential to understanding it.</p><ol>{article.sources.map(source => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ol><div className={styles.sourcePhoto}><PhotoCredit photo={photo} /><p>Location photographs introduce a place; they do not represent every speaker or community. Stock photographs were resized and converted to WebP. {id === 'hawaiian' && 'The six additional photographs were supplied by WPMTest’s editor; captions avoid assigning unverified dates, school names, or language use to the people pictured.'}</p></div><p>New sentence passages require appropriate language review. <a href="/contact/">Send a correction or offer language review →</a></p></section>
+          </>}
         </div>
       </div>
     </article>
