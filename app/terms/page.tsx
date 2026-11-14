@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="legal-page">
+    <main id="main-content" tabIndex={-1} className="legal-page">
       <h1>WPMTest Terms and Disclaimer</h1>
       <p>WPMTest provides typing tests, practice tools, lessons, workplace-skill assessments, and locally stored performance summaries for informational, practice, and evaluation purposes.</p>
       <h2>Results and certificates</h2>

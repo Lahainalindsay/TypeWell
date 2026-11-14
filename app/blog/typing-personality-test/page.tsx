@@ -11,7 +11,7 @@ const url = absoluteUrl("/blog/typing-personality-test/");
 const image = absoluteUrl("/images/typing-personality.webp");
 export const metadata: Metadata = { title, description, alternates:{canonical:url}, openGraph:{title,description,url,type:"article",images:[image]},twitter:{card:"summary_large_image",title,description,images:[image]} };
 export default function Article() {
-return <main className={styles.page}>
+return <main id="main-content" tabIndex={-1} className={styles.page}>
 <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Typing personality</span></nav>
 <article><header className={styles.header}><h1>{title}</h1><p>{description} Each profile explains the score pattern and suggests a way to practice.</p><AuthorByline date="2026-11-12" /></header>
 <figure className={styles.hero}><img src="/images/typing-personality.webp" srcSet="/images/typing-personality-600.webp 600w, /images/typing-personality-1000.webp 1000w, /images/typing-personality.webp 1672w" sizes="(max-width: 700px) 100vw, 1050px" width="1672" height="941" alt="A mischievous keyboard judging a typing scorecard" fetchPriority="high" /></figure>

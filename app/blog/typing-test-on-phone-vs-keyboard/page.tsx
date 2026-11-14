@@ -19,7 +19,7 @@ export default function PhoneVersusKeyboardArticle() {
   const schema = { "@context": "https://schema.org", "@type": "Article", headline: title, description, mainEntityOfPage: url,
     datePublished: "2026-10-28", dateModified: "2026-11-12", image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
     author, publisher };
-  return <main className={styles.page}>
+  return <main id="main-content" tabIndex={-1} className={styles.page}>
     <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Phone vs. keyboard</span></nav>
     <article>
       <header className={styles.header}>

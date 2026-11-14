@@ -36,7 +36,7 @@ export default function SampleCertificatePage() {
 
   return (
     <>
-      <main className="tw-standalone">
+      <main id="main-content" tabIndex={-1} className="tw-standalone">
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/typing-certificate/">Typing Certificate</a> <span aria-hidden="true">›</span>{" "}

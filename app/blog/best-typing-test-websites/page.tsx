@@ -88,7 +88,7 @@ export default function BestTypingTestWebsitesPage() {
 
   return (
     <>
-      <main className={`${styles.page} ${styles.standalone}`}>
+      <main id="main-content" tabIndex={-1} className={`${styles.page} ${styles.standalone}`}>
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/blog/">Guides</a> <span aria-hidden="true">›</span>{" "}

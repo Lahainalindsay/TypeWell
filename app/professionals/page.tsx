@@ -54,7 +54,7 @@ export default function ProfessionalsPage() {
     isAccessibleForFree: true,
     inLanguage: "en-US"
   };
-  return <main className="tw-standalone">
+  return <main id="main-content" tabIndex={-1} className="tw-standalone">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <span className="tw-kicker">Professional keyboard skills</span>
     <h1>Professional Typing Tests</h1>

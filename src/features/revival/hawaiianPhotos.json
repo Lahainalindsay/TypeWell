@@ -33,7 +33,9 @@
     "height": 450,
     "alt": "Children in yellow shirts holding harvested plants in a garden.",
     "caption": "Learning on the land connects practical activity with relationships, place, and care.",
-    "credit": "Image supplied by WPMTest’s editor"
+    "credit": "Image supplied by WPMTest’s editor",
+    "smallSrc": "/images/revival/hawaiian-story/learning-on-the-land-360.webp",
+    "smallWidth": 360
   },
   "culture-and-community": {
     "src": "/images/revival/hawaiian-story/culture-and-community.webp",
@@ -41,7 +43,9 @@
     "height": 480,
     "alt": "Children wearing leafy lei and blue garments gathered outdoors.",
     "caption": "Cultural learning takes place through participation, shared attention, and time together.",
-    "credit": "Image supplied by WPMTest’s editor"
+    "credit": "Image supplied by WPMTest’s editor",
+    "smallSrc": "/images/revival/hawaiian-story/culture-and-community-360.webp",
+    "smallWidth": 360
   },
   "next-generation": {
     "src": "/images/revival/hawaiian-story/next-generation.webp",
@@ -49,6 +53,8 @@
     "height": 419,
     "alt": "Four children wearing yellow lei and holding bright red and yellow feathered implements.",
     "caption": "The next generation belongs at the heart of the story—not at its margins.",
-    "credit": "Image supplied by WPMTest’s editor"
+    "credit": "Image supplied by WPMTest’s editor",
+    "smallSrc": "/images/revival/hawaiian-story/next-generation-400.webp",
+    "smallWidth": 400
   }
 }

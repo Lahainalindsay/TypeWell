@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="legal-page">
+    <main id="main-content" tabIndex={-1} className="legal-page">
       <h1>Privacy Policy</h1><p>Updated November 9, 2026</p>
       <p>WPMTest is designed so core typing tests and practice can be used without creating an account. Typing progress, settings, and practice history used by the core trainer are stored locally in your browser on this device.</p>
 

@@ -2,6 +2,8 @@ import photos from './hawaiianPhotos.json';
 import { Photo } from './Photo';
 import styles from '../../../app/blog/hawaiian-language-revival/article.module.css';
 
+const gallerySizes = '(max-width: 600px) 50vw, 360px';
+
 export default function HawaiianPhotoEssay({ chapter }: { chapter: number }) {
   if (chapter === 1) return <aside className={styles.photoEssay} aria-labelledby="waialee-photo-title">
     <header><p className={styles.eyebrow}>The institutional record</p><h3 id="waialee-photo-title">Waialeʻe: the place behind the record</h3><p>The archival photograph and the building’s exterior bring a physical place into the historical account.</p></header>
@@ -14,7 +16,7 @@ export default function HawaiianPhotoEssay({ chapter }: { chapter: number }) {
   </aside>;
   if (chapter === 3) return <aside className={styles.photoEssay} aria-labelledby="community-photo-title">
     <header><p className={styles.eyebrow}>Beyond a single classroom</p><h3 id="community-photo-title">Learning, culture, and the next generation</h3><p>Language renewal reaches into relationships, cultural practice, and everyday life. The next generation needs opportunities to learn, participate, and belong.</p></header>
-    <div className={styles.communityGallery}><Photo photo={photos['learning-on-the-land']} /><Photo photo={photos['culture-and-community']} /><Photo photo={photos['next-generation']} /></div>
+    <div className={styles.communityGallery}><Photo photo={photos['learning-on-the-land']} sizes="(max-width: 600px) 100vw, 360px" /><Photo photo={photos['culture-and-community']} sizes={gallerySizes} /><Photo photo={photos['next-generation']} sizes={gallerySizes} /></div>
   </aside>;
   return null;
 }

@@ -52,7 +52,7 @@ export default function CustomerServiceTypingTestPage() {
   ];
 
   return <>
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
         <a href="/typing-test-for-employment/">Employment Tests</a> <span aria-hidden="true">›</span>{" "}

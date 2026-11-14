@@ -16,7 +16,7 @@ describe("client app hydration boundary", () => {
     const app = readFileSync(resolve("src/App.tsx"), "utf8");
 
     expect(app).toContain('const ContentLandmark = embedded ? "div" : "main"');
-    expect(app).toContain('<ContentLandmark className="app-content">');
+    expect(app).toContain('id={embedded ? undefined : "main-content"} tabIndex={embedded ? undefined : -1}');
     expect(app).not.toContain("<main>");
   });
 
@@ -51,7 +51,8 @@ describe("client app hydration boundary", () => {
     expect(app).toContain('aria-label="Exit results and return to the typing test"');
     expect(shell).toContain('className="site-mobile-toggle"');
     expect(shell).toContain('label: "Professional"');
-    expect(shell).toContain('href="/blog/">Articles');
+    expect(shell).toContain('href="/blog/">All Articles');
+    expect(shell).toContain('className="site-mobile-articles" href="/blog/"');
     expect(layout).toContain('<SiteHeader />{children}<SiteFooter />');
     expect(styles).toContain('max-height: calc(100dvh - 58px)');
   });

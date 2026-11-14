@@ -27,7 +27,7 @@ export default async function SharedPersonality({ params }: Props) {
   const { slug } = await params;
   const profile = personalities.find(item => item.slug === slug);
   if (!profile) notFound();
-  return <main className="seo-prerender" style={{ maxWidth: 820, margin: "0 auto", padding: "2rem 1rem" }}>
+  return <main id="main-content" tabIndex={-1} className="seo-prerender" style={{ maxWidth: 820, margin: "0 auto", padding: "2rem 1rem" }}>
     <p>WPMTEST · KEYBOARD ALL-STARS</p>
     <h1>I'm {profile.name}!</h1>
     <img src={`/images/personalities/${profile.slug}.webp`} srcSet={`/images/personalities/${profile.slug}-480.webp 480w, /images/personalities/${profile.slug}.webp 960w`} sizes="(max-width: 820px) calc(100vw - 2rem), 788px" alt={`Illustrated ${profile.name} typing personality character at a keyboard`} width={960} height={640} style={{ width: "100%", height: "auto", borderRadius: 16 }} />

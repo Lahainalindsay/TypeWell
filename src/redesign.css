@@ -13,6 +13,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 .site-brand { color: var(--text); font-size: 1.24rem; font-weight: 850; letter-spacing: -.035em; text-decoration: none; white-space: nowrap; }
 .site-brand span { color: var(--accent); }
 .site-mobile-toggle { display: none; }
+.site-mobile-articles { display: none; }
 .site-header-actions { display: flex; align-items: center; gap: .5rem; }
 .site-theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 1px solid var(--tw-line); border-radius: 9px; background: transparent; color: var(--text); cursor: pointer; }
 .site-theme-toggle:hover { background: var(--panel); }
@@ -126,8 +127,9 @@ body:has(.focus-active) > .site-header, body:has(.focus-active) > .site-footer {
   .home-pathway-grid a { min-height: 0; }
 }
 @media (max-width: 700px) {
-  .site-header-inner { min-height: 58px; }
+  .site-header-inner { min-height: 58px; padding-inline: .75rem; gap: .5rem; }
   .site-mobile-toggle { display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: .5rem .75rem; border: 1px solid var(--tw-line); border-radius: 9px; cursor: pointer; font-weight: 650; }
+  .site-mobile-articles { display: inline-flex; align-items: center; min-height: 44px; padding: .25rem; color: var(--text); white-space: nowrap; }
   .site-navigation { display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100dvh - 58px); overflow-y: auto; overscroll-behavior: contain; padding: .6rem 1rem 1.25rem; background: var(--bg-2); border-bottom: 1px solid var(--tw-line); box-shadow: 0 18px 30px rgba(0,0,0,.3); }
   .site-navigation[data-open="true"] { display: block; }
   .site-menu { position: static; border-bottom: 1px solid var(--tw-line); }
@@ -174,3 +176,19 @@ body:has(.focus-active) > .site-header, body:has(.focus-active) > .site-footer {
 .practice-check fieldset { min-width: 0; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; }
 .practice-check code { overflow-wrap: anywhere; }
 .practice-check button[aria-pressed="true"] { outline: 2px solid var(--accent, #4b9fff); }
+
+.site-skip-link {
+  position: fixed;
+  z-index: 1000;
+  inset-block-start: .75rem;
+  inset-inline-start: .75rem;
+  padding: .65rem 1rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 2px solid currentColor;
+  border-radius: .35rem;
+  transform: translateY(calc(-100% - 1rem));
+}
+.site-skip-link:focus { transform: none; }
+#main-content { scroll-margin-block-start: 5rem; }
+@media print { .site-skip-link { display: none; } }

@@ -1,8 +1,13 @@
 # Basic protections for Cloudflare Pages static assets.
-# These headers do not block crawlers, scripts, ads, or embedded typing tests.
+# These headers do not block crawlers, scripts, ads, or typing tests. Cross-origin framing is disabled.
 /*
   X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
 
 /.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
+
+/feed.xml
+  Content-Type: application/rss+xml; charset=utf-8

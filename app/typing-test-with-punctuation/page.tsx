@@ -24,7 +24,7 @@ export default function PunctuationTypingTestPage() {
     ] }
   ];
   return <>
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Punctuation Test</span></nav>
       <section className="seo-mode-intro"><p className="eyebrow">Free punctuation typing test</p><h1>Punctuation Typing Test</h1><p>Measure typing speed when the text includes the characters real writing requires: commas, periods, quotes, apostrophes, questions, capitalization and other punctuation that simple word tests often avoid.</p></section>
       <WPMTestApp initialPath="/typing-test-with-punctuation/" embedded />

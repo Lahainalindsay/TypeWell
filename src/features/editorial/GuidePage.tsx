@@ -5,7 +5,6 @@ import { ErrorCheck } from "./ErrorCheck";
 import { ArticleVisual, AuthorByline, GuideTakeaways, PracticeCard, RelatedGuides, type ArticleTopic } from "./ArticleVisual";
 import { author, breadcrumbList, publisher } from "../../lib/seo/structured";
 import styles from "./editorial.module.css";
-const dateModified = "2026-11-12";
 type GuideTopic = Exclude<ArticleTopic, "best-typing-test-websites" | "data-entry-typing-test-for-employment">;
 const introductions: Record<GuideTopic, string> = {
  "wpm-vs-kph": "Use WPM for prose and KPH for numeric entry. WPMTest divides correct prose characters by five and by elapsed minutes, while KPH scales the numeric characters entered to an hourly rate.",
@@ -27,6 +26,7 @@ export function guideMetadata(slug: GuideTopic): Metadata {
  return { title: `${guide.title} | WPMTest`, description: guide.description, alternates: { canonical:url }, robots: {index:true,follow:true}, openGraph: { title:guide.title, description:guide.description, type:"article", url, images:[{url:image,width:1200,height:630,alt:guide.title}] }, twitter: {card:"summary_large_image",title:guide.title,description:guide.description,images:[image]} };
 }
 export function GuidePage({slug}: {slug:GuideTopic}) {
+ const dateModified = slug === "wpm-vs-kph" ? "2026-11-14" : "2026-11-12";
  const guide=guides.find(item => item.slug===slug)!;
  const canonical=absoluteUrl(`/blog/${slug}/`);
  const schema = {
@@ -38,7 +38,7 @@ export function GuidePage({slug}: {slug:GuideTopic}) {
    breadcrumbList([{ name: "Home", url: "/" }, { name: "Articles", url: "/blog/" }, { name: guide.title, url: `/blog/${slug}/` }])
   ]
  };
- return <main className={styles.page}>
+ return <main id="main-content" tabIndex={-1} className={styles.page}>
   <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>{guide.title}</span></nav>
   <article>
    <header className={styles.header}><p className="eyebrow">Practical keyboard skills</p><h1>{guide.title}</h1><p>{introductions[slug]}</p><AuthorByline date={dateModified} /></header>

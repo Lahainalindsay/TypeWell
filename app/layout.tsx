@@ -57,9 +57,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+        <link rel="alternate" type="application/rss+xml" title="WPMTest Articles" href="/feed.xml" />
         <script defer src="/certificate-flow.js" />
       </head>
-      <body><SiteHeader />{children}<SiteFooter /></body>
+      <body><a className="site-skip-link" href="#main-content" lang="en">Skip to main content</a><SiteHeader />{children}<SiteFooter /></body>
       <Script
         src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
         strategy="afterInteractive"
