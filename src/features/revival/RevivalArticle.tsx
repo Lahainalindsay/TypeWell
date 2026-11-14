@@ -1,5 +1,6 @@
 import ReviewCopy, { reviewSectionClass, reviewSectionId } from './ReviewCopy';
 import hawaiianReview from './hawaiian-review.json';
+import soraniReview from './sorani-kurdish-review.json';
 import taigiReview from './taiwanese-taigi-review.json';
 import catalanReview from './catalan-review.json';
 import welshReview from './welsh-review.json';
@@ -34,7 +35,7 @@ export default function RevivalArticle({ id }: { id: string }) {
   const article = articles[id];
   const photo = photoData[id as keyof typeof photoData];
   const story = editorial[id as keyof typeof editorial];
-  const review = id === 'hawaiian' ? hawaiianReview : id === 'scottish-gaelic' ? gaelicReview : id === 'welsh' ? welshReview : id === 'catalan' ? catalanReview : id === 'taiwanese-taigi' ? taigiReview : undefined;
+  const review = id === 'hawaiian' ? hawaiianReview : id === 'scottish-gaelic' ? gaelicReview : id === 'welsh' ? welshReview : id === 'catalan' ? catalanReview : id === 'taiwanese-taigi' ? taigiReview : id === 'sorani-kurdish' ? soraniReview : undefined;
   const url = absoluteUrl(articlePath(id));
   const wordCount = (review ? review.sections.map(section => section.body) : [story.lead, ...article.sections.flatMap(section => section.paragraphs)]).join(' ').split(/\s+/).length;
   const readingMinutes = Math.max(3, Math.ceil(wordCount / 200));
