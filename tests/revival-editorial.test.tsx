@@ -32,7 +32,7 @@ describe('revival editorial reading paths', () => {
       expect(page.textContent).toContain(photo.caption);
     }
     expect(page.textContent).not.toContain('fatal school fire');
-    expect(page.textContent).toContain('The institution opened in 1903.');
+    expect(page.textContent).toContain('1903 — Waialeʻe Opens');
   });
   it('uses local responsive stock photographs and shows their attribution', () => {
     for (const language of languages) {
