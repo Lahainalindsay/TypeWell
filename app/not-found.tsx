@@ -1,6 +1,6 @@
 export default function NotFound() {
   return (
-    <main className="not-found-page">
+    <main id="main-content" tabIndex={-1} className="not-found-page">
       <section className="panel">
         <p className="eyebrow">404</p>
         <h1>That page couldn't be found.</h1>

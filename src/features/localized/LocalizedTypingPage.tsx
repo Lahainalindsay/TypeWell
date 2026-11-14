@@ -19,7 +19,7 @@ const mobileQuestions = {
 
 export default function LocalizedTypingPage({ content }: { content: LocalizedTypingContent }) {
   return (
-    <main className={styles.page} lang={content.interfaceLang ?? content.lang}>
+    <main id="main-content" tabIndex={-1} className={styles.page} lang={content.interfaceLang ?? content.lang}>
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{content.eyebrow}</p>
         <h1>{content.h1}</h1>

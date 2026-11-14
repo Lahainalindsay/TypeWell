@@ -9,7 +9,7 @@ import gaelicReview from './scottish-gaelic-review.json';
 import type { Metadata } from 'next';
 import { Fragment } from 'react';
 import GlossikaCard from '../partners/GlossikaCard';
-import { languages, articles, articlePath, practicePath } from './content';
+import { languages, articles, articleLastModified, articlePath, practicePath } from './content';
 import photoData from './photos.json';
 import editorial from './editorial.json';
 import { Photo, PhotoCredit, responsivePhoto } from './Photo';
@@ -42,7 +42,8 @@ export default function RevivalArticle({ id }: { id: string }) {
   const readingMinutes = Math.max(3, Math.ceil(wordCount / 200));
   const related = languages.filter(item => item.id !== id).slice(0, 3);
   const datePublished = id === 'hawaiian' ? '2026-10-27' : '2026-11-08';
-  const dateModified = '2026-11-12';
+  const dateModified = articleLastModified(id);
+  const updatedLabel = new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(dateModified));
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -61,14 +62,14 @@ export default function RevivalArticle({ id }: { id: string }) {
   };
   const direction = id === 'sorani-kurdish' ? 'rtl' : 'ltr';
 
-  return <main className={`${styles.page} ${styles.storyPage}`}>
+  return <main id="main-content" tabIndex={-1} className={`${styles.page} ${styles.storyPage}`}>
     <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true"> › </span><a href="/language-revival/">Language Revival</a><span aria-hidden="true"> › </span><span>{language.name}</span></nav>
     <article>
       <header className={styles.storyHeader}>
         <p className={styles.eyebrow}>{story.kicker}</p>
         <h1>{review?.title ?? story.headline}</h1>
         <p className={styles.storyDeck}>{review?.deck ?? language.desc}</p>
-        <div className={styles.storyMeta}><a href="/about/#lindsay-johnson">Lindsay Johnson</a><span>{readingMinutes} min read</span><time dateTime={dateModified}>Updated November 12, 2026</time></div>
+        <div className={styles.storyMeta}><a href="/about/#lindsay-johnson">Lindsay Johnson</a><span>{readingMinutes} min read</span><time dateTime={dateModified}>Updated {updatedLabel}</time></div>
       </header>
       <Photo photo={photo} priority className={styles.storyHero} />
       <div className={styles.storyIntro}>

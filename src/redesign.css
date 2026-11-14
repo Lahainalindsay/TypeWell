@@ -174,3 +174,19 @@ body:has(.focus-active) > .site-header, body:has(.focus-active) > .site-footer {
 .practice-check fieldset { min-width: 0; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; }
 .practice-check code { overflow-wrap: anywhere; }
 .practice-check button[aria-pressed="true"] { outline: 2px solid var(--accent, #4b9fff); }
+
+.site-skip-link {
+  position: fixed;
+  z-index: 1000;
+  inset-block-start: .75rem;
+  inset-inline-start: .75rem;
+  padding: .65rem 1rem;
+  background: var(--bg);
+  color: var(--text);
+  border: 2px solid currentColor;
+  border-radius: .35rem;
+  transform: translateY(calc(-100% - 1rem));
+}
+.site-skip-link:focus { transform: none; }
+#main-content { scroll-margin-block-start: 5rem; }
+@media print { .site-skip-link { display: none; } }

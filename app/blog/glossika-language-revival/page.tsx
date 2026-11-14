@@ -10,7 +10,7 @@ import partnerStyles from './page.module.css';
 const url=absoluteUrl('/blog/glossika-language-revival/');
 const image=absoluteUrl('/images/partners/glossika-wordmark.png');
 export const metadata:Metadata={title:article.title,description:article.description,alternates:{canonical:url},openGraph:{title:article.title,description:article.description,url,type:'article',images:[{url:image,width:1024,height:300,alt:'Glossika official owl and wordmark'}]},twitter:{card:'summary_large_image',title:article.title,description:article.description,images:[image]}};
-export default function Page(){return <main className={styles.page}>
+export default function Page(){return <main id="main-content" tabIndex={-1} className={styles.page}>
  <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Glossika partnership</span></nav>
  <article><header className={styles.header}><p className={styles.eyebrow}>Language revival · Our affiliate partnership</p><h1>{article.title}</h1><p className={styles.subtitle}>Glossika uses recorded sentences and spaced review to practice listening and speaking. This guide shows which courses overlap with the WPMTest language revival series and how to pair them with written practice.</p><AuthorByline date="2026-11-12" /></header>
  <figure className={partnerStyles.brandHero}><img src="/images/partners/glossika-wordmark.png" alt="Glossika official owl logo and wordmark" width="1024" height="300" fetchPriority="high"/><figcaption>Official brand imagery from <a href="https://ai.glossika.com/press">Glossika’s press kit</a>. Glossika’s trademarks and artwork belong to Glossika.</figcaption></figure>

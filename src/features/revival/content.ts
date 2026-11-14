@@ -7,3 +7,11 @@ export function articlePath(id:string){return `/blog/${id}-language-revival/`;}
 export function practicePath(id:string){return id==='hawaiian'?'/haw/hawaiian-typing-test/':`/language-revival/${id}/typing-test/`;}
 export const glossikaSource='https://help.glossika.com/en/articles/1245181-which-courses-are-free-do-free-courses-require-a-subscription-or-always-available';
 export function glossikaUrl(id:string){return glossikaCourses[id]?glossikaAffiliateUrl:null;}
+
+const revisedStories = new Set([
+  "hawaiian", "scottish-gaelic", "welsh", "catalan", "taiwanese-taigi", "sorani-kurdish", "wenzhounese"
+]);
+
+export function articleLastModified(id: string) {
+  return revisedStories.has(id) ? "2026-11-13" : "2026-11-12";
+}

@@ -19,7 +19,7 @@ export default function EmploymentTypingTestPage(){
   {"@context":"https://schema.org","@type":"WebApplication",name:"WPMTest Employment Typing Test",url:canonical,applicationCategory:"UtilitiesApplication",operatingSystem:"Any",offers:{"@type":"Offer",price:"0",priceCurrency:"USD"}},
   {"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"Home",item:`${SITE_URL}/`},{"@type":"ListItem",position:2,name:"Typing Tests",item:`${SITE_URL}/typing-test/`},{"@type":"ListItem",position:3,name:"Typing Test for Employment",item:canonical}]}
  ];
- return <><main>
+ return <><main id="main-content" tabIndex={-1}>
   <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Employment Test</span></nav>
   <section className="seo-mode-intro"><p className="eyebrow">Free employment typing practice</p><h1>Typing Test for Employment</h1><p>Practice the speed and accuracy skills commonly used in office, administrative and data-entry work. Get an instant WPM benchmark, identify errors, and retest before a job application or employer typing assessment.</p></section>
   <WPMTestApp initialPath="/5-minute-typing-test/" embedded />

@@ -16,7 +16,7 @@ const features = [
 ];
 
 export default function EducatorsPage() {
-  return <main className="tw-standalone">
+  return <main id="main-content" tabIndex={-1} className="tw-standalone">
     <span className="tw-kicker">Coming soon</span>
     <h1>Typing for Educators</h1>
     <p className="lead">A classroom-friendly typing experience is in development for teachers and students, combining structured keyboarding lessons, engaging practice, progress tools and multiplayer-style typing races.</p>

@@ -50,7 +50,7 @@ for key in ['title','description','canonical']:
  counts=Counter((p.title if key=='title' else p.meta.get(key,'') if key=='description' else str(p.canon)) for path,p in pages.items() if not path.startswith(('/404','/_not-found')) and (key != 'canonical' or path != '/typing-test/'))
  print('DUPLICATE',key,[(k,v) for k,v in counts.items() if v>1])
 print('SITEMAP missing files',[u for u in urls if u not in pages])
-print('BROKEN INTERNAL LINKS',sorted(set((path,h) for path,p in pages.items() for h in p.links if h.startswith('/') and h.split('#')[0].split('?')[0] not in pages and not (Path('public')/h.split('#')[0].split('?')[0].lstrip('/')).is_file() and h.split('#')[0].split('?')[0]!=''))[:60])
+print('BROKEN INTERNAL LINKS',sorted(set((path,h) for path,p in pages.items() for h in p.links if h.startswith('/') and h.split('#')[0].split('?')[0] not in pages and not (root/h.split('#')[0].split('?')[0].lstrip('/')).is_file() and h.split('#')[0].split('?')[0]!=''))[:60])
 
 if pages['/typing-test/'].canon != pages['/'].canon or '/typing-test/' in urls:
  errors.append(('/typing-test/', 'expected a canonical alias of the homepage outside the sitemap'))
@@ -94,7 +94,7 @@ for url in urls:
 for path,p in pages.items():
  for href in p.links:
   target=href.split('#')[0].split('?')[0]
-  if target.startswith('/') and target not in pages and not (Path('public')/target.lstrip('/')).is_file(): errors.append((path,'unresolved internal link '+href))
+  if target.startswith('/') and target not in pages and not (root/target.lstrip('/')).is_file(): errors.append((path,'unresolved internal link '+href))
  for key in ['og:image','twitter:image']:
   image=p.meta.get(key,'')
   if image.startswith('https://wpmtest.app/') and not (Path('public')/image.removeprefix('https://wpmtest.app/')).is_file(): errors.append((path,'missing social image '+image))

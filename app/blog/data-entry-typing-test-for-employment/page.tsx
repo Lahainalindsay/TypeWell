@@ -46,7 +46,7 @@ export default function DataEntryEmploymentGuidePage() {
 
   return (
     <>
-      <main className={`${styles.page} ${styles.standalone}`}>
+      <main id="main-content" tabIndex={-1} className={`${styles.page} ${styles.standalone}`}>
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/typing-test-for-employment/">Employment Tests</a> <span aria-hidden="true">›</span>{" "}
