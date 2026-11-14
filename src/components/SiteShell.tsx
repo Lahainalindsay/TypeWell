@@ -54,7 +54,7 @@ const groups = [
     { title: "Data entry practice", links: [["/data-entry-practice/alphanumeric/", "Alphanumeric"], ["/data-entry-practice/names-addresses/", "Names & Addresses"], ["/data-entry-practice/currency-dates/", "Currency & Dates"], ["/data-entry-practice/invoices-orders/", "Invoices & Orders"]] }
   ], hub: ["/professionals/", "Explore all professional skills"] },
   { label: "Practice", sections: [
-    { title: "Build your skills", links: [["/typing-practice/", "Typing Practice"], ["/learn/", "Touch Typing Lessons"], ["/practice/weak-keys/", "Weak-Key Practice"], ["/rhythm/", "Rhythm Trainer"], ["/progress/", "Progress"]] }
+    { title: "Build your skills", links: [["/typing-practice/", "Typing Practice"], ["/learn/", "Touch Typing Lessons"], ["/practice/weak-keys/", "Weak-Key Practice"], ["/typing-games/", "Typing Games"], ["/rhythm/", "Rhythm Trainer"], ["/progress/", "Progress"]] }
   ] },
   { label: "Languages", sections: [
     { title: "Typing test language", links: [[typingTestLanguagePaths.en, "English"], [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português (Brasil)"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]] }
@@ -75,7 +75,7 @@ export function SiteHeader() {
     document.addEventListener("keydown", close);
     return () => { document.removeEventListener("pointerdown", close); document.removeEventListener("keydown", close); };
   }, []);
-  return <header className="site-header" ref={header}>
+  return <header lang="en" className="site-header" ref={header}>
     <div className="site-header-inner">
       <a className="site-brand" href="/" aria-label="WPMTest home">WPMTEST<span>.</span></a>
       <div className="site-header-actions"><ThemeToggle />
@@ -114,11 +114,11 @@ export function SiteFooter() {
     ["Tests", ["/", "Standard Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/1-page-typing-test/", "Page Tests"], ["/mobile-typing-test/", "Mobile Test"]],
     ["Practice", ["/typing-practice/", "Typing Practice"], ["/learn/", "Lessons"], ["/practice/weak-keys/", "Weak Keys"], ["/rhythm/", "Rhythm"], ["/progress/", "Progress"]],
     ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/customer-service-typing-test/", "Customer Service Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
-    ["Resources", ["/blog/", "Articles"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
+    ["Resources", ["/blog/", "Articles"], ["/blog/wpm-vs-kph/", "Scoring Methodology"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
     ["Languages", [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]],
-    ["Company", ["/about/", "About"], ["/contact/", "Contact"], ["/privacy/", "Privacy"], ["/terms/", "Terms"], ["/settings/", "Settings"]]
+    ["Company", ["/about/", "About"], ["/about/#corrections", "Corrections Policy"], ["/contact/", "Contact"], ["/privacy/", "Privacy"], ["/terms/", "Terms"], ["/settings/", "Settings"]]
   ] as const;
-  return <footer className="site-footer site-footer-grid">
+  return <footer lang="en" className="site-footer site-footer-grid">
     <div className="site-footer-intro"><strong>WPMTEST.</strong><p>Free typing tests and practical keyboard skills. Progress stays on your device.</p></div>
     <div className="site-footer-columns">{columns.map(([title, ...links]) => <nav aria-label={`${title} links`} key={title}><strong>{title}</strong>{links.map(([href, label]) => <a href={href} key={href}>{label}</a>)}</nav>)}</div>
     <div className="site-footer-bottom"><span>© {new Date().getUTCFullYear()} WPMTest</span><CookieSettings /></div>

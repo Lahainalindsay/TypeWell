@@ -31,14 +31,14 @@ export default function BlogPage() {
 
   return (
     <>
-      <main className="seo-prerender">
+      <main id="main-content" tabIndex={-1} className="seo-prerender">
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span> <span>Blog</span>
         </nav>
 
         <p className="eyebrow">Blog & articles</p>
         <h1>Typing Blog & Articles</h1>
-        <p>Explore typing test comparisons, practice advice, and articles about keyboard skills.</p>
+        <p>Explore typing test comparisons, practice advice, and articles about keyboard skills. <a href="/feed.xml">Subscribe via RSS</a>.</p>
 
         <div className="seo-card-grid"><article><p className="eyebrow">Language learning · Affiliate partnership</p><h2><a href="/blog/glossika-language-revival/">The Story Doesn’t End at the Keyboard: WPMTest × Glossika</a></h2><p>How Glossika teaches, ten courses from our revival series, and a fifteen-minute routine for written and spoken practice.</p><a href="/blog/glossika-language-revival/">Meet our language-learning partner →</a></article><article><p className="eyebrow">Language histories and practice</p><h2><a href="/language-revival/">Language Revival: Suppression, Survival and Community Renewal</a></h2><p>Explore eleven detailed language histories, timelines, sources, keyboard guidance and practice pathways.</p><a href="/language-revival/">Explore the collection →</a></article><article><p className="eyebrow">Your keyboard alter ego</p><h2><a href="/blog/typing-personality-test/">{personalityArticleTitle}</a></h2><p>Your keyboard has been keeping score. Find out what it thinks of you.</p><a href="/blog/typing-personality-test/">Read the article →</a></article><article><p className="eyebrow">Typing experiments · A little ridiculous</p><h2><a href="/blog/typing-test-on-phone-vs-keyboard/">Phone vs Keyboard Typing Speed: How to Compare Your WPM</a></h2><p>Compare WPM, accuracy and input settings across a phone and a physical keyboard, with a repeatable one-minute test.</p><p><a href="/blog/typing-test-on-phone-vs-keyboard/">Read the showdown →</a></p></article><article><p className="eyebrow">ʻŌlelo Hawaiʻi</p><h2><a href="/blog/hawaiian-language-revival/">Hawaiian Language Revival: Speakers, Schools &amp; Typing Practice</a></h2><p>How Hawaiian survived suppression, the growth of Hawaiian-medium schools, and ways to practice the language online.</p><p><a href="/blog/hawaiian-language-revival/">Read the article →</a></p></article>{guides.map(guide => <article key={guide.slug}><p className="eyebrow">Practical guide</p><h2><a href={`/blog/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p><p><a href={`/blog/${guide.slug}/`}>Read and practice →</a></p></article>)}
           <article>

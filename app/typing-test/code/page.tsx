@@ -48,7 +48,7 @@ export default function CodeTypingTestPage() {
 
   return (
     <>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Code Typing Test</span>
         </nav>

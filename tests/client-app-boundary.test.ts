@@ -16,7 +16,7 @@ describe("client app hydration boundary", () => {
     const app = readFileSync(resolve("src/App.tsx"), "utf8");
 
     expect(app).toContain('const ContentLandmark = embedded ? "div" : "main"');
-    expect(app).toContain('<ContentLandmark className="app-content">');
+    expect(app).toContain('id={embedded ? undefined : "main-content"} tabIndex={embedded ? undefined : -1}');
     expect(app).not.toContain("<main>");
   });
 

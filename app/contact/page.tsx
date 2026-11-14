@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="legal-page">
+    <main id="main-content" tabIndex={-1} className="legal-page">
       <h1>Contact WPMTest</h1>
       <p>Report a bug, request an accessibility improvement, or suggest a practice exercise through the WPMTest project’s public issue tracker.</p>
       <p><a className="button primary" href="https://github.com/Lahainalindsay/TypeWell/issues/new">Submit a support report →</a></p>

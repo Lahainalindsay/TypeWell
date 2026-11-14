@@ -98,7 +98,7 @@ export default function DataEntryPracticePage() {
 
   return (
     <>
-      <main className="data-entry-page">
+      <main id="main-content" tabIndex={-1} className="data-entry-page">
         <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
           <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
           <a href="/data-entry-typing-test/">Data Entry</a> <span aria-hidden="true">›</span>{" "}

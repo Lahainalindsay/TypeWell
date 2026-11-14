@@ -91,7 +91,7 @@ export default function WPMTestApp({ initialPath = "/", embedded = false }: { in
 
   return (
     <div className={focus ? "app focus-active" : "app"}>
-      <ContentLandmark className="app-content">
+      <ContentLandmark className="app-content" id={embedded ? undefined : "main-content"} tabIndex={embedded ? undefined : -1}>
         {page === "home" && <Home {...props} />}
         {page === "learn" && <Learn {...props} />}
         {page === "practice" && <Practice {...props} />}
@@ -296,7 +296,9 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
   const fields = profile.indexes.map((index) => allFields[index]);
   const expected = fields[fieldIndex] ?? "";
 
-  useEffect(() => { inputRef.current?.focus(); }, [recordIndex, fieldIndex, finished]);
+  useEffect(() => {
+    if (recordIndex > 0 || fieldIndex > 0) inputRef.current?.focus();
+  }, [recordIndex, fieldIndex]);
 
   function submitField() {
     const start = startedAt ?? performance.now();

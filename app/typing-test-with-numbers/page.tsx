@@ -24,7 +24,7 @@ export default function NumbersTypingTestPage() {
     ] }
   ];
   return <>
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Numbers Test</span></nav>
       <section className="seo-mode-intro"><p className="eyebrow">Free number typing test</p><h1>Typing Test With Numbers</h1><p>Test how quickly and accurately you type numbers mixed with everyday text. Practice dates, prices, percentages, measurements, phone-style numbers and IDs while tracking WPM and accuracy.</p></section>
       <WPMTestApp initialPath="/typing-test-with-numbers/" embedded />

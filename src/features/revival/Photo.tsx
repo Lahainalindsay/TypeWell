@@ -4,6 +4,7 @@ export interface EditorialPhoto {
   src: string;
   smallSrc?: string;
   mediumSrc?: string;
+  smallWidth?: number;
   mobileSrc?: string;
   width: number;
   height: number;
@@ -30,9 +31,14 @@ export function Photo({ photo, priority = false, className = '', sizes = '(max-w
 }
 
 export function responsivePhoto(photo: EditorialPhoto, sizes: string) {
-  if (!photo.smallSrc || !photo.mediumSrc) return {};
+  if (!photo.smallSrc) return {};
+  const candidates = [
+    `${photo.smallSrc} ${photo.smallWidth ?? 600}w`,
+    ...(photo.mediumSrc ? [`${photo.mediumSrc} 1000w`] : []),
+    `${photo.src} ${photo.width}w`
+  ];
   return {
-    srcSet: `${photo.smallSrc} 600w, ${photo.mediumSrc} 1000w, ${photo.src} ${photo.width}w`,
+    srcSet: candidates.join(", "),
     sizes: photo.mobileSrc ? "(max-width: 900px) 1000px, 1600px" : sizes
   };
 }

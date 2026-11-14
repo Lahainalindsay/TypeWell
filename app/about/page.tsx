@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="legal-page">
+    <main id="main-content" tabIndex={-1} className="legal-page">
       <h1>About WPMTest</h1>
       <p>WPMTest is a free typing platform built around useful, focused tools: typing speed tests, accuracy practice, 10-key and data-entry practice, career-focused proficiency assessments, and printable results.</p>
       <script type="application/ld+json" dangerouslySetInnerHTML={{
@@ -27,8 +27,10 @@ export default function AboutPage() {
       <p>Core typing tools can be used without signing up. Progress and preferences for the core trainer are stored locally in your browser so you can practice while keeping the experience simple.</p>
       <h2>Typing for work</h2>
       <p>WPMTest combines prose typing, numeric keypad practice and exact-match structured records. These are self-administered practice tools. They help you identify errors before an application or assessment; they do not verify identity or replace an employer’s required test.</p>
-      <h2>How we explain scores</h2><p>Our <a href="/blog/wpm-vs-kph/">scoring guide</a> explains this site’s formulas. Guides use fictional examples, explain measurement limits and link to practice tools. A practice target is not a universal employer requirement. Use the contact page to report calculation or editorial errors.</p><h2>What results mean</h2>
+      <h2>How we test and score</h2><p>Our <a href="/blog/wpm-vs-kph/">scoring methodology</a> explains this site’s formulas. Guides use fictional examples, explain measurement limits and link to practice tools. A practice target is not a universal employer requirement.</p><h2>What results mean</h2>
       <p>WPMTest reports speed, accuracy, consistency, and other task-specific measurements. Results and certificates document performance on a WPMTest assessment; they are not accredited credentials or guarantees of employment.</p>
+      <h2 id="corrections">Corrections policy</h2>
+      <p>Use the <a href="/contact/">contact form</a> to report a factual error, scoring discrepancy, or missing attribution. Include the page URL, the passage or result in question, and a source or steps to reproduce the issue if you have them. When we verify a substantive editorial error, we correct the article and add a dated note describing what changed.</p>
     </main>
   );
 }

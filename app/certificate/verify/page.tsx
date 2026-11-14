@@ -37,7 +37,7 @@ export default function CertificateVerifyPage() {
     { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(faq => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) }
   ];
   return <>
-    <main className="seo-prerender">
+    <main id="main-content" tabIndex={-1} className="seo-prerender">
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
         <a href="/">Home</a> <span aria-hidden="true">›</span>{" "}
         <a href="/typing-certificate/">Certificate</a> <span aria-hidden="true">›</span>{" "}<span>Verify</span>

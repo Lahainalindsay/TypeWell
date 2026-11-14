@@ -24,7 +24,7 @@ export default function KidsTypingTestPage() {
     ] }
   ];
   return <>
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/typing-test/">Typing Tests</a> <span aria-hidden="true">›</span> <span>Typing Test for Kids</span></nav>
       <section className="seo-mode-intro"><p className="eyebrow">Free • no signup</p><h1>Typing Test for Kids</h1><p>A simple typing test for kids and students who want to check keyboard speed and accuracy without an account. Start with a comfortable pace, focus on correct keys, and use the result as a starting point for practice.</p></section>
       <WPMTestApp initialPath="/1-minute-typing-test/" embedded />
