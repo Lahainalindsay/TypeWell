@@ -78,7 +78,7 @@ export function SiteHeader() {
   return <header lang="en" className="site-header" ref={header}>
     <div className="site-header-inner">
       <a className="site-brand" href="/" aria-label="WPMTest home">WPMTEST<span>.</span></a>
-      <div className="site-header-actions"><ThemeToggle />
+      <div className="site-header-actions"><a className="site-mobile-articles" href="/blog/" aria-label="All Articles">Articles</a><ThemeToggle />
       <button type="button" className="site-mobile-toggle" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button></div>
         <nav id="site-navigation" className="site-navigation" data-open={mobileOpen} aria-label="Primary navigation">
           {groups.map((group) => <details className="site-menu" key={group.label} onToggle={(event) => {
@@ -94,7 +94,7 @@ export function SiteHeader() {
               {"hub" in group && <a className="site-menu-hub" href={group.hub[0]}>{group.hub[1]} →</a>}
             </div>
           </details>)}
-          <a className="site-articles" href="/blog/">Articles</a><a className="site-articles" href="/language-revival/">Language Revival</a>
+          <a className="site-articles" href="/blog/">All Articles</a><a className="site-articles" href="/language-revival/">Language Revival</a>
         </nav>
     </div>
   </header>;
@@ -114,7 +114,7 @@ export function SiteFooter() {
     ["Tests", ["/", "Standard Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/1-page-typing-test/", "Page Tests"], ["/mobile-typing-test/", "Mobile Test"]],
     ["Practice", ["/typing-practice/", "Typing Practice"], ["/learn/", "Lessons"], ["/practice/weak-keys/", "Weak Keys"], ["/rhythm/", "Rhythm"], ["/progress/", "Progress"]],
     ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/customer-service-typing-test/", "Customer Service Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
-    ["Resources", ["/blog/", "Articles"], ["/blog/wpm-vs-kph/", "Scoring Methodology"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
+    ["Resources", ["/blog/", "All Articles"], ["/blog/wpm-vs-kph/", "Scoring Methodology"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
     ["Languages", [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]],
     ["Company", ["/about/", "About"], ["/about/#corrections", "Corrections Policy"], ["/contact/", "Contact"], ["/privacy/", "Privacy"], ["/terms/", "Terms"], ["/settings/", "Settings"]]
   ] as const;

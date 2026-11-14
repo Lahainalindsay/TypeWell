@@ -11,6 +11,7 @@ function escapeXml(value: string) {
 
 export function GET() {
   const entries = [
+    { path: "/blog/desk-setup-for-typing/", title: "Set Yourself Up for Success: A Desk That Works With You" },
     { path: "/blog/glossika-language-revival/", title: "The Story Doesn’t End at the Keyboard" },
     { path: "/blog/typing-personality-test/", title: personalityArticleTitle },
     { path: "/blog/typing-test-on-phone-vs-keyboard/", title: "Phone vs Keyboard Typing Speed" },

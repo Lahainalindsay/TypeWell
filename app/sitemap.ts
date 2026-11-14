@@ -31,10 +31,12 @@ const updatedContentDates = new Map([
   ...languages.map(language => [articlePath(language.id), articleLastModified(language.id)] as const),
   ["/language-revival/", "2026-11-13"],
   ["/about/", "2026-11-14"],
+  ["/blog/desk-setup-for-typing/", "2026-11-13"],
   ["/blog/wpm-vs-kph/", "2026-11-14"]
 ].map(([path, date]) => [path, new Date(date)] as const));
 
 const supportingIndexableRoutes = [
+  "/blog/desk-setup-for-typing/",
   "/blog/glossika-language-revival/",
   "/typing-personality-test/", "/blog/typing-personality-test/",
   "/blog/hawaiian-language-revival/",

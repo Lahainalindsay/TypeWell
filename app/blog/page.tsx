@@ -1,3 +1,4 @@
+import { articlePath, languages } from "../../src/features/revival/content";
 import { personalityArticleTitle } from "../../src/features/editorial/personalityArticle";
 import { guides } from "../../src/features/editorial/guides";
 import type { Metadata } from "next";
@@ -37,10 +38,15 @@ export default function BlogPage() {
         </nav>
 
         <p className="eyebrow">Blog & articles</p>
-        <h1>Typing Blog & Articles</h1>
+        <h1>All Articles</h1>
         <p>Explore typing test comparisons, practice advice, and articles about keyboard skills. <a href="/feed.xml">Subscribe via RSS</a>.</p>
 
-        <div className="seo-card-grid"><article><p className="eyebrow">Language learning · Affiliate partnership</p><h2><a href="/blog/glossika-language-revival/">The Story Doesn’t End at the Keyboard: WPMTest × Glossika</a></h2><p>How Glossika teaches, ten courses from our revival series, and a fifteen-minute routine for written and spoken practice.</p><a href="/blog/glossika-language-revival/">Meet our language-learning partner →</a></article><article><p className="eyebrow">Language histories and practice</p><h2><a href="/language-revival/">Language Revival: Suppression, Survival and Community Renewal</a></h2><p>Explore eleven detailed language histories, timelines, sources, keyboard guidance and practice pathways.</p><a href="/language-revival/">Explore the collection →</a></article><article><p className="eyebrow">Your keyboard alter ego</p><h2><a href="/blog/typing-personality-test/">{personalityArticleTitle}</a></h2><p>Your keyboard has been keeping score. Find out what it thinks of you.</p><a href="/blog/typing-personality-test/">Read the article →</a></article><article><p className="eyebrow">Typing experiments · A little ridiculous</p><h2><a href="/blog/typing-test-on-phone-vs-keyboard/">Phone vs Keyboard Typing Speed: How to Compare Your WPM</a></h2><p>Compare WPM, accuracy and input settings across a phone and a physical keyboard, with a repeatable one-minute test.</p><p><a href="/blog/typing-test-on-phone-vs-keyboard/">Read the showdown →</a></p></article><article><p className="eyebrow">ʻŌlelo Hawaiʻi</p><h2><a href="/blog/hawaiian-language-revival/">Hawaiian Language Revival: Speakers, Schools &amp; Typing Practice</a></h2><p>How Hawaiian survived suppression, the growth of Hawaiian-medium schools, and ways to practice the language online.</p><p><a href="/blog/hawaiian-language-revival/">Read the article →</a></p></article>{guides.map(guide => <article key={guide.slug}><p className="eyebrow">Practical guide</p><h2><a href={`/blog/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p><p><a href={`/blog/${guide.slug}/`}>Read and practice →</a></p></article>)}
+        <div className="seo-card-grid">
+          <article>
+            <h2><a href="/blog/desk-setup-for-typing/">Set Yourself Up for Success: A Desk That Works With You</a></h2>
+            <p>Adjust your chair, keyboard, lighting, and papers for typing at school or work.</p>
+          </article>
+          <article><p className="eyebrow">Language learning · Affiliate partnership</p><h2><a href="/blog/glossika-language-revival/">The Story Doesn’t End at the Keyboard: WPMTest × Glossika</a></h2><p>How Glossika teaches, ten courses from our revival series, and a fifteen-minute routine for written and spoken practice.</p><a href="/blog/glossika-language-revival/">Meet our language-learning partner →</a></article><article><p className="eyebrow">Language histories and practice</p><h2><a href="/language-revival/">Language Revival: Suppression, Survival and Community Renewal</a></h2><p>Explore eleven detailed language histories, timelines, sources, keyboard guidance and practice pathways.</p><a href="/language-revival/">Explore the collection →</a></article><article><p className="eyebrow">Your keyboard alter ego</p><h2><a href="/blog/typing-personality-test/">{personalityArticleTitle}</a></h2><p>Your keyboard has been keeping score. Find out what it thinks of you.</p><a href="/blog/typing-personality-test/">Read the article →</a></article><article><p className="eyebrow">Typing experiments · A little ridiculous</p><h2><a href="/blog/typing-test-on-phone-vs-keyboard/">Phone vs Keyboard Typing Speed: How to Compare Your WPM</a></h2><p>Compare WPM, accuracy and input settings across a phone and a physical keyboard, with a repeatable one-minute test.</p><p><a href="/blog/typing-test-on-phone-vs-keyboard/">Read the showdown →</a></p></article><article><p className="eyebrow">ʻŌlelo Hawaiʻi</p><h2><a href="/blog/hawaiian-language-revival/">Hawaiian Language Revival: Speakers, Schools &amp; Typing Practice</a></h2><p>How Hawaiian survived suppression, the growth of Hawaiian-medium schools, and ways to practice the language online.</p><p><a href="/blog/hawaiian-language-revival/">Read the article →</a></p></article>{guides.map(guide => <article key={guide.slug}><p className="eyebrow">Practical guide</p><h2><a href={`/blog/${guide.slug}/`}>{guide.title}</a></h2><p>{guide.description}</p><p><a href={`/blog/${guide.slug}/`}>Read and practice →</a></p></article>)}
           <article>
             <p className="eyebrow">Comparison</p>
             <h2><a href="/blog/best-typing-test-websites/">The 9 Best Free Typing Test Websites (2026), Compared</a></h2>
@@ -60,6 +66,12 @@ export default function BlogPage() {
             <p><a href="/blog/data-entry-typing-test-for-employment/">Read the guide →</a></p>
           </article>
         </div>
+        <section aria-labelledby="revival-articles">
+          <h2 id="revival-articles">Language revival articles</h2>
+          <ul>{languages.map(language => <li key={language.id}>
+            <a href={articlePath(language.id)}>{language.name} language revival</a>
+          </li>)}</ul>
+        </section>
       </main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </>
