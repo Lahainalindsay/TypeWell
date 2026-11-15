@@ -1,6 +1,7 @@
 export default function NotFound() {
   return (
     <main id="main-content" tabIndex={-1} className="not-found-page">
+      <title>Page Not Found | WPMTest</title>
       <section className="panel">
         <p className="eyebrow">404</p>
         <h1>That page couldn't be found.</h1>

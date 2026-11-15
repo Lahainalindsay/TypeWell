@@ -82,7 +82,7 @@ export const frenchTypingContent: LocalizedTypingContent = {
   locale: "fr-FR",
   path: "/fr/test-de-vitesse-de-frappe/",
   title: "Test de dactylographie gratuit en ligne | WPMTest",
-  description: "Test de dactylographie gratuit en français : mesurez votre vitesse de frappe en mots par minute (MPM) et votre précision. Texte français, clavier AZERTY, sans inscription.",
+  description: "Test de dactylographie gratuit en français : mesurez votre vitesse en mots par minute (MPM) et votre précision sur clavier AZERTY, sans inscription.",
   h1: "Test de vitesse de frappe en français",
   eyebrow: "GRATUIT · SANS INSCRIPTION · RÉSULTATS PRIVÉS",
   intro: "Tapez un texte français naturel avec ses accents et sa ponctuation. Obtenez immédiatement votre vitesse, votre précision et votre régularité, puis créez un certificat en français.",

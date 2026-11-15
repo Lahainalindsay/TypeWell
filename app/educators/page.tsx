@@ -1,9 +1,11 @@
+import { Breadcrumbs, JsonLd } from "../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Typing for Educators – Classroom Typing Lessons & Games | WPMTest",
-  description: "Explore WPMTest for educators: classroom typing lessons, student practice, typing games, progress tracking, assignments and certificates. Classroom tools coming soon.",
-  alternates: { canonical: "/educators/" }
+  title: "Typing for Educators: Lessons and Games | WPMTest",
+  description: "Explore typing lessons, student practice, and typing games available today, plus classroom progress tools and assignments in development.",
+  alternates: { canonical: "/educators/" },
+  openGraph: { url: "/educators/" }
 };
 
 const features = [
@@ -17,6 +19,8 @@ const features = [
 
 export default function EducatorsPage() {
   return <main id="main-content" tabIndex={-1} className="tw-standalone">
+      <Breadcrumbs items={[{ name: "Typing for Educators", url: "/educators/" }]} />
+      <JsonLd data={{ "@type": "WebPage", name: "Typing for Educators", url: "https://wpmtest.app/educators/" }} />
     <span className="tw-kicker">Coming soon</span>
     <h1>Typing for Educators</h1>
     <p className="lead">A classroom-friendly typing experience is in development for teachers and students, combining structured keyboarding lessons, engaging practice, progress tools and multiplayer-style typing races.</p>

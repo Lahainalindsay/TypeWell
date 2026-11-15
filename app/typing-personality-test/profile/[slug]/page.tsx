@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "../../../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -13,8 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const profile = personalities.find(item => item.slug === slug);
   if (!profile) return { title: "Typing personality not found | WPMTest", robots: { index: false } };
-  const title = `I'm ${profile.name}! What's Your Typing Personality? | WPMTest`;
-  const description = `${profile.description} Discover your own typing personality with the free WPMTest typing personality test.`;
+  const title = `${profile.name} | WPMTest Typing Personality`;
+  const description = `Meet ${profile.name}, one of nine WPMTest typing personalities. Learn how speed, accuracy, and consistency shape this playful result.`;
   const url = absoluteUrl(`/typing-personality-test/profile/${slug}/`);
   const image = absoluteUrl(`/images/personalities/${slug}.webp`);
   return {
@@ -28,6 +29,7 @@ export default async function SharedPersonality({ params }: Props) {
   const profile = personalities.find(item => item.slug === slug);
   if (!profile) notFound();
   return <main id="main-content" tabIndex={-1} className="seo-prerender" style={{ maxWidth: 820, margin: "0 auto", padding: "2rem 1rem" }}>
+    <Breadcrumbs items={[{ name: "Typing Personality Test", url: "/typing-personality-test/" }, { name: profile.name, url: `/typing-personality-test/profile/${slug}/` }]} />
     <p>WPMTEST · KEYBOARD ALL-STARS</p>
     <h1>I'm {profile.name}!</h1>
     <img src={`/images/personalities/${profile.slug}.webp`} srcSet={`/images/personalities/${profile.slug}-480.webp 480w, /images/personalities/${profile.slug}.webp 960w`} sizes="(max-width: 820px) calc(100vw - 2rem), 788px" alt={`Illustrated ${profile.name} typing personality character at a keyboard`} width={960} height={640} style={{ width: "100%", height: "auto", borderRadius: 16 }} />

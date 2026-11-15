@@ -1,21 +1,24 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { buildPageTestText, buildPracticeText, categoryPassages } from "../src/data/texts";
 
 describe("coherent typing passages", () => {
-  it.each(["Sentences", "Fun Facts", "Tiny Dramas"] as const)("keeps one complete %s passage in authored order, including long tests", (mode) => {
-    for (const choice of [0, 0.99]) {
-      const random = vi.spyOn(Math, "random").mockReturnValue(choice);
-      try {
-        const expected = categoryPassages[mode][Math.floor(choice * categoryPassages[mode].length)];
-        for (const count of [10, 50, 120, 540, 1080]) {
-          const result = buildPracticeText(mode, count);
-          expect(result.length).toBeGreaterThanOrEqual(count * 6);
-          expect(result.split(expected).join("").trim()).toBe("");
-          expect(result).not.toMatch(/\d/);
-          expect(result.endsWith(".")).toBe(true);
-        }
-      } finally { random.mockRestore(); }
+  it.each(["Sentences", "Fun Facts", "Tiny Dramas"] as const)("cycles through complete %s passages before repeating", (mode) => {
+    const passages = categoryPassages[mode];
+    expect(passages.length).toBeGreaterThanOrEqual(6);
+    const result = buildPracticeText(mode, 2500, "", () => 0);
+    const seen: string[] = [];
+    let remainder = result;
+    while (remainder) {
+      const next = passages.find(passage => remainder.startsWith(passage));
+      expect(next).toBeDefined();
+      if (!next) break;
+      seen.push(next);
+      remainder = remainder.slice(next.length).trimStart();
     }
+    expect(result.length).toBeGreaterThanOrEqual(2500 * 6);
+    expect(new Set(seen.slice(0, passages.length)).size).toBe(passages.length);
+    expect(seen.slice(1).some((passage, index) => passage === seen[index])).toBe(false);
+    expect(result).not.toMatch(/\d/);
   });
 
   it("keeps page stories chronological across page lengths", () => {

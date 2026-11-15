@@ -1,3 +1,5 @@
+import { aboutUpdated } from "../../src/lib/seo/pageDates";
+import { Breadcrumbs } from "../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
@@ -17,20 +19,24 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main id="main-content" tabIndex={-1} className="legal-page">
+      <Breadcrumbs items={[{ name: "About WPMTest", url: "/about/" }]} />
       <h1>About WPMTest</h1>
+      <p className="page-updated">Last updated <time dateTime={aboutUpdated}>November 15, 2026</time></p>
       <p>WPMTest is a free typing platform built around useful, focused tools: typing speed tests, accuracy practice, 10-key and data-entry practice, career-focused proficiency assessments, and printable results.</p>
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify({ "@context": "https://schema.org", ...authorProfile }).replace(/</g, "\\u003c")
       }} />
       <h2 id="lindsay-johnson">Built by Lindsay Johnson</h2>
-      <img src={authorImagePath} width={160} height={192} alt="Lindsay Johnson" loading="lazy" decoding="async" /><p>WPMTest is an independent project created by Lindsay Johnson, a Maui-based developer. The goal is accessible keyboard practice without a subscription or account, particularly for people preparing for office and data-entry work.</p><p><a href={authorProfile.sameAs[0]}>Lindsay Johnson on GitHub</a>. The public <a href="https://github.com/Lahainalindsay/TypeWell">TypeWell repository</a> contains the site’s source. <a href="/contact/">Report an issue or suggest an improvement</a> when a tool does not work as expected.</p><h2>Practice without an account</h2>
+      <img src={authorImagePath} width={160} height={192} alt="Lindsay Johnson in a blush blazer and a silver necklace" loading="lazy" decoding="async" /><p>WPMTest is an independent project created by Lindsay Johnson, a Maui-based developer. She built WPMTest to make keyboard practice accessible without a subscription or account. The site brings quick speed checks and workplace-style drills together so learners can practice the kinds of typing they actually need.</p><p><a href={authorProfile.sameAs[0]}>Lindsay Johnson on GitHub</a>. The public <a href="https://github.com/Lahainalindsay/TypeWell">TypeWell repository</a> contains the site’s source. <a href="/contact/">Report an issue or suggest an improvement</a> when a tool does not work as expected.</p><h2>Practice without an account</h2>
       <p>Core typing tools can be used without signing up. Progress and preferences for the core trainer are stored locally in your browser so you can practice while keeping the experience simple.</p>
       <h2>Typing for work</h2>
       <p>WPMTest combines prose typing, numeric keypad practice and exact-match structured records. These are self-administered practice tools. They help you identify errors before an application or assessment; they do not verify identity or replace an employer’s required test.</p>
       <h2>How we test and score</h2><p>Our <a href="/blog/wpm-vs-kph/">scoring methodology</a> explains this site’s formulas. Guides use fictional examples, explain measurement limits and link to practice tools. A practice target is not a universal employer requirement.</p><h2>What results mean</h2>
       <p>WPMTest reports speed, accuracy, consistency, and other task-specific measurements. Results and certificates document performance on a WPMTest assessment; they are not accredited credentials or guarantees of employment.</p>
       <h2 id="corrections">Corrections policy</h2>
-      <p>Use the <a href="/contact/">contact form</a> to report a factual error, scoring discrepancy, or missing attribution. Include the page URL, the passage or result in question, and a source or steps to reproduce the issue if you have them. When we verify a substantive editorial error, we correct the article and add a dated note describing what changed.</p>
+      <p>Use the <a href="/contact/">support page</a> to report a factual error, scoring discrepancy, or missing attribution. Include the page URL, the passage or result in question, and a source or steps to reproduce the issue if you have them. When we verify a substantive editorial error, we correct the article and add a dated note describing what changed.</p>
+      <h3>Corrections log</h3>
+      <p>Verified corrections will be listed here with the affected article and date.</p>
     </main>
   );
 }

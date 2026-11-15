@@ -1,3 +1,4 @@
+import { Breadcrumbs, JsonLd } from "../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main id="main-content" tabIndex={-1} className="legal-page">
+      <Breadcrumbs items={[{ name: "Contact WPMTest", url: "/contact/" }]} />
+      <JsonLd data={{ "@type": "ContactPage", name: "Contact WPMTest", url: "https://wpmtest.app/contact/" }} />
       <h1>Contact WPMTest</h1>
       <p>Report a bug, request an accessibility improvement, or suggest a practice exercise through the WPMTest project’s public issue tracker.</p>
       <p><a className="button primary" href="https://github.com/Lahainalindsay/TypeWell/issues/new">Submit a support report →</a></p>

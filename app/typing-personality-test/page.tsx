@@ -1,3 +1,4 @@
+import { Breadcrumbs, JsonLd } from "../../src/components/Breadcrumbs";
 import { TypingPreviews } from "../../src/components/TypingPreviews";
 import type { Metadata } from "next";
 import { personalities } from "../../src/features/typingPersonality";
@@ -5,8 +6,9 @@ import WPMTestApp from "../../src/ClientApp";
 import { absoluteUrl } from "../../src/lib/seo/site";
 const title = "Typing Personality Test | Discover Your Keyboard Alter Ego";
 const description = "Take a typing test and reveal your typing personality on a playful baseball card based on your speed, accuracy and consistency.";
-export const metadata: Metadata = {title,description,alternates:{canonical:absoluteUrl("/typing-personality-test/")},openGraph:{title,description,images:[absoluteUrl("/images/typing-personality.webp")]}};
-export default function PersonalityTest() {return <><WPMTestApp initialPath="/typing-personality-test/" /><section className="seo-prerender"><h2>Your keyboard alter ego awaits</h2><p>Type the passage to start. Finish the test to reveal your personality card, complete with your speed and accuracy. Retake it to see how your result changes.</p><p>Discover one of nine illustrated keyboard alter egos, find out why your scores matched it, and turn repeated errors into a short warm-up. No questionnaire, signup or mystical keyboard destiny required.</p>
+export const metadata: Metadata = {title,description,alternates:{canonical:absoluteUrl("/typing-personality-test/")},openGraph:{title,description,url:absoluteUrl("/typing-personality-test/"),images:[absoluteUrl("/images/typing-personality.webp")]}};
+export default function PersonalityTest() {return <><WPMTestApp initialPath="/typing-personality-test/" /><section className="seo-prerender"><Breadcrumbs items={[{ name: "Typing Personality Test", url: "/typing-personality-test/" }]} />
+<JsonLd data={{ "@type": "WebApplication", name: "Typing Personality Test", url: absoluteUrl("/typing-personality-test/"), applicationCategory: "EntertainmentApplication", operatingSystem: "Web browser" }} /><h2>Your keyboard alter ego awaits</h2><p>Type the passage to start. Finish the test to reveal your personality card, complete with your speed and accuracy. Retake it to see how your result changes.</p><p>Discover one of nine illustrated keyboard alter egos, find out why your scores matched it, and turn repeated errors into a short warm-up. No questionnaire, signup or mystical keyboard destiny required.</p>
 <h2 id="how-personalities-work">How your keyboard delivers its verdict</h2><p>We use the displayed WPM, accuracy and consistency from your completed attempt. Rules below are checked from top to bottom: the first match wins. This order matters—a fast, accurate run can qualify for several profiles.</p>
 <ol>{personalities.map(personality=><li key={personality.slug}><strong><a href={`/typing-personality-test/profile/${personality.slug}/`}>{personality.name}</a></strong> — {personality.rule}. {personality.description}</li>)}</ol>
 <h2>A playful profile. A practical next step.</h2><p>The character is for entertainment; the score explanation and warm-up are for practice. Your result includes your actual repeated error keys where enough attempts exist, their error counts, a focused exercise, and a suggested way to compare your next run.</p>

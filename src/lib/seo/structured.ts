@@ -2,7 +2,8 @@ import { absoluteUrl, SITE_NAME } from "./site";
 
 export const publisher = {
   "@id": absoluteUrl("/#organization"), "@type": "Organization", name: SITE_NAME,
-  url: absoluteUrl("/"), logo: absoluteUrl("/favicon.svg"),
+  url: absoluteUrl("/"), logo: absoluteUrl("/icon-512.png"),
+  // Add only verified WPMTest profiles here.
   sameAs: ["https://github.com/Lahainalindsay/TypeWell"]
 };
 export const website = { "@id": absoluteUrl("/#website") };

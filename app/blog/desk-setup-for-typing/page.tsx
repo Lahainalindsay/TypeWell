@@ -1,3 +1,6 @@
+import { deskSetupPublished, deskSetupUpdated } from "../../../src/lib/seo/pageDates";
+import { author, publisher } from "../../../src/lib/seo/structured";
+import { Breadcrumbs, JsonLd } from "../../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 import { AuthorByline } from "../../../src/features/editorial/ArticleVisual";
 import styles from "../../../src/features/editorial/editorial.module.css";
@@ -8,7 +11,7 @@ const description = "Set up your desk for typing at school or work. Adjust your 
 const url = absoluteUrl("/blog/desk-setup-for-typing/");
 
 export const metadata: Metadata = {
-  title: `${title} | WPMTest`,
+  title,
   description,
   alternates: { canonical: url },
   openGraph: { title, description, url, type: "article", images: ["/images/typing-editorial-desk.webp"] },
@@ -21,12 +24,13 @@ function AmazonLink({ href, product }: { href: string; product: string }) {
 
 export default function DeskSetupPage() {
   return <main id="main-content" tabIndex={-1} className={styles.page}>
-    <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Desk setup</span></nav>
+    <Breadcrumbs items={[{ name: "All Articles", url: "/blog/" }, { name: "Desk Setup for Typing", url: "/blog/desk-setup-for-typing/" }]} />
+      <JsonLd data={{ "@type": "Article", name: title, url, mainEntityOfPage: url, headline: title, description, datePublished: deskSetupPublished, dateModified: deskSetupUpdated, image: absoluteUrl("/images/typing-editorial-desk.webp"), author, publisher }} />
     <article>
       <header className={styles.header}>
         <h1>{title}</h1>
         <p>A practical desk setup for school, work, and typing practice. Start with what you already have, then buy only what solves a problem.</p>
-        <AuthorByline date="2026-11-13" />
+        <AuthorByline date={deskSetupUpdated} />
       </header>
       <div className={styles.body}>
         <p>As an Amazon Associate I earn from qualifying purchases.</p>

@@ -160,7 +160,7 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/typing-practice/",
-    title: "Typing Practice - Targeted Drills to Improve Weak Keys | WPMTest",
+    title: "Typing Practice - Targeted Drills to Improve Weak Keys",
     description: "Practice typing with targeted drills for weak keys, accuracy, rhythm, numbers, punctuation, code-style text, and custom text. Free and no signup required.",
     h1: "Typing Practice — Targeted Drills to Fix Your Weak Keys",
     intro: "Generic typing practice — just typing random paragraphs repeatedly — improves speed slowly because it treats every key the same, when in reality most typists have three to five specific letter combinations or fingers that are quietly capping their whole score.",
@@ -293,7 +293,7 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/kph-typing-test/",
-    title: "KPH Typing Test - Measure 10-Key Numeric Entry Speed | WPMTest",
+    title: "KPH Typing Test - Measure 10-Key Numeric Entry Speed",
     description: "Take a KPH typing test to measure keystrokes per hour for 10-key, numeric keypad, accounting, bookkeeping, and data-entry practice.",
     h1: "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed",
     intro: "KPH, or Keystrokes Per Hour, is the standard metric for numeric keypad speed used in accounting, bookkeeping, banking, and high-volume numeric data-entry roles.",
@@ -354,13 +354,15 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/typing-certificate/",
-    title: "Free Typing Certificate - Test Your Typing Speed | WPMTest",
+    title: "Free Typing Certificate: Printable WPM Result",
     description: "Create a printable WPMTest typing result certificate from your most recent local typing test result.",
-    h1: "Typing Certificate",
+    h1: "Free Typing Certificate: Printable WPM Result",
     intro: "After completing a typing test, create a simple printable certificate from your local result.",
     content: [
       "WPMTest certificates are site-generated practice records, not accredited professional certifications.",
-      "Use the certificate as a personal record of a completed online typing test."
+      "The certificate records the test type, completion date, and measured results, such as WPM and accuracy. The name you enter appears on the certificate you generate.",
+      "Stored locally means your result is kept in this browser on this device. Open the certificate tool in the same browser after finishing a test to use that result.",
+      "Generate the certificate, select Print, and choose your printer or your browser’s Save as PDF option."
     ],
     related: [
       { href: "/5-minute-typing-test/", label: "5 Minute Test" },

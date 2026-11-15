@@ -6,7 +6,7 @@ const SITE_URL = "https://wpmtest.app";
 const canonical = `${SITE_URL}/typing-test-for-students/`;
 
 export const metadata: Metadata = {
-  title: "Typing Test for Students - Free WPM & Accuracy Test | WPMTest",
+  title: "Typing Test for Students - Free WPM & Accuracy Test",
   description: "Free typing test for students. Check WPM, accuracy and consistency for schoolwork, essays and computer assignments with no signup.",
   alternates: { canonical },
   openGraph: { title: "Typing Test for Students | WPMTest", description: "Measure student typing speed and accuracy with a free online WPM test.", url: canonical, type: "website", images: [{ url: `${SITE_URL}/og-default.png`, width: 1200, height: 630, alt: "WPMTest typing tools" }] },

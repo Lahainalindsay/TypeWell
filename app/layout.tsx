@@ -26,7 +26,7 @@ const themeBootstrapScript = `
 `;
 
 export const metadata: Metadata = {
-  title: "Page Not Found | WPMTest",
+  title: "WPMTest — Typing Tests and Practice",
   metadataBase: new URL(SITE_ORIGIN),
   applicationName: SITE_NAME,
   robots: {
@@ -37,7 +37,12 @@ export const metadata: Metadata = {
     "google-adsense-account": adsenseClient
   },
   icons: {
-    icon: "/favicon.svg"
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" }
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }]
   },
   openGraph: {
     siteName: SITE_NAME,

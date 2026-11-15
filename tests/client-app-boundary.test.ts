@@ -1,3 +1,4 @@
+import { articlesLink, footerColumns, navigationGroups } from "../src/components/siteNavigation";
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -50,9 +51,9 @@ describe("client app hydration boundary", () => {
 
     expect(app).toContain('aria-label="Exit results and return to the typing test"');
     expect(shell).toContain('className="site-mobile-toggle"');
-    expect(shell).toContain('label: "Professional"');
-    expect(shell).toContain('href="/blog/">All Articles');
-    expect(shell).toContain('className="site-mobile-articles" href="/blog/"');
+    expect(navigationGroups.map(group => group.label)).toContain("Professional");
+    expect(footerColumns.some(([, ...links]) => links.some(link => link === articlesLink))).toBe(true);
+    expect(shell).toContain('className="site-mobile-articles" href={articlesLink[0]}');
     expect(layout).toContain('<SiteHeader />{children}<SiteFooter />');
     expect(styles).toContain('max-height: calc(100dvh - 58px)');
   });
