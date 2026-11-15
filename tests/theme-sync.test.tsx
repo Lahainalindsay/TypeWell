@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 describe("shared theme controls", () => {
-  it("keeps the header, settings and saved progress in sync, including system changes", () => {
+  it("keeps the header, settings and saved progress in sync, including system changes", async () => {
     vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
     let prefersLight = false;
     const media = new EventTarget();
@@ -25,7 +25,10 @@ describe("shared theme controls", () => {
     const container = document.createElement("div");
     document.body.appendChild(container);
     root = createRoot(container);
-    act(() => { root!.render(<><SiteHeader /><WPMTestApp initialPath="/settings/" embedded /></>); });
+    await act(async () => {
+      root!.render(<><SiteHeader /><WPMTestApp initialPath="/settings/" embedded /></>);
+    });
+    await act(async () => { await vi.dynamicImportSettled(); });
     const toggle = container.querySelector<HTMLButtonElement>(".site-theme-toggle")!;
     const select = container.querySelector<HTMLSelectElement>('select[aria-label="Color theme"]')!;
     expect(select.value).toBe("dark");
