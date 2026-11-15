@@ -72,7 +72,7 @@ export function SiteHeader() {
     <div className="site-header-inner">
       <a className="site-brand" href="/" aria-label="WPMTest home">WPMTEST<span>.</span></a>
       <div className="site-header-actions"><a className="site-mobile-articles" href={articlesLink[0]}>{articlesLink[1]}</a><ThemeToggle />
-      <button type="button" className="site-mobile-toggle" ref={mobileToggle} aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button></div>
+      <button type="button" className="site-mobile-toggle" ref={mobileToggle} aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button></div>
         <nav id="site-navigation" className="site-navigation" data-open={mobileOpen} aria-label="Primary navigation">
           {navigationGroups.map((group) => <details className="site-menu" key={group.label} onToggle={(event) => {
             if (!event.currentTarget.open) return;

@@ -1,3 +1,4 @@
+import { editorialUpdated } from "../../../src/lib/seo/pageDates";
 import { Breadcrumbs } from "../../../src/components/Breadcrumbs";
 import { AuthorByline, RelatedGuides } from "../../../src/features/editorial/ArticleVisual";
 import { author, publisher } from "../../../src/lib/seo/structured";
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function PhoneVersusKeyboardArticle() {
   const schema = { "@context": "https://schema.org", "@type": "Article", headline: title, description, mainEntityOfPage: url,
-    datePublished: "2026-10-28", dateModified: "2026-11-12", image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
+    datePublished: "2026-10-28", dateModified: editorialUpdated, image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
     author, publisher };
   return <main id="main-content" tabIndex={-1} className={styles.page}>
     <Breadcrumbs items={[{ name: "All Articles", url: "/blog/" }, { name: "Phone vs. Keyboard", url: "/blog/typing-test-on-phone-vs-keyboard/" }]} />
@@ -27,7 +28,7 @@ export default function PhoneVersusKeyboardArticle() {
       <p className={styles.eyebrow}>Typing experiments · Questionable life choices</p>
       <h1>{title}</h1>
       <p className={styles.subtitle}>You can compare phone and keyboard WPM by using similar passages and the same test duration. Record accuracy and any autocorrect or predictions alongside each score.</p>
-      <AuthorByline date="2026-11-12" />
+      <AuthorByline date={editorialUpdated} />
       </header>
       <figure className={styles.hero}>
         <img src="/images/typing-editorial-desk.webp" srcSet="/images/typing-editorial-desk-600.webp 600w, /images/typing-editorial-desk-1000.webp 1000w, /images/typing-editorial-desk.webp 1536w" sizes="(max-width: 700px) 100vw, 1050px" width="1536" height="1024" alt="A keyboard and notebook on a wooden desk" fetchPriority="high" />

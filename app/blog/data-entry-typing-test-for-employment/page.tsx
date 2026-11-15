@@ -1,10 +1,11 @@
+import { editorialUpdated } from "../../../src/lib/seo/pageDates";
 import { author, publisher } from "../../../src/lib/seo/structured";
 import { ArticleVisual, AuthorByline, GuideTakeaways, PracticeCard, RelatedGuides } from "../../../src/features/editorial/ArticleVisual";
 import styles from "../../../src/features/editorial/editorial.module.css";
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../../src/lib/seo/site";
 
-const dateModified = "2026-11-12";
+const dateModified = editorialUpdated;
 const canonical = absoluteUrl("/blog/data-entry-typing-test-for-employment/");
 
 export const metadata: Metadata = {

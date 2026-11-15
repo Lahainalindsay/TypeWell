@@ -21,7 +21,7 @@ const displayDate = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", time
 
 export function ArticleCard({ href, title, description, category, date, image, affiliate }: ArticleCardProps) {
   return <article className="article-card">
-    <a href={href} className="article-card-link" aria-label={`Read ${title}`}>
+    <a href={href} className="article-card-link">
       <img src={image.src} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" />
       <div className="article-card-copy">
         <p className="article-card-meta">{category} <span aria-hidden="true">·</span> <time dateTime={date}>{displayDate.format(new Date(date))}</time></p>

@@ -1,6 +1,7 @@
 from html.parser import HTMLParser
 from pathlib import Path
 from collections import Counter
+from urllib.parse import urlsplit
 import json,xml.etree.ElementTree as E
 class Page(HTMLParser):
  def __init__(self):super().__init__();self.title='';self.intitle=False;self.meta={};self.canon=[];self.h1=0;self.img=[];self.links=[];self.text=[];self.skip=0;self.hreflang={};self.schemas=[];self.schema=None;self.sources=[];self.title_count=0;self.has_breadcrumb=False;self.schema_errors=[]
@@ -97,6 +98,21 @@ for path, page in pages.items():
   article = next((node for node in nodes if node.get('@type') == 'Article'), {})
   if not {'datePublished', 'publisher', 'author'}.issubset(article) or 'BreadcrumbList' not in kinds:
    errors.append((path, 'incomplete revival article schema'))
+
+# The header, footer, and section hubs should expose every public page in two
+# steps from the home page. Error routes are deliberately excluded.
+def internal_pages(page):
+ targets = set()
+ for href in page.links:
+  parsed = urlsplit(href)
+  if parsed.netloc in ('', 'wpmtest.app') and parsed.path in pages:
+   targets.add(parsed.path)
+ return targets
+
+first_hop = internal_pages(pages['/'])
+within_two_hops = first_hop.union(*(internal_pages(pages[path]) for path in first_hop))
+for path in sorted(set(pages) - within_two_hops - {'/', '/404.html', '/404/', '/_not-found/'}):
+ errors.append((path, 'not linked within two clicks of the homepage'))
 
 # The generated export is the contract crawlers receive. Fail on regressions.
 for key in ['title', 'description', 'canonical']:

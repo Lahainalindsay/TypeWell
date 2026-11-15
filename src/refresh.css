@@ -1,7 +1,7 @@
 /* WPMTest visual refinement: compact, tool-first, ad-friendly. Loaded after styles.css. */
 
 :root {
-  --content-width: 1120px;
+  --content-width: var(--tw-max);
   --soft-line: color-mix(in srgb, var(--line), transparent 28%);
   --soft-panel: color-mix(in srgb, var(--panel), transparent 18%);
 }

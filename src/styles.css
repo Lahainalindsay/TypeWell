@@ -52,7 +52,7 @@ button, input, select, textarea { font: inherit; }
 button, .button, select {
   min-height: 42px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--tw-control-radius);
   background: var(--panel);
   color: var(--text);
   padding: 0.62rem 0.85rem;
