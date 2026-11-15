@@ -38,6 +38,13 @@
   --muted: #d1d9e4;
 }
 
+:root[data-theme="light"][data-contrast="true"] {
+  --panel: rgba(9, 16, 28, 0.1);
+  --line: rgba(9, 16, 28, 0.38);
+  --muted: #38455a;
+  --accent: #075985;
+}
+
 * { box-sizing: border-box; }
 html, body, #root { max-width: 100%; overflow-x: hidden; }
 body { margin: 0; min-width: 320px; background: radial-gradient(circle at 20% 0%, rgba(125, 211, 252, 0.12), transparent 26rem), var(--bg); }

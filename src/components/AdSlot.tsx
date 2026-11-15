@@ -1,10 +1,14 @@
 "use client";
-import { adsConfig, adsEnabledForLocalPreview } from "../ads.config";
 
-export function AdSlot({ placement }: { placement: string }) {
-  const enabled = adsConfig.enabled || adsEnabledForLocalPreview();
-  if (!enabled) return null;
-  const slot = adsConfig.slots[placement as keyof typeof adsConfig.slots] ?? adsConfig.slots.contentMiddle;
-  return <div className="ad-slot" data-placement={placement} aria-label="Ad placement" style={{ minHeight: slot.minHeight }}>Ad placement</div>;
+import { useEffect, useState } from "react";
+import { adsConfig, adsEnabledForLocalPreview, type AdSlotId } from "../ads.config";
+
+export function AdSlot({ placement }: { placement: AdSlotId }) {
+  const [localPreview, setLocalPreview] = useState(false);
+  useEffect(() => { setLocalPreview(adsEnabledForLocalPreview()); }, []);
+
+  if (!adsConfig.enabled && !localPreview) return null;
+
+  return <div className="ad-slot" data-placement={placement} aria-hidden="true"
+    style={{ minHeight: adsConfig.slots[placement].minHeight, visibility: "hidden" }} />;
 }
-

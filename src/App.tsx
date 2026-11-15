@@ -116,7 +116,7 @@ function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedP
   const [passageType, setPassageType] = useState<"Sentences" | "Fun Facts" | "Tiny Dramas">("Sentences");
   const passage = useMemo(() => buildInitialPracticeText(passageType, Math.max(120, Math.round(duration * 1.8))), [duration, passageType]);
   const durationLabels: Record<number, string> = { 60: "1 Minute", 180: "3 Minutes", 300: "5 Minutes", 600: "10 Minutes" };
-  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} aria-pressed={duration === Number(seconds)} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><div className="panel home-passage-picker"><label htmlFor="home-passage-type"><strong>Choose your typing passage</strong></label><select id="home-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} regenerate={() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
+  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} aria-pressed={duration === Number(seconds)} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><div className="panel home-passage-picker"><label htmlFor="home-passage-type"><strong>Choose your typing passage</strong></label><select id="home-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} keyboardToggle regenerate={() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
 }
 
 function InternalLink({ href, go, children }: { href: string; go: (page: Page, route?: string) => void; children: React.ReactNode }) {
@@ -383,6 +383,7 @@ interface SharedProps {
 }
 
 function Trainer(props: {
+  keyboardToggle?: boolean;
   title: string;
   personalityTest?: boolean;
   subtitle: string;
@@ -529,6 +530,11 @@ function Trainer(props: {
     if (value) applyKeys(keysFromTextInput("insertText", value));
   }
 
+  const showKeyboard = props.progress.settings.showKeyboard;
+  const keyboard = showKeyboard && <KeyboardView current={current} next={next}
+    last={session.typed.at(-1)}
+    incorrect={session.statuses[session.typed.length - 1] === "incorrect" ? session.typed.at(-1) : undefined} />;
+
   return (
     <section className="workspace">
       <aside className="side">{props.side}</aside>
@@ -562,7 +568,10 @@ function Trainer(props: {
           aria-label="Typing input area. Type the displayed text."
         />
         {pausedAt && <p className="pause-notice" role="status">Test paused while this tab was inactive. Return to continue.</p>}
-        {props.progress.settings.showKeyboard && <KeyboardView current={current} next={next} last={session.typed.at(-1)} incorrect={session.statuses[session.typed.length - 1] === "incorrect" ? session.typed.at(-1) : undefined} />}
+        {props.keyboardToggle && <button type="button" className="keyboard-toggle" aria-expanded={props.progress.settings.showKeyboard} aria-controls="home-keyboard-guide" onClick={() => props.setProgress(old => ({
+          ...old, settings: { ...old.settings, showKeyboard: !old.settings.showKeyboard }
+        }))}>{props.progress.settings.showKeyboard ? "Hide keyboard guide" : "Show keyboard guide"}</button>}
+        {props.keyboardToggle ? <div id="home-keyboard-guide" className="keyboard-guide" hidden={!showKeyboard}>{keyboard}</div> : keyboard}
         {props.footer}
         {finished && <ResultScreen personalityTest={props.personalityTest} record={finished} history={props.progress.sessions} reset={reset} onPractice={props.onPractice} />}
       </section>
@@ -885,7 +894,7 @@ function AverageTypingSpeed({ go }: { go: (page: Page, route?: string) => void }
         <div className="panel"><h2><Gauge size={18} />WPM Interpreter</h2><label>Typing speed <input type="range" min="5" max="120" value={wpm} onChange={(event) => setWpm(Number(event.target.value))} /></label><div className="metrics"><Metric label="Entered WPM" value={wpm} /><Metric label="Practice band" value={label} /></div><p>The practice bands are WPMTest reference labels. Use the study table for measured averages and repeat a longer test to assess your sustained speed.</p></div>
         <div className="panel"><h2>What WPM Means</h2><p>Typing tests commonly treat five characters, including spaces, as one standard word. WPMTest calculates WPM from correct characters so mistakes do not inflate the score.</p><p>For work assessments, check the required accuracy and scoring rules in the job posting.</p></div>
       </div>
-      <AdSlot placement="guide-mid-article" />
+      <AdSlot placement="guideMidArticle" />
       <section className="seo-section two-column-copy"><div><h2>How to Improve</h2><p>Practice clean finger movement, return to home row, slow down around weak keys, and retest after targeted practice. Consistent daily sessions usually beat occasional long sessions.</p></div><div><h2>Related Tools</h2><div className="inline-links"><InternalLink href="/wpm-calculator/" go={go}>WPM Calculator</InternalLink><InternalLink href="/typing-practice/" go={go}>Typing Practice</InternalLink><InternalLink href="/rhythm/" go={go}>Rhythm Trainer</InternalLink></div></div></section>
     </section>
   );
@@ -918,7 +927,7 @@ function TypingCertificate({ progress, go }: { progress: ProgressData; go: (page
   const certificate = lastTest ? certificateForSession(lastTest) : undefined;
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Typing Certificate</h1><p>Generate the designed WPMTest certificate from your most recent completed typing test.</p></div><div className="actions"><a href="/certificate/sample/">View Sample Certificate</a><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div></div>
+      <div className="trainer-head"><div><h1>Free Typing Certificate: Printable WPM Result</h1><p>Generate the designed WPMTest certificate from your most recent completed typing test.</p></div><div className="actions"><a href="/certificate/sample/">View Sample Certificate</a><InternalLink href="/1-minute-typing-test/" go={go}>Complete a Test</InternalLink></div></div>
       {lastTest && certificate ? (
         <div className="result-card" data-certificate-result={JSON.stringify(certificate)}>
           <h2>{certificate.type}</h2>

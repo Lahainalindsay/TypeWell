@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Moon, Sun, Monitor } from "lucide-react";
 import { loadProgress, saveProgress } from "../storage/progress";
 import { resolveTheme, THEME_EVENT, type ThemePreference } from "../lib/theme";
-import { typingTestLanguagePaths } from "../lib/seo/localized";
+import { articlesLink, footerColumns, navigationGroups } from "./siteNavigation";
 
 const themeOrder: ThemePreference[] = ["system", "light", "dark"];
 const themeIcon = { system: Monitor, light: Sun, dark: Moon } as const;
@@ -44,30 +44,23 @@ function ThemeToggle() {
     }}><Icon size={18} aria-hidden="true" /></button>;
 }
 
-const groups = [
-  { label: "Tests", sections: [
-    { title: "Standard tests", links: [["/", "Standard Typing Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/10-minute-typing-test/", "10 Minute Test"]] },
-    { title: "Specialized tests", links: [["/typing-personality-test/", "Typing Personality Test"], ["/1-page-typing-test/", "Page Typing Tests"], ["/typing-test-with-numbers/", "Numbers Test"], ["/typing-test-with-punctuation/", "Punctuation Test"], ["/mobile-typing-test/", "Mobile Typing Test"]] }
-  ] },
-  { label: "Professional", sections: [
-    { title: "Professional tests", links: [["/typing-test-for-employment/", "Employment Typing Test"], ["/data-entry-typing-test/", "Data Entry Typing Test"], ["/customer-service-typing-test/", "Customer Service Typing Test"], ["/10-key-typing-test/", "10-Key Typing Test"], ["/kph-typing-test/", "KPH Typing Test"]] },
-    { title: "Data entry practice", links: [["/data-entry-practice/alphanumeric/", "Alphanumeric"], ["/data-entry-practice/names-addresses/", "Names & Addresses"], ["/data-entry-practice/currency-dates/", "Currency & Dates"], ["/data-entry-practice/invoices-orders/", "Invoices & Orders"]] }
-  ], hub: ["/professionals/", "Explore all professional skills"] },
-  { label: "Practice", sections: [
-    { title: "Build your skills", links: [["/typing-practice/", "Typing Practice"], ["/learn/", "Touch Typing Lessons"], ["/practice/weak-keys/", "Weak-Key Practice"], ["/typing-games/", "Typing Games"], ["/rhythm/", "Rhythm Trainer"], ["/progress/", "Progress"]] }
-  ] },
-  { label: "Languages", sections: [
-    { title: "Typing test language", links: [[typingTestLanguagePaths.en, "English"], [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português (Brasil)"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]] }
-  ] }
-] as const;
-
 export function SiteHeader() {
   const header = useRef<HTMLElement>(null);
+  const mobileToggle = useRef<HTMLButtonElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => {
     const close = (event: Event) => {
       if (event instanceof KeyboardEvent && event.key !== "Escape") return;
       if (event.type === "pointerdown" && header.current?.contains(event.target as Node)) return;
+      const active = document.activeElement;
+      if (event instanceof KeyboardEvent && active instanceof HTMLElement) {
+        const menu = active.closest<HTMLDetailsElement>(".site-menu[open]");
+        if (mobileToggle.current?.getAttribute("aria-expanded") === "true" && header.current?.contains(active)) {
+          mobileToggle.current.focus();
+        } else {
+          menu?.querySelector("summary")?.focus();
+        }
+      }
       header.current?.querySelectorAll("details[open]").forEach((item) => item.removeAttribute("open"));
       setMobileOpen(false);
     };
@@ -78,10 +71,10 @@ export function SiteHeader() {
   return <header lang="en" className="site-header" ref={header}>
     <div className="site-header-inner">
       <a className="site-brand" href="/" aria-label="WPMTest home">WPMTEST<span>.</span></a>
-      <div className="site-header-actions"><a className="site-mobile-articles" href="/blog/" aria-label="All Articles">Articles</a><ThemeToggle />
-      <button type="button" className="site-mobile-toggle" aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button></div>
+      <div className="site-header-actions"><a className="site-mobile-articles" href={articlesLink[0]}>{articlesLink[1]}</a><ThemeToggle />
+      <button type="button" className="site-mobile-toggle" ref={mobileToggle} aria-label="Toggle navigation" aria-controls="site-navigation" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)}>Menu <span aria-hidden="true">☰</span></button></div>
         <nav id="site-navigation" className="site-navigation" data-open={mobileOpen} aria-label="Primary navigation">
-          {groups.map((group) => <details className="site-menu" key={group.label} onToggle={(event) => {
+          {navigationGroups.map((group) => <details className="site-menu" key={group.label} onToggle={(event) => {
             if (!event.currentTarget.open) return;
             header.current?.querySelectorAll(".site-menu[open]").forEach((item) => { if (item !== event.currentTarget) item.removeAttribute("open"); });
           }}>
@@ -94,7 +87,7 @@ export function SiteHeader() {
               {"hub" in group && <a className="site-menu-hub" href={group.hub[0]}>{group.hub[1]} →</a>}
             </div>
           </details>)}
-          <a className="site-articles" href="/blog/">All Articles</a><a className="site-articles" href="/language-revival/">Language Revival</a>
+          <a className="site-articles" href={articlesLink[0]}>{articlesLink[1]}</a>
         </nav>
     </div>
   </header>;
@@ -110,17 +103,9 @@ function CookieSettings() {
 }
 
 export function SiteFooter() {
-  const columns = [
-    ["Tests", ["/", "Standard Test"], ["/1-minute-typing-test/", "1 Minute Test"], ["/3-minute-typing-test/", "3 Minute Test"], ["/5-minute-typing-test/", "5 Minute Test"], ["/1-page-typing-test/", "Page Tests"], ["/mobile-typing-test/", "Mobile Test"]],
-    ["Practice", ["/typing-practice/", "Typing Practice"], ["/learn/", "Lessons"], ["/practice/weak-keys/", "Weak Keys"], ["/rhythm/", "Rhythm"], ["/progress/", "Progress"]],
-    ["Professional", ["/professionals/", "Professional Hub"], ["/data-entry-typing-test/", "Data Entry Test"], ["/customer-service-typing-test/", "Customer Service Test"], ["/data-entry-practice/", "Data Entry Practice"], ["/10-key-typing-test/", "10-Key Test"], ["/kph-typing-test/", "KPH Test"]],
-    ["Resources", ["/blog/", "All Articles"], ["/blog/wpm-vs-kph/", "Scoring Methodology"], ["/wpm-calculator/", "WPM Calculator"], ["/average-typing-speed/", "Average Speed"], ["/typing-certificate/", "Certificate"], ["/certificate/sample/", "Sample Certificate"], ["/certificate/verify/", "Verify a Certificate"], ["/educators/", "Educators"], ["/typing-test-for-students/", "Students"]],
-    ["Languages", [typingTestLanguagePaths.fr, "Français"], [typingTestLanguagePaths.it, "Italiano"], [typingTestLanguagePaths.hi, "हिन्दी"], [typingTestLanguagePaths.es, "Español"], [typingTestLanguagePaths.de, "Deutsch"], [typingTestLanguagePaths.pt, "Português"], [typingTestLanguagePaths.ru, "Русский"], [typingTestLanguagePaths.fil, "Filipino"], [typingTestLanguagePaths.haw, "ʻŌlelo Hawaiʻi"]],
-    ["Company", ["/about/", "About"], ["/about/#corrections", "Corrections Policy"], ["/contact/", "Contact"], ["/privacy/", "Privacy"], ["/terms/", "Terms"], ["/settings/", "Settings"]]
-  ] as const;
   return <footer lang="en" className="site-footer site-footer-grid">
     <div className="site-footer-intro"><strong>WPMTEST.</strong><p>Free typing tests and practical keyboard skills. Progress stays on your device.</p></div>
-    <div className="site-footer-columns">{columns.map(([title, ...links]) => <nav aria-label={`${title} links`} key={title}><strong>{title}</strong>{links.map(([href, label]) => <a href={href} key={href}>{label}</a>)}</nav>)}</div>
+    <div className="site-footer-columns">{footerColumns.map(([title, ...links]) => <nav aria-label={`${title} links`} key={title}><strong>{title}</strong>{links.map(([href, label]) => <a href={href} key={href}>{label}</a>)}</nav>)}</div>
     <div className="site-footer-bottom"><span>© {new Date().getUTCFullYear()} WPMTest</span><CookieSettings /></div>
   </footer>;
 }

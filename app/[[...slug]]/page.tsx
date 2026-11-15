@@ -118,6 +118,10 @@ export default async function Page({ params }: { params: Promise<{ slug?: string
           <>
             <p className="eyebrow">{SITE_NAME} guide</p>
             <h2>How to use this tool and understand your results</h2>
+            {path === "/typing-certificate/" && <figure className="certificate-preview">
+              <img src="/images/typing-previews/certificate.svg" width={540} height={310} alt="Example WPMTest typing certificate with speed and accuracy results" loading="lazy" decoding="async" />
+              <figcaption><a href="/certificate/sample/">View the full sample certificate</a></figcaption>
+            </figure>}
             {seo.content.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             {seo.faqs?.length ? (
               <section className="seo-faq" aria-labelledby="page-faq-heading">
