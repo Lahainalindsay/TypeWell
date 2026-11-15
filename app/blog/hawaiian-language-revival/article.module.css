@@ -148,7 +148,9 @@
 .collectionMosaic .editorialPhoto { display:flex; flex-direction:column; }
 .collectionMosaic figcaption { font-size:.7rem; }
 .languageDirectory { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px 26px; margin:60px 0; }
-.directoryCard { padding:0 0 28px; border-bottom:1px solid var(--line); }
+.directoryCard { display:flex; flex-direction:column; min-width:0; padding:var(--tw-card-padding); border:1px solid var(--tw-card-line); border-radius:var(--tw-radius); background:var(--tw-surface); }
+.directoryCard .directoryActions { margin-top:auto; padding-top:.75rem; }
+.directoryCard:focus-within { border-color:var(--accent); }
 .directoryCard .editorialPhoto img { aspect-ratio:1.6; object-fit:cover; }
 .directoryCard .editorialPhoto figcaption { font-size:.65rem; }
 .directoryCard h2 { font:500 clamp(1.6rem,2.5vw,2rem)/1.25 Georgia,serif; margin:20px 0 10px; }
