@@ -8,9 +8,9 @@
 .previews figure {
   margin: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--panel);
+  border: 1px solid var(--tw-card-line);
+  border-radius: var(--tw-radius);
+  background: var(--tw-surface);
 }
 .previews img { display: block; width: 100%; height: auto; }
 .previews figcaption { display: grid; gap: .35rem; padding: 1rem; }
