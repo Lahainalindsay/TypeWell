@@ -21,29 +21,26 @@ export function HomePage({ test }: { test: React.ReactNode }) {
     <section className="home-pathways" aria-labelledby="pathways-heading">
       <h2 id="pathways-heading">Choose your path</h2>
       <div className="home-pathway-grid">
-        <a href="#popular-heading"><span>01 / TEST</span><h3>Test Your Speed</h3><p>Explore timed tests and specialized formats.</p><strong>View popular tests →</strong></a>
-        <a href="/professionals/"><span>02 / WORK</span><h3>Professional Skills</h3><p>Practice workplace typing, data entry, numbers, 10-key and employment assessments.</p><strong>Explore Professional Tests →</strong></a>
-        <a href="/typing-practice/"><span>03 / IMPROVE</span><h3>Improve Your Typing</h3><p>Build accuracy, rhythm, technique and weak-key control.</p><strong>Start Practicing →</strong></a>
+        <a href="#popular-heading"><h3>Test Your Speed</h3><p>Explore timed tests and specialized formats.</p><strong>View popular tests →</strong></a>
+        <a href="/professionals/"><h3>Professional Skills</h3><p>Practice workplace typing, data entry, numbers, 10-key and employment assessments.</p><strong>Explore Professional Tests →</strong></a>
+        <a href="/typing-practice/"><h3>Improve Your Typing</h3><p>Build accuracy, rhythm, technique and weak-key control.</p><strong>Start Practicing →</strong></a>
       </div>
     </section>
-    <AdSlot placement="afterHomeTest" />
-    <section className="home-popular" aria-labelledby="popular-heading"><div className="home-section-heading"><h2 id="popular-heading">Popular tests</h2><a href="/10-minute-typing-test/">10-minute test →</a></div><div className="home-popular-grid">{popular.map(([href, label]) => <a href={href} key={href}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>
-    <section className="home-professional" aria-labelledby="professional-heading"><div>
-      <p className="eyebrow">For work and job preparation</p><h2 id="professional-heading">Typing skills that translate to the workplace.</h2>
-      <p>Practice alphanumeric records, names and addresses, invoices and orders, currency and dates, and numeric keypad entry. Measure WPM for prose and KPM or KPH for numeric work.</p>
-      <a className="button primary" href="/professionals/">Explore Professional Tests →</a>
-    </div></section>
-    <section className="home-learning" aria-labelledby="learning-heading"><div><p className="eyebrow">Build the habit</p><h2 id="learning-heading">Improve one skill at a time.</h2><p>Use guided lessons, focused practice, weak-key drills and rhythm training to build accuracy before speed.</p></div><a className="button" href="/typing-practice/">Start Practicing →</a></section>
-    <AdSlot placement="contentMiddle" />
-    <section className="home-guide seo-section" aria-labelledby="guide-heading"><h2 id="guide-heading">Understanding your typing speed</h2>
-      <p>WPM means words per minute. WPMTest counts five characters, including spaces, as one word. Accuracy measures correct input; consistency shows whether your pace holds through the test. A short test gives a quick baseline, while longer tests show how well you maintain your speed.</p>
-      <p>If you are preparing for a job, compare the test format with the work. Numeric keypad assessments often measure keystrokes per hour (KPH), while structured record entry also demands exact field accuracy. <a href="/data-entry-typing-test/">Try the data entry test</a> or <a href="/10-key-typing-test/">measure 10-key speed</a>.</p>
-      <p>For example, 250 correct characters in one minute equals 50 WPM. Corrections can lower keystroke accuracy even when the final text is correct. <a href="/blog/wpm-vs-kph/">See worked scoring examples</a>.</p><p>For steady improvement, practice a few minutes at a time. Start with <a href="/learn/">touch typing lessons</a>, work on <a href="/practice/weak-keys/">weak keys</a>, then repeat a <a href="/5-minute-typing-test/">five minute test</a>. Explore <a href="/average-typing-speed/">average typing speeds</a> or use the <a href="/wpm-calculator/">WPM calculator</a> to interpret your result.</p>
-      <TypingPreviews />
+    <section className="home-popular" aria-labelledby="popular-heading"><div className="home-section-heading"><h2 id="popular-heading">Popular tests</h2><a href="/10-minute-typing-test/">10-minute test →</a></div><div className="home-popular-grid">{popular.map(([href, label]) => <a href={href} key={href}>{label}<span aria-hidden="true">→</span></a>)}</div></section>
+    <section className="home-guide" aria-labelledby="guide-heading"><h2 id="guide-heading">Understanding your typing speed</h2>
+      <div className="home-guide-layout">
+        <div className="home-guide-copy">
+          <p>WPM means words per minute. WPMTest counts five characters, including spaces, as one word. Accuracy measures correct input; consistency shows whether your pace holds through the test. A short test gives a quick baseline, while longer tests show how well you maintain your speed.</p>
+          <p>If you are preparing for a job, compare the test format with the work. Numeric keypad assessments often measure keystrokes per hour (KPH), while structured record entry also demands exact field accuracy. <a href="/data-entry-typing-test/">Try the data entry test</a> or <a href="/10-key-typing-test/">measure 10-key speed</a>.</p>
+          <p>For example, 250 correct characters in one minute equals 50 WPM. Corrections can lower keystroke accuracy even when the final text is correct. <a href="/blog/wpm-vs-kph/">See worked scoring examples</a>.</p>
+          <p>For steady improvement, practice a few minutes at a time. Start with <a href="/learn/">touch typing lessons</a>, work on <a href="/practice/weak-keys/">weak keys</a>, then repeat a <a href="/5-minute-typing-test/">five minute test</a>. Explore <a href="/average-typing-speed/">average typing speeds</a> or use the <a href="/wpm-calculator/">WPM calculator</a> to interpret your result.</p>
+        </div>
+        <TypingPreviews />
+      </div>
       <details className="home-additional-links"><summary>Explore more typing formats and lessons</summary><nav aria-label="More tests and practice"><a href="/10-minute-typing-test/">10 Minute Test</a><a href="/1-page-typing-test/">1 Page Test</a><a href="/2-page-typing-test/">2 Page Test</a><a href="/3-page-typing-test/">3 Page Test</a><a href="/typing-test-with-punctuation/">Punctuation Test</a><a href="/touch-typing-practice/">Touch Typing</a><a href="/rhythm/">Rhythm Trainer</a><a href="/typing-games/">Typing Games</a><a href="/typing-personality-test/#how-personalities-work">Typing Personality Profiles</a><a href="/typing-test-for-kids/">Typing Test for Kids</a></nav></details>
     </section>
-    <section className="home-faq seo-section" aria-labelledby="home-faq-heading"><h2 id="home-faq-heading">Frequently asked questions</h2>
-      {Object.entries(faqAnswers).map(([question, answer]) => <details key={question}><summary>{question}</summary><p>{answer}{benchmarkQuestions.has(question) && <> Sources: <a href={typingStudies[0].href}>Dhakal et al. (2018)</a> and <a href={typingStudies[1].href}>Palin et al. (2019)</a>.</>}</p></details>)}
+    <section className="home-faq" aria-labelledby="home-faq-heading"><h2 id="home-faq-heading">Frequently asked questions</h2>
+      {Object.entries(faqAnswers).map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true" /></summary><p>{answer}{benchmarkQuestions.has(question) && <> Sources: <a href={typingStudies[0].href}>Dhakal et al. (2018)</a> and <a href={typingStudies[1].href}>Palin et al. (2019)</a>.</>}</p></details>)}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -52,6 +49,13 @@ export function HomePage({ test }: { test: React.ReactNode }) {
         }))
       }) }} />
     </section>
+    <AdSlot placement="contentMiddle" />
+    <section className="home-professional" aria-labelledby="professional-heading"><div>
+      <p className="eyebrow">For work and job preparation</p><h2 id="professional-heading">Typing skills that translate to the workplace.</h2>
+      <p>Practice alphanumeric records, names and addresses, invoices and orders, currency and dates, and numeric keypad entry. Measure WPM for prose and KPM or KPH for numeric work.</p>
+      <a className="button" href="/professionals/">Explore Professional Tests →</a>
+    </div></section>
+    <section className="home-learning" aria-labelledby="learning-heading"><div><p className="eyebrow">Build the habit</p><h2 id="learning-heading">Improve one skill at a time.</h2><p>Use guided lessons, focused practice, weak-key drills and rhythm training to build accuracy before speed.</p></div><a className="button" href="/typing-practice/">Start Practicing →</a></section>
   </div>;
 }
 
