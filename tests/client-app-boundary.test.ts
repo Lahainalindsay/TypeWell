@@ -25,7 +25,8 @@ describe("client app hydration boundary", () => {
     const app = readFileSync(resolve("src/App.tsx"), "utf8");
 
     expect(app).toContain('aria-label="Rhythm practice mode"');
-    expect(app).toContain('aria-label="Color theme"');
+    const preferences = readFileSync(resolve("src/features/localPreferences/ProgressAndSettings.tsx"), "utf8");
+    expect(preferences).toContain('aria-label="Color theme"');
     expect(app).toContain('aria-label="Practice text type"');
     expect(app).toContain('aria-label="Custom practice text"');
   });
