@@ -8,10 +8,11 @@ export const publisher = {
 export const website = { "@id": absoluteUrl("/#website") };
 const authorUrl = absoluteUrl("/about/#lindsay-johnson");
 export const author = { "@id": authorUrl, "@type": "Person", name: "Lindsay Johnson", url: authorUrl };
+export const authorImagePath = "/images/lindsay-johnson-headshot.webp";
 export const authorProfile = {
   ...author,
   jobTitle: "Web Developer and WPMTest Creator",
-  image: "https://avatars.githubusercontent.com/u/220595273?v=4&s=320",
+  image: absoluteUrl(authorImagePath),
   sameAs: ["https://github.com/Lahainalindsay"]
 };
 
