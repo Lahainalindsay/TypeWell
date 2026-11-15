@@ -13,13 +13,7 @@ const publicRules = {
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      { userAgent: "*", ...publicRules },
-      { userAgent: "OAI-SearchBot", ...publicRules },
-      { userAgent: "PerplexityBot", ...publicRules },
-      { userAgent: "bingbot", ...publicRules },
-      { userAgent: "Googlebot", ...publicRules }
-    ],
+    rules: { userAgent: "*", ...publicRules },
     sitemap: absoluteUrl("/sitemap.xml")
   };
 }

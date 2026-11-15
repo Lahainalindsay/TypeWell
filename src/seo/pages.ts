@@ -160,7 +160,7 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/typing-practice/",
-    title: "Typing Practice - Targeted Drills to Improve Weak Keys | WPMTest",
+    title: "Typing Practice - Targeted Drills to Improve Weak Keys",
     description: "Practice typing with targeted drills for weak keys, accuracy, rhythm, numbers, punctuation, code-style text, and custom text. Free and no signup required.",
     h1: "Typing Practice — Targeted Drills to Fix Your Weak Keys",
     intro: "Generic typing practice — just typing random paragraphs repeatedly — improves speed slowly because it treats every key the same, when in reality most typists have three to five specific letter combinations or fingers that are quietly capping their whole score.",
@@ -293,7 +293,7 @@ export const seoPages: SeoPage[] = [
   },
   {
     path: "/kph-typing-test/",
-    title: "KPH Typing Test - Measure 10-Key Numeric Entry Speed | WPMTest",
+    title: "KPH Typing Test - Measure 10-Key Numeric Entry Speed",
     description: "Take a KPH typing test to measure keystrokes per hour for 10-key, numeric keypad, accounting, bookkeeping, and data-entry practice.",
     h1: "KPH Typing Test — Measure Your 10-Key Numeric Entry Speed",
     intro: "KPH, or Keystrokes Per Hour, is the standard metric for numeric keypad speed used in accounting, bookkeeping, banking, and high-volume numeric data-entry roles.",

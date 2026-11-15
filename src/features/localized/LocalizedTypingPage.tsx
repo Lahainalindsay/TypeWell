@@ -1,3 +1,5 @@
+import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { SITE_NAME } from "../../lib/seo/site";
 import { TypingPreviews } from "../../components/TypingPreviews";
 import GlossikaCard from '../partners/GlossikaCard';
 import {localizedGlossikaCourses} from '../partners/glossika';
@@ -20,6 +22,7 @@ const mobileQuestions = {
 export default function LocalizedTypingPage({ content }: { content: LocalizedTypingContent }) {
   return (
     <main id="main-content" tabIndex={-1} className={styles.page} lang={content.interfaceLang ?? content.lang}>
+      <Breadcrumbs items={[{ name: content.h1, url: content.path }]} homeName={SITE_NAME} includeSchema={false} />
       <section className={styles.hero}>
         <p className={styles.eyebrow}>{content.eyebrow}</p>
         <h1>{content.h1}</h1>

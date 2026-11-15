@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "../../src/components/Breadcrumbs";
 import { articlePath, languages } from "../../src/features/revival/content";
 import { personalityArticleTitle } from "../../src/features/editorial/personalityArticle";
 import { guides } from "../../src/features/editorial/guides";
@@ -33,9 +34,7 @@ export default function BlogPage() {
   return (
     <>
       <main id="main-content" tabIndex={-1} className="seo-prerender">
-        <nav className="seo-breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a> <span aria-hidden="true">›</span> <span>Blog</span>
-        </nav>
+        <Breadcrumbs items={[{ name: "All Articles", url: "/blog/" }]} />
 
         <p className="eyebrow">Blog & articles</p>
         <h1>All Articles</h1>

@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
@@ -55,6 +56,7 @@ export default function ProfessionalsPage() {
     inLanguage: "en-US"
   };
   return <main id="main-content" tabIndex={-1} className="tw-standalone">
+      <Breadcrumbs items={[{ name: "Professional Typing Tests", url: "/professionals/" }]} />
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <span className="tw-kicker">Professional keyboard skills</span>
     <h1>Professional Typing Tests</h1>

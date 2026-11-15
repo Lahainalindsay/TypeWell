@@ -1,3 +1,4 @@
+import { guideUpdated } from "../../lib/seo/pageDates";
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../lib/seo/site";
 import { guides } from "./guides";
@@ -23,10 +24,10 @@ export function guideMetadata(slug: GuideTopic): Metadata {
  const guide = guides.find(item => item.slug === slug)!;
  const url = absoluteUrl(`/blog/${slug}/`);
  const image = absoluteUrl(`/images/guides/${slug}.jpg`);
- return { title: `${guide.title} | WPMTest`, description: guide.description, alternates: { canonical:url }, robots: {index:true,follow:true}, openGraph: { title:guide.title, description:guide.description, type:"article", url, images:[{url:image,width:1200,height:630,alt:guide.title}] }, twitter: {card:"summary_large_image",title:guide.title,description:guide.description,images:[image]} };
+ return { title: guide.title.length <= 49 ? `${guide.title} | WPMTest` : guide.title, description: guide.description, alternates: { canonical:url }, robots: {index:true,follow:true}, openGraph: { title:guide.title, description:guide.description, type:"article", url, images:[{url:image,width:1200,height:630,alt:guide.title}] }, twitter: {card:"summary_large_image",title:guide.title,description:guide.description,images:[image]} };
 }
 export function GuidePage({slug}: {slug:GuideTopic}) {
- const dateModified = slug === "wpm-vs-kph" ? "2026-11-14" : "2026-11-12";
+ const dateModified = guideUpdated(slug);
  const guide=guides.find(item => item.slug===slug)!;
  const canonical=absoluteUrl(`/blog/${slug}/`);
  const schema = {

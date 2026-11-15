@@ -3,10 +3,11 @@ from pathlib import Path
 from collections import Counter
 import json,xml.etree.ElementTree as E
 class Page(HTMLParser):
- def __init__(self):super().__init__();self.title='';self.intitle=False;self.meta={};self.canon=[];self.h1=0;self.img=[];self.links=[];self.text=[];self.skip=0;self.hreflang={};self.schemas=[];self.schema=None;self.sources=[]
+ def __init__(self):super().__init__();self.title='';self.intitle=False;self.meta={};self.canon=[];self.h1=0;self.img=[];self.links=[];self.text=[];self.skip=0;self.hreflang={};self.schemas=[];self.schema=None;self.sources=[];self.title_count=0;self.has_breadcrumb=False;self.schema_errors=[]
  def handle_starttag(self,t,a):
   d=dict(a)
-  if t=='title':self.intitle=True
+  if t=='title':self.intitle=True;self.title_count+=1
+  if t=='nav' and d.get('aria-label','').casefold()=='breadcrumb':self.has_breadcrumb=True
   if t in ['script','style']:self.skip+=1
   if t=='script' and d.get('type')=='application/ld+json':self.schema=''
   if t=='link' and d.get('rel')=='alternate' and d.get('hreflang'):self.hreflang[d['hreflang']]=d.get('href')
@@ -19,7 +20,13 @@ class Page(HTMLParser):
  def handle_endtag(self,t):
   if t=='title':self.intitle=False
   if t=='script' and self.schema is not None:
-   self.schemas.append(json.loads(self.schema));self.schema=None
+   try:
+    value=json.loads(self.schema)
+    if not isinstance(value,dict) or not isinstance(value.get('@graph',[]),list) or any(not isinstance(node,dict) for node in value.get('@graph',[])):
+     raise ValueError('expected a JSON-LD object or graph')
+    self.schemas.append(value)
+   except ValueError as issue: self.schema_errors.append(str(issue))
+   self.schema=None
   if t in ['script','style']:self.skip=max(0,self.skip-1)
  def handle_data(self,d):
   if self.intitle:self.title+=d
@@ -33,7 +40,14 @@ print('PAGES',len(pages),'SITEMAP',len(urls))
 for path,p in pages.items():
  if path.startswith(('/404','/_not-found')):continue
  problems=[]
- if not p.title:problems.append('missing title')
+ if p.title_count != 1 or not 1 <= len(p.title) <= 60:problems.append('expected one title of 1–60 characters')
+ if p.title == 'WPMTest — Typing Tests and Practice':problems.append('using default title')
+ if not 70 <= len(p.meta.get('description','')) <= 160:problems.append('expected description of 70–160 characters')
+ if p.canon and p.meta.get('og:url') != p.canon[0]:problems.append('missing or mismatched og:url')
+ if not p.schemas:problems.append('missing JSON-LD')
+ problems.extend('invalid JSON-LD: '+issue for issue in p.schema_errors)
+ if path != '/' and (not p.has_breadcrumb or not any(node.get('@type') == 'BreadcrumbList' for schema in p.schemas for node in schema.get('@graph',[schema]))):
+  problems.append('missing visible breadcrumb or BreadcrumbList')
  if p.h1!=1:problems.append('h1='+str(p.h1))
  if len(p.canon)!=1:problems.append('canonical count='+str(len(p.canon)))
  if not p.meta.get('description'):problems.append('missing description')
@@ -55,8 +69,8 @@ print('BROKEN INTERNAL LINKS',sorted(set((path,h) for path,p in pages.items() fo
 if pages['/typing-test/'].canon != pages['/'].canon or '/typing-test/' in urls:
  errors.append(('/typing-test/', 'expected a canonical alias of the homepage outside the sitemap'))
 for path, page in pages.items():
- if path.startswith(('/404', '/_not-found')) and not page.title:
-  errors.append((path, 'missing 404 title'))
+ if path.startswith(('/404', '/_not-found')) and (page.title_count != 1 or page.title != 'Page Not Found | WPMTest'):
+  errors.append((path, 'expected one 404-specific title'))
 
 for hub, prefix, count in [
  ('/learn/', '/learn/', 6),

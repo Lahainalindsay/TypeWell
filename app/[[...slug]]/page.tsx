@@ -41,7 +41,7 @@ const extraSeo = new Map([
   ["/learn/capital-letters", ["Capital Letters Typing Lesson | WPMTest", "Practice Shift-key technique and capital letters with a guided typing lesson and live accuracy feedback.", "Capital Letters Typing Lesson"]],
   ["/learn/punctuation", ["Punctuation Typing Lesson | WPMTest", "Practice punctuation keys and accurate Shift-key reaches with a guided touch-typing lesson.", "Punctuation Typing Lesson"]],
   ["/learn/numbers", ["Number Row Typing Lesson | WPMTest", "Practice number-row typing with guided finger placement, live accuracy feedback, and local progress tracking.", "Number Row Typing Lesson"]],
-  ["/rhythm", ["Typing Rhythm Trainer - Improve Speed & Consistency | WPMTest", "Train typing rhythm with a visual keystroke metronome that measures early, on-beat, and late timing.", "Typing Rhythm Trainer"]],
+  ["/rhythm", ["Typing Rhythm Trainer - Improve Speed & Consistency", "Train typing rhythm with a visual keystroke metronome that measures early, on-beat, and late timing.", "Typing Rhythm Trainer"]],
   ["/progress", ["Typing Progress Tracker | WPMTest", "Track local typing progress, best WPM, average accuracy, practice time, weak keys, and completed lessons.", "Typing Progress Tracker"]],
   ["/settings", ["Typing Trainer Settings | WPMTest", "Adjust typing display, theme, keyboard guide, sound, high contrast, and reduced motion settings.", "Typing Settings"]]
 ]);

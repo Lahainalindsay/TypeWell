@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "../../../src/components/Breadcrumbs";
 import { AuthorByline, RelatedGuides } from "../../../src/features/editorial/ArticleVisual";
 import { author, publisher } from "../../../src/lib/seo/structured";
 import type { Metadata } from "next";
@@ -9,7 +10,7 @@ const description = "Compare phone and keyboard typing speed with a one-minute W
 const path = "/blog/typing-test-on-phone-vs-keyboard/";
 const url = absoluteUrl(path);
 export const metadata: Metadata = {
-  title: title + " | WPMTest", description, alternates: { canonical: url },
+  title, description, alternates: { canonical: url },
   robots: { index: true, follow: true },
   openGraph: { title, description, url, type: "article", images: [absoluteUrl("/images/typing-editorial-desk.webp")] },
   twitter: { card: "summary_large_image", title, description, images: [absoluteUrl("/images/typing-editorial-desk.webp")] }
@@ -20,7 +21,7 @@ export default function PhoneVersusKeyboardArticle() {
     datePublished: "2026-10-28", dateModified: "2026-11-12", image: absoluteUrl("/images/typing-editorial-desk.webp"), inLanguage: "en",
     author, publisher };
   return <main id="main-content" tabIndex={-1} className={styles.page}>
-    <nav className="seo-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a> › <a href="/blog/">Articles</a> › <span>Phone vs. keyboard</span></nav>
+    <Breadcrumbs items={[{ name: "All Articles", url: "/blog/" }, { name: "Phone vs. Keyboard", url: "/blog/typing-test-on-phone-vs-keyboard/" }]} />
     <article>
       <header className={styles.header}>
       <p className={styles.eyebrow}>Typing experiments · Questionable life choices</p>

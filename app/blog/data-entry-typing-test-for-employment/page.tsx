@@ -8,7 +8,7 @@ const dateModified = "2026-11-12";
 const canonical = absoluteUrl("/blog/data-entry-typing-test-for-employment/");
 
 export const metadata: Metadata = {
-  title: "Data Entry Typing Test for Employment: What to Expect | WPMTest",
+  title: "Data Entry Typing Test for Employment: What to Expect",
   description: "Learn what employers may measure in a data entry typing test, including accuracy, KPH, structured records, numbers and verification, and how to practice.",
   alternates: { canonical },
   openGraph: { title: "Data Entry Typing Test for Employment: What to Expect",

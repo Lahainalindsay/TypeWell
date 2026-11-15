@@ -3,7 +3,7 @@ import type { LocalizedTypingContent } from "./content";
 export const spanishTypingContent: LocalizedTypingContent = {
   lang: "es", locale: "es-ES", path: "/es/prueba-de-velocidad-de-escritura/",
   title: "Test de mecanografía gratis online | WPMTest",
-  description: "Haz un test de mecanografía gratis en español. Mide tu velocidad de escritura en palabras por minuto y tu precisión. Prueba online sin registro y con certificado.",
+  description: "Haz un test de mecanografía gratis en español. Mide tu velocidad de escritura en palabras por minuto y tu precisión. Sin registro y con certificado.",
   h1: "Prueba de velocidad de escritura en español",
   eyebrow: "GRATIS · SIN REGISTRO · RESULTADOS PRIVADOS",
   intro: "Escribe frases en español con tildes, eñes y signos de puntuación. Mide tu velocidad y precisión con el teclado de tu dispositivo y crea un certificado en español.",

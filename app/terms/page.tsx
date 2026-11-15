@@ -1,3 +1,4 @@
+import { Breadcrumbs, JsonLd } from "../../src/components/Breadcrumbs";
 import type { Metadata } from "next";
 import { absoluteUrl } from "../../src/lib/seo/site";
 
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <main id="main-content" tabIndex={-1} className="legal-page">
+      <Breadcrumbs items={[{ name: "Terms of Use", url: "/terms/" }]} />
+      <JsonLd data={{ "@type": "WebPage", name: "Terms of Use", url: "https://wpmtest.app/terms/" }} />
       <h1>WPMTest Terms and Disclaimer</h1>
       <p>WPMTest provides typing tests, practice tools, lessons, workplace-skill assessments, and locally stored performance summaries for informational, practice, and evaluation purposes.</p>
       <h2>Results and certificates</h2>
