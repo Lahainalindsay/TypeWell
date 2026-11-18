@@ -200,3 +200,29 @@
 /* The shared site shell supplies navigation; keep translated content near its test. */
 .hero { padding-top: clamp(2rem, 5vw, 3.5rem); padding-bottom: 1.75rem; }
 .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
+
+/* Shared premium certificate design, derived from the main WPMTest award style. */
+.certificateChoice{border:1px solid #d4e2ee;border-radius:12px;padding:15px;margin:16px 0 20px;display:grid;gap:10px}
+.certificateChoice legend{font-weight:750;padding:0 8px}
+.certificateChoice label{display:flex;align-items:center;gap:10px;cursor:pointer}
+.certificateChoice input{accent-color:#0d68b6;width:18px;height:18px}
+.certificate{position:relative;margin:20px auto;padding:clamp(28px,5vw,60px);border:10px solid #103458;outline:3px solid #b58a35;outline-offset:-23px;background:radial-gradient(circle at 10% 50%,#e4eff6 0,transparent 30%),radial-gradient(circle at 90% 50%,#e4eff6 0,transparent 30%),#fffdf7;color:#112d48;box-shadow:0 16px 45px #061e3433;font-family:Georgia,"Noto Sans","Noto Sans Devanagari","Noto Sans Cherokee",serif;overflow-wrap:anywhere}
+.certificate:before{content:"";position:absolute;inset:32px;border:1px solid #b58a3577;pointer-events:none}
+.certificate header{position:relative;z-index:1;align-items:center;font-family:Arial,sans-serif}
+.certificate header strong{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900}
+.certificate header small{font-size:.7rem;letter-spacing:.14em;max-width:180px;text-align:right}
+.certificateEmblem{display:grid;place-items:center;width:72px;height:72px;margin:3px auto 10px;border:7px solid #bc9040;border-radius:50%;background:#103458;color:#f0d790;font-size:2.3rem}
+.certificate>p:first-of-type{letter-spacing:.25em;font-size:clamp(.75rem,2vw,1.1rem);margin:8px 0}
+.certificate>h2{font-family:Georgia,"Noto Sans",serif;line-height:1.1;letter-spacing:.03em;font-size:clamp(1.8rem,5vw,3.8rem)}
+.certificateName{font-style:italic;overflow-wrap:anywhere;line-height:1.15;max-width:100%;font-size:clamp(2rem,5vw,3.8rem)}
+.certificateStats{position:relative;z-index:1;border-top:1px solid #b58a35;border-bottom:1px solid #b58a35;padding:12px 0;gap:0}
+.certificateStats .metric{background:transparent;border:0;border-right:1px solid #b58a35;border-radius:0}
+.certificateStats .metric:last-child{border:0}
+.certificateStats .metric strong{color:#102a45;font-size:clamp(1rem,2vw,1.55rem)}
+.certificateStats .metric span{color:#59677a;text-transform:uppercase;font-weight:700;letter-spacing:.05em}
+.certificateSeal{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;width:80px;height:80px;border:6px double #8b6727;border-radius:50%;margin:15px auto 8px;background:radial-gradient(circle,#f6e3a4,#c4973d);font-size:1.65rem;color:#143858}
+.certificateSeal small{font-size:.6rem;font-family:Arial,sans-serif;font-weight:800}
+.certificateMotto{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase}
+.certificate>small{display:block;font-size:.68rem;line-height:1.4}
+@media(max-width:650px){.certificate{padding:32px 17px}.certificate header small{display:none}.certificateStats{grid-template-columns:repeat(2,minmax(0,1fr))}.certificateStats .metric:nth-child(2){border-right:0}.certificateStats .metric{border-bottom:1px solid #b58a3566}.certificateStats .metric:nth-child(n+3){border-bottom:0}}
+@media print{@page{size:landscape;margin:.3in}.certificate{break-after:page;page-break-after:always;box-shadow:none;min-height:0!important;height:7in}.certificate:last-of-type{break-after:auto;page-break-after:auto}.certificateChoice{display:none}}
