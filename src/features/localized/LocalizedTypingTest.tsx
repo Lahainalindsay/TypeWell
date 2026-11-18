@@ -238,7 +238,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
                   <input value={certificateName} maxLength={80} autoComplete="name" placeholder={content.certificate.namePlaceholder} onChange={(event) => setCertificateName(event.target.value)} />
                 </label>
                 <fieldset className={styles.certificateChoice}><legend>Certificate language / ʻŌlelo o ka palapala</legend>
-                  <label><input type="radio" name="certificate-language" checked={certificateLanguage==="local"} onChange={()=>setCertificateLanguage("local")}/> Language tested ({content.certificate.testName})</label>
+                  <label><input type="radio" name="certificate-language" checked={certificateLanguage==="local"} onChange={()=>setCertificateLanguage("local")}/> Language tested ({content.lang==="haw"?"ʻŌlelo Hawaiʻi":content.certificate.testName})</label>
                   <label><input type="radio" name="certificate-language" checked={certificateLanguage==="english"} onChange={()=>setCertificateLanguage("english")}/> English</label>
                   <label><input type="radio" name="certificate-language" checked={certificateLanguage==="both"} onChange={()=>setCertificateLanguage("both")}/> Both — two certificates</label>
                 </fieldset>
@@ -246,10 +246,10 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
               </>
             ) : (
               <>
-                {certificateLanguage!=="english" && <Certificate content={content} name={certificateName.trim()} metrics={result} date={completedDate} duration={duration} />}
+                {certificateLanguage!=="english" && <Certificate content={{...content,certificate:localCertificate(content)}} name={certificateName.trim()} metrics={result} date={completedDate} duration={duration} />}
                 {certificateLanguage!=="local" && <Certificate content={{...content,certificate:englishCertificate(content)}} name={certificateName.trim()} metrics={result} date={new Intl.DateTimeFormat("en-US",{dateStyle:"long"}).format(new Date())} duration={duration} />}
                 <div className={styles.resultActions}>
-                  <button type="button" onClick={() => { if(certificateLanguage!=="english")downloadCertificate(content,certificateName.trim(),result,completedDate,duration); if(certificateLanguage!=="local")downloadCertificate({...content,certificate:englishCertificate(content)},certificateName.trim(),result,new Intl.DateTimeFormat("en-US",{dateStyle:"long"}).format(new Date()),duration); }}>{content.certificate.download}</button>
+                  <button type="button" onClick={() => { if(certificateLanguage!=="english")downloadCertificate({...content,certificate:localCertificate(content)},certificateName.trim(),result,completedDate,duration); if(certificateLanguage!=="local")downloadCertificate({...content,certificate:englishCertificate(content)},certificateName.trim(),result,new Intl.DateTimeFormat("en-US",{dateStyle:"long"}).format(new Date()),duration); }}>{content.certificate.download}</button>
                   <button type="button" onClick={() => window.print()}>{content.certificate.print}</button>
                 </div>
               </>
@@ -285,6 +285,25 @@ function Metric({ label, value }: { label: string; value: string | number }) {
   return <div className={styles.metric}><span>{label}</span><strong>{value}</strong></div>;
 }
 
+function localCertificate(content: LocalizedTypingContent): LocalizedTypingContent["certificate"] {
+ // Hawaiian interface text is in English; use a Hawaiian certificate variant
+ // without changing the test content or scoring. Native-speaker review is still required.
+ if (content.lang !== "haw") return content.certificate;
+ return {...content.certificate,
+   titleTop:"PALAPALA",
+   titleMain:"HOʻOMAIKAʻI",
+   certifies:"HE PALAPALA NO",
+   statement:"Ua hoʻopau i ka hoʻāʻo kikokiko ʻōlelo Hawaiʻi ma WPMTest:",
+   speedLabel:"HUAʻŌLELO I KA MINUKE",
+   accuracyLabel:"POLOLEI",
+   testLabel:"HOʻĀʻO",
+   dateLabel:"LĀ",
+   testName:"Hoʻāʻo kikokiko ʻōlelo Hawaiʻi",
+   motto:"E hoʻomau i ka hoʻomaʻamaʻa",
+   disclaimer:"He moʻolelo kēia no ka hopena hoʻāʻo kikokiko WPMTest; ʻaʻole ia he palapala hōʻoia ʻoihana.",
+   fileName:"WPMTest-Palapala-Hawaii"
+ };
+}
 function englishCertificate(content: LocalizedTypingContent): LocalizedTypingContent["certificate"] {
  return {...content.certificate,titleTop:"CERTIFICATE OF",titleMain:"TYPING ACHIEVEMENT",certifies:"THIS CERTIFIES THAT",statement:"completed a typing test in "+content.certificate.testName+" on WPMTest with the following results:",speedLabel:"WORDS PER MINUTE",accuracyLabel:"ACCURACY",testLabel:"TEST",dateLabel:"DATE",testName:content.certificate.testName,motto:"PRACTICE BUILDS PROGRESS",disclaimer:"WPMTest typing-result record. Not an accredited language or professional certification.",fileName:"WPMTest-English-"+content.lang};
 }
