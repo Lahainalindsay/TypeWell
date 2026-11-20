@@ -44,6 +44,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [certificateName, setCertificateName] = useState("");
   const [certificateReady, setCertificateReady] = useState(false);
+  const [certificateLanguage, setCertificateLanguage] = useState<"local" | "english" | "both">("local");
   const [captureValue, setCaptureValue] = useState("");
   const composing = useRef(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -77,6 +78,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
     setResult(null);
     setCertificateOpen(false);
     setCertificateReady(false);
+    setCertificateLanguage("local");
     setCaptureValue("");
     requestAnimationFrame(() => inputRef.current?.focus());
   }
@@ -235,13 +237,19 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
                   {content.certificate.nameLabel}
                   <input value={certificateName} maxLength={80} autoComplete="name" placeholder={content.certificate.namePlaceholder} onChange={(event) => setCertificateName(event.target.value)} />
                 </label>
+                <fieldset className={styles.certificateChoice}><legend>Certificate language / ʻŌlelo o ka palapala</legend>
+                  <label><input type="radio" name="certificate-language" checked={certificateLanguage==="local"} onChange={()=>setCertificateLanguage("local")}/> Language tested ({content.lang==="haw"?"ʻŌlelo Hawaiʻi":content.certificate.testName})</label>
+                  <label><input type="radio" name="certificate-language" checked={certificateLanguage==="english"} onChange={()=>setCertificateLanguage("english")}/> English</label>
+                  <label><input type="radio" name="certificate-language" checked={certificateLanguage==="both"} onChange={()=>setCertificateLanguage("both")}/> Both — two certificates</label>
+                </fieldset>
                 <button type="button" className={styles.primaryButton} disabled={!certificateName.trim()} onClick={() => setCertificateReady(true)}>{content.certificate.generate}</button>
               </>
             ) : (
               <>
-                <Certificate content={content} name={certificateName.trim()} metrics={result} date={completedDate} duration={duration} />
+                {certificateLanguage!=="english" && <Certificate content={{...content,certificate:localCertificate(content)}} name={certificateName.trim()} metrics={result} date={completedDate} duration={duration} />}
+                {certificateLanguage!=="local" && <Certificate content={{...content,certificate:englishCertificate(content)}} name={certificateName.trim()} metrics={result} date={new Intl.DateTimeFormat("en-US",{dateStyle:"long"}).format(new Date())} duration={duration} />}
                 <div className={styles.resultActions}>
-                  <button type="button" onClick={() => downloadCertificate(content, certificateName.trim(), result, completedDate, duration)}>{content.certificate.download}</button>
+                  <button type="button" onClick={() => { if(certificateLanguage!=="english")downloadCertificate({...content,certificate:localCertificate(content)},certificateName.trim(),result,completedDate,duration); if(certificateLanguage!=="local")downloadCertificate({...content,certificate:englishCertificate(content)},certificateName.trim(),result,new Intl.DateTimeFormat("en-US",{dateStyle:"long"}).format(new Date()),duration); }}>{content.certificate.download}</button>
                   <button type="button" onClick={() => window.print()}>{content.certificate.print}</button>
                 </div>
               </>
@@ -277,10 +285,32 @@ function Metric({ label, value }: { label: string; value: string | number }) {
   return <div className={styles.metric}><span>{label}</span><strong>{value}</strong></div>;
 }
 
+function localCertificate(content: LocalizedTypingContent): LocalizedTypingContent["certificate"] {
+ // Hawaiian interface text is in English; use a Hawaiian certificate variant
+ // without changing the test content or scoring. Native-speaker review is still required.
+ if (content.lang !== "haw") return content.certificate;
+ return {...content.certificate,
+   titleTop:"PALAPALA",
+   titleMain:"HOʻOMAIKAʻI",
+   certifies:"HE PALAPALA NO",
+   statement:"Ua hoʻopau i ka hoʻāʻo kikokiko ʻōlelo Hawaiʻi ma WPMTest:",
+   speedLabel:"HUAʻŌLELO I KA MINUKE",
+   accuracyLabel:"POLOLEI",
+   testLabel:"HOʻĀʻO",
+   dateLabel:"LĀ",
+   testName:"Hoʻāʻo kikokiko ʻōlelo Hawaiʻi",
+   motto:"E hoʻomau i ka hoʻomaʻamaʻa",
+   disclaimer:"He moʻolelo kēia no ka hopena hoʻāʻo kikokiko WPMTest; ʻaʻole ia he palapala hōʻoia ʻoihana.",
+   fileName:"WPMTest-Palapala-Hawaii"
+ };
+}
+function englishCertificate(content: LocalizedTypingContent): LocalizedTypingContent["certificate"] {
+ return {...content.certificate,titleTop:"CERTIFICATE OF",titleMain:"TYPING ACHIEVEMENT",certifies:"THIS CERTIFIES THAT",statement:"completed a typing test in "+content.certificate.testName+" on WPMTest with the following results:",speedLabel:"WORDS PER MINUTE",accuracyLabel:"ACCURACY",testLabel:"TEST",dateLabel:"DATE",testName:content.certificate.testName,motto:"PRACTICE BUILDS PROGRESS",disclaimer:"WPMTest typing-result record. Not an accredited language or professional certification.",fileName:"WPMTest-English-"+content.lang};
+}
 function Certificate({ content, name, metrics, date, duration }: { content: LocalizedTypingContent; name: string; metrics: Metrics; date: string; duration: number }) {
   return (
-    <article className={styles.certificate} id={`${content.lang}-typing-certificate`} lang={content.lang}>
-      <header><strong>WPM<span>Test</span></strong><small>{content.certificate.motto}</small></header>
+    <article className={styles.certificate} lang={content.certificate.titleTop==="CERTIFICATE OF"?"en":content.lang}>
+      <header><strong>WPM<span>Test</span></strong><small>OFFICIAL TYPING RESULT · ONLINE PRACTICE</small></header><div className={styles.certificateEmblem} aria-hidden="true">★</div>
       <p>{content.certificate.titleTop}</p>
       <h2>{content.certificate.titleMain}</h2>
       <p>{content.certificate.certifies}</p>
@@ -292,7 +322,7 @@ function Certificate({ content, name, metrics, date, duration }: { content: Loca
         <Metric label={content.certificate.testLabel} value={`${content.certificate.testName} · ${content.ui.durations[duration as 60 | 180 | 300]}`} />
         <Metric label={content.certificate.dateLabel} value={date} />
       </div>
-      <small>{content.certificate.disclaimer}</small>
+      <div className={styles.certificateSeal} aria-hidden="true">★<small>WPMTEST</small></div><p className={styles.certificateMotto}>{content.certificate.motto}</p><small>{content.certificate.disclaimer}</small>
     </article>
   );
 }
@@ -304,8 +334,8 @@ function escapeXml(value: string): string {
 function downloadCertificate(content: LocalizedTypingContent, name: string, metrics: Metrics, date: string, duration: number) {
   const certificate = content.certificate;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
-    <rect width="1600" height="1000" fill="#fffdf7"/><rect x="24" y="24" width="1552" height="952" rx="18" fill="none" stroke="#0c2948" stroke-width="18"/><rect x="45" y="45" width="1510" height="910" rx="12" fill="none" stroke="#b58a35" stroke-width="4"/>
-    <g text-anchor="middle" font-family="Arial, Noto Sans Devanagari, sans-serif" fill="#071a30">
+    <rect width="1600" height="1000" fill="#fffdf7"/><rect x="24" y="24" width="1552" height="952" rx="18" fill="none" stroke="#0c2948" stroke-width="18"/><rect x="45" y="45" width="1510" height="910" rx="12" fill="none" stroke="#b58a35" stroke-width="4"/><rect x="63" y="63" width="1474" height="874" rx="8" fill="none" stroke="#b58a35" stroke-width="1"/><circle cx="800" cy="80" r="26" fill="#0c2948" stroke="#b58a35" stroke-width="5"/><text x="800" y="90" font-family="serif" text-anchor="middle" font-size="29" fill="#f1d38b">★</text>
+    <g text-anchor="middle" font-family="Arial, Noto Sans, Noto Sans Devanagari, Noto Sans Cherokee, sans-serif" fill="#071a30">
       <text x="800" y="120" font-size="50" font-weight="700">WPMTest</text><text x="800" y="215" font-size="34" letter-spacing="4">${escapeXml(certificate.titleTop)}</text><text x="800" y="305" font-size="72" font-weight="700">${escapeXml(certificate.titleMain)}</text>
       <text x="800" y="375" font-size="24">${escapeXml(certificate.certifies)}</text><text x="800" y="485" font-size="66" fill="#a87822">${escapeXml(name)}</text><line x1="330" x2="1270" y1="515" y2="515" stroke="#b58a35"/>
       <text x="800" y="575" font-size="22">${escapeXml(certificate.statement)}</text>
