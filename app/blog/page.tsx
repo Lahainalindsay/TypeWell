@@ -1,4 +1,5 @@
 import { ArticleCard, type ArticleCardProps } from "../../src/features/editorial/ArticleCard";
+import { languages, articlePath } from "../../src/features/revival/content";
 import { deskSetupUpdated, editorialUpdated, guideUpdated } from "../../src/lib/seo/pageDates";
 
 import { Breadcrumbs } from "../../src/components/Breadcrumbs";
@@ -97,6 +98,7 @@ export default function BlogPage() {
         <section className="revival-blog-bridge" aria-labelledby="revival-articles">
           <div><p className="eyebrow">Living languages</p><h2 id="revival-articles">The story belongs to the speakers. The typing tools live here.</h2><p>Our companion Language Revival blog explores community-led language renewal. WPMTest provides practical keyboard information and typing exercises. Older WPMTest history articles remain available in the archive, but new stories belong on the companion site.</p></div>
           <div className="revival-blog-actions"><a href="/language-revival/">Explore language typing tools →</a><a href="https://wpmtest-language-revival.lahainalindsay9111.chatgpt.site/" target="_blank" rel="noopener noreferrer">Read revival stories ↗</a></div>
+          <details className="revival-archive"><summary>Older WPMTest revival articles (archive)</summary><p>These earlier articles remain available while the companion blog becomes the home for language history.</p><ul>{languages.map(language => <li key={language.id}><a href={articlePath(language.id)}>{language.name} language revival archive</a></li>)}</ul></details>
         </section>
       </main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
