@@ -1,8 +1,10 @@
 import { ArticleCard, type ArticleCardProps } from "../../src/features/editorial/ArticleCard";
+import bridgeStyles from "./revivalBridge.module.css";
+import { languages, articlePath } from "../../src/features/revival/content";
 import { deskSetupUpdated, editorialUpdated, guideUpdated } from "../../src/lib/seo/pageDates";
-import photos from "../../src/features/revival/photos.json";
+
 import { Breadcrumbs } from "../../src/components/Breadcrumbs";
-import { articleLastModified, articlePath, languages } from "../../src/features/revival/content";
+
 import { personalityArticleTitle } from "../../src/features/editorial/personalityArticle";
 import { guides } from "../../src/features/editorial/guides";
 import type { Metadata } from "next";
@@ -12,15 +14,15 @@ const canonical = absoluteUrl("/blog/");
 
 export const metadata: Metadata = {
   title: "Typing Blog & Articles | WPMTest",
-  description: "Read articles about typing tests, practice methods, keyboard skills, and employment assessments.",
+  description: "Browse practical typing guides, test comparisons, desk setup advice, data-entry skills and keyboard practice resources from WPMTest.",
   alternates: { canonical },
   openGraph: { title: "Typing Blog & Articles | WPMTest",
-    description: "Articles about typing tests, practice methods, keyboard skills, and employment assessments.",
+    description: "Explore typing speed guides, keyboard technique, workplace data-entry practice and evidence-based test comparisons.",
     url: canonical,
     type: "website", images: [{ url: absoluteUrl("/og-default.png"), width: 1200, height: 630, alt: "WPMTest typing tools" }] },
   twitter: { card: "summary_large_image",
     title: "Typing Blog & Articles | WPMTest",
-    description: "Articles about typing tests, practice methods, keyboard skills, and employment assessments.", images: [absoluteUrl("/og-default.png")] },
+    description: "Explore typing speed guides, keyboard technique, workplace data-entry practice and evidence-based test comparisons.", images: [absoluteUrl("/og-default.png")] },
   robots: { index: true, follow: true }
 };
 
@@ -35,14 +37,14 @@ const featuredArticles: ArticleCardProps[] = [
   },
   {
     href: "/blog/glossika-language-revival/", title: "The Story Doesn’t End at the Keyboard: WPMTest × Glossika",
-    description: "How Glossika teaches, ten courses from our revival series, and a fifteen-minute routine.",
+    description: "Explore Glossika’s language-learning approach, historical course overlaps, and a practical fifteen-minute routine.",
     category: "Language revival", date: editorialUpdated, affiliate: true,
     image: { src: "/images/partners/glossika-wordmark.png", alt: "Glossika owl and wordmark", width: 1024, height: 300 },
   },
   {
-    href: "/language-revival/", title: "Language Revival: Suppression, Survival and Community Renewal",
-    description: "Explore eleven language histories, timelines, sources, and practice pathways.",
-    category: "Language revival", date: "2026-11-13", image: photos.hawaiian,
+    href: "/language-revival/", title: "Living-Language Typing Tests & Keyboard Guides",
+    description: "Explore ten language pathways with keyboard information, available typing tests, and beginner character practice.",
+    category: "Language practice", date: "2026-11-18", image: { src: "/images/revival/hawaiian.webp", alt: "Hawaiian language practice and keyboard resources", width: 600, height: 400 },
   },
   {
     href: "/blog/typing-personality-test/", title: personalityArticleTitle,
@@ -94,15 +96,10 @@ export default function BlogPage() {
         <div className="article-card-grid">
           {featuredArticles.map(article => <ArticleCard key={article.href} {...article} />)}
         </div>
-        <section aria-labelledby="revival-articles">
-          <h2 id="revival-articles">Language revival articles</h2>
-          <div className="article-card-grid">
-            {languages.map(language => {
-              const photo = photos[language.id as keyof typeof photos];
-              return <ArticleCard key={language.id} href={articlePath(language.id)} title={`${language.name} Language Revival`}
-                description={language.desc} category="Language revival" date={articleLastModified(language.id)} image={photo} />;
-            })}
-          </div>
+        <section className={bridgeStyles.bridge} aria-labelledby="revival-articles">
+          <div><p className="eyebrow">Living languages</p><h2 id="revival-articles">The story belongs to the speakers. The typing tools live here.</h2><p>Our companion Language Revival blog explores community-led language renewal. WPMTest provides practical keyboard information and typing exercises. Older WPMTest history articles remain available in the archive, but new stories belong on the companion site.</p></div>
+          <div className={bridgeStyles.actions}><a href="/language-revival/">Explore language typing tools →</a><a href="https://wpmtest-language-revival.lahainalindsay9111.chatgpt.site/" target="_blank" rel="noopener noreferrer">Read revival stories ↗</a></div>
+          <details className={bridgeStyles.archive}><summary>Older WPMTest revival articles (archive)</summary><p>These earlier articles remain available while the companion blog becomes the home for language history.</p><ul>{languages.map(language => <li key={language.id}><a href={articlePath(language.id)}>{language.name} language revival archive</a></li>)}</ul></details>
         </section>
       </main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
