@@ -159,7 +159,7 @@ article p, .panel p, .trainer-head p, .hint { color: var(--muted); line-height: 
 h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 .key-strip { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; color: var(--muted); }
 .key-strip span { min-width: 38px; min-height: 34px; border: 1px solid var(--line); border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; background: var(--panel-strong); color: var(--text); font-weight: 800; }
-.typing-text { width: 100%; max-width: 100%; height: clamp(150px, 24vh, 230px); min-height: 0; padding: clamp(1rem, 3vw, 2rem); outline: none; white-space: pre-wrap; overflow: hidden; overflow-wrap: anywhere; word-break: break-word; contain: layout paint; cursor: text; }
+.typing-text { overflow-anchor: none; width: 100%; max-width: 100%; height: clamp(150px, 24vh, 230px); min-height: 0; padding: clamp(1rem, 3vw, 2rem); outline: none; white-space: pre-wrap; overflow: hidden; overflow-wrap: anywhere; word-break: break-word; contain: layout paint; cursor: text; }
 .typing-text span { overflow-wrap: anywhere; word-break: break-word; }
 .start-hint { margin: -0.35rem 0 0; color: var(--muted); font-size: 0.86rem; }
 .pause-notice { margin: -0.35rem 0 0; color: var(--warning); font-size: 0.86rem; }
