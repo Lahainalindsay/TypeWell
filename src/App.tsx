@@ -594,12 +594,21 @@ function TypingText({ target, statuses, index, fontSize, lineHeight, onFocusInpu
       if (!viewport) return;
       const current = viewport.querySelector<HTMLElement>(".current");
       if (!current || index === 0) { viewport.scrollTop = 0; return; }
-      const style = getComputedStyle(viewport);
-      const lineHeight = parseFloat(style.lineHeight) || 40;
-      const top = current.offsetTop;
-      const bottom = viewport.scrollTop + viewport.clientHeight - parseFloat(style.paddingBottom || "0");
-      if (top + lineHeight > bottom || top < viewport.scrollTop) {
-        viewport.scrollTop = Math.max(0, top - lineHeight);
+      // Measure relative to the scrolling viewport, not offsetTop (whose
+      // offset parent may be a different ancestor on mobile browsers).
+      const viewportRect = viewport.getBoundingClientRect();
+      const currentRect = current.getBoundingClientRect();
+      const paddingTop = parseFloat(getComputedStyle(viewport).paddingTop) || 0;
+      const paddingBottom = parseFloat(getComputedStyle(viewport).paddingBottom) || 0;
+      const visibleTop = viewportRect.top + paddingTop;
+      const visibleBottom = viewportRect.bottom - paddingBottom;
+      // Leave one line of context around the active character.
+      const lineHeightPx = parseFloat(getComputedStyle(current).lineHeight) ||
+        parseFloat(getComputedStyle(viewport).lineHeight) || 32;
+      if (currentRect.bottom > visibleBottom) {
+        viewport.scrollTop += currentRect.bottom - visibleBottom + lineHeightPx;
+      } else if (currentRect.top < visibleTop) {
+        viewport.scrollTop -= visibleTop - currentRect.top + lineHeightPx;
       }
     }
     keepCurrentLineVisible();
