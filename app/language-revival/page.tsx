@@ -90,5 +90,15 @@ export default function Page() {
    <a href="#language-heading">Explore the Collection ↑</a>
    <a className={styles.companionLink} href={stories} target="_blank" rel="noopener noreferrer">Read the Revival Stories ↗</a>
   </section>
+  <details className={styles.archive}>
+   <summary>Additional character-practice resources</summary>
+   <p>These existing introductory drills remain available outside the ten featured pathways.</p>
+   <ul>
+    <li><a href="/language-revival/catalan/typing-test/">Catalan character practice</a></li>
+    <li><a href="/language-revival/hakka-sixian/typing-test/">Sixian Hakka character practice</a></li>
+    <li><a href="/language-revival/hakka-hailu/typing-test/">Hailu Hakka character practice</a></li>
+    <li><a href="/language-revival/wenzhounese/typing-test/">Wenzhounese character practice</a></li>
+   </ul>
+  </details>
  </main>;
 }

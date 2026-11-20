@@ -45,3 +45,7 @@
 .editorial blockquote{margin:30px 0;padding:10px 0 10px 24px;border-left:3px solid var(--accent,#2084cd);font-size:clamp(1.2rem,2.6vw,1.6rem);line-height:1.6;font-weight:600;letter-spacing:-.02em}
 .footer .companionLink{margin-left:12px;background:transparent;color:var(--text);border:1px solid var(--tw-line,#d5e0e9)}
 @media(max-width:480px){.footer a{display:flex;justify-content:center}.footer .companionLink{margin-left:0}}
+
+.archive{margin-top:32px;padding:20px 0;border-top:1px solid var(--tw-line,#d5e0e9);color:var(--muted)}
+.archive summary{cursor:pointer;font-weight:600;min-height:44px;align-content:center}
+.archive li{margin:12px 0}
