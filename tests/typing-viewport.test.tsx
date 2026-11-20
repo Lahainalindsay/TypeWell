@@ -15,8 +15,11 @@ it("advances weak-key rows and scrolls the cursor without another click, includi
   const input = host.querySelector<HTMLTextAreaElement>(".typing-capture-input")!;
   const text = prompt.textContent!;
   // Model three visible rows, with the fourth row below the viewport.
-  Object.defineProperty(prompt, "clientHeight", { value: 160 });
-  [...prompt.children].forEach((span, index) => Object.defineProperty(span, "offsetTop", { value: 32 + Math.floor(index / 20) * 40 }));
+  vi.spyOn(prompt, "getBoundingClientRect").mockImplementation(() => ({ top: 0, bottom: 160 }) as DOMRect);
+  [...prompt.children].forEach((span, index) => vi.spyOn(span, "getBoundingClientRect").mockImplementation(() => {
+    const top = 32 + Math.floor(index / 20) * 40 - prompt.scrollTop;
+    return { top, bottom: top + 40 } as DOMRect;
+  }));
   act(() => prompt.click());
   expect(document.activeElement).toBe(input);
   function key(value: string) { act(() => input.dispatchEvent(new KeyboardEvent("keydown", { key: value, bubbles: true, cancelable: true }))); }

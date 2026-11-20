@@ -32,3 +32,16 @@
 .note{font-size:.83rem;color:var(--muted,#5b6b7d)}
 @media(max-width:720px){.grid,.instructions{grid-template-columns:1fr}.hero{padding:30px 22px}.page{padding-inline:16px}}
 @media(prefers-reduced-motion:reduce){.card,.storyLink,.footer a{transition:none}.card:hover,.storyLink:hover,.footer a:hover{transform:none}}
+
+.hero h2{max-width:730px;font-size:clamp(1.35rem,3vw,2rem);line-height:1.35;font-weight:500;letter-spacing:-.025em;color:#d5f3ed;margin:0 0 28px}
+.hero strong{color:#fff}
+.collection>p,.pathways{max-width:780px;line-height:1.8}
+.pathways{padding-left:1.3rem;margin:22px 0 38px}
+.pathways li{padding-left:.35rem;margin:14px 0}
+.editorial{max-width:780px;margin:clamp(40px,7vw,88px) auto}
+.editorial section{padding:clamp(28px,4vw,48px) 0;border-top:1px solid var(--tw-line,#d5e0e9)}
+.editorial p{line-height:1.85;margin:18px 0;color:var(--text)}
+.editorial h2{line-height:1.2}
+.editorial blockquote{margin:30px 0;padding:10px 0 10px 24px;border-left:3px solid var(--accent,#2084cd);font-size:clamp(1.2rem,2.6vw,1.6rem);line-height:1.6;font-weight:600;letter-spacing:-.02em}
+.footer .companionLink{margin-left:12px;background:transparent;color:var(--text);border:1px solid var(--tw-line,#d5e0e9)}
+@media(max-width:480px){.footer a{display:flex;justify-content:center}.footer .companionLink{margin-left:0}}

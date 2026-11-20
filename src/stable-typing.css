@@ -30,3 +30,26 @@
     max-width: 100% !important;
   }
 }
+
+/* The browser must track a real, nearby caret, including on touch laptops. */
+.typing-surface { display: grid; gap: .5rem; overflow-anchor: none; min-width: 0; }
+@media (max-width: 900px), (pointer: coarse) {
+  .typing-text.typing-viewport,
+  .home-test .typing-text.typing-viewport {
+    height: var(--typing-visible-height, 150px) !important;
+    min-height: var(--typing-visible-height, 150px) !important;
+    max-height: var(--typing-visible-height, 150px) !important;
+    padding: .65rem !important;
+  }
+  .typing-capture-input, .trainer .typing-capture-input, .utility-test .typing-capture-input {
+    position: relative; display: block; opacity: 1; pointer-events: auto;
+    width: 100%; height: 48px; min-height: 48px; padding: .65rem;
+    border: 2px solid var(--accent); border-radius: 10px;
+    background: var(--panel-strong); color: var(--text); font-size: 16px; resize: none;
+  }
+  [data-typing-prompt]:not(.typing-viewport) {
+    max-height: var(--typing-visible-height, 180px) !important;
+    min-height: 0 !important; overflow-y: auto !important; overflow-anchor: none;
+  }
+  #revival-typing { font-size: 16px; }
+}
