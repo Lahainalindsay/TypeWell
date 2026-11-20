@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import Collection from '../app/language-revival/page';
-import LanguagePage from '../app/language-revival/[language]/page';
+import LanguagePage, { generateMetadata } from '../app/language-revival/[language]/page';
 import PracticePage from '../app/language-revival/[language]/typing-test/page';
 import { languagePathways, revivalStoryUrl } from '../src/features/revival/pathways';
 import { drillCharacters } from '../src/features/revival/RevivalPractice';
@@ -21,6 +21,15 @@ describe('ten featured language pathways', () => {
  it('provides a real setup anchor, practice action, and matching external history on each page', async () => {
   for (const item of languagePathways) {
    const page = dom(renderToStaticMarkup(await LanguagePage({params: Promise.resolve({language:item.id})})));
+   const stages = ['discover','keyboard-setup','characters','practice','story'];
+   const guideNav = page.querySelector(`nav[aria-label="${item.name} pathway"]`)!;
+   expect([...guideNav.querySelectorAll('a')].map(a => a.getAttribute('href'))).toEqual(stages.map(id => `#${id}`));
+   for (const id of stages) expect(page.querySelector(`#${id}`)).not.toBeNull();
+   expect(page.querySelectorAll('table tbody tr').length).toBeGreaterThanOrEqual(2);
+   expect(page.querySelectorAll('#keyboard-setup details')).toHaveLength(4);
+   const metadata = await generateMetadata({params: Promise.resolve({language:item.id})});
+   expect(String(metadata.title).length).toBeLessThanOrEqual(60);
+   expect(String(metadata.description).length).toBeLessThanOrEqual(160);
    expect(page.querySelector('#keyboard-setup')).not.toBeNull();
    expect(page.querySelector(`a[href="${item.test}"]`)).not.toBeNull();
    expect(page.querySelector(`a[href="${revivalStoryUrl(item.id)}"]`)).not.toBeNull();
