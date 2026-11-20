@@ -317,15 +317,28 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 }
 :root[data-motion="reduced"] *, :root[data-motion="reduced"] *::before, :root[data-motion="reduced"] *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 @media (max-width: 900px) {
+  /* Keep the focused input in document flow on touchscreens.
+     Hidden absolute inputs cause mobile browsers to scroll away from the prompt. */
   .trainer .typing-capture-input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    width: 1px;
-    min-height: 1px;
-    height: 1px;
-    padding: 0;
-    border: 0;
+    position: relative;
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+    width: 100%;
+    min-height: 52px;
+    height: 52px;
+    padding: .85rem 1rem;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    background: var(--panel-strong);
+    color: var(--text);
+    font-size: 16px;
+    resize: none;
+    touch-action: manipulation;
+  }
+  .trainer .typing-text {
+    height: clamp(110px, 23dvh, 180px);
+    padding: .85rem;
   }
   .utility-test .typing-capture-input {
     position: relative;
