@@ -11,7 +11,7 @@ import { TypingPreviews } from "../../src/components/TypingPreviews";
 const dedicatedRoutes = new Set([
   "/blog/desk-setup-for-typing/",
   "/blog/glossika-language-revival/",
-  "/blog/[revivalArticle]/", "/language-revival/", "/language-revival/[language]/typing-test/", "/typing-personality-test/profile/[slug]/",
+  "/blog/[revivalArticle]/", "/language-revival/", "/language-revival/[language]/typing-test/", "/language-revival/[language]/", "/typing-personality-test/profile/[slug]/",
   "/typing-personality-test/", "/blog/typing-personality-test/",
   "/blog/hawaiian-language-revival/",
   "/blog/typing-test-on-phone-vs-keyboard/",

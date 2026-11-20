@@ -45,3 +45,28 @@
 .editorial blockquote{margin:30px 0;padding:10px 0 10px 24px;border-left:3px solid var(--accent,#2084cd);font-size:clamp(1.2rem,2.6vw,1.6rem);line-height:1.6;font-weight:600;letter-spacing:-.02em}
 .footer .companionLink{margin-left:12px;background:transparent;color:var(--text);border:1px solid var(--tw-line,#d5e0e9)}
 @media(max-width:480px){.footer a{display:flex;justify-content:center}.footer .companionLink{margin-left:0}}
+
+.archive{margin-top:32px;padding:20px 0;border-top:1px solid var(--tw-line,#d5e0e9);color:var(--muted)}
+.archive summary{cursor:pointer;font-weight:600;min-height:44px;align-content:center}
+.archive li{margin:12px 0}
+.actions{display:grid;gap:8px}
+.actions a{padding:10px 0;border-top:1px solid var(--tw-line,#d5e0e9)}
+.pathwayNav{display:flex;flex-wrap:wrap;gap:10px 24px;padding:20px 0;border-bottom:1px solid var(--tw-line,#d5e0e9)}
+.pathwayNav a{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+.editorial section[id]{scroll-margin-top:90px}
+.editorial li{line-height:1.8;margin:14px 0}
+
+.sectionNumber{font-size:.72rem!important;font-weight:800;letter-spacing:.16em;color:var(--accent)!important;margin-bottom:12px!important}
+.deviceGuides{display:grid;gap:12px;margin:26px 0}
+.deviceGuides details{padding:18px 22px;border:1px solid var(--tw-line,#d5e0e9);border-radius:14px;background:var(--tw-surface,var(--bg-2))}
+.deviceGuides summary{font-weight:750;cursor:pointer;min-height:28px;align-content:center}
+.tableScroll{overflow-x:auto;margin:24px 0;border:1px solid var(--tw-line,#d5e0e9);border-radius:14px}
+.characterTable{width:100%;border-collapse:collapse;text-align:left;font-size:.94rem}
+.characterTable caption{text-align:left;padding:18px;font-weight:700;background:var(--tw-surface,var(--bg-2))}
+.characterTable th,.characterTable td{padding:16px;vertical-align:top;border-top:1px solid var(--tw-line,#d5e0e9);line-height:1.7}
+.characterTable tbody th{font-size:1.4rem;font-weight:500;min-width:120px;overflow-wrap:anywhere}
+.characterTable thead th{font-size:.76rem;letter-spacing:.05em;text-transform:uppercase}
+.example,.fallback{padding:22px 26px;margin:24px 0;border-radius:14px;border:1px solid var(--tw-line,#d5e0e9);background:var(--tw-surface,var(--bg-2))}
+.example>p:first-of-type{font-size:clamp(1.35rem,4vw,1.8rem);line-height:1.8;overflow-wrap:anywhere}
+.fallback{border-left:3px solid var(--accent)}
+@media(max-width:600px){.characterTable th,.characterTable td{padding:12px}.characterTable{min-width:560px}.deviceGuides details,.example,.fallback{padding:18px}.pathwayNav{gap:6px 16px}}

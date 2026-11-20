@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Breadcrumbs } from '../../src/components/Breadcrumbs';
 import { absoluteUrl } from '../../src/lib/seo/site';
 import styles from './page.module.css';
+import { languagePathways, revivalStoryUrl } from '../../src/features/revival/pathways';
 
 export const metadata: Metadata = {
   title: 'Living Language Typing Tests & Keyboard Guides | WPMTest',
@@ -12,19 +13,6 @@ export const metadata: Metadata = {
 };
 
 const stories = 'https://wpmtest-language-revival.lahainalindsay9111.chatgpt.site/';
-type Entry = { name: string; native: string; region: string; layout: string; test?: string; detail: string };
-const featured: Entry[] = [
- {name:'Hawaiian',native:'ʻŌlelo Hawaiʻi',region:'Hawaiʻi',layout:'Hawaiian QWERTY with ʻokina and kahakō',test:'/haw/hawaiian-typing-test/',detail:'Dedicated passages, 1-, 3- and 5-minute tests, and keyboard instructions.'},
- {name:'Māori',native:'Te reo Māori',region:'Aotearoa New Zealand',layout:'Māori keyboard with macrons ā ē ī ō ū',detail:'Full test and certificate not yet available; passages require language review.'},
- {name:'Cherokee',native:'ᏣᎳᎩ',region:'United States',layout:'Cherokee syllabary keyboard/input method',detail:'Syllabary practice is planned, pending community review and input-method testing.'},
- {name:'Basque',native:'Euskara',region:'Basque Country',layout:'Latin keyboard, including ñ and accented vowels',detail:'Basque practice is planned; passages must be verified before publication.'},
- {name:'Welsh',native:'Cymraeg',region:'Wales',layout:'Welsh accented vowels â ê î ô û ŵ ŷ',test:'/language-revival/welsh/typing-test/',detail:'Character-copy drill available; full passages pending review.'},
- {name:'Irish',native:'Gaeilge',region:'Ireland',layout:'Irish keyboard with fada á é í ó ú',test:'/language-revival/irish/typing-test/',detail:'Character-copy drill available; full passages pending review.'},
- {name:'Scottish Gaelic',native:'Gàidhlig',region:'Scotland',layout:'Grave accents à è ì ò ù',test:'/language-revival/scottish-gaelic/typing-test/',detail:'Character-copy drill available; full passages pending review.'},
- {name:'Manx',native:'Gaelg',region:'Isle of Man',layout:'Latin-script keyboard',test:'/language-revival/manx/typing-test/',detail:'Name-copy drill available; full passages pending review.'},
- {name:'Taiwanese Taigi',native:'Tâi-gí',region:'Taiwan',layout:'Taiwanese Latin input with diacritics; other writing systems use separate input methods',test:'/language-revival/taiwanese-taigi/typing-test/',detail:'Character-copy drill available; full passages pending review.'},
- {name:'Sorani Kurdish',native:'کوردیی سۆرانی',region:'Kurdistan region',layout:'Central Kurdish (Sorani) right-to-left keyboard',test:'/language-revival/sorani-kurdish/typing-test/',detail:'Right-to-left character-copy drill available; full passages pending review.'}
-];
 export default function Page() {
  return <main id="main-content" tabIndex={-1} className={styles.page}>
   <Breadcrumbs items={[{name:'Language Revival',url:'/language-revival/'}]}/>
@@ -49,7 +37,12 @@ export default function Page() {
     <li><strong>Typing Practice</strong> — Dedicated exercises designed to build familiarity, accuracy, and confidence.</li>
     <li><strong>The Revival Story</strong> — A deeper look at the language's history and the communities sustaining its future.</li>
    </ul>
-  <div className={styles.grid}>{featured.map(item=><article className={styles.card} key={item.name}><p className={styles.region}>{item.region}</p><h3>{item.native}</h3><p className={styles.english}>{item.name}</p><div className={styles.layout}><b>Written input</b><p>{item.layout}</p></div><p>{item.detail}</p><div className={styles.actions}>{item.test?<a href={item.test}>{item.name==='Hawaiian'?'Take the typing test →':'Open character practice →'}</a>:<span>Full typing test in preparation</span>}</div></article>)}</div></section>
+  <div className={styles.grid}>{languagePathways.map(item=><article className={styles.card} key={item.name}><p className={styles.region}>{item.region}</p><h3>{item.native}</h3><p className={styles.english}>{item.name}</p><div className={styles.layout}><b>Written input</b><p>{item.layout}</p></div><p>{item.detail}</p><nav className={styles.actions} aria-label={`${item.name} pathway`}>
+   <a href={`/language-revival/${item.id}/`}>Discover the Language →</a>
+   <a href={`/language-revival/${item.id}/#keyboard-setup`}>Keyboard &amp; Setup Guide →</a>
+   <a href={item.test}>Typing Practice →</a>
+   <a href={revivalStoryUrl(item.id)} target="_blank" rel="noopener noreferrer">The Revival Story ↗</a>
+  </nav></article>)}</div></section>
   <div className={styles.editorial}>
    <section aria-labelledby="digital-heading">
     <h2 id="digital-heading">From Written Language to Digital Fluency</h2>
@@ -90,5 +83,15 @@ export default function Page() {
    <a href="#language-heading">Explore the Collection ↑</a>
    <a className={styles.companionLink} href={stories} target="_blank" rel="noopener noreferrer">Read the Revival Stories ↗</a>
   </section>
+  <details className={styles.archive}>
+   <summary>Additional character-practice resources</summary>
+   <p>These existing introductory drills remain available outside the ten featured pathways.</p>
+   <ul>
+    <li><a href="/language-revival/catalan/typing-test/">Catalan character practice</a></li>
+    <li><a href="/language-revival/hakka-sixian/typing-test/">Sixian Hakka character practice</a></li>
+    <li><a href="/language-revival/hakka-hailu/typing-test/">Hailu Hakka character practice</a></li>
+    <li><a href="/language-revival/wenzhounese/typing-test/">Wenzhounese character practice</a></li>
+   </ul>
+  </details>
  </main>;
 }

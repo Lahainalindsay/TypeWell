@@ -1,3 +1,4 @@
+import { revivalStoryUrl } from './pathways';
 import ReviewCopy, { reviewSectionClass, reviewSectionId } from './ReviewCopy';
 import hawaiianReview from './hawaiian-review.json';
 import wenzhouneseReview from './wenzhounese-review.json';
@@ -68,6 +69,7 @@ export default function RevivalArticle({ id }: { id: string }) {
       <header className={styles.storyHeader}>
         <p className={styles.eyebrow}>{story.kicker}</p>
         <h1>{review?.title ?? story.headline}</h1>
+        <p><a href={revivalStoryUrl(id)} target="_blank" rel="noopener noreferrer">Read the {language.name} history on our Language Revival companion site ↗</a></p>
         <p className={styles.storyDeck}>{review?.deck ?? language.desc}</p>
         <div className={styles.storyMeta}><a href="/about/#lindsay-johnson">Lindsay Johnson</a><span>{readingMinutes} min read</span><time dateTime={dateModified}>Updated {updatedLabel}</time></div>
       </header>
