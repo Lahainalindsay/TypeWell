@@ -1,5 +1,6 @@
 "use client";
 
+import { useTypingViewport } from "../../hooks/useTypingViewport";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { applyInput, calculateMetrics, createSession, round } from "../../engine/metrics";
 import { splitGraphemes } from "../../engine/graphemes";
@@ -48,6 +49,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
   const [captureValue, setCaptureValue] = useState("");
   const composing = useRef(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  useTypingViewport(inputRef);
   const metrics = calculateMetrics(session, now || performance.now());
   const targetCharacters = useMemo(() => splitGraphemes(target), [target]);
   const remainingMs = session.startedAt ? Math.max(0, duration * 1000 - ((now || performance.now()) - session.startedAt)) : duration * 1000;
@@ -80,7 +82,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
     setCertificateReady(false);
     setCertificateLanguage("local");
     setCaptureValue("");
-    requestAnimationFrame(() => inputRef.current?.focus());
+    requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
   }
 
   function applyKeys(keys: string[]) {
@@ -158,12 +160,12 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
       </div>
 
       <div
-        className={styles.typingText}
+        data-typing-prompt className={styles.typingText}
         lang={content.lang}
         role="textbox"
         tabIndex={0}
-        onClick={() => inputRef.current?.focus()}
-        onFocus={() => inputRef.current?.focus()}
+        onClick={() => inputRef.current?.focus({ preventScroll: true })}
+        onFocus={() => inputRef.current?.focus({ preventScroll: true })}
         aria-label={content.ui.inputLabel}
       >
         {start > 0 ? <span className={styles.fade}>…</span> : null}
@@ -172,7 +174,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
           const status = session.statuses[index] ?? "pending";
           return (
             <span
-              className={`${styles.character} ${styles[status]} ${index === session.typed.length ? styles.current : ""}`}
+              data-typing-current={index === session.typed.length} className={`${styles.character} ${styles[status]} ${index === session.typed.length ? styles.current : ""}`}
               key={`${index}-${character}`}
             >
               {character}

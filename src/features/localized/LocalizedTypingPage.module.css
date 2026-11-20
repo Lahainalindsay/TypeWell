@@ -226,3 +226,11 @@
 .certificate>small{display:block;font-size:.68rem;line-height:1.4}
 @media(max-width:650px){.certificate{padding:32px 17px}.certificate header small{display:none}.certificateStats{grid-template-columns:repeat(2,minmax(0,1fr))}.certificateStats .metric:nth-child(2){border-right:0}.certificateStats .metric{border-bottom:1px solid #b58a3566}.certificateStats .metric:nth-child(n+3){border-bottom:0}}
 @media print{@page{size:landscape;margin:.3in}.certificate{break-after:page;page-break-after:always;box-shadow:none;min-height:0!important;height:7in}.certificate:last-of-type{break-after:auto;page-break-after:auto}.certificateChoice{display:none}}
+
+@media (max-width: 900px), (pointer: coarse) {
+  .captureInput {
+    position: relative; display: block; opacity: 1; pointer-events: auto;
+    width: 100%; height: 48px; min-height: 48px; padding: .65rem;
+    border: 2px solid var(--accent); border-radius: 10px; font-size: 16px; resize: none;
+  }
+}

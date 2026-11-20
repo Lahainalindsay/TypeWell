@@ -37,7 +37,7 @@ describe("client app hydration boundary", () => {
 
     expect(app).toContain('className="typing-capture-input"');
     expect(app).toContain("onBeforeInput={onBeforeInput}");
-    expect(app).toContain("onFocusInput={() => inputRef.current?.focus()}");
+    expect(app).toContain("onFocusInput={() => inputRef.current?.focus({ preventScroll: true })}");
     expect(app).not.toContain("Touchscreen mode measures speed");
     expect(app).not.toContain('className="typing-capture-input" value="" readOnly');
     expect(styles).toContain(".typing-capture-input");

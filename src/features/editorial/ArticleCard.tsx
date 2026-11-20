@@ -1,4 +1,4 @@
-export type ArticleCategory = "Guides" | "Data entry" | "Comparisons" | "Language revival" | "Fun";
+export type ArticleCategory = "Guides" | "Data entry" | "Comparisons" | "Language revival" | "Language practice" | "Fun";
 
 type Thumbnail = {
   src: string;
