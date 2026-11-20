@@ -2,7 +2,7 @@
 import { useTypingViewport } from "../../hooks/useTypingViewport";
 import { useEffect, useRef, useState } from 'react';
 import { splitGraphemes } from '../../engine/graphemes';
-export const drillCharacters:Record<string,string>={welsh:'â ê î ô û ŵ ŷ',manx:'Gaelg Ellan Vannin', 'scottish-gaelic':'à è ì ò ù Gàidhlig',irish:'á é í ó ú Gaeilge',catalan:'à è é í ï ò ó ú ü ç l·l', 'taiwanese-taigi':'Tâi-gí Pe̍h-ōe-jī','hakka-sixian':'四 縣 客 語','hakka-hailu':'海 陸 客 語',wenzhounese:'溫 州 話','sorani-kurdish':'ڕ ڵ ۆ ێ ە کوردی'};
+export const drillCharacters:Record<string,string>={maori:'ā ē ī ō ū Māori',cherokee:'ᏣᎳᎩ',basque:'ñ Euskara',welsh:'â ê î ô û ŵ ŷ',manx:'Gaelg Ellan Vannin', 'scottish-gaelic':'à è ì ò ù Gàidhlig',irish:'á é í ó ú Gaeilge',catalan:'à è é í ï ò ó ú ü ç l·l', 'taiwanese-taigi':'Tâi-gí Pe̍h-ōe-jī','hakka-sixian':'四 縣 客 語','hakka-hailu':'海 陸 客 語',wenzhounese:'溫 州 話','sorani-kurdish':'ڕ ڵ ۆ ێ ە کوردی'};
 export function copyScore(target:string,typed:string,elapsed:number){const expected=splitGraphemes(target),actual=splitGraphemes(typed);const correct=actual.filter((c,i)=>c===expected[i]).length;return {correct,total:actual.length,accuracy:actual.length?Math.round(correct/actual.length*100):0,wpm:elapsed>0?Math.round(correct/5/(elapsed/60000)):0};}
 export default function RevivalPractice({id,name}:{id:string;name:string}){
  const [custom,setCustom]=useState(''),[useCustom,setUseCustom]=useState(false),[typed,setTyped]=useState(''),[start,setStart]=useState<number|null>(null),[now,setNow]=useState(0),[done,setDone]=useState(false);

@@ -1,3 +1,4 @@
+import { languagePathways } from "../src/features/revival/pathways";
 import { aboutUpdated, deskSetupUpdated, editorialUpdated, guideUpdated } from "../src/lib/seo/pageDates";
 import {personalities} from "../src/features/typingPersonality";
 import {languages,articleLastModified,articlePath,practicePath} from "../src/features/revival/content";
@@ -86,7 +87,7 @@ const supportingIndexableRoutes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [...personalities.map(p=>`/typing-personality-test/profile/${p.slug}/`),"/language-revival/", ...languages.flatMap(l=>[articlePath(l.id),practicePath(l.id)]), ...seoPages.map((page) => page.path), ...supportingIndexableRoutes, ...guides.map(guide => `/blog/${guide.slug}/`)];
+  const paths = [...languagePathways.flatMap(l => [`/language-revival/${l.id}/`, ...(l.test ? [l.test] : [])]),...personalities.map(p=>`/typing-personality-test/profile/${p.slug}/`),"/language-revival/", ...languages.flatMap(l=>[articlePath(l.id),practicePath(l.id)]), ...seoPages.map((page) => page.path), ...supportingIndexableRoutes, ...guides.map(guide => `/blog/${guide.slug}/`)];
   return [...new Set(paths.map(canonicalPath))].filter(path => path !== "/typing-test/").map((path) => ({
     url: absoluteUrl(path),
     lastModified: new Date(contentDates.get(path) ?? "2026-09-20"),

@@ -1,3 +1,4 @@
+import { revivalStoryUrl } from "../revival/pathways";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { SITE_NAME } from "../../lib/seo/site";
 import { TypingPreviews } from "../../components/TypingPreviews";
@@ -29,6 +30,7 @@ export default function LocalizedTypingPage({ content }: { content: LocalizedTyp
         <p>{content.intro}</p>
       </section>
 
+      {content.lang === "haw" && <nav aria-label="Hawaiian language resources"><a href="/language-revival/hawaiian/">Discover the Language</a> · <a href="#haw-keyboard-heading">Keyboard &amp; Setup Guide</a> · <a href={revivalStoryUrl("hawaiian")} target="_blank" rel="noopener noreferrer">The Revival Story ↗</a></nav>}
       <LocalizedTypingTest content={content} />
 
       <section className={styles.keyboardSection} aria-labelledby={`${content.lang}-keyboard-heading`}>
