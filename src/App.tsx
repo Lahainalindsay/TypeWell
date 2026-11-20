@@ -302,7 +302,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
   const expected = fields[fieldIndex] ?? "";
 
   useEffect(() => {
-    if (recordIndex > 0 || fieldIndex > 0) inputRef.current?.focus();
+    if (recordIndex > 0 || fieldIndex > 0) inputRef.current?.focus({ preventScroll: true });
   }, [recordIndex, fieldIndex]);
 
   function submitField() {
@@ -554,7 +554,7 @@ function Trainer(props: {
         {props.seoCopy}
         {props.keys && <div className="key-strip">{props.keys.map((key) => <span key={key}>{key}</span>)}<small>Target {props.targetWpm} WPM · {props.targetAccuracy}% accuracy</small></div>}
         {props.progress.settings.showLiveMetrics && <div className="metrics"><Metric label="WPM" value={metrics.wpm} /><Metric label="Accuracy" value={`${metrics.accuracy}%`} /><Metric label="Consistency" value={`${metrics.consistency}%`} /><Metric label="Time" value={formatTime(metrics.elapsedMs)} />{props.duration && <Metric label="Remaining" value={formatTime(Math.max(0, props.duration * 1000 - metrics.elapsedMs))} />}</div>}
-        <TypingText target={activeTarget} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus()} />
+        <TypingText target={activeTarget} statuses={session.statuses} index={session.typed.length} fontSize={props.progress.settings.fontSize} lineHeight={props.progress.settings.lineHeight} onFocusInput={() => inputRef.current?.focus({ preventScroll: true })} />
         {!session.startedAt && <p className="start-hint">Tap or click the text, then start typing. The timer begins on your first keystroke.</p>}
         <textarea
           ref={inputRef}
@@ -593,7 +593,7 @@ function TypingText({ target, statuses, index, fontSize, lineHeight, onFocusInpu
     function keepCurrentLineVisible() {
       if (!viewport) return;
       const current = viewport.querySelector<HTMLElement>(".current");
-      if (!current || index === 0) { viewport.scrollTop = 0; return; }
+      if (!current || index === 0) { if (index === 0) viewport.scrollTop = 0; return; }
       // Measure relative to the scrolling viewport, not offsetTop (whose
       // offset parent may be a different ancestor on mobile browsers).
       const viewportRect = viewport.getBoundingClientRect();
@@ -612,11 +612,10 @@ function TypingText({ target, statuses, index, fontSize, lineHeight, onFocusInpu
       }
     }
     keepCurrentLineVisible();
-    window.addEventListener("resize", keepCurrentLineVisible);
-    return () => window.removeEventListener("resize", keepCurrentLineVisible);
+    // Do not re-scroll on mobile keyboard viewport resize: it can move the whole page.
   }, [target, index, fontSize, lineHeight]);
   return (
-    <div ref={viewportRef} className="typing-text typing-viewport" style={{ fontSize, lineHeight }} tabIndex={0} role="textbox" aria-label="Typing prompt. Start typing to begin." onMouseDown={(event) => { event.preventDefault(); onFocusInput?.(); }} onFocus={onFocusInput} onClick={onClickInput ?? onFocusInput}>
+    <div ref={viewportRef} className="typing-text typing-viewport" style={{ fontSize, lineHeight }} role="group" aria-label="Typing passage. Tap to activate typing." onMouseDown={(event) => { event.preventDefault(); onFocusInput?.(); }} onClick={onClickInput ?? onFocusInput}>
       {targetCharacters.map((char, targetIndex) => (
         <span key={targetIndex} className={`${statuses[targetIndex] ?? "pending"} ${targetIndex === index ? "current" : ""}`}>{char}</span>
       ))}
@@ -814,7 +813,7 @@ function Rhythm({ progress, setProgress }: SharedProps) {
       <div className="trainer-head"><div><h1>Rhythm Trainer</h1><p>Type one keystroke per beat. Use visual pulse, audio if enabled, or silent timing.</p></div><button className="primary" onClick={begin}>Start Timing</button></div>
       <div className="rhythm-grid">
         <div className="panel"><h2>Keystroke Metronome</h2><Segment values={[40,50,60,70,80,90,100,120,140,160]} value={bpm} setValue={setBpm} suffix=" BPM" /><select aria-label="Rhythm practice mode" value={mode} onChange={(e) => setMode(e.target.value)}><option>Single Keys</option><option>Letter Sequences</option><option>Words</option><option>Sentences</option></select><label className="inline-toggle"><input type="checkbox" checked={progress.settings.metronome} onChange={(event) => setProgress((old) => ({ ...old, settings: { ...old.settings, metronome: event.target.checked } }))} /> Audio metronome</label><div className={pulse ? "beat on" : "beat"} aria-label="Visual beat indicator" /></div>
-        <div className="panel"><div className="coach-title"><h2>Timing Coach</h2><button className="primary" onClick={begin}>{running ? "Restart Timing" : "Start Timing"}</button></div><TypingText target={text} statuses={[]} index={hits.length} fontSize={22} lineHeight={1.7} onFocusInput={() => inputRef.current?.focus()} onClickInput={() => { if (!running) void begin(); else inputRef.current?.focus(); }} /><textarea ref={inputRef} className="sr-input" value="" readOnly onKeyDown={key} aria-label="Rhythm typing input. Type one key per beat." /><p className="start-hint">{running ? "Type the displayed sequence one key per beat." : "Click Start Timing or click the text to begin."}</p><TimingHeatmap deviation={metrics.deviations.at(-1) ?? 0} /><div className="metrics"><Metric label="Rhythm Accuracy" value={`${metrics.withinTolerancePercent}%`} /><Metric label="Avg Deviation" value={`${metrics.averageDeviationMs}ms`} /><Metric label="Std Dev" value={`${metrics.standardDeviationMs}ms`} /><Metric label="Status" value={metrics.label} /></div></div>
+        <div className="panel"><div className="coach-title"><h2>Timing Coach</h2><button className="primary" onClick={begin}>{running ? "Restart Timing" : "Start Timing"}</button></div><TypingText target={text} statuses={[]} index={hits.length} fontSize={22} lineHeight={1.7} onFocusInput={() => inputRef.current?.focus({ preventScroll: true })} onClickInput={() => { if (!running) void begin(); else inputRef.current?.focus(); }} /><textarea ref={inputRef} className="sr-input" value="" readOnly onKeyDown={key} aria-label="Rhythm typing input. Type one key per beat." /><p className="start-hint">{running ? "Type the displayed sequence one key per beat." : "Click Start Timing or click the text to begin."}</p><TimingHeatmap deviation={metrics.deviations.at(-1) ?? 0} /><div className="metrics"><Metric label="Rhythm Accuracy" value={`${metrics.withinTolerancePercent}%`} /><Metric label="Avg Deviation" value={`${metrics.averageDeviationMs}ms`} /><Metric label="Std Dev" value={`${metrics.standardDeviationMs}ms`} /><Metric label="Status" value={metrics.label} /></div></div>
       </div>
     </section>
   );
