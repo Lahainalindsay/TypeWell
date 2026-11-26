@@ -374,12 +374,12 @@ export const seoPages: SeoPage[] = [
   {
     path: "/typing-games/",
     title: "Typing Games - Free Accuracy and Speed Drills | WPMTest",
-    description: "Play lightweight typing games that reinforce real keyboard accuracy, speed bursts, and repeat practice.",
+    description: "Play free typing games. Clear words before they reach shore in Word Tide or sprint through a 20-second Word Rush.",
     h1: "Typing Games",
-    intro: "Typing games should reinforce real typing skill, not distract from accuracy.",
+    intro: "Play Word Tide and Word Rush for free on WPMTest.",
     content: [
-      "WPMTest's first typing game is a short speed-burst drill that records local practice results.",
-      "More games can be added later without fake leaderboards or account requirements."
+      "In Word Tide, clear words before they reach the shore. Waves get faster, three misses end the run, and clearing words in a row earns bonus points. Your best score stays in this browser.",
+      "Word Rush is a 20-second typing sprint that saves results to your local practice history."
     ],
     related: [
       { href: "/typing-practice/", label: "Typing Practice" },
