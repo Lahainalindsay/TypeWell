@@ -32,6 +32,7 @@ import { resolveTheme, THEME_EVENT, type ThemePreference } from "./lib/theme";
 const Progress = dynamic(() => import("./features/localPreferences/ProgressAndSettings").then(module => module.Progress));
 const Settings = dynamic(() => import("./features/localPreferences/ProgressAndSettings").then(module => module.Settings));
 const PersonalityCard = dynamic(() => import("./features/PersonalityCard").then(module => module.PersonalityCard));
+const WordTide = dynamic(() => import("./features/typingGames/WordTide").then(module => module.WordTide));
 
 type Page = "home" | "learn" | "practice" | "test" | "rhythm" | "progress" | "settings" | "tools" | "games";
 
@@ -909,11 +910,12 @@ function TypingCertificate({ progress, go }: { progress: ProgressData; go: (page
   );
 }
 
-function TypingGames({ progress, setProgress, record, setFocus, path, go }: SharedProps) {
+function TypingGames({ progress, setProgress, record, setFocus, go }: SharedProps) {
   return (
     <section className="dashboard">
-      <div className="trainer-head"><div><h1>Typing Games</h1><p>Lightweight drills that reinforce real typing accuracy without accounts or leaderboards.</p></div><Gamepad2 aria-hidden="true" /></div>
-      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildInitialPracticeText("Speed Burst", 35)} regenerate={() => buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">This typing game is a functional 20-second speed burst, not a leaderboard. Results are stored locally with your other practice history.</p>} />
+      <div className="trainer-head"><div><h1>Typing Games</h1><p>Play Word Tide or warm up with a 20-second Word Rush.</p></div><Gamepad2 aria-hidden="true" /></div>
+      <WordTide />
+      <Trainer title="Word Rush" heading="h2" subtitle="A short speed-burst game. Type common words cleanly before chasing peak WPM." target={buildInitialPracticeText("Speed Burst", 35)} regenerate={() => buildPracticeText("Speed Burst", 35)} mode="practice" duration={20} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} seoCopy={<p className="tool-copy">Results are saved with your practice history on this device.</p>} />
     </section>
   );
 }
