@@ -228,7 +228,7 @@ export default function LocalizedTypingTest({ content }: { content: LocalizedTyp
       ) : null}
 
       {result && certificateOpen ? (
-        <div className={styles.modalBackdrop} role="dialog" aria-modal="true" aria-labelledby={`${content.lang}-certificate-dialog`}>
+        <div data-language-certificate className={styles.modalBackdrop} role="dialog" aria-modal="true" aria-labelledby={`${content.lang}-certificate-dialog`}>
           <div className={styles.modal}>
             <button type="button" className={styles.closeButton} onClick={() => setCertificateOpen(false)} aria-label={content.ui.close}>×</button>
             {!certificateReady ? (

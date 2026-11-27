@@ -42,9 +42,9 @@ export const guideDetails: Record<string, GuideDetails> = {
   characters:[{forms:'à è ì ò ù',meaning:'Lowercase grave-accented vowels.',entry:'Select the mark sloping down to the right; á and à are different characters.'},{forms:'À È Ì Ò Ù',meaning:'Uppercase grave-accented vowels.',entry:'Use a supporting uppercase character or a character picker; do not replace it with an unmarked capital.'}],example:'Gàidhlig · à è ì ò ù',checklist:['Keep à distinct from á.','Retain accents in capitals.','Do not let a different language’s spellchecker silently replace the forms.']
  },
  manx: {
-  script:'Latin alphabet. The introductory language-name drill can be entered on an ordinary English Latin layout.',keyboard:'Your usual Latin keyboard for this drill',
-  method:'You do not need to install a new keyboard for the current name-copy exercise. Keep your Latin layout, then check spaces and capital letters. If a later verified passage contains additional marks, use the forms required by that source.',
-  characters:[{forms:'Gaelg',meaning:'Language-name form used in the introductory drill.',entry:'Type the Latin letters directly, preserving the initial capital.'},{forms:'Ellan Vannin',meaning:'A two-word name included in the copying material.',entry:'Enter the space between the words; do not join them or add accents.'}],example:'Gaelg Ellan Vannin',checklist:['Use the source’s capitalization.','Retain spaces between words.','Treat this as name-copy practice, not a full Manx reading lesson.']
+  script:'Latin alphabet. The passage test uses connected Manx text, and the character exercise also includes ç and letter combinations.',keyboard:'A Latin keyboard with access to ç',
+  method:'An ordinary Latin layout handles most of the passage. Use an international layout or a character picker for ç when required. Check spaces, capitalization, punctuation and the source spelling.',
+  characters:[{forms:'Gaelg',meaning:'Language-name form used in the introductory drill.',entry:'Type the Latin letters directly, preserving the initial capital.'},{forms:'Ellan Vannin',meaning:'A two-word name included in the copying material.',entry:'Enter the space between the words; do not join them or add accents.'}],example:'Gaelg Ellan Vannin',checklist:['Use the source’s capitalization.','Retain spaces between words.','Compare the same material and test duration when reviewing your typing results.']
  },
  'taiwanese-taigi': {
   script:'This guide uses Latin-script Pe̍h-ōe-jī examples. Taigi also has other writing traditions; their input conventions are not interchangeable.',keyboard:'A Pe̍h-ōe-jī-capable input method, such as PhahTaigi POJ',
@@ -65,3 +65,18 @@ export const setupSources = [
  {title:'Windows Character Map and Unicode characters',url:'https://support.microsoft.com/en-us/word/insert-ascii-or-unicode-latin-based-symbols-and-characters'},
  {title:'Mac Character Viewer shortcut',url:'https://support.apple.com/102650'}
 ];
+
+// Compatible, documented layout references. Platform-specific keyboard guides
+// above remain authoritative for the user's selected input source.
+export const keyboardLayouts: Record<string, { title: string; url: string }> = {
+ hawaiian: { title: 'Hawaiian Basic — layout and on-screen keyboard', url: 'https://keyman.com/keyboards/basic_kbdhaw' },
+ maori: { title: 'Māori Basic — layout and on-screen keyboard', url: 'https://keyman.com/keyboards/basic_kbdmaori' },
+ cherokee: { title: 'Cherokee Nation — syllabary and phonetic layouts', url: 'https://language.cherokee.gov/fonts-and-keyboards/cherokee-keyboards' },
+ basque: { title: 'Spanish Basic — compatible Latin layout with ñ', url: 'https://keyman.com/keyboards/basic_kbdsp' },
+ welsh: { title: 'Cymraeg Fodern — Welsh QWERTY layout', url: 'https://keyman.com/keyboards/cymraeg_fodern' },
+ irish: { title: 'US International — compatible accent-capable layout', url: 'https://keyman.com/keyboards/basic_kbdusx' },
+ 'scottish-gaelic': { title: 'Gaelic Basic — layout and on-screen keyboard', url: 'https://keyman.com/keyboards/basic_kbdgae' },
+ manx: { title: 'US International — compatible Latin layout with ç', url: 'https://keyman.com/keyboards/basic_kbdusx' },
+ 'taiwanese-taigi': { title: 'PhahTaigi — Pe̍h-ōe-jī layout and tone-mark instructions', url: 'https://help.keyman.com/keyboard/taigi_poj/1.4.1/taigi_poj' },
+ 'sorani-kurdish': { title: 'Central Kurdish Basic — Sorani layout', url: 'https://keyman.com/keyboards/basic_kbdkurd' }
+};

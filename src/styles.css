@@ -404,3 +404,11 @@ h1 { font-size: clamp(2rem, 4vw, 4rem); margin: 0 0 0.5rem; letter-spacing: 0; }
 /* Stack filter labels and contain long passage names on small screens. */
 .comparison-filters label { flex-direction: column; align-items: stretch; min-width: 0; }
 .comparison-filters select { width: 100%; min-width: 0; }
+
+.revival-prompt { max-height: 13rem; overflow: auto; padding: 1rem; margin: 1rem 0; font-size: clamp(1.2rem, 3vw, 1.6rem); line-height: 1.9; overflow-wrap: anywhere; border: 1px solid var(--line); border-radius: 12px; }
+.revival-prompt .current { border-bottom: 3px solid var(--accent); background: color-mix(in srgb, var(--accent), transparent 80%); }
+.revival-capture { display: block; width: 100%; min-height: 7rem; font-size: 16px; line-height: 1.6; margin-block: .75rem; }
+.revival-character-reference { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: 1rem; }
+.revival-character-reference span { display: grid; place-items: center; min-width: 2.8rem; min-height: 2.8rem; padding: .4rem; font-size: 1.25rem; border: 1px solid var(--line); border-radius: 7px; }
+@font-face { font-family: 'WPM Cherokee'; src: url('/fonts/noto-sans-cherokee.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+[lang="chr"], [lang="chr"] * { font-family: 'WPM Cherokee', sans-serif; }
