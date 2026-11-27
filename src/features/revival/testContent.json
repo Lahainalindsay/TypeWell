@@ -1,0 +1,101 @@
+{
+  "maori": {
+    "lang": "mi",
+    "direction": "ltr",
+    "certificateTitle": "Tiwhikete",
+    "characters": "a e h i k m n o p r t u w ng wh ā ē ī ō ū Ā Ē Ī Ō Ū",
+    "passage": "Ko te katoa o nga tangata i te whanaungatanga mai e watea ana i nga here katoa; e tauriterite ana hoki nga mana me nga tika. E whakawhiwhia ana hoki ki a ratou te ngakau whai whakaaro me te hinengaro mohio ki te tika me te he, a e tika ana kia meinga te mahi a tetahi ki tetahi me ma roto atu i te wairua o te noho tahi, ano he teina he tuakana i ringa i te whakaaro kotahi.",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Maori",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_mri.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://maoridictionary.co.nz/word/8269"
+  },
+  "cherokee": {
+    "lang": "chr",
+    "direction": "ltr",
+    "certificateTitle": "ᎬᏂᎨᏒ ᎢᎬᏁᏗ",
+    "characters": "Ꭰ Ꭱ Ꭲ Ꭳ Ꭴ Ꭵ Ꭶ Ꭷ Ꭸ Ꭹ Ꭺ Ꭻ Ꭼ Ꭽ Ꭾ Ꭿ Ꮀ Ꮁ Ꮂ Ꮃ Ꮄ Ꮅ Ꮆ Ꮇ Ꮈ Ꮉ Ꮊ Ꮋ Ꮌ Ꮍ Ꮎ Ꮏ Ꮐ Ꮑ Ꮒ Ꮓ Ꮔ Ꮕ Ꮖ Ꮗ Ꮘ Ꮙ Ꮚ Ꮛ Ꮜ Ꮝ Ꮞ Ꮟ Ꮠ Ꮡ Ꮢ Ꮣ Ꮤ Ꮥ Ꮦ Ꮧ Ꮨ Ꮩ Ꮪ Ꮫ Ꮬ Ꮭ Ꮮ Ꮯ Ꮰ Ꮱ Ꮲ Ꮳ Ꮴ Ꮵ Ꮶ Ꮷ Ꮸ Ꮹ Ꮺ Ꮻ Ꮼ Ꮽ Ꮾ Ꮿ Ᏸ Ᏹ Ᏺ Ᏻ Ᏼ ꭰ ꭱ ꭲ ꭳ ꭴ ꭵ ꭶ ꭷ ꭸ ꭹ ꭺ ꭻ ꭼ ꭽ ꭾ ꭿ ꮀ ꮁ ꮂ ꮃ ꮄ ꮅ ꮆ ꮇ ꮈ ꮉ ꮊ ꮋ ꮌ ꮍ ꮎ ꮏ ꮐ ꮑ ꮒ ꮓ ꮔ ꮕ ꮖ ꮗ ꮘ ꮙ ꮚ ꮛ ꮜ ꮝ ꮞ ꮟ ꮠ ꮡ ꮢ ꮣ ꮤ ꮥ ꮦ ꮧ ꮨ ꮩ ꮪ ꮫ ꮬ ꮭ ꮮ ꮯ ꮰ ꮱ ꮲ ꮳ ꮴ ꮵ ꮶ ꮷ ꮸ ꮹ ꮺ ꮻ ꮼ ꮽ ꮾ ꮿ ᏸ ᏹ ᏺ ᏻ ᏼ",
+    "passage": "ᏂᎦᏓ ᎠᏂᏴᏫ ᎤᎾᏕᏅᎢ ᎤᎾᏚᏓᎴᏓ ᎠᎴ ᎡᏧᎳᎭᏉ ᎾᎢ ᎠᏢᏉᏙᏗ ᎠᎴ ᎤᏂᎲ ᎢᏳᎾᏛᏗᎢ. ᎾᏍᎩᎾᏃ ᎤᎵᏍᎪᎸᏔᏅᎩ ᎤᏠᏯᏍᏗ ᏅᏰᎵᏛᎩ ᎠᎴ ᎠᏓᏅᏖᏟᏓᏍᏗ ᎠᎴ ᎡᎵᏍᏗ ᏏᏴᏫᎭ ᏂᏚᎾᏓᏛᎾᏕᎬᎩ Ꮎ ᏗᎾᏓᏅᏟ ᎠᏓᏅᏙ ᎬᏗ.",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Cherokee (uppercase)",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_chr_uppercase.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://language.cherokee.gov/media/ykahxw4v/oudictionaryeuglutan.pdf"
+  },
+  "basque": {
+    "lang": "eu",
+    "direction": "ltr",
+    "certificateTitle": "Ziurtagiria",
+    "characters": "a b c d e f g h i j k l m n ñ o p q r s t u v w x y z Ñ tx tz ts",
+    "passage": "Gizon-emakume guztiak aske jaiotzen dira, duintasun eta eskubide berberak dituztela; eta ezaguera eta kontzientzia dutenez gero, elkarren artean senide legez jokatu beharra dute.",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Basque",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_eus.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://www.elhuyar.eus/sites/default/files/pd/dd37ec68589da3b6f89f140e521dde0554c1ee8f.pdf"
+  },
+  "welsh": {
+    "lang": "cy",
+    "direction": "ltr",
+    "certificateTitle": "Tystysgrif",
+    "characters": "a b c ch d dd e f ff g ng h i j l ll m n o p ph r rh s t th u w y â ê î ô û ŵ ŷ Â Ê Î Ô Û Ŵ Ŷ á é í ó ú ẃ ý à è ì ò ù ẁ ỳ ä ë ï ö ü ẅ ÿ",
+    "passage": "Genir pawb yn rhydd ac yn gydradd â’i gilydd mewn urddas a hawliau. Fe’u cynysgaeddir â rheswm a chydwybod, a dylai pawb ymddwyn y naill at y llall mewn ysbryd cymodlon.",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Welsh",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_cym.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://hwb.gov.wales/api/storage/abcee699-e7e0-43ab-be70-ca884001c961/Tystysgrif%20-%20Certificate.pdf"
+  },
+  "irish": {
+    "lang": "ga",
+    "direction": "ltr",
+    "certificateTitle": "Teastas",
+    "characters": "a b c d e f g h i l m n o p r s t u á é í ó ú Á É Í Ó Ú",
+    "passage": "Saoláitear na daoine uile saor agus comhionann ina ndínit agus ina gcearta. Tá bauidh an réasúin agus an choinsiasa acu agus dlíd iad féin d'iompar de mheon bhrthreachais i leith a chéile.",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Gaelic, Irish",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_gle.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://www.teanglann.ie/ga/eid/teastas"
+  },
+  "scottish-gaelic": {
+    "lang": "gd",
+    "direction": "ltr",
+    "certificateTitle": "Teisteanas",
+    "characters": "a b c d e f g h i l m n o p r s t u à è ì ò ù À È Ì Ò Ù",
+    "passage": "Tha gach uile dhuine air a bhreth saor agus co-ionnan ann an urram 's ann an còirichean. Tha iad air am breth le reusan is le cogais agus mar sin bu chòir dhaibh a bhith beò nam measg fhein ann an spiorad bràthaireil,",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Gaelic, Scottish",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_gla.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://go-gaelic.scot/classroom-resources/"
+  },
+  "manx": {
+    "lang": "gv",
+    "direction": "ltr",
+    "certificateTitle": "Teisht",
+    "characters": "a b c d e f g h i j k l m n o p q r s t u v w x y z ç çh ch gh sh th",
+    "passage": "Ta dy chooilley ghooinney ruggit seyr as corrym rish dy chooilley ghooinney elley ayns ooashley as ayns cairys. Ta resoon as cooinsheanse stowit orroo as lhisagh ad dellal rish y cheilley lesh spyrryd braaragh.",
+    "sourceTitle": "Universal Declaration of Human Rights, Article 1 — Manx",
+    "sourceUrl": "https://raw.githubusercontent.com/unicode-org/udhr/e6a1b6f8cb048fba115d6b81bab47875a4eca0d8/data/udhr/udhr_glv.xml",
+    "sourceNote": "Source spelling is preserved. The excerpt repeats as needed for the selected duration.",
+    "certificateSource": "https://manxlanguage.sch.im/pages/index/view/id/3/Teisht%20Chadjin%20%28General%20Certificate%29"
+  },
+  "taiwanese-taigi": {
+    "lang": "nan-Latn",
+    "direction": "ltr",
+    "certificateTitle": "Chèng-su",
+    "characters": "a b ch chh e g h i j k kh l m n ng o o͘ p ph s t th u á à â ā a̍ é è ê ē e̍ í ì î ī i̍ ó ò ô ō o̍ ú ù û ū u̍ ⁿ",
+    "passage": "Lâng-lâng seng-jî chū-iû, chāi chun-giâm kah koân-lī siōng it-lu̍t pêng-téng.",
+    "sourceTitle": "UDHR Article 1 excerpt in Pe̍h-ōe-jī — Hokkien (Wikipedia, CC BY-SA)",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Hokkien#Writing_systems",
+    "sourceNote": "A short published Pe̍h-ōe-jī excerpt, repeated for timed copying. This test uses POJ rather than Tâi-lô or Han characters.",
+    "certificateSource": "https://en.wiktionary.org/wiki/證書"
+  },
+  "sorani-kurdish": {
+    "lang": "ckb",
+    "direction": "rtl",
+    "certificateTitle": "بڕوانامە",
+    "characters": "ئ ا ب پ ت ج چ ح خ د ر ڕ ز ژ س ش ع غ ف ڤ ق ک گ ل ڵ م ن ه ە و ۆ وو ی ێ",
+    "passage": "تایبەت بە دەرچوانی زانکۆ بۆ داواکردنی بڕوانامە و بەدواداچوونی داواکارییەکان",
+    "sourceTitle": "Soran University — short graduate-services excerpt",
+    "sourceUrl": "https://certificate.soran.edu.iq/",
+    "sourceNote": "A short public university-services excerpt, repeated for timed copying. Arabic-derived Central Kurdish script is retained.",
+    "certificateSource": "https://certificate.soran.edu.iq/"
+  }
+}

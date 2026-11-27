@@ -1,25 +1,107 @@
 "use client";
-import { useTypingViewport } from "../../hooks/useTypingViewport";
-import { useEffect, useRef, useState } from 'react';
+
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { splitGraphemes } from '../../engine/graphemes';
-export const drillCharacters:Record<string,string>={maori:'ā ē ī ō ū Māori',cherokee:'ᏣᎳᎩ',basque:'ñ Euskara',welsh:'â ê î ô û ŵ ŷ',manx:'Gaelg Ellan Vannin', 'scottish-gaelic':'à è ì ò ù Gàidhlig',irish:'á é í ó ú Gaeilge',catalan:'à è é í ï ò ó ú ü ç l·l', 'taiwanese-taigi':'Tâi-gí Pe̍h-ōe-jī','hakka-sixian':'四 縣 客 語','hakka-hailu':'海 陸 客 語',wenzhounese:'溫 州 話','sorani-kurdish':'ڕ ڵ ۆ ێ ە کوردی'};
-export function copyScore(target:string,typed:string,elapsed:number){const expected=splitGraphemes(target),actual=splitGraphemes(typed);const correct=actual.filter((c,i)=>c===expected[i]).length;return {correct,total:actual.length,accuracy:actual.length?Math.round(correct/actual.length*100):0,wpm:elapsed>0?Math.round(correct/5/(elapsed/60000)):0};}
-export default function RevivalPractice({id,name}:{id:string;name:string}){
- const [custom,setCustom]=useState(''),[useCustom,setUseCustom]=useState(false),[typed,setTyped]=useState(''),[start,setStart]=useState<number|null>(null),[now,setNow]=useState(0),[done,setDone]=useState(false);
- const input=useRef<HTMLTextAreaElement>(null);
- useTypingViewport(input);
- const source=(useCustom&&custom.trim()?custom.trim():drillCharacters[id]).normalize('NFC');
- const target=Array(40).fill(source).join(' ');
- useEffect(()=>{if(start===null||done)return;const tick=()=>{const time=Date.now();setNow(Math.min(time,start+60000));if(time-start>=60000)setDone(true);};const timer=window.setInterval(tick,100);return()=>window.clearInterval(timer);},[start,done]);
- const elapsed=start===null?0:Math.min(60000,Math.max(0,now-start));const score=copyScore(target,typed,elapsed);
- function reset(){setTyped('');setStart(null);setNow(0);setDone(false);requestAnimationFrame(()=>input.current?.focus({preventScroll:true}));}
- return <section className="panel" aria-label={`${name} character practice`}>
- <h2>One-minute {name} keyboard practice</h2><p>Copy the line below. The timer starts on your first input. Default material is a repeated character/name drill, not a sentence corpus or a fluency assessment.</p>
- <details><summary>Practice a passage you already know</summary><p>Paste material you have permission to use and whose language/variety you can verify. Text stays in this browser’s memory and is not uploaded by this tool.</p><label htmlFor="revival-source">Your passage</label><textarea id="revival-source" value={custom} disabled={start!==null} onChange={e=>setCustom(e.target.value.slice(0,4000))}/><label><input type="checkbox" checked={useCustom} disabled={start!==null||!custom.trim()} onChange={e=>setUseCustom(e.target.checked)}/> Use my passage</label></details>
- <p><strong>{Math.ceil((60000-elapsed)/1000)} seconds remaining</strong></p>
- <p data-typing-prompt style={{padding:20,fontSize:'1.35rem',lineHeight:1.8,overflowWrap:'anywhere',background:'var(--bg-2)',borderRadius:12}} dir={id==='sorani-kurdish'?'rtl':'ltr'}>{splitGraphemes(target).slice(Math.max(0,splitGraphemes(typed).length-30),splitGraphemes(typed).length+120).join('')}</p>
- <label htmlFor="revival-typing">Type the displayed text</label><textarea id="revival-typing" ref={input} disabled={done} value={typed} dir={id==='sorani-kurdish'?'rtl':'ltr'} autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false} onChange={e=>{const time=Date.now();if(start!==null&&time-start>=60000){setNow(start+60000);setDone(true);return;}const value=e.target.value.normalize('NFC').slice(0,target.length);if(!value&&start===null)return;if(start===null)setStart(time);setNow(time);setTyped(value);if(value===target)setDone(true);}}/>
- {done&&<div role="status"><h3>Practice complete</h3><p>{score.wpm} WPM · {score.accuracy}% copy accuracy · {score.correct} matching characters of {score.total} entered.</p><p>Copy accuracy compares the current text with the target; corrected mistakes are not retained in this exercise. WPM uses matching grapheme clusters ÷ 5 ÷ elapsed minutes. These repeated drills are easier to anticipate than unseen prose; compare only like-for-like attempts. A score does not demonstrate language knowledge.</p></div>}
- <button type="button" onClick={reset}>Restart practice</button><p>Use your normal input method. Combining marks are normalized to NFC and counted as grapheme clusters; input-method composition is supported by the text field. {id==='wenzhounese'||id.startsWith('hakka')?'A Han-character drill cannot distinguish pronunciation or certify a particular spoken variety.':''}</p>
- </section>;
+import { useTypingViewport } from '../../hooks/useTypingViewport';
+import { revivalTestContent } from './testContent';
+import { languagePathways } from './pathways';
+import RevivalCertificate, { type RevivalResult } from './RevivalCertificate';
+import styles from '../localized/LocalizedTypingPage.module.css';
+
+export const drillCharacters: Record<string, string> = {
+  ...Object.fromEntries(Object.entries(revivalTestContent).map(([id, content]) => [id, content.characters])),
+  catalan: 'à è é í ï ò ó ú ü ç l·l', 'hakka-sixian': '四 縣 客 語',
+  'hakka-hailu': '海 陸 客 語', wenzhounese: '溫 州 話'
+};
+
+export function copyScore(target: string, typed: string, elapsed: number) {
+  const expected = splitGraphemes(target), actual = splitGraphemes(typed);
+  const correct = actual.filter((character, index) => character === expected[index]).length;
+  return { correct, total: actual.length, accuracy: actual.length ? Math.round(correct / actual.length * 100) : 0,
+    wpm: elapsed > 0 ? Math.round(correct / 5 / (elapsed / 60000)) : 0 };
+}
+
+export default function RevivalPractice({ id, name }: { id: string; name: string }) {
+  const content = revivalTestContent[id];
+  const [duration, setDuration] = useState(60);
+  const [mode, setMode] = useState(content ? 'passage' : 'characters');
+  const [custom, setCustom] = useState('');
+  const [typed, setTyped] = useState('');
+  const [capture, setCapture] = useState('');
+  const [start, setStart] = useState<number | null>(null);
+  const [now, setNow] = useState(0);
+  const [result, setResult] = useState<RevivalResult | null>(null);
+  const input = useRef<HTMLTextAreaElement>(null);
+  const composing = useRef(false);
+  useTypingViewport(input);
+  const source = mode === 'custom' ? custom.trim() : mode === 'passage' ? content?.passage : drillCharacters[id];
+  const target = useMemo(() => {
+    const text = (source || drillCharacters[id] || '').normalize('NFC');
+    const count = Math.max(1, Math.ceil(duration * 15 / Math.max(1, splitGraphemes(text).length)));
+    return Array(count).fill(text).join(' ');
+  }, [source, duration, id]);
+  const expected = useMemo(() => splitGraphemes(target), [target]);
+  const entered = splitGraphemes(typed);
+  const elapsed = start === null ? 0 : Math.min(duration * 1000, Math.max(0, now - start));
+  const score = copyScore(target, typed, elapsed);
+  const direction = content?.direction === 'rtl' ? 'rtl' : 'ltr';
+
+  function finish(time: number, text = typed) {
+    const elapsed = Math.max(1, Math.min(duration * 1000, time - (start ?? time)));
+    setNow(time); setCapture(text);
+    setResult({ ...copyScore(target, text, elapsed), elapsed, completed: new Date().toISOString(), material: mode === 'passage' ? '¶' : mode === 'characters' ? 'Aa' : '✎' });
+  }
+  useEffect(() => {
+    if (start === null || result) return;
+    const timer = window.setInterval(() => {
+      const time = Date.now();
+      if (time - start >= duration * 1000) finish(start + duration * 1000);
+      else setNow(time);
+    }, 100);
+    return () => window.clearInterval(timer);
+  }, [start, result, duration, typed, target, mode]);
+
+  function reset() {
+    setTyped(''); setCapture(''); setStart(null); setNow(0); setResult(null); composing.current = false;
+    requestAnimationFrame(() => input.current?.focus({ preventScroll: true }));
+  }
+  function begin() {
+    if (start === null) { const time = Date.now(); setStart(time); setNow(time); }
+  }
+  function update(value: string) {
+    const time = Date.now();
+    if (start !== null && time - start >= duration * 1000) { finish(start + duration * 1000); return; }
+    begin();
+    const text = splitGraphemes(value).slice(0, expected.length).join('');
+    setTyped(text); setCapture(text); setNow(time);
+    if (text === target) finish(time, text);
+  }
+  const native = languagePathways.find(language => language.id === id)?.native ?? name;
+  return <section className={styles.testPanel} aria-label={`${name} typing test`}>
+    <h2>{name} Typing Test</h2>
+    <p>Choose a duration and material, then copy the displayed text. The timer begins with your first input.</p>
+    <div className={styles.resultActions}>
+      <label>Duration<select value={duration} disabled={start !== null} onChange={event => setDuration(Number(event.target.value))}>{[60, 180, 300].map(seconds => <option key={seconds} value={seconds}>{seconds / 60} minute{seconds > 60 ? 's' : ''}</option>)}</select></label>
+      <label>Test material<select value={mode} disabled={start !== null} onChange={event => setMode(event.target.value)}>{content && <option value="passage">Sourced passage</option>}<option value="characters">Characters and writing patterns</option><option value="custom">My own text</option></select></label>
+    </div>
+    {mode === 'custom' && <label>Your passage<textarea value={custom} disabled={start !== null} maxLength={4000} onChange={event => setCustom(event.target.value)} /><span>Use text you have permission to copy. It stays in this browser.</span></label>}
+    {content && mode === 'passage' && <p><a href={content.sourceUrl} target="_blank" rel="noopener noreferrer">{content.sourceTitle}</a>. {content.sourceNote}</p>}
+    <p aria-live="off"><strong>{Math.ceil((duration * 1000 - elapsed) / 1000)} seconds remaining</strong> · {score.wpm} WPM · {score.accuracy}%</p>
+    <div data-typing-prompt className="revival-prompt" lang={content?.lang} dir={direction} onClick={() => input.current?.focus({ preventScroll: true })}>
+      {expected.slice(Math.max(0, entered.length - 25), entered.length + 100).map((character, offset) => {
+        const index = Math.max(0, entered.length - 25) + offset;
+        return <span key={index} className={index === entered.length ? 'current' : index < entered.length ? character === entered[index] ? 'correct' : 'incorrect' : ''}>{character}</span>;
+      })}
+    </div>
+    <label>Type the displayed text<textarea ref={input} lang={content?.lang} dir={direction} disabled={Boolean(result) || (mode === 'custom' && !custom.trim())} value={capture} className="revival-capture" autoComplete="off" autoCorrect="off" autoCapitalize="none" spellCheck={false}
+      onPaste={event => event.preventDefault()} onDrop={event => event.preventDefault()}
+      onCompositionStart={() => { composing.current = true; begin(); }}
+      onCompositionEnd={event => { composing.current = false; update(event.currentTarget.value); }}
+      onChange={event => { setCapture(event.target.value); if (!composing.current) update(event.target.value); }} /></label>
+    {result && <div role="status"><h3>Test complete</h3><p>{result.wpm} WPM · {result.accuracy}% copy accuracy · {result.correct}/{result.total} matching characters.</p>
+    </div>}
+    {result && content && <RevivalCertificate id={id} native={native} result={result} />}
+    <button type="button" onClick={reset}>Restart test</button>
+    <p>Scoring compares the final copied text with the target after NFC normalization. Corrections replace earlier mistakes. WPM means matching grapheme clusters ÷ 5 ÷ elapsed minutes. Compare the same material, keyboard and duration. The certificate records this copying result and does not certify language fluency.</p>
+  </section>;
 }

@@ -49,7 +49,7 @@ export default function Page() {
     <p>A language's place in the modern world extends beyond books and classrooms.</p>
     <p>It's present in messages between friends, school assignments, family conversations, creative work, and the countless everyday moments that now happen on screens.</p>
     <p>Being able to type accurately—whether that means entering an ʻokina in Hawaiian, a fada in Irish, or writing in the right-to-left Kurdish script—is one small but meaningful part of making a language usable in digital life.</p>
-    <p>Some languages in this collection have established typing passages. Others begin with carefully selected characters, names, and introductory exercises.</p>
+    <p>Choose a timed passage test, explore character and writing patterns, or practice text you already know. Each test links to its material source and keyboard guide. Completed results offer certificates in English, the tested language, or both.</p>
     <p>The emphasis is on <strong>correct written forms, accessible tools, and thoughtful practice</strong>, not speed alone.</p>
    </section>
    <section aria-labelledby="began-heading">
