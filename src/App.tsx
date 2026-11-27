@@ -1,4 +1,5 @@
 "use client";
+import { MissedFieldRetry } from "./features/dataEntry/MissedFieldRetry";
 
 import { TypingBenchmarks } from "./components/TypingBenchmarks";
 import { numericExercise, numericProfileForTitle } from "./features/numericProfiles";
@@ -123,7 +124,7 @@ function HomeTest({ progress, setProgress, record, setFocus, path, go }: SharedP
   const [passageType, setPassageType] = useState<"Sentences" | "Fun Facts" | "Tiny Dramas">("Sentences");
   const passage = useMemo(() => buildInitialPracticeText(passageType, Math.max(120, Math.round(duration * 1.8))), [duration, passageType]);
   const durationLabels: Record<number, string> = { 60: "1 Minute", 180: "3 Minutes", 300: "5 Minutes", 600: "10 Minutes" };
-  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} aria-pressed={duration === Number(seconds)} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><div className="panel home-passage-picker"><label htmlFor="home-passage-type"><strong>Choose your typing passage</strong></label><select id="home-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." target={passage} keyboardToggle regenerate={() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
+  return <section className="home-test"><div className="home-test-head"><div><h2>Check Your Typing Speed</h2><p>Choose a test length, then type the passage below. Your WPM, accuracy, and consistency update as you type.</p></div><div className="duration-picker" aria-label="Typing test duration">{Object.entries(durationLabels).map(([seconds, label]) => <button className={duration === Number(seconds) ? "active" : ""} aria-pressed={duration === Number(seconds)} onClick={() => { const next = Number(seconds); setDuration(next); trackEvent("test_duration_selected", { testType: "home", duration: next }); }} key={seconds}>{label}</button>)}</div></div><div className="panel home-passage-picker"><label htmlFor="home-passage-type"><strong>Choose your typing passage</strong></label><select id="home-passage-type" aria-label="Choose typing passage" value={passageType} onChange={e => setPassageType(e.target.value as typeof passageType)}><option value="Sentences">Everyday stories</option><option value="Fun Facts">Fun Facts — surprising and sarcastic</option><option value="Tiny Dramas">Tiny Dramas — funny mini stories</option></select></div><Trainer title={`${duration / 60} Minute Typing Test`} heading="h2" subtitle="Standard 5-character word scoring with local results and no signup." comparisonCategory={passageType} target={passage} keyboardToggle regenerate={() => buildPracticeText(passageType, Math.max(120, Math.round(duration * 1.8)))} mode="test" duration={duration} progress={progress} setProgress={setProgress} onRecord={record} setFocus={setFocus} onPractice={() => go("practice", "/practice/weak-keys")} /></section>;
 }
 
 function InternalLink({ href, go, children }: { href: string; go: (page: Page, route?: string) => void; children: React.ReactNode }) {
@@ -182,6 +183,7 @@ function Practice({ progress, setProgress, record, setFocus, path, embedded }: S
       title={path.replace(/\/$/, "") === "/touch-typing-practice" ? "Touch Typing Practice" : path.replace(/\/$/, "") === "/practice/weak-keys" ? "Weak-Key Typing Practice" : "Typing Practice — Targeted Drills to Fix Your Weak Keys"}
       heading={embedded ? "h2" : undefined}
       subtitle="Choose a focused mode, duration, or word-count target. Everything runs locally in your browser."
+      comparisonCategory={mode}
       target={target}
       regenerate={mode === "Custom Text" ? undefined : () => mode === "Weak Keys" ? generateWeakKeyExercise(weak.map((item) => item.key)) : buildPracticeText(mode, count, custom)}
       mode="practice"
@@ -241,6 +243,7 @@ function Test({ progress, setProgress, record, setFocus, path, go, embedded }: S
   return (
     <Trainer
       title={testTitle}
+      comparisonCategory={pageCount ? "Page passage" : testMode === "Sentences" ? passageType : testMode}
       personalityTest={personalityTest}
       heading={embedded ? "h2" : undefined}
       subtitle={pageCount ? "Finish the whole passage at your own pace. No countdown or account required." : "Standard 5-character word WPM with raw WPM, accuracy, consistency, and local best comparisons."}
@@ -335,7 +338,7 @@ function DataEntryTrainer({ path, progress, setProgress, onRecord, setFocus, go,
   function reset() { setRecordIndex(0); setFieldIndex(0); setActual([]); setValue(""); setStartedAt(null); setFinished(null); setReport(null); requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true })); }
   return <section className="dashboard utility-test">
     <div className="trainer-head"><div>{embedded ? <h2>{profile.title}</h2> : <h1>{profile.title}</h1>}<p>{profile.description}</p></div><button onClick={reset}><RotateCcw size={18} />Restart</button></div>
-    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => { if (!startedAt) { setStartedAt(performance.now()); trackEvent("data_entry_started", { testType: "data-entry" }); } setValue(event.target.value); }} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" autoCapitalize="off" spellCheck={false} /><button className="primary data-entry-next" type="button" onClick={submitField}>{fieldIndex === fields.length - 1 && recordIndex === fictionalDataEntryRecords.length - 1 ? "See results" : "Next field"}</button><p className="hint">Type the value exactly, then press Enter or tap Next field. An empty field counts as an error.</p></div></> : report && <div className="result-card inline-result data-entry-report" data-certificate-result={finished.certificate ? JSON.stringify(finished.certificate) : undefined}><p className="eyebrow">Session complete · {new Date(finished.date).toLocaleDateString()}</p><h2>{isTest ? "Data entry test result" : "Data entry practice result"}</h2><p>Four fictional records · {report.fieldsAttempted} fields · exact matches, including punctuation and leading zeroes.</p><div className="metrics"><Metric label="Field accuracy" value={`${report.accuracy}%`} /><Metric label="Correct fields" value={`${report.correctFields}/${report.fieldsAttempted}`} /><Metric label="Complete records" value={`${report.correctRecords}/${report.recordsAttempted}`} /><Metric label="Fields/min" value={report.fieldsPerMinute} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><h3>Where to practice next</h3><div className="data-entry-breakdown">{report.byType.map((group) => <div key={group.label}><span>{group.label}</span><strong>{group.correct}/{group.total}</strong>{group.correct < group.total && <a href={group.practice}>Practice this skill →</a>}</div>)}</div>{report.mistakes.length > 0 ? <details><summary>Review {report.mistakes.length} incorrect {report.mistakes.length === 1 ? "field" : "fields"}</summary><ul>{report.mistakes.map((mistake, index) => <li key={index}>Record {mistake.record}, {mistake.label}: entered <code>{mistake.entered || "(blank)"}</code>; expected <code>{mistake.expected}</code></li>)}</ul></details> : <p>All fields matched. Try the 10-key test or retake this assessment for consistency.</p>}<p className="hint">This is a self-administered practice result. It is not proctored or an employer-approved certification. Check each employer’s requirements.</p><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button>{isTest && <button onClick={() => shareResult(finished)}>Share Result</button>}<button type="button" onClick={() => window.print()}>Print or save result</button><a href="/data-entry-practice/">All practice drills</a></div></div>}
+    {!finished ? <><div className="data-entry-record panel"><p className="eyebrow">Record {recordIndex + 1} of {fictionalDataEntryRecords.length} · Field {fieldIndex + 1} of {fields.length}</p>{fields.map((field, index) => <div className={index === fieldIndex ? "data-field active" : "data-field"} key={`${field}-${index}`}><span>{profile.labels[index]}</span><strong>{field}</strong></div>)}</div><div className="panel data-entry-input"><label htmlFor="data-entry-field">Type the highlighted value</label><input id="data-entry-field" ref={inputRef} value={value} onChange={(event) => { if (!startedAt) { setStartedAt(performance.now()); trackEvent("data_entry_started", { testType: "data-entry" }); } setValue(event.target.value); }} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submitField(); } }} autoComplete="off" autoCapitalize="off" spellCheck={false} /><button className="primary data-entry-next" type="button" onClick={submitField}>{fieldIndex === fields.length - 1 && recordIndex === fictionalDataEntryRecords.length - 1 ? "See results" : "Next field"}</button><p className="hint">Type the value exactly, then press Enter or tap Next field. An empty field counts as an error.</p></div></> : report && <div className="result-card inline-result data-entry-report" data-certificate-result={finished.certificate ? JSON.stringify(finished.certificate) : undefined}><p className="eyebrow">Session complete · {new Date(finished.date).toLocaleDateString()}</p><h2>{isTest ? "Data entry test result" : "Data entry practice result"}</h2><p>Four fictional records · {report.fieldsAttempted} fields · exact matches, including punctuation and leading zeroes.</p><div className="metrics"><Metric label="Field accuracy" value={`${report.accuracy}%`} /><Metric label="Correct fields" value={`${report.correctFields}/${report.fieldsAttempted}`} /><Metric label="Complete records" value={`${report.correctRecords}/${report.recordsAttempted}`} /><Metric label="Fields/min" value={report.fieldsPerMinute} /><Metric label="Time" value={formatTime(finished.metrics.elapsedMs)} /></div><MissedFieldRetry report={report} /><h3>Where to practice next</h3><div className="data-entry-breakdown">{report.byType.map((group) => <div key={group.label}><span>{group.label}</span><strong>{group.correct}/{group.total}</strong>{group.correct < group.total && <a href={group.practice}>Practice this skill →</a>}</div>)}</div>{report.mistakes.length > 0 ? <details><summary>Review {report.mistakes.length} incorrect {report.mistakes.length === 1 ? "field" : "fields"}</summary><ul>{report.mistakes.map((mistake, index) => <li key={index}>Record {mistake.record}, {mistake.label}: entered <code>{mistake.entered || "(blank)"}</code>; expected <code>{mistake.expected}</code></li>)}</ul></details> : <p>All fields matched. Try the 10-key test or retake this assessment for consistency.</p>}<p className="hint">This is a self-administered practice result. It is not proctored or an employer-approved certification. Check each employer’s requirements.</p><div className="actions"><button className="primary" onClick={reset}><RotateCcw size={18} />Retake Test</button>{isTest && <button onClick={() => shareResult(finished)}>Share Result</button>}<button type="button" onClick={() => window.print()}>Print or save result</button><a href="/data-entry-practice/">All practice drills</a></div></div>}
     <p className="tool-copy">This test uses fictional records and measures field-level accuracy separately from paragraph typing. Progress is stored locally on this device.</p>
     <div className="inline-links"><InternalLink href="/data-entry-practice/" go={go}>All Data Entry Practice</InternalLink><InternalLink href="/10-key-typing-test/" go={go}>10-Key Test</InternalLink><InternalLink href="/kph-typing-test/" go={go}>KPH Test</InternalLink><InternalLink href="/typing-test/" go={go}>Prose Typing Test</InternalLink></div>
   </section>;
@@ -354,7 +357,7 @@ function NumericKeypadTrainer({ title, duration, progress, setProgress, onRecord
   const elapsedMs = startedAt !== null ? Math.min(duration * 1000, now - startedAt) : 0;
   const numeric = calculateNumericMetrics(target, typed, elapsedMs);
   useEffect(() => { if (startedAt !== null && elapsedMs >= duration * 1000 && !finished) complete(); }, [elapsedMs, startedAt, finished]);
-  function complete() { const finalMs = Math.max(1, Math.min(duration * 1000, performance.now() - (startedAt ?? performance.now()))); const result = calculateNumericMetrics(target, typed, finalMs); const session: SessionRecord = { id: crypto.randomUUID(), date: new Date().toISOString(), type: "test", label: title, metrics: utilityMetrics(result.correctKeystrokes, result.incorrectKeystrokes, result.totalKeystrokes, finalMs), weakKeys: [], weakCombinations: [] }; session.certificate = speedCertificateResult(session, duration, true); setFinished(session); onRecord(session); trackEvent("ten_key_completed", { testType: title, duration, accuracyRange: metricRange(result.accuracy) }); }
+  function complete() { const finalMs = Math.max(1, Math.min(duration * 1000, performance.now() - (startedAt ?? performance.now()))); const result = calculateNumericMetrics(target, typed, finalMs); const session: SessionRecord = { id: crypto.randomUUID(), date: new Date().toISOString(), type: "test", label: title, metrics: utilityMetrics(result.correctKeystrokes, result.incorrectKeystrokes, result.totalKeystrokes, finalMs), weakKeys: [], weakCombinations: [] }; session.comparison = { duration: String(duration), category: "Numeric keypad", language: "Numeric", input: "Unknown", corrections: "Allowed" }; session.certificate = speedCertificateResult(session, duration, true); setFinished(session); onRecord(session); trackEvent("ten_key_completed", { testType: title, duration, accuracyRange: metricRange(result.accuracy) }); }
   function reset() { setTyped(""); setStartedAt(null); setFinished(null); requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true })); }
   function applyNumericKeys(keys: string[]) {
     if (!keys.length) return;
@@ -393,6 +396,7 @@ interface SharedProps {
 
 function Trainer(props: {
   keyboardToggle?: boolean;
+  comparisonCategory?: string;
   title: string;
   personalityTest?: boolean;
   subtitle: string;
@@ -413,6 +417,7 @@ function Trainer(props: {
   setFocus: (focus: boolean) => void;
   side?: React.ReactNode;
 }) {
+  const inputMethod = useRef("Unknown");
   const [activeTarget, setActiveTarget] = useState(props.target);
   const [session, setSession] = useState(() => createSession(props.target));
   const [finished, setFinished] = useState<SessionRecord | null>(null);
@@ -427,6 +432,7 @@ function Trainer(props: {
 
   useEffect(() => {
     const nextTarget = props.regenerate ? props.regenerate() : props.target;
+    inputMethod.current = "Unknown";
     setActiveTarget(nextTarget);
     setSession(createSession(nextTarget));
     setFinished(null);
@@ -470,6 +476,7 @@ function Trainer(props: {
 
   function reset() {
     const nextTarget = props.regenerate ? props.regenerate() : props.target;
+    inputMethod.current = "Unknown";
     setActiveTarget(nextTarget);
     setSession(createSession(nextTarget));
     setFinished(null);
@@ -490,7 +497,14 @@ function Trainer(props: {
       metrics: finalMetrics,
       weakKeys,
       weakCombinations,
-      strokes: session.keystrokes
+      strokes: session.keystrokes,
+      comparison: {
+        duration: props.duration ? String(props.duration) : "Untimed",
+        category: props.comparisonCategory ?? props.title,
+        language: document.documentElement.lang || "Unknown",
+        input: inputMethod.current,
+        corrections: props.progress.settings.allowCorrections ? "Allowed" : "Disabled"
+      }
     };
     if (props.mode === "test") record.certificate = speedCertificateResult(record, props.duration);
     setFinished(record);
@@ -521,12 +535,14 @@ function Trainer(props: {
   function onKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === "Tab") return;
     if (event.key.length === 1 || event.key === "Backspace") {
+      inputMethod.current = "Physical keyboard";
       event.preventDefault();
       applyKeys([event.key]);
     }
   }
 
   function onBeforeInput(event: React.FormEvent<HTMLTextAreaElement>) {
+    if (inputMethod.current === "Unknown") inputMethod.current = "On-screen / text input";
     const inputEvent = event.nativeEvent as InputEvent;
     if (inputEvent.isComposing) return;
     const keys = keysFromTextInput(inputEvent.inputType, inputEvent.data);
@@ -537,7 +553,10 @@ function Trainer(props: {
 
   function onTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     const value = event.currentTarget.value;
-    if (value) applyKeys(keysFromTextInput("insertText", value));
+    if (value) {
+      if (inputMethod.current === "Unknown") inputMethod.current = "On-screen / text input";
+      applyKeys(keysFromTextInput("insertText", value));
+    }
   }
 
   const showKeyboard = props.progress.settings.showKeyboard;

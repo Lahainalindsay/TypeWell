@@ -11,6 +11,7 @@ export interface SessionRecord {
   metrics: Metrics;
   weakKeys: WeakKey[];
   weakCombinations: WeakCombination[];
+  comparison?: { duration: string; category: string; language: string; input: string; corrections: string };
   strokes?: Keystroke[];
   certificate?: CertificateResult;
 }
